@@ -28,9 +28,10 @@ app.get('/', (req, res) => {
  */
 
 const userRoutes = require('./app/routers/user.router')
+const adminRoutes = require('./app/routers/admin.router')
 
-app.use("/User", userRoutes)
- 
+app.use("/user", userRoutes)
+app.use("/admin", adminRoutes)
 
 app.listen(PORT, () => {
     console.log(`http://localhost:${process.env.PORT}`)

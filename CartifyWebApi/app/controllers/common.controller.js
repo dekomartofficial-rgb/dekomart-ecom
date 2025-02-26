@@ -4,7 +4,7 @@
  */
 async function handleReps(response) {
     try {
-        const res = {};
+        let res = {};
 
         for (const [key, value] of Object.entries(response)) {
             if (value !== undefined && value !== null) {
@@ -37,7 +37,7 @@ async function handleReps(response) {
                 }
             }
         }
-
+  
         return res;
     } catch (err) {
         console.error('Error processing response:', err);

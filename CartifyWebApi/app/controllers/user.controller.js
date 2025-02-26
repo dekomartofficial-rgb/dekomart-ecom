@@ -27,9 +27,10 @@ class User {
                 const secret = process.env.SECRET_TOKERN;
                 const token = jwt.sign({ UserId: output.UserId }, secret, { expiresIn: process.env.TOKEN_EXPIRE })
                 res.json({ ...output, Token: token });
+                return
             }
 
-            res.json(output);
+            res.status(200).json(output);
         }
         catch (e) {
             res.status(500).json({ err : 'Error Occur'});
