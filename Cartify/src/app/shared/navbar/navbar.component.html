@@ -1,44 +1,41 @@
-<!-- left-sidebar.component.html -->
-<div class="sidebar bg-white border-end shadow-sm">
-    <div class="brand-container p-3 border-bottom">
-        <h5 class="m-0 d-flex align-items-center">
-            <i class="bi bi-box me-2"></i>
-            Your Brand
-        </h5>
+<!-- sidebar.component.html -->
+<div class="sidebar" [ngClass]="{'collapsed': isCollapsed}">
+    <div class="sidebar-header">
+        <h3 *ngIf="!isCollapsed">Admin Panel</h3>
     </div>
 
-    <nav class="nav flex-column p-2">
-        @for (item of navItems; track item.header) {
-        <div class="nav-item mb-1">
-            <div class="nav-link header d-flex justify-content-between align-items-center" (click)='onHeaderClick(item)'
-                [class.active]="activeHeader === item.header">
-                <div class="d-flex align-items-center">
-                    <i class="bi {{item.icon}} me-2"></i>
-                    <span>{{item.header}}</span>
-                </div>
-                <i class="bi" [class.bi-chevron-down]="!item.isCollapsed"
-                    [class.bi-chevron-right]="item.isCollapsed"></i>
-            </div>
-            <div class="children" [class.show]="!item.isCollapsed">
-                @for (child of item.children; track child.name) {
-                <a class="nav-link child d-flex align-items-center" [routerLink]="[child.url]" routerLinkActive="active"
-                    [class.active]="isActive(child.url)">
-                    <i class="bi {{child.icon}} me-2"></i>
-                    {{child.name}}
+    <ul class="list-unstyled">
+        <li *ngFor="let item of ScreenList" class="nav-item">
+            <!-- Items with children (dropdown) -->
+            <ng-container *ngIf="item.IsHaveChild === 1">
+                <a class="nav-link dropdown-toggle" (click)="toggleGroup(item.GroupName)"
+                    [attr.aria-expanded]="isGroupExpanded(item.GroupName)">
+                    <i class="{{ item.GroupIcon }}"></i>
+                    <span *ngIf="!isCollapsed">{{ item.GroupName }}</span>
+                    <i *ngIf="!isCollapsed" class="fa-solid dropdown-icon"></i>
                 </a>
-                }
-            </div>
-        </div>
-        }
-    </nav>
 
-    <div class="sidebar-footer border-top p-3 mt-auto">
-        <div class="d-flex align-items-center">
-            <img src="/api/placeholder/32/32" alt="User" class="rounded-circle me-2" />
-            <div>
-                <div class="fw-medium">John Doe</div>
-                <small class="text-muted">Admin</small>
-            </div>
-        </div>
-    </div>
+                <!-- Dropdown children -->
+                <ul class="submenu" [ngClass]="{'show': isGroupExpanded(item.GroupName)}">
+                    <li *ngFor="let child of item.Children" class="nav-item">
+                        <a class="nav-link" [routerLink]="child.WindowUrl" [class.active]="isActive(child.WindowUrl)"
+                            (click)="setActive(child.WindowUrl)">
+                            <i class="{{ child.WindowIcon }}"></i>
+                            <span *ngIf="!isCollapsed">{{ child.WindowName }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </ng-container>
+
+            <!-- Items without children (direct links) -->
+            <ng-container *ngIf="item.IsHaveChild === 0 && item.Children && item.Children.length > 0">
+                <a class="nav-link" [routerLink]="item.Children[0].WindowUrl"
+                    [class.active]="isActive(item.Children[0].WindowUrl)"
+                    (click)="setActive(item.Children[0].WindowUrl)">
+                    <i class="{{ item.GroupIcon }}"></i>
+                    <span *ngIf="!isCollapsed">{{ item.GroupName }}</span>
+                </a>
+            </ng-container>
+        </li>
+    </ul>
 </div>

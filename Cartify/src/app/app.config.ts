@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -13,6 +13,7 @@ export const appConfig: ApplicationConfig = {
       withFetch() // Optional: Use Fetch API instead of XMLHttpRequest
     ),
     provideAnimationsAsync(),
-    providePrimeNG({ theme: { preset: Aura } })
+    providePrimeNG({ theme: { preset: Aura } }),
+    
   ]
 };

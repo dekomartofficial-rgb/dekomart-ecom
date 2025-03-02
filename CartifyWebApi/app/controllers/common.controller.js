@@ -21,6 +21,9 @@ async function handleReps(response) {
                     case 'p_msg':
                         parsedColumn = "RtnMsg";
                         break;
+                    case 'p_retmsg':
+                            parsedColumn = "RtnMsg";
+                            break;
                     case 'p_rettype':
                         parsedColumn = "RtnType";
                         break;
@@ -28,6 +31,9 @@ async function handleReps(response) {
                         parsedColumn = "UserId";
                         break;
                     case 'p_ret_id':
+                        parsedColumn = 'RetId';
+                        break;
+                    case 'p_retid':
                         parsedColumn = 'RetId';
                         break;
                 }

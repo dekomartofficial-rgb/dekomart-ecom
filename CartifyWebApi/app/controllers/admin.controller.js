@@ -9,12 +9,14 @@ class Admin {
             pool = await dataAcces.connect();
             const request = pool.request();
 
-            const result = await request.execute('PKG_AD$p_get_screen_list') 
+            request.input('ai_user_id', mssql.BigInt, 1)
+            const result = await request.execute('PKG_USER_ACCESS$p_get_role_screen')
 
-            res.status(200).json( { screenList : result.recordsets[0], groupName : result.recordsets[1] });
+            res.status(200).json({ groupName: result.recordsets[0], screenList: result.recordsets[1] });
         }
         catch (e) {
-            res.status(500).json({ err: 'Error Occur' });
+            res.status(500).json({ err: 'Error Occur ' + e });
+
         }
     }
 }
