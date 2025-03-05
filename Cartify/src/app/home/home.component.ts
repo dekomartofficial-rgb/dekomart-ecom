@@ -1,14 +1,55 @@
 import { Component } from '@angular/core';
 import { HttpClientService } from '../provider/services/http-client.service'
+import { RouterLink } from '@angular/router';
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  originalPrice?: number;
+  reviewCount: number;
+  isNew: boolean;
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-
-  constructor(private http: HttpClientService) { }
-
+ 
+  featuredProducts: Product[] = [
+    {
+      id: 1,
+      name: 'Wireless Headphones',
+      price: 79.99,
+      originalPrice: 99.99,
+      reviewCount: 124,
+      isNew: true
+    },
+    {
+      id: 2,
+      name: 'Smart Watch',
+      price: 149.99,
+      reviewCount: 86,
+      isNew: false
+    },
+    {
+      id: 3,
+      name: 'Laptop Backpack',
+      price: 45.99,
+      originalPrice: 59.99,
+      reviewCount: 214,
+      isNew: false
+    },
+    {
+      id: 4,
+      name: 'Bluetooth Speaker',
+      price: 55.99,
+      reviewCount: 178,
+      isNew: true
+    }
+  ];
 }

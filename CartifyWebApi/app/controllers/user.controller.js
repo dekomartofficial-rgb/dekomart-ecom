@@ -30,7 +30,7 @@ class User {
                 return
             }
 
-            res.status(200).json(result.output  );
+            res.status(200).json(output);
         }
         catch (e) {
             res.status(500).json({ err : 'Error Occur' + e});

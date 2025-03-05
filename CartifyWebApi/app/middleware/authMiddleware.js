@@ -1,12 +1,16 @@
 const jwt = require('jsonwebtoken')
 
 function VerifyToken(req, res, next){
-    const token = req.header('Authorization')
+    let token = ''
+    if(req.header('Authorization')){
+        token = req.header('Authorization')?.split(" ")[1] 
+    }
+    
     if(!token){
         return res.status(401).json({err: 'Access Denied'})
     } else{
         try {
-            const decoded = jwt.verify(token, 'your-secret-key');
+            const decoded = jwt.verify(token, process.env.SECRET_TOKERN);
             req.userId = decoded.userId;
             next();
             } 

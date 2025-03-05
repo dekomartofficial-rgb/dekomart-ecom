@@ -19,22 +19,22 @@ async function handleReps(response) {
 
                 switch (key) {
                     case 'p_msg':
-                        parsedColumn = "RtnMsg";
+                        parsedColumn = "Message";
                         break;
                     case 'p_retmsg':
-                            parsedColumn = "RtnMsg";
-                            break;
+                        parsedColumn = "Message";
+                        break;
                     case 'p_rettype':
-                        parsedColumn = "RtnType";
+                        parsedColumn = "MessageType";
                         break;
                     case 'p_user_id':
                         parsedColumn = "UserId";
                         break;
                     case 'p_ret_id':
-                        parsedColumn = 'RetId';
+                        parsedColumn = 'MessageId';
                         break;
                     case 'p_retid':
-                        parsedColumn = 'RetId';
+                        parsedColumn = 'MessageId';
                         break;
                 }
 

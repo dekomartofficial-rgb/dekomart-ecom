@@ -1,41 +1,60 @@
 <!-- sidebar.component.html -->
-<div class="sidebar" [ngClass]="{'collapsed': isCollapsed}">
-    <div class="sidebar-header">
-        <h3 *ngIf="!isCollapsed">Admin Panel</h3>
-    </div>
+<div class="sidebar" [ngClass]="{ collapsed: isCollapsed }">
+  <div class="sidebar-header">
+    <h3 *ngIf="!isCollapsed">Admin Panel</h3>
+    <a routerLink="/">Go To Home</a>
+    <button (click)="Logout()">Log Out</button>
+  </div>
 
-    <ul class="list-unstyled">
-        <li *ngFor="let item of ScreenList" class="nav-item">
-            <!-- Items with children (dropdown) -->
-            <ng-container *ngIf="item.IsHaveChild === 1">
-                <a class="nav-link dropdown-toggle" (click)="toggleGroup(item.GroupName)"
-                    [attr.aria-expanded]="isGroupExpanded(item.GroupName)">
-                    <i class="{{ item.GroupIcon }}"></i>
-                    <span *ngIf="!isCollapsed">{{ item.GroupName }}</span>
-                    <i *ngIf="!isCollapsed" class="fa-solid dropdown-icon"></i>
-                </a>
+  <ul class="list-unstyled">
+    <li *ngFor="let item of ScreenList" class="nav-item">
+      <!-- Items with children (dropdown) -->
+      <ng-container *ngIf="item.IsHaveChild === 1">
+        <a
+          class="nav-link dropdown-toggle"
+          (click)="toggleGroup(item.GroupName)"
+          [attr.aria-expanded]="isGroupExpanded(item.GroupName)"
+        >
+          <i class="{{ item.GroupIcon }}"></i>
+          <span *ngIf="!isCollapsed">{{ item.GroupName }}</span>
+          <i *ngIf="!isCollapsed" class="fa-solid dropdown-icon"></i>
+        </a>
 
-                <!-- Dropdown children -->
-                <ul class="submenu" [ngClass]="{'show': isGroupExpanded(item.GroupName)}">
-                    <li *ngFor="let child of item.Children" class="nav-item">
-                        <a class="nav-link" [routerLink]="child.WindowUrl" [class.active]="isActive(child.WindowUrl)"
-                            (click)="setActive(child.WindowUrl)">
-                            <i class="{{ child.WindowIcon }}"></i>
-                            <span *ngIf="!isCollapsed">{{ child.WindowName }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </ng-container>
+        <!-- Dropdown children -->
+        <ul
+          class="submenu"
+          [ngClass]="{ show: isGroupExpanded(item.GroupName) }"
+        >
+          <li *ngFor="let child of item.Children" class="nav-item">
+            <a
+              class="nav-link"
+              [routerLink]="child.WindowUrl"
+              [class.active]="isActive(child.WindowUrl)"
+              (click)="setActive(child.WindowUrl)"
+            >
+              <i class="{{ child.WindowIcon }}"></i>
+              <span *ngIf="!isCollapsed">{{ child.WindowName }}</span>
+            </a>
+          </li>
+        </ul>
+      </ng-container>
 
-            <!-- Items without children (direct links) -->
-            <ng-container *ngIf="item.IsHaveChild === 0 && item.Children && item.Children.length > 0">
-                <a class="nav-link" [routerLink]="item.Children[0].WindowUrl"
-                    [class.active]="isActive(item.Children[0].WindowUrl)"
-                    (click)="setActive(item.Children[0].WindowUrl)">
-                    <i class="{{ item.GroupIcon }}"></i>
-                    <span *ngIf="!isCollapsed">{{ item.GroupName }}</span>
-                </a>
-            </ng-container>
-        </li>
-    </ul>
+      <!-- Items without children (direct links) -->
+      <ng-container
+        *ngIf="
+          item.IsHaveChild === 0 && item.Children && item.Children.length > 0
+        "
+      >
+        <a
+          class="nav-link"
+          [routerLink]="item.Children[0].WindowUrl"
+          [class.active]="isActive(item.Children[0].WindowUrl)"
+          (click)="setActive(item.Children[0].WindowUrl)"
+        >
+          <i class="{{ item.GroupIcon }}"></i>
+          <span *ngIf="!isCollapsed">{{ item.GroupName }}</span>
+        </a>
+      </ng-container>
+    </li>
+  </ul>
 </div>
