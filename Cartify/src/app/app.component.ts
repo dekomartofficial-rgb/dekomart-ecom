@@ -8,7 +8,7 @@ import { ProductDashboardComponent } from './pages/admin/product-dashboard/produ
 import { ProductDetailsComponent } from './pages/admin/product-details/product-details.component';
 import { UserRegistrationComponent } from './pages/admin/user-registration/user-registration.component';
 import { HttpClientService } from './provider/services/http-client.service';
-import { CommonModule } from '@angular/common'; // Import this
+import { CommonModule, Location } from '@angular/common'; // Import this
 
 
 @Component({
@@ -20,10 +20,28 @@ import { CommonModule } from '@angular/common'; // Import this
 })
 export class AppComponent {
   LoggerId: boolean = false;
+  UserId: number = 0
+  public href: string = "";
 
-  constructor(private httpClient: HttpClientService) { }
+  constructor(private httpClient: HttpClientService, private Location: Location) { }
+  ngOnInit(): void {
+    this.IsLoggedUser()
+
+  }
 
   IsLoggedUser() {
-    return this.LoggerId = this.httpClient.isLoggedIn()
+    this.UserId = this.httpClient.getUserId()
+    if (this.UserId > 0) {
+      return this.LoggerId = true
+    }
+    console.log(this.IsLoggedUser)
+    return this.LoggerId = false
+  }
+
+  IsHome() {
+    if (this.Location.path() === '' || this.Location.path() === '/login') {
+      return true
+    }
+    return false
   }
 }

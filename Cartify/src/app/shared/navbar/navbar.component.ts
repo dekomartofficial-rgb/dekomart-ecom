@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule, RouterLink } from '@angular/router';
 import { HttpClientService } from '../../provider/services/http-client.service';
-import { ScreenList } from '../../provider/interface/AdminInterface'; 
+import { ScreenList } from '../../provider/interface/AdminInterface';
 
 
 
@@ -22,27 +22,25 @@ export class NavbarComponent implements OnInit {
 
   constructor(private router: Router, private httpClient: HttpClientService) { }
 
-  ngOnInit(): void { 
-    this.GetScreenList() 
-  }
+  ngOnInit(): void {
+    this.GetScreenList()
+  } 
 
   GetScreenList() {
     const UserId = this.httpClient.getUserId();
-    if(UserId){
-      this.httpClient.get<any>('admin/GetScreenList/', { UserId: UserId }).subscribe((res) => {
-        this.ScreenList = res.groupName.map((GroupName: any) => {
-          return {
-            GroupName: GroupName.GroupName,
-            GroupIcon: GroupName.GroupIcon,
-            IsHaveChild: GroupName.IsHaveChild,
-            Children: res.screenList.filter((child: any) => {
-              return child.GroupName === GroupName.GroupName;
-            })
-          }
-        });
+    this.httpClient.get<any>('admin/GetScreenList/', { UserId: UserId }).subscribe((res) => {
+      this.ScreenList = res.groupName.map((GroupName: any) => {
+        return {
+          GroupName: GroupName.GroupName,
+          GroupIcon: GroupName.GroupIcon,
+          IsHaveChild: GroupName.IsHaveChild,
+          Children: res.screenList.filter((child: any) => {
+            return child.GroupName === GroupName.GroupName;
+          })
+        }
       });
-    }
-   
+    });
+
   }
 
   toggleSidebar() {
@@ -64,9 +62,9 @@ export class NavbarComponent implements OnInit {
   isActive(url: string): boolean {
     return this.activeUrl === url;
   }
-  Logout(){
+  Logout() {
     this.httpClient.LogOut()
   }
- 
+
 
 }

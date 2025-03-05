@@ -1,23 +1,109 @@
 .sidebar {
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    padding-top: 56px; /* Adjust based on your navbar height */
-    overflow-y: auto;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  padding-top: 56px; /* Adjust based on your navbar height */
+  overflow-y: auto;
+}
+
+.main-content {
+  margin-left: 16.666667%; /* Corresponds to col-md-2 width */
+  padding-top: 56px; /* Match sidebar top padding */
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
   }
-  
   .main-content {
-    margin-left: 16.666667%; /* Corresponds to col-md-2 width */
-    padding-top: 56px; /* Match sidebar top padding */
+    margin-left: 0;
   }
-  
-  @media (max-width: 768px) {
-    .sidebar {
-      display: none;
-    }
-    .main-content {
-      margin-left: 0;
-    }
-  }
+}
+
+.admin-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f4f7f6;
+}
+
+.sidebar {
+  width: 250px;
+  transition: width 0.3s ease;
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.main-header {
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.notification-btn,
+.settings-btn {
+  background: none;
+  border: none;
+  position: relative;
+  cursor: pointer;
+}
+
+.badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 10px;
+}
+
+.content-wrapper {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #f4f7f6;
+}
+
+.main-footer {
+  background-color: white;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}

@@ -1,2 +1,10 @@
-<p-toast></p-toast>  
-<router-outlet></router-outlet>
+<p-toast></p-toast>
+
+@if (LoggerId && IsHome() !== true) { 
+  <app-navbar class="sidebar"></app-navbar>
+  <div class="container">
+    <router-outlet> </router-outlet>
+  </div> 
+} @else {
+  <router-outlet> </router-outlet>
+}
