@@ -32,7 +32,9 @@ export class LoginComponent {
   }
   ngOnInit(): void {
     if (!this.httpClient.getUserId()) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/login']); 
+    } else {
+      this.router.navigate(['/admin']); 
     }
   }
   // Getter for easy access to form fields

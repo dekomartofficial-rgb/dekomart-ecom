@@ -107,3 +107,19 @@
   text-align: center;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
+.container-fluid {
+  margin-left: 250px; /* Adjust according to your sidebar width */
+  width: calc(100% - 250px); /* Adjust the width accordingly */
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.sidebar {
+  width: 250px; /* Adjust this based on your sidebar width */
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding-top: 20px;
+}

@@ -1,10 +1,17 @@
 <p-toast></p-toast>
+<!-- <app-loader 
+      [isFullscreen]="true" 
+      [size]="60" 
+      [color]="'#FF5733'" 
+      [text]="'Loading...'"
+    ></app-loader> -->
+<ng-container *ngIf="LoggerId && !IsHome(); else defaultOutlet">
+  <app-navbar class="sidebar col-md-2"></app-navbar>
+  <div class="container-fluid">
+    <router-outlet class="col-md-8"></router-outlet>
+  </div>
+</ng-container>
 
-@if (LoggerId && IsHome() !== true) { 
-  <app-navbar class="sidebar"></app-navbar>
-  <div class="container">
-    <router-outlet> </router-outlet>
-  </div> 
-} @else {
-  <router-outlet> </router-outlet>
-}
+<ng-template #defaultOutlet>
+  <router-outlet></router-outlet>
+</ng-template>

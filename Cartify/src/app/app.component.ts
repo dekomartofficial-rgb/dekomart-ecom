@@ -8,13 +8,14 @@ import { ProductDashboardComponent } from './pages/admin/product-dashboard/produ
 import { ProductDetailsComponent } from './pages/admin/product-details/product-details.component';
 import { UserRegistrationComponent } from './pages/admin/user-registration/user-registration.component';
 import { HttpClientService } from './provider/services/http-client.service';
-import { CommonModule, Location } from '@angular/common'; // Import this
-
+import { CommonModule, Location } from '@angular/common';
+import { LoaderComponent } from "./shared/loader/loader.component"; // Import this
+import { LoaderService } from './provider/services/loader.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HomeComponent, LoginComponent, NavbarComponent, ToastModule, ProductDashboardComponent, ProductDetailsComponent, UserRegistrationComponent],
+  imports: [CommonModule, RouterOutlet, HomeComponent, LoginComponent, NavbarComponent, ToastModule, ProductDashboardComponent, ProductDetailsComponent, UserRegistrationComponent, LoaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -23,10 +24,9 @@ export class AppComponent {
   UserId: number = 0
   public href: string = "";
 
-  constructor(private httpClient: HttpClientService, private Location: Location) { }
+  constructor(private httpClient: HttpClientService, private Location: Location, private loaderService : LoaderService) { }
   ngOnInit(): void {
-    this.IsLoggedUser()
-
+    this.IsLoggedUser() 
   }
 
   IsLoggedUser() {
@@ -34,7 +34,6 @@ export class AppComponent {
     if (this.UserId > 0) {
       return this.LoggerId = true
     }
-    console.log(this.IsLoggedUser)
     return this.LoggerId = false
   }
 
@@ -44,4 +43,6 @@ export class AppComponent {
     }
     return false
   }
+
+  
 }

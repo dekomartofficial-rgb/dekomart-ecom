@@ -1,0 +1,31 @@
+<div class="loader-container" [ngClass]="{ fullscreen: isFullscreen }">
+  <div class="spinner" [ngStyle]="{ width: size + 'px', height: size + 'px' }">
+    <div
+      class="spinner-inner"
+      [ngStyle]="{
+        'border-color': color + ' transparent transparent transparent'
+      }"
+    ></div>
+    <div
+      class="spinner-inner"
+      [ngStyle]="{
+        'border-color': color + ' transparent transparent transparent'
+      }"
+    ></div>
+    <div
+      class="spinner-inner"
+      [ngStyle]="{
+        'border-color': color + ' transparent transparent transparent'
+      }"
+    ></div>
+    <div
+      class="spinner-inner"
+      [ngStyle]="{
+        'border-color': color + ' transparent transparent transparent'
+      }"
+    ></div>
+  </div>
+  <div *ngIf="text" class="loading-text" [ngStyle]="{ color: textColor }">
+    {{ text }}
+  </div>
+</div>

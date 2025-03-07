@@ -19,28 +19,30 @@ export class NavbarComponent implements OnInit {
   expandedGroups: { [key: string]: boolean } = {};
   isCollapsed = false;
   activeHeader: string | null = null;
-
+  UserId: number = 0;
   constructor(private router: Router, private httpClient: HttpClientService) { }
 
   ngOnInit(): void {
-    this.GetScreenList()
-  } 
+    this.UserId = this.httpClient.getUserId();
+    this.GetScreenList() 
+  }
 
   GetScreenList() {
-    const UserId = this.httpClient.getUserId();
-    this.httpClient.get<any>('admin/GetScreenList/', { UserId: UserId }).subscribe((res) => {
-      this.ScreenList = res.groupName.map((GroupName: any) => {
-        return {
-          GroupName: GroupName.GroupName,
-          GroupIcon: GroupName.GroupIcon,
-          IsHaveChild: GroupName.IsHaveChild,
-          Children: res.screenList.filter((child: any) => {
-            return child.GroupName === GroupName.GroupName;
-          })
-        }
+    if (this.UserId) {
+      this.httpClient.get<any>('admin/GetScreenList', { UserId: this.UserId }).subscribe((res) => {
+        this.ScreenList = res.groupName.map((GroupName: any) => {
+          return {
+            GroupName: GroupName.GroupName,
+            GroupIcon: GroupName.GroupIcon,
+            IsHaveChild: GroupName.IsHaveChild,
+            Children: res.screenList.filter((child: any) => {
+              return child.GroupName === GroupName.GroupName;
+            })
+          }
+        });
       });
-    });
 
+    }
   }
 
   toggleSidebar() {

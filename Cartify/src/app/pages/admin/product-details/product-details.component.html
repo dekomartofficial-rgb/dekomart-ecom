@@ -1,1 +1,73 @@
-<p>product-details works!</p>
+<div class=".container">
+    <div class="addProduct">
+        <li (click)="showDialog()" label="Show"><span><i class="pi pi-plus" style="font-size: 1.5rem"></i></span>Add
+            Products</li>
+    </div>
+    <div class="productDialog">
+        <p-dialog header="Add Products" [modal]="true" [(visible)]="visible" [style]="{ width: '50rem' }"
+            [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true" >
+            <div class="form-contant">
+                <p-floatlabel variant="on">
+                    <input pInputText id="product_Id" [(ngModel)]="productId" autocomplete="off" pSize="large"
+                        class="custom-input" />
+                    <label for="product_Id">Product Id</label>
+                </p-floatlabel>
+
+                <p-floatlabel variant="on">
+                    <input pInputText id="product_Name" [(ngModel)]="productName" autocomplete="off" pSize="large"
+                        class="custom-input" />
+                    <label for="product_Name">Product Name</label>
+                </p-floatlabel>
+
+
+                <p-floatlabel variant="on">
+                    <input pInputText id="product_Stock" [(ngModel)]="productStock" autocomplete="off" pSize="large"
+                        class="custom-input" />
+                    <label for="product_Stock">Price</label>
+                </p-floatlabel>
+
+                <p-floatlabel variant="on">
+                    <input pInputText id="product_Category" [(ngModel)]="productCategory" autocomplete="off"
+                        pSize="large" class="custom-input" />
+                    <label for="product_Category">Category</label>
+                </p-floatlabel>
+
+                <p-floatlabel variant="on">
+                    <input pInputText id="product_Quantity" [(ngModel)]="productQuantity" autocomplete="off"
+                        pSize="large" class="custom-input" />
+                    <label for="product_Quantity">Quantity/Size</label>
+                </p-floatlabel>
+
+                <p-floatlabel variant="on">
+                    <input pInputText id="product_Stock" [(ngModel)]="productStock" autocomplete="off" pSize="large"
+                        class="custom-input" />
+                    <label for="product_Stock">Stock</label>
+                </p-floatlabel>
+            </div>
+            <ng-template #footer>
+                <p-button label="Cancel" [text]="true" severity="danger" size="large" />
+                <p-button label="Save" [outlined]="true" severity="success" size="large" />
+            </ng-template>
+        </p-dialog>
+    </div>
+    <div class="productList">
+        <div class="card">
+            <p-table [columns]="cols" [value]="products" [tableStyle]="{ 'min-width': '30rem' }">
+                <ng-template #header let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            {{ col.header }}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template #body let-rowData let-columns="columns">
+                    <tr>
+                        <td *ngFor="let col of columns">
+                            {{ rowData[col.field] }}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
