@@ -110,7 +110,6 @@
 .container-fluid {
   margin-left: 250px; /* Adjust according to your sidebar width */
   width: calc(100% - 250px); /* Adjust the width accordingly */
-  transition: margin-left 0.3s ease-in-out;
 }
 
 .sidebar {

@@ -24,23 +24,24 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.UserId = this.httpClient.getUserId();
-    this.GetScreenList() 
+    this.GetScreenList()
   }
 
   GetScreenList() {
     if (this.UserId) {
-      this.httpClient.get<any>('admin/GetScreenList', { UserId: this.UserId }).subscribe((res) => {
-        this.ScreenList = res.groupName.map((GroupName: any) => {
-          return {
-            GroupName: GroupName.GroupName,
-            GroupIcon: GroupName.GroupIcon,
-            IsHaveChild: GroupName.IsHaveChild,
-            Children: res.screenList.filter((child: any) => {
-              return child.GroupName === GroupName.GroupName;
-            })
-          }
+      this.httpClient.get<any>('user/GetScreenList', { UserId: this.UserId })
+        .subscribe((res) => {
+          this.ScreenList = res.groupName.map((s: any) => {
+            return {
+              GroupName: s.GroupName,
+              GroupIcon: s.GroupIcon,
+              IsHaveChild: s.IsHaveChild,
+              Children: res.screenList.filter((child: any) => {
+                return child.GroupName === s.GroupName;
+              })
+            }
+          });
         });
-      });
 
     }
   }
@@ -64,6 +65,7 @@ export class NavbarComponent implements OnInit {
   isActive(url: string): boolean {
     return this.activeUrl === url;
   }
+  
   Logout() {
     this.httpClient.LogOut()
   }

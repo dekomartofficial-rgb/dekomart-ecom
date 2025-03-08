@@ -19,7 +19,10 @@ interface Product {
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
- 
+  constructor(private httpClient: HttpClientService) {
+    // httpClient.LogOut()
+  }
+
   featuredProducts: Product[] = [
     {
       id: 1,

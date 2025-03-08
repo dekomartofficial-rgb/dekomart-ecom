@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './shared/navbar/navbar.component'
 import { LoginComponent } from './pages/login/login.component';
@@ -15,7 +15,7 @@ import { LoaderService } from './provider/services/loader.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HomeComponent, LoginComponent, NavbarComponent, ToastModule, ProductDashboardComponent, ProductDetailsComponent, UserRegistrationComponent, LoaderComponent],
+  imports: [CommonModule, RouterOutlet, NavbarComponent, ToastModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -24,25 +24,33 @@ export class AppComponent {
   UserId: number = 0
   public href: string = "";
 
-  constructor(private httpClient: HttpClientService, private Location: Location, private loaderService : LoaderService) { }
+  constructor(private httpClient: HttpClientService, private router: Router, private loaderService: LoaderService) { }
   ngOnInit(): void {
-    this.IsLoggedUser() 
+    // this.IsLoggedUser()
   }
 
-  IsLoggedUser() {
-    this.UserId = this.httpClient.getUserId()
-    if (this.UserId > 0) {
-      return this.LoggerId = true
+  isLoggedUser() {
+    let userData = this.httpClient.getUserData()
+    return userData && userData.UserId > 0 && !['/login', '/', '/home'].includes(this.router.url)
+  }
+
+  // IsHome() {
+  //   if (this.Location.path() === '' || this.Location.path() === '/login') {
+  //     return true
+  //   }
+  //   return false
+  // }
+
+  validateInspect() {
+    let date = Date.now();
+    debugger
+    let newDate = Date.now();
+    let differ = (newDate - date);
+    if (differ > 100) {
+      localStorage.removeItem('userData');
+      this.router.navigateByUrl('/');
     }
-    return this.LoggerId = false
+    return true;
   }
 
-  IsHome() {
-    if (this.Location.path() === '' || this.Location.path() === '/login') {
-      return true
-    }
-    return false
-  }
-
-  
 }

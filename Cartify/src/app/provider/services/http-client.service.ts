@@ -28,6 +28,10 @@ export class HttpClientService {
     }
   }
 
+  getUserData() {
+    let userData = localStorage.getItem('userData');
+    return !!userData ? JSON.parse(userData) : null;
+  }
   getToken() {
     var getJson = localStorage.getItem('userData')
     if (getJson) {
@@ -37,7 +41,7 @@ export class HttpClientService {
   }
 
   LogOut() {
-    localStorage.clear();
+    localStorage.removeItem('userData');
     this.Router.navigate(['/'])
   }
 

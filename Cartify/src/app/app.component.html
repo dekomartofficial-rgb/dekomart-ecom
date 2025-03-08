@@ -1,3 +1,4 @@
+<!-- <div style="display: none;" *ngIf="validateInspect()"></div> -->
 <p-toast></p-toast>
 <!-- <app-loader 
       [isFullscreen]="true" 
@@ -5,13 +6,10 @@
       [color]="'#FF5733'" 
       [text]="'Loading...'"
     ></app-loader> -->
-<ng-container *ngIf="LoggerId && !IsHome(); else defaultOutlet">
-  <app-navbar class="sidebar col-md-2"></app-navbar>
-  <div class="container-fluid">
-    <router-outlet class="col-md-8"></router-outlet>
+<ng-container >
+  <app-navbar class="sidebar col-md-2" *ngIf="isLoggedUser();"></app-navbar>
+  <div [class.container-fluid]="isLoggedUser()">
+    <router-outlet [class.col-md-8]="isLoggedUser()"  [class.col-md-12]="!isLoggedUser()"></router-outlet>
   </div>
 </ng-container>
 
-<ng-template #defaultOutlet>
-  <router-outlet></router-outlet>
-</ng-template>

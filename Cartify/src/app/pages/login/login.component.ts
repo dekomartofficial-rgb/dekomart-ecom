@@ -19,8 +19,8 @@ export class LoginComponent {
   isSubmitted = false;
   errorMessage = '';
   Login: Login = {
-    EmailId: '',
-    Password: '',
+    EmailId: 'test@gmail.com',
+    Password: '12345678',
     AuthType: ''
   }
 

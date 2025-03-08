@@ -12,7 +12,7 @@ export interface ScreenList {
 }
 
 export interface Login {
-    EmailId: string;
+    EmailId: string ;
     Password: string;
     AuthType: string;
 }
