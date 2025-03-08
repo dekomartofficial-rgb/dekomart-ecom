@@ -10,7 +10,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     const clonedReq = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`,
-        //path : base64
+        WindowPath : window.location.pathname,
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
       }
     });
     return next(clonedReq);

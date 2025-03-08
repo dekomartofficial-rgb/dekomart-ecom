@@ -6,8 +6,8 @@ const { handleReps } = require('./common.controller')
 
 class User {
     static ValidateUser = async (req, res) => {
-        let pool = null;
         try {
+            let pool = null;
             pool = await dataAcces.connect();
             const request = pool.request();
 
@@ -37,10 +37,11 @@ class User {
         }
     }
     static SaveUser = async (req, res) => {
-        let pool = null;
+
         try {
+            let pool = null;
             pool = await dataAcces.connect();
-            const request = pool.request(); 
+            const request = pool.request();
 
             request.input('ai_user_id', mssql.BigInt, req.body.UserId)
             request.input('as_first_name', mssql.VarChar(100), req.body.FirstName)
@@ -57,8 +58,24 @@ class User {
 
             const result = await request.execute('PKG_USER$p_validate_login')
             const output = await handleReps(result.output);
+
+            res.status(200).json(output);
         } catch (e) {
             res.status(500).json({ err: 'Error Occur' + e });
+        }
+    }
+    static GetScreenList = async (req, res) => {
+        try {
+            let pool = null;
+            pool = await dataAcces.connect();
+            const request = pool.request();
+
+            request.input('ai_user_id', mssql.BigInt, req.query.UserId)
+            const result = await request.execute('PKG_USER_ACCESS$p_get_role_screen')
+            res.status(200).json({ groupName: result.recordsets[0], screenList: result.recordsets[1] });
+        }
+        catch (e) {
+            res.status(500).json({ err: 'Error Occur :' + e });
         }
     }
 }
