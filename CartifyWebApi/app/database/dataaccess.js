@@ -75,18 +75,18 @@ class DataAccess {
   }
 }
 
-process.on('SIGINT', async () => {
-  try {
-    console.log('Closing SQL Server connection pool...');
-    const pool = await poolPromise;
-    await pool.close();
-    console.log('Pool closed successfully.');
-    process.exit(0);
-  } catch (err) {
-    console.error('Error closing pool:', err);
-    process.exit(1);
-  }
-});
+// process.on('SIGINT', async () => {
+//   try {
+//     console.log('Closing SQL Server connection pool...');
+//     const pool = await poolPromise;
+//     await pool.close();
+//     console.log('Pool closed successfully.');
+//     process.exit(0);
+//   } catch (err) {
+//     console.error('Error closing pool:', err);
+//     process.exit(1);
+//   }
+// });
 
 // Create and export an instance of DataAccess
 module.exports = new DataAccess();

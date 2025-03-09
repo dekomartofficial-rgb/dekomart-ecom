@@ -16,3 +16,8 @@ export interface Login {
     Password: string;
     AuthType: string;
 }
+export interface UserProfile{
+    UserName: string;
+    Email: string;
+    ProfieImage: string
+}

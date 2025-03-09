@@ -34,12 +34,7 @@ export class AppComponent {
     return userData && userData.UserId > 0 && !['/login', '/', '/home'].includes(this.router.url)
   }
 
-  // IsHome() {
-  //   if (this.Location.path() === '' || this.Location.path() === '/login') {
-  //     return true
-  //   }
-  //   return false
-  // }
+
 
   validateInspect() {
     let date = Date.now();

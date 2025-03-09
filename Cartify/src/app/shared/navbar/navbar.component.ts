@@ -2,19 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule, RouterLink } from '@angular/router';
 import { HttpClientService } from '../../provider/services/http-client.service';
-import { ScreenList } from '../../provider/interface/AdminInterface';
+import { ScreenList, } from '../../provider/interface/AdminInterface';
+import { UserProfile } from '../../provider/interface/AdminInterface'
+import { AvatarModule } from 'primeng/avatar';
+import { OverlayBadgeModule } from 'primeng/overlaybadge';
+import { ButtonModule } from 'primeng/button';
 
 
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterLink,],
+  imports: [CommonModule, RouterModule, RouterLink, AvatarModule, OverlayBadgeModule, ButtonModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  ScreenList: ScreenList[] = [];
+  ScreenList: ScreenList[] = []; 
+  UserProfile: UserProfile[] = [];  
   activeUrl: string = '';
   expandedGroups: { [key: string]: boolean } = {};
   isCollapsed = false;
@@ -24,25 +29,33 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.UserId = this.httpClient.getUserId();
+    this.getUserProfile()
     this.GetScreenList()
   }
+
+  getUserProfile(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const userId = this.httpClient.getUserData()?.UserId;
+      this.httpClient.get<UserProfile[]>('user/GetUserProfiler', { UserId: userId })
+        .subscribe(
+          (res) => {
+            this.UserProfile = res;
+            resolve(res); 
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+    });
+  }
+
 
   GetScreenList() {
     if (this.UserId) {
       this.httpClient.get<any>('user/GetScreenList', { UserId: this.UserId })
         .subscribe((res) => {
-          this.ScreenList = res.groupName.map((s: any) => {
-            return {
-              GroupName: s.GroupName,
-              GroupIcon: s.GroupIcon,
-              IsHaveChild: s.IsHaveChild,
-              Children: res.screenList.filter((child: any) => {
-                return child.GroupName === s.GroupName;
-              })
-            }
-          });
+          this.ScreenList = res.screenList;
         });
-
     }
   }
 
@@ -65,7 +78,7 @@ export class NavbarComponent implements OnInit {
   isActive(url: string): boolean {
     return this.activeUrl === url;
   }
-  
+
   Logout() {
     this.httpClient.LogOut()
   }

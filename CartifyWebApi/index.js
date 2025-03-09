@@ -8,7 +8,7 @@ const errorHandler = require("./app/helper/error-handler");
 
 app.use(cors());
 app.use(express.json()); // deal with json data
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true })); 
 dotenv.config();
 app.use(logger("dev"));
 app.use(errorHandler);

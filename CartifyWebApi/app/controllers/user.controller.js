@@ -72,10 +72,35 @@ class User {
 
             request.input('ai_user_id', mssql.BigInt, req.query.UserId)
             const result = await request.execute('PKG_USER_ACCESS$p_get_role_screen')
-            res.status(200).json({ groupName: result.recordsets[0], screenList: result.recordsets[1] });
+
+            const screenList = result.recordsets[0].map((s) => {
+                return {
+                    GroupName: s.GroupName,
+                    GroupIcon: s.GroupIcon,
+                    IsHaveChild: s.IsHaveChild,
+                    Children: result.recordsets[1].filter((c) => c.GroupName === s.GroupName)
+                }
+            })
+
+
+            res.status(200).json({ screenList });
         }
         catch (e) {
             res.status(500).json({ err: 'Error Occur :' + e });
+        }
+    }
+    static GetUserProfile = async (req, res) => {
+        try {
+            let pool = null;
+            pool = await dataAcces.connect()
+            const request = pool.request()
+
+            request.input('ai_user_id', mssql.BigInt, req.query.UserId)
+            const result = await request.execute('PKG_USER$p_get_user_profile')
+
+            res.status(200).json(result.recordsets[0])
+        } catch (e) {
+            res.status(500).json({ err: 'Error Occur:' + e })
         }
     }
 }

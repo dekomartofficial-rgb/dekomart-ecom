@@ -20,6 +20,7 @@
 .sidebar .sidebar-header {
     padding: 10px 15px 20px;
     border-bottom: 1px solid #f0f0f0;
+    height: 231px;
 }
 
 .sidebar .sidebar-header h3 {
@@ -130,4 +131,11 @@
 
 .sidebar.collapsed .submenu .nav-link span {
     display: inline-block;
+}
+.sidebar-header a{
+    text-decoration: none;
+    text-align: center;
+}
+.sidebar-header button{
+    height: 40px;
 }
