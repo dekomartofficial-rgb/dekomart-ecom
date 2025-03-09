@@ -1,1 +1,26 @@
-<h1>Hi</h1>
+<div class=" container chart-container flex flex-col md:flex-row justify-center items-center gap-8 p-4">
+    <!-- Line Chart -->
+    <div class="card w-full max-w-4xl p-6 shadow-lg rounded-lg bg-white">
+        <h2 class="text-xl font-semibold text-center mb-4">Sales & Revenue</h2>
+        <p-chart type="line" [data]="data" [options]="options" class="h-[30rem] w-full"></p-chart>
+    </div>
+
+ 
+        <div class="row mt-5">
+            <!-- Doughnut Chart-->
+            <div class="col-12 col-md-6 mb-4">
+                <div class="card p-4 shadow-lg rounded-lg bg-white">
+                    <h2 class="text-xl font-semibold text-center mb-4">Category Distribution</h2>
+                    <p-chart type="doughnut" [data]="doughnutData" [options]="doughnutOptions" class="w-full md:w-[30rem]"></p-chart>
+                </div>
+            </div>
+    
+            <!-- Bar Chart -->
+            <div class="col-12 col-md-6 mb-4">
+                <div class="card p-4 shadow-lg rounded-lg bg-white">
+                    <h2 class="text-xl font-semibold text-center mb-4">Quarterly Sales</h2>
+                    <p-chart type="bar" [data]="basicData" [options]="basicOptions" class="w-full md:w-[30rem]"></p-chart>
+                </div>
+            </div>
+        </div>
+</div>
