@@ -6,11 +6,12 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: white;
+    background-color: #222b45;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.3s;
     overflow-x: hidden;
     padding-top: 20px;
+    color: white;
 }
 
 .sidebar.collapsed {
@@ -21,6 +22,13 @@
     padding: 10px 15px 20px;
     border-bottom: 1px solid #f0f0f0;
     height: 231px;
+}
+.list-unstyled a, li, i {
+    color: white !important;
+}
+.list-unstyled .child-icon :hover{
+    background-color: white !important;
+    color: #222b45;
 }
 
 .sidebar .sidebar-header h3 {
@@ -53,7 +61,7 @@
 
 .sidebar .nav-item .nav-link:hover {
     background-color: #f8f9fa;
-    color: #007bff;
+    color: black;
 }
 
 .sidebar .nav-item .nav-link.active {

@@ -22,7 +22,7 @@
       <ng-container *ngIf="item.IsHaveChild === 1">
         <a class="nav-link dropdown-toggle" (click)="toggleGroup(item.GroupName)"
           [attr.aria-expanded]="isGroupExpanded(item.GroupName)">
-          <i class="{{ item.GroupIcon }}"></i>
+          <i class="child-icon" [className]="item.GroupIcon"></i>
           <span *ngIf="!isCollapsed">{{ item.GroupName }}</span>
           <i *ngIf="!isCollapsed" class="fa-solid dropdown-icon"></i>
         </a>

@@ -7,6 +7,7 @@ import { UserProfile } from '../../provider/interface/AdminInterface'
 import { AvatarModule } from 'primeng/avatar';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { ButtonModule } from 'primeng/button';
+import { take } from 'rxjs';
 
 
 
@@ -18,8 +19,8 @@ import { ButtonModule } from 'primeng/button';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  ScreenList: ScreenList[] = []; 
-  UserProfile: UserProfile[] = [];  
+  ScreenList: ScreenList[] = [];
+  UserProfile: UserProfile[] = [];
   activeUrl: string = '';
   expandedGroups: { [key: string]: boolean } = {};
   isCollapsed = false;
@@ -37,10 +38,11 @@ export class NavbarComponent implements OnInit {
     return new Promise((resolve, reject) => {
       const userId = this.httpClient.getUserData()?.UserId;
       this.httpClient.get<UserProfile[]>('user/GetUserProfiler', { UserId: userId })
+        .pipe(take(1))
         .subscribe(
           (res) => {
             this.UserProfile = res;
-            resolve(res); 
+            resolve(res);
           },
           (error) => {
             reject(error);
@@ -53,6 +55,7 @@ export class NavbarComponent implements OnInit {
   GetScreenList() {
     if (this.UserId) {
       this.httpClient.get<any>('user/GetScreenList', { UserId: this.UserId })
+        .pipe(take(1))
         .subscribe((res) => {
           this.ScreenList = res.screenList;
         });
