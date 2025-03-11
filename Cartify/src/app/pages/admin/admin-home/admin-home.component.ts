@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { NavbarComponent } from "../../../shared/navbar/navbar.component";
 import { ChartModule } from 'primeng/chart';
 
 @Component({
   selector: 'app-admin-home',
   standalone: true,
-  imports: [NavbarComponent, ChartModule],
+  imports: [ ChartModule],
   templateUrl: './admin-home.component.html',
   styleUrl: './admin-home.component.css'
 })
@@ -16,6 +15,7 @@ export class AdminHomeComponent {
   basicOptions: any;
   doughnutData: any;
   doughnutOptions: any;
+  
 
   constructor() {
     // Line Chart Data
@@ -130,5 +130,5 @@ export class AdminHomeComponent {
         }
       }
     };
-  }
+  } 
 }
