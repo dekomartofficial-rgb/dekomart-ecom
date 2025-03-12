@@ -5,10 +5,11 @@ const logger = require("morgan");
 const PORT = process.env.PORT || 3000;
 var cors = require("cors");
 const errorHandler = require("./app/helper/error-handler");
+const DataAccess = require('./app/database/dataaccess')
 
 app.use(cors());
 app.use(express.json()); // deal with json data
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true })); 
 dotenv.config();
 app.use(logger("dev"));
 app.use(errorHandler);
@@ -26,4 +27,5 @@ app.use("/admin", adminRoutes);
 
 app.listen(PORT, () => {
   console.log(`http://localhost:${process.env.PORT}`);
+  DataAccess.getPool().then( console.log('Database Connected')).catch((e) => console.log('Error : Database Connection Failed') )
 });

@@ -25,6 +25,7 @@ export const ErrorHandlerInterceptor: HttpInterceptorFn = (req, next) => {
             break;
           case 401:
             errorMessage = 'Unauthorized: Please log in again.';
+            localStorage.clear()
             router.navigate(['']);
             break;
           case 403:

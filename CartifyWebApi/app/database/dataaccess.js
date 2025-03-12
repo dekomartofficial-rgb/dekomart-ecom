@@ -4,9 +4,9 @@ require("dotenv").config();
 class DataAccess {
   constructor() {
     this.env = process.env.NODE_ENV;
-    this.pool = null;
+    this.poolPromise = null;
 
-    if (this.env === 'DEV') {
+    if (this.env === "DEV") {
       this.user = process.env.SQL_USER_NAME;
       this.password = process.env.SQL_PASSWORD;
       this.server = process.env.SQL_SERVER;
@@ -27,7 +27,8 @@ class DataAccess {
       database: this.database,
       options: {
         trustServerCertificate: true,
-      }, pool: {
+      },
+      pool: {
         max: 10, // Set max number of connections
         min: 0,
         idleTimeoutMillis: 30000,
@@ -37,56 +38,46 @@ class DataAccess {
 
   async connect() {
     try {
-      if (!this.pool) {
+      if (!this.poolPromise) {
         const config = this.getConfig();
-        this.pool = await new mssql.ConnectionPool(config).connect();
-        console.log(`Connected to database: ${this.database} (Environment: ${this.env})`);
+        this.poolPromise = new mssql.ConnectionPool(config).connect();
+        const pool = await this.poolPromise;
+
+        pool.on("error", (err) => {
+          console.error("Database pool error:", err);
+          this.poolPromise = null; // Reset pool on error
+        });
       }
-      return this.pool;
+      return this.poolPromise;
     } catch (error) {
       console.error("Database Connection Error:", error.message);
+      this.poolPromise = null; // Reset pool on error
       throw error;
     }
+  }
+
+  // Get singleton pool instance
+  async getPool() {
+    return this.connect();
+  }
+
+  // Get a new request object from the pool
+  async getRequest() {
+    const pool = await this.getPool();
+    return pool.request();
   }
 
   async disconnect() {
     try {
-      if (this.pool) {
-        await this.pool.close();
-        this.pool = null;
-        console.log("Database connection closed.");
+      if (this.poolPromise) {
+        const pool = await this.poolPromise;
+        await pool.close();
+        this.poolPromise = null;
       }
     } catch (error) {
-      console.error("Error closing connection:", error.message);
-      throw error;
-    }
-  }
-
-  async tryDatabase() {
-    try {
-      const config = this.getConfig();
-      const tempPool = await new mssql.ConnectionPool(config).connect();
-      console.log(`Database Connected: ${this.database} (Environment: ${this.env})`);
-      await tempPool.close();
-    } catch (error) {
-      console.error("Database Connection Error:", error.message);
       throw error;
     }
   }
 }
 
-process.on('SIGINT', async () => {
-  try {
-    console.log('Closing SQL Server connection pool...');
-    const pool = await poolPromise;
-    await pool.close();
-    console.log('Pool closed successfully.');
-    process.exit(0);
-  } catch (err) {
-    console.error('Error closing pool:', err);
-    process.exit(1);
-  }
-});
-
-// Create and export an instance of DataAccess
 module.exports = new DataAccess();

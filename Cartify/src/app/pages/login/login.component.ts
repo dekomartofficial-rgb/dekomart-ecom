@@ -31,15 +31,18 @@ export class LoginComponent {
     });
   }
   ngOnInit(): void {
-    if (!this.httpClient.getUserId()) {
-      this.router.navigate(['/login']); 
-    } else {
-      this.router.navigate(['/admin']); 
-    }
+    this.navigateLogin()
   }
   // Getter for easy access to form fields
   get formControls() {
     return this.loginForm.controls;
+  }
+
+  navigateLogin() {
+    if (this.httpClient.getUserData()?.UserId > 0) {
+      return this.router.navigate(['admin/']);
+    }
+    return null
   }
 
   onSubmit(Login: Login) {

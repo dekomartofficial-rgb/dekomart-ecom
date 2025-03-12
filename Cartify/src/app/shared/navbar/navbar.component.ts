@@ -29,6 +29,7 @@ import { MenuItem } from 'primeng/api';
 export class NavbarComponent implements OnInit {
   @Output() sendDataToParent: EventEmitter<boolean> = new EventEmitter<boolean>();
   ScreenList: ScreenList[] = [];
+  UserProfile: UserProfile[] = [];
   activeUrl: string = '';
   expandedGroups: { [key: string]: boolean } = {};
   isCollapsed = false;
@@ -57,6 +58,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.UserId = this.httpClient.getUserId();
+    this.getUserProfile()
     this.GetScreenList()
   }
 
@@ -80,19 +82,10 @@ export class NavbarComponent implements OnInit {
   GetScreenList() {
     if (this.UserId) {
       this.httpClient.get<any>('user/GetScreenList', { UserId: this.UserId })
+        .pipe(take(1))
         .subscribe((res) => {
-          this.ScreenList = res.groupName.map((s: any) => {
-            return {
-              GroupName: s.GroupName,
-              GroupIcon: s.GroupIcon,
-              IsHaveChild: s.IsHaveChild,
-              Children: res.screenList.filter((child: any) => {
-                return child.GroupName === s.GroupName;
-              })
-            }
-          });
+          this.ScreenList = res.screenList;
         });
-
     }
   }
 
@@ -115,6 +108,7 @@ export class NavbarComponent implements OnInit {
   isActive(url: string): boolean {
     return this.activeUrl === url;
   }
+
 
   Logout() {
     this.httpClient.LogOut()
