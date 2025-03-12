@@ -7,8 +7,8 @@
       [text]="'Loading...'"
     ></app-loader> -->
 <ng-container >
-  <app-navbar class="sidebar col-md-2" *ngIf="isLoggedUser();"></app-navbar>
-  <div [class.container-fluid]="isLoggedUser()">
+  <app-navbar class="container col-md-2" *ngIf="isLoggedUser();" (sendDataToParent)="receiveData($event)"></app-navbar>
+  <div [class.container-fluid]="isLoggedUser()" [ngClass]="{'expanded': !isSidebarVisible}">
     <router-outlet [class.col-md-8]="isLoggedUser()"  [class.col-md-12]="!isLoggedUser()"></router-outlet>
   </div>
 </ng-container>

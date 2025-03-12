@@ -23,10 +23,15 @@ export class AppComponent {
   LoggerId: boolean = false;
   UserId: number = 0
   public href: string = "";
+  isSidebarVisible: boolean = false;
 
   constructor(private httpClient: HttpClientService, private router: Router, private loaderService: LoaderService) { }
   ngOnInit(): void {
     // this.IsLoggedUser()
+  }
+
+  receiveData(event: boolean) {
+    this.isSidebarVisible = event;
   }
 
   isLoggedUser() {
