@@ -5,11 +5,13 @@ import { ToastModule } from 'primeng/toast';
 import { HttpClientService } from './provider/services/http-client.service';
 import { CommonModule } from '@angular/common';
 import { LoaderService } from './provider/services/loader.service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NavbarComponent, ToastModule],
+  imports: [CommonModule, RouterOutlet, NavbarComponent, ToastModule, FontAwesomeModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

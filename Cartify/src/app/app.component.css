@@ -22,6 +22,11 @@
   }
 }
 
+.container-fluid-main {
+  margin-left: 249px;
+  width: calc(100% - 249px);
+}
+
 .admin-container {
   display: flex;
   height: 100vh;

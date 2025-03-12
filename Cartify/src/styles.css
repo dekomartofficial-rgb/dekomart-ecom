@@ -9,14 +9,17 @@
 }
 
 body {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  background-color: #edf1f5 !important;
 }
 
 .p-button {
   background-color: black !important;
   color: white !important;
   border: 1px solid white !important;
-  font-size: 1px; 
+  font-size: 1px;
 }
 .p-button-label {
   font-size: 12px;
@@ -25,5 +28,40 @@ body {
 .p-button:hover {
   background-color: white !important;
   color: black !important;
-  border: 1px solid black !important; 
+  border: 1px solid black !important;
+}
+
+.page-header i {
+  height: 50px !important;
+}
+.page-header p {
+  margin-bottom: 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+.page-header {
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  top: 70px;
+  left: 260px;
+  z-index: 1023;
+  min-height: 55px;
+  /* margin: 5px; */
+  padding: 4px 25px;
+  box-shadow: none;
+  background: #ffffff;
+  border-radius: 8px;
+  /* border-style: dashed; */
+  border-radius: 8px;
+  /* border-width: 1px; */
+  border-color: #222b45;
+  font-weight: 200;
+}
+
+.main-content-body {
+  padding: 14px;
+  background-color: white;
+  margin: 14px;
+  border-radius: 10px;
 }

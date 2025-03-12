@@ -6,10 +6,10 @@
       [color]="'#FF5733'" 
       [text]="'Loading...'"
     ></app-loader> -->
-<ng-container >
+<ng-container class="main-page-header">
   <app-navbar class="sidebar col-md-2" *ngIf="isLoggedUser();"></app-navbar>
-  <div [class.container-fluid]="isLoggedUser()">
-    <router-outlet [class.col-md-8]="isLoggedUser()"  [class.col-md-12]="!isLoggedUser()"></router-outlet>
+  <div [class.container-fluid-main]="isLoggedUser()">
+    <router-outlet [class.col-md-8]="isLoggedUser()"  [class.col-md-12]="!isLoggedUser()" class="router-background-colour"></router-outlet>
   </div>
 </ng-container>
 
