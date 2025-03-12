@@ -1,24 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule, RouterLink } from '@angular/router';
 import { HttpClientService } from '../../provider/services/http-client.service';
-import { ScreenList, } from '../../provider/interface/AdminInterface';
-import { UserProfile } from '../../provider/interface/AdminInterface'
+import { ScreenList } from '../../provider/interface/AdminInterface';
+import { Toolbar } from 'primeng/toolbar';
 import { AvatarModule } from 'primeng/avatar';
-import { OverlayBadgeModule } from 'primeng/overlaybadge';
+import { SharedModule } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { take } from 'rxjs';
-
+import { InputIcon } from 'primeng/inputicon';
+import { IconField } from 'primeng/iconfield';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms';
+import { Dialog } from 'primeng/dialog';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { DropdownModule } from 'primeng/dropdown';
+import { SidebarModule } from 'primeng/sidebar';
+import { MenuItem } from 'primeng/api';
 
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterLink, AvatarModule, OverlayBadgeModule, ButtonModule],
+  imports: [CommonModule, RouterModule, RouterLink, Toolbar, AvatarModule, SharedModule, ButtonModule, InputIcon, InputTextModule, IconField, FormsModule, Dialog, OverlayPanelModule, InputSwitchModule, DropdownModule, SidebarModule],
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
+  @Output() sendDataToParent: EventEmitter<boolean> = new EventEmitter<boolean>();
   ScreenList: ScreenList[] = [];
   UserProfile: UserProfile[] = [];
   activeUrl: string = '';
@@ -26,6 +35,25 @@ export class NavbarComponent implements OnInit {
   isCollapsed = false;
   activeHeader: string | null = null;
   UserId: number = 0;
+  sidebarVisible: boolean = false;
+  allowNotifications = true;
+  accountVisible: boolean = false;
+  notificationVisible : boolean = false;
+  selectedType : any = '';
+  notificationTypes = [
+    { label: 'All Notification', value: 'all' },
+    { label: 'Unread', value: 'unread' },
+    { label: 'Read', value: 'read' }
+  ];
+
+  menuItems: MenuItem[] = [
+    { label: 'Dashboard', icon: 'pi pi-home' },
+    { label: 'Profile', icon: 'pi pi-user' },
+    { label: 'Messages', icon: 'pi pi-envelope' },
+    { label: 'Settings', icon: 'pi pi-cog' },
+    { label: 'Logout', icon: 'pi pi-sign-out' }
+  ];
+
   constructor(private router: Router, private httpClient: HttpClientService) { }
 
   ngOnInit(): void {
@@ -34,23 +62,22 @@ export class NavbarComponent implements OnInit {
     this.GetScreenList()
   }
 
-  getUserProfile(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      const userId = this.httpClient.getUserData()?.UserId;
-      this.httpClient.get<UserProfile[]>('user/GetUserProfiler', { UserId: userId })
-        .pipe(take(1))
-        .subscribe(
-          (res) => {
-            this.UserProfile = res;
-            resolve(res);
-          },
-          (error) => {
-            reject(error);
-          }
-        );
-    });
+  sidrBarDialog() {
+    this.sidebarVisible = !this.sidebarVisible; 
+    this.sendDataToParent.emit(this.sidebarVisible);
   }
 
+  preventClosing() {
+    this.sidebarVisible = true;
+  }
+
+  accountDialog() {
+    this.accountVisible = true;
+  }
+
+  notificationDialog() {
+    this.notificationVisible = true;
+  }
 
   GetScreenList() {
     if (this.UserId) {
@@ -81,6 +108,7 @@ export class NavbarComponent implements OnInit {
   isActive(url: string): boolean {
     return this.activeUrl === url;
   }
+
 
   Logout() {
     this.httpClient.LogOut()

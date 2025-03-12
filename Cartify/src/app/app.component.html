@@ -6,10 +6,17 @@
       [color]="'#FF5733'" 
       [text]="'Loading...'"
     ></app-loader> -->
+<<<<<<< HEAD
 <ng-container class="main-page-header">
   <app-navbar class="sidebar col-md-2" *ngIf="isLoggedUser();"></app-navbar>
   <div [class.container-fluid-main]="isLoggedUser()">
     <router-outlet [class.col-md-8]="isLoggedUser()"  [class.col-md-12]="!isLoggedUser()" class="router-background-colour"></router-outlet>
+=======
+<ng-container >
+  <app-navbar class="container col-md-2" *ngIf="isLoggedUser();" (sendDataToParent)="receiveData($event)"></app-navbar>
+  <div [class.container-fluid]="isLoggedUser()" [ngClass]="{'expanded': !isSidebarVisible}">
+    <router-outlet [class.col-md-8]="isLoggedUser()"  [class.col-md-12]="!isLoggedUser()"></router-outlet>
+>>>>>>> f55fb7315807427bd74c5c0f477604446fb2a99a
   </div>
 </ng-container>
 

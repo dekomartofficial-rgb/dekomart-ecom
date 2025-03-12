@@ -1,54 +1,61 @@
-<!-- sidebar.component.html -->
-<div class="sidebar">
-  <div class="sidebar-header">
-    <div class="container text-center mt-1" style="height: 200px; text-align: center">
-      @if (UserProfile.length) { @for (item of UserProfile; track $index) {
-      <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" class="mr-2" size="xlarge"
-        shape="circle" [style]="{ width: '120px', height: '120px' }">
-      </p-avatar>
-      <p>{{ item?.UserName }}</p>
-      <div class="col-12 justify-content-center d-flex gap-2">
-        <p-button icon="pi pi-home" aria-label="Save" [routerLink]="['/']" />
-        <p-button icon="pi pi-sign-out" aria-label="Save" (onClick)="Logout()"/>  
-      </div>      
-      } } 
-      
-    </div>
+<div class="container">
+  <div class="card">
+    <p-toolbar [style]="{ 'padding': '1rem 1rem 1rem 1.5rem' }">
+      <ng-template #start>
+        <div class="flex items-center gap-2">
+          <svg width="40" height="40" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg"
+            style="width: 10rem; margin-right: -5rem">
+
+            <g transform="translate(10,10)">
+              <circle cx="15" cy="50" r="6" fill="#0ABF53" />
+              <circle cx="45" cy="50" r="6" fill="#0ABF53" />
+              <path d="M10 15 H55 L50 35 H20 Z" fill="none" stroke="#0ABF53" stroke-width="4" stroke-linejoin="round" />
+              <path d="M10 15 L15 50" stroke="#0ABF53" stroke-width="4" />
+            </g>
+
+
+            <text x="90" y="55" font-family="'Montserrat', sans-serif" font-size="36" font-weight="bold" fill="#333">
+              Cartify
+            </text>
+
+
+            <rect x="90" y="60" width="80" height="5" rx="2" fill="#0ABF53" />
+          </svg>
+        </div>
+        <div class="searchbar flex items-center gap-2">
+          <button pButton pRipple class="custom-icon-button p-button-text p-button-warning" type="button"
+            (click)="sidrBarDialog()">
+            <i *ngIf="sidebarVisible" class="pi pi-times"></i>
+            <i *ngIf="!sidebarVisible" class="pi pi-bars"></i>
+          </button>
+        </div>
+        <div class="searchbar flex items-center gap-2">
+          <p-iconfield>
+            <p-inputicon styleClass="pi pi-search" />
+            <input type="text" pInputText placeholder="Search here..." />
+          </p-iconfield>
+        </div>
+      </ng-template>
+
+      <ng-template #end>
+        <div class="notification flex items-center gap-2">
+          <button pButton pRipple type="button" icon="pi pi-bell"
+            class="custom-icon-button p-button-text p-button-warning" (click)="notificationDialog()"></button>
+        </div>
+        <div class="flex items-center gap-2" (click)="accountDialog()">
+          <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+            [style]="{ width: '32px', height: '32px' }" />
+        </div>
+      </ng-template>
+    </p-toolbar>
   </div>
 
-  <ul class="list-unstyled">
-    <li *ngFor="let item of ScreenList" class="nav-item">
-      <!-- Items with children (dropdown) -->
-      <ng-container *ngIf="item.IsHaveChild === 1">
-        <a class="nav-link dropdown-toggle" (click)="toggleGroup(item.GroupName)"
-          [attr.aria-expanded]="isGroupExpanded(item.GroupName)">
-          <i class="child-icon" [className]="item.GroupIcon"></i>
-          <span *ngIf="!isCollapsed">{{ item.GroupName }}</span>
-          <i *ngIf="!isCollapsed" class="fa-solid dropdown-icon"></i>
-        </a>
-
-        <!-- Dropdown children -->
-        <ul class="submenu" [ngClass]="{ show: isGroupExpanded(item.GroupName) }">
-          <li *ngFor="let child of item.Children" class="nav-item">
-            <a class="nav-link" [routerLink]="child.WindowUrl" [class.active]="isActive(child.WindowUrl)"
-              (click)="setActive(child.WindowUrl)">
-              <i class="{{ child.WindowIcon }}"></i>
-              <span *ngIf="!isCollapsed">{{ child.WindowName }}</span>
-            </a>
-          </li>
-        </ul>
-      </ng-container>
-
-      <!-- Items without children (direct links) -->
-      <ng-container *ngIf="
-          item.IsHaveChild === 0 && item.Children && item.Children.length > 0
-        ">
-        <a class="nav-link" [routerLink]="item.Children[0].WindowUrl"
-          [class.active]="isActive(item.Children[0].WindowUrl)" (click)="setActive(item.Children[0].WindowUrl)">
-          <i class="{{ item.GroupIcon }}"></i>
-          <span *ngIf="!isCollapsed">{{ item.GroupName }}</span>
-        </a>
-      </ng-container>
-    </li>
-  </ul>
+  <p-sidebar [(visible)]="sidebarVisible" [showCloseIcon]="false" styleClass="custom-sidebar"
+    (click)="preventClosing()">
+    <div class="sidebar-content">
+      <ul class="menu">
+        <li *ngFor="let item of menuItems"><i [class]="item.icon"></i>{{ item.label }}</li>
+      </ul>
+    </div>
+  </p-sidebar>
 </div>
