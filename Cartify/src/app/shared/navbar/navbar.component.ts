@@ -1,8 +1,9 @@
-import { Component, OnInit, EventEmitter, Output  } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule, RouterLink } from '@angular/router';
 import { HttpClientService } from '../../provider/services/http-client.service';
 import { ScreenList } from '../../provider/interface/AdminInterface';
+import { UserProfile } from '../../provider/interface/AdminInterface'
 import { Toolbar } from 'primeng/toolbar';
 import { AvatarModule } from 'primeng/avatar';
 import { SharedModule } from 'primeng/api';
@@ -10,19 +11,19 @@ import { ButtonModule } from 'primeng/button';
 import { InputIcon } from 'primeng/inputicon';
 import { IconField } from 'primeng/iconfield';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormsModule } from '@angular/forms';
-import { Dialog } from 'primeng/dialog';
+import { FormsModule } from '@angular/forms'; 
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { DropdownModule } from 'primeng/dropdown';
 import { SidebarModule } from 'primeng/sidebar';
 import { MenuItem } from 'primeng/api';
+import { take } from 'rxjs';
 
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterLink, Toolbar, AvatarModule, SharedModule, ButtonModule, InputIcon, InputTextModule, IconField, FormsModule, Dialog, OverlayPanelModule, InputSwitchModule, DropdownModule, SidebarModule],
+  imports: [CommonModule, RouterModule, Toolbar, AvatarModule, SharedModule, ButtonModule, InputIcon, InputTextModule, IconField, FormsModule, OverlayPanelModule, InputSwitchModule, DropdownModule, SidebarModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
@@ -38,8 +39,8 @@ export class NavbarComponent implements OnInit {
   sidebarVisible: boolean = false;
   allowNotifications = true;
   accountVisible: boolean = false;
-  notificationVisible : boolean = false;
-  selectedType : any = '';
+  notificationVisible: boolean = false;
+  selectedType: any = '';
   notificationTypes = [
     { label: 'All Notification', value: 'all' },
     { label: 'Unread', value: 'unread' },
@@ -62,8 +63,25 @@ export class NavbarComponent implements OnInit {
     this.GetScreenList()
   }
 
+  getUserProfile(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const userId = this.httpClient.getUserData()?.UserId;
+      this.httpClient.get<UserProfile[]>('user/GetUserProfiler', { UserId: userId })
+        .pipe(take(1))
+        .subscribe(
+          (res) => {
+            this.UserProfile = res;
+            resolve(res);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+    });
+  }
+
   sidrBarDialog() {
-    this.sidebarVisible = !this.sidebarVisible; 
+    this.sidebarVisible = !this.sidebarVisible;
     this.sendDataToParent.emit(this.sidebarVisible);
   }
 
