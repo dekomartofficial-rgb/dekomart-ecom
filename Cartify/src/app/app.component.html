@@ -1,7 +1,13 @@
- <p-toast></p-toast> 
-<ng-container>
+<p-toast></p-toast>
+<ng-container class="main-page-header">
   <app-navbar class="container col-md-2" *ngIf="isLoggedUser();" (sendDataToParent)="receiveData($event)"></app-navbar>
-  <div [class.container-fluid]="isLoggedUser()" [ngClass]="{'expanded': !isSidebarVisible}">
-    <router-outlet [class.col-md-8]="isLoggedUser()" [class.col-md-12]="!isLoggedUser()"></router-outlet>
-  </div>
+  @if(!isLoggedUser()){
+    <router-outlet class="col-md-12"></router-outlet>
+  } @else {
+    <div [ngClass]="{'expanded': !isSidebarVisible}" [class.container-fluid-main.disable-header]="isLoggedUser()"
+      style="padding-top: 76px !important;">
+      <router-outlet [class.col-md-8]="isLoggedUser()" [class.col-md-12]="!isLoggedUser()"
+        class="router-background-colour" style="padding-top: 79px !important;"></router-outlet>
+    </div>
+  }
 </ng-container>

@@ -1,139 +1,374 @@
-.container {
+/* Main Container */
+:host ::ng-deep .navbar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border-radius: 0;
+  border: none;
+  
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* Section Styles */
+.navbar-section {
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  
+  &.brand-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    @media (min-width: 768px) {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+  
+  &.user-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+}
+
+/* Brand Logo */
+.brand-logo {
+  color: #2196F3;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  
+  @media (min-width: 768px) {
+    margin-bottom: 0;
+    margin-right: 2rem;
+  }
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem 0;
+  
+  @media (min-width: 768px) {
+    flex-direction: row;
+    margin: 0;
+  }
+}
+
+.nav-link {
+  color: #666;
+  text-decoration: none;
+  padding: 0.5rem 0;
+  margin-right: 0;
+  
+  @media (min-width: 768px) {
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+  }
+  
+  &:hover {
+    color: #2196F3;
+  }
+}
+
+/* Search Box */
+.search-container {
+  margin: 0.5rem 0;
+  
+  @media (min-width: 768px) {
+    margin: 0;
+  }
+}
+
+:host ::ng-deep .search-input {
+  width: 200px;
+  border-radius: 4px;
+}
+
+/* User Controls */
+:host ::ng-deep .notification-btn {
+  background-color: #333;
+  color: white;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+:host ::ng-deep .user-avatar {
+  border: 2px solid #2196F3;
+}
+
+:host ::ng-deep .logout-btn {
+  background-color: #333;
+  color: white;
+  border-radius: 4px;
+}
+
+/* Responsive Layout */
+@media (max-width: 767px) {
+  :host ::ng-deep .p-toolbar {
+    flex-wrap: wrap;
+  }
+  
+  .navbar-section {
     width: 100%;
-    max-width: 1340px;
-    margin-top: -25px;
-    padding-right: calc(var(--bs-gutter-x)* .0);
-    padding-left: calc(var(--bs-gutter-x)* .0);
+    justify-content: flex-start;
+    
+    &.user-controls {
+      justify-content: flex-start;
+    }
+  }
+}
+/* Navbar styles */
+:host {
+  display: block;
 }
 
 .card {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-style: none;
-    z-index: 1;
-    width: 100%;
-    position: fixed;
+  margin-bottom: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .custom-icon-button {
-    color: rgb(3, 2, 2);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
 }
 
-.searchbar {
-    padding-left: 65px;
+.custom-icon-button:hover {
+  background-color: #f8f9fa;
 }
 
-.p-inputtext:enabled:focus {
-    border-color: var(--p-form-field-focus-border-color);
+/* Sidebar styles */
+.sidebar-container {
+  position: relative;
+  height: 100%;
 }
 
-.notification {
-    padding-right: 50px;
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  z-index: 999;
+  top: 70px; /* Height of the navbar */
+  left: 0;
+  background-color: #222b45;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  overflow-x: hidden;
+  padding-top: 20px;
+  color: white;
 }
 
-.p-iconfield .p-inputicon:last-child {
-    inset-inline-end: var(--p-form-field-padding-x);
-    color: black;
+.sidebar.collapsed {
+  width: 70px;
 }
 
-.popup-container {
-    width: 250px;
-    padding: 15px;
-    text-align: left;
-}
-
-.subtitle {
-    font-size: 12px;
-    color: gray;
-    margin-bottom: 10px;
-}
-
-.search-box {
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-.premium-btn {
-    width: 100%;
-    margin-bottom: 15px;
-}
-
-.settings {
-    background: #eef4ff;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-}
-
-.setting-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 0;
-}
-
-.profile-options {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-::ng-deep .custom-sidebar {
-    width: 200px !important;
-    background: #ffffff !important;
-    color: #333;
-    padding-top: 60px;
-    border-right: 1px solid #ddd;
-    z-index: 0;
+.sidebar.hidden {
+  left: -250px;
 }
 
 .sidebar-content {
-    padding: 0px;
-    width: 100%;
+  height: calc(100vh - 70px);
+  overflow-y: auto;
 }
 
-.menu {
-    width: 100%;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+  margin: 0;
 }
 
-.menu li {
-    width: 100%;
-    padding: 10px 10px;
-    font-size: 14px;
-    color: #444;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    border-radius: 0;
-    transition: background 0.3s ease;
+.nav-item {
+  margin: 2px 0;
 }
 
-.menu li:hover {
-    background:  var(--p-green-200);
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s;
+  border-radius: 4px;
+  margin: 0 5px;
+  position: relative;
 }
 
-.menu li.active {
-    font-weight: bold;
-    color: #222;
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-.toggle-btn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
+.nav-link.active {
+  background-color: #0abf53;
+  color: white;
+  font-weight: 500;
+}
+
+.nav-link i {
+  min-width: 25px;
+  font-size: 16px;
+  line-height: 1;
+  color: white;
+}
+
+.nav-link span {
+  margin-left: 10px;
+  color: white;
+}
+
+.dropdown-icon {
+  margin-left: auto;
+  transition: transform 0.3s;
+}
+
+.submenu {
+  padding-left: 0;
+  list-style: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.submenu.show {
+  max-height: 500px;
+}
+
+.submenu .nav-link {
+  padding: 8px 15px 8px 45px;
+  font-size: 0.9rem;
+}
+
+/* Styles for collapsed sidebar */
+.sidebar.collapsed .nav-link {
+  justify-content: center;
+  padding: 15px 5px;
+}
+
+.sidebar.collapsed .nav-link i {
+  font-size: 18px;
+  min-width: auto;
+}
+
+.sidebar.collapsed .nav-link span,
+.sidebar.collapsed .dropdown-icon {
+  display: none;
+}
+
+.sidebar.collapsed .submenu {
+  position: absolute;
+  left: 70px;
+  top: 0;
+  width: 180px;
+  background-color: #222b45;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  z-index: 999;
+}
+
+.sidebar.collapsed .submenu.show {
+  padding: 5px 0;
+}
+
+.sidebar.collapsed .submenu .nav-link {
+  text-align: left;
+  padding: 8px 15px;
+}
+
+.sidebar.collapsed .submenu .nav-link span {
+  display: inline-block;
+}
+
+/* Account and notification sidebar styles */
+:host ::ng-deep .p-sidebar-header {
+  padding: 1rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+:host ::ng-deep .p-sidebar-content {
+  padding: 0;
+}
+
+.account-profile {
+  border-bottom: 1px solid #e9ecef;
+}
+
+.menu-list ul li a {
+  transition: background-color 0.2s;
+}
+
+.menu-list ul li a:hover {
+  background-color: #f8f9fa;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 240px;
+  }
+
+  .sidebar.hidden {
+    left: -240px;
+  }
+
+  .content-shifted {
+    margin-left: 0;
+  }
+}
+
+/* Main content positioning */
+:host ::ng-deep .p-toolbar {
+  padding: 0.5rem 1rem;
+}
+
+:host ::ng-deep .p-inputtext {
+  padding: 0.5rem 0.75rem;
+}
+
+/* For better mobile experience */
+@media screen and (max-width: 576px) {
+  .searchbar input {
+    width: 120px;
+  }
+}
+/* Main content area styles */
+.main-content {
+  margin-left: 250px; /* Same as sidebar width */
+  margin-top: 70px; /* Same as navbar height */
+  padding: 20px;
+  transition: margin-left 0.3s;
+}
+
+.main-content {
+  margin-left: 250px; /* Adjust as needed */
+}
+
+/* Adjust main content when sidebar is collapsed */
+.main-content.sidebar-collapsed {
+  margin-left: 70px; /* Same as collapsed sidebar width */
+}
+
+/* Adjust main content when sidebar is hidden */
+.main-content.sidebar-hidden {
+  margin-left: 0;
+}
+
+/* Responsive adjustment for main content */
+@media screen and (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
 } 
-
-::ng-deep .p-overlay-mask {
-    position: fixed;
-    height: 100%;
-    width: 200px !important;
-    left: 0px;
-    top: 0px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 0 !important;
-}

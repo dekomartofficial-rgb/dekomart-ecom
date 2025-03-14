@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, OnInit, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './shared/navbar/navbar.component'
 import { ToastModule } from 'primeng/toast';
@@ -17,16 +17,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 })
 export class AppComponent {
   LoggerId: boolean = false;
-  UserId: number = 0
-  public href: string = "";
-  isSidebarVisible: boolean = false;
-
+  isSidebarVisible: boolean = true;
+  isLeftSidebarCollapsed = signal<boolean>(false);
   constructor(private httpClient: HttpClientService, private router: Router, private loaderService: LoaderService) { }
   ngOnInit(): void {
-
+    this.isLoggedUser()
   }
 
-  receiveData(event: boolean) {
+  receiveData(event: boolean) { 
     this.isSidebarVisible = event;
   }
 
@@ -45,6 +43,6 @@ export class AppComponent {
       this.router.navigateByUrl('/');
     }
     return true;
-  }
-
+  } 
+  
 }
