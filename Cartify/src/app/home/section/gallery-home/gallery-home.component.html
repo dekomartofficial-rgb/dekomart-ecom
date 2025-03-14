@@ -1,0 +1,60 @@
+<p-carousel 
+  [value]="imageCircle" 
+  [numVisible]="5" 
+  [numScroll]="1" 
+  [circular]="true" 
+  [showNavigators]="false" 
+  [autoplayInterval]="3000" 
+  [showIndicators]="false">
+  
+  <ng-template let-item pTemplate="item">
+    <div class="text-center   circle-image">
+      <img [src]="item.image" alt="{{ item.name }}" class="gallery-img">
+      <p class="mt-2">{{ item.name }}</p>
+    </div>  
+  </ng-template>
+</p-carousel>
+
+<!-- Auto-scrolling Gallery -->
+<p-carousel
+  [value]="productvdio"
+  [numVisible]="5"
+  [numScroll]="1"
+  [circular]="true"
+  [autoplayInterval]="7000"
+  [showNavigators]="false"
+  [showIndicators]="false"
+>
+  <ng-template let-item pTemplate="item">
+    <div class="gallery-item">
+     <video [src]="item.video" autoplay loop muted  ></video>
+    </div>
+  </ng-template>
+</p-carousel>
+
+<!-- Best selling -->
+<div class="p-4 custom-bg">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1 class="mb-4">Best Sellings</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-md-6 col-lg-3 mb-4" *ngFor="let item of newArrivals">
+      <div class="card product-card">
+        <img [src]="item.image" alt="{{ item.name }}" class="card-img-top product-image">
+        <div class="card-body text-left">
+          <h5 class="card-title">{{ item.name }}</h5>
+          <p class="card-text text-muted">{{ item.description }}</p>
+          
+          <!-- Pricing Section -->
+          <p class="price">
+            <span class="original-price">₹ {{ item.originalPrice }}</span>
+            <span class="offer-price">₹ {{ item.offerPrice }}</span>
+            <span class="discount">({{ getDiscount(item.originalPrice, item.offerPrice) }}% OFF)</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
