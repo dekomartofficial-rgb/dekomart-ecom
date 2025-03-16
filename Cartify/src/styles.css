@@ -1,6 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
 @import "primeicons/primeicons.css";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 
 * {
   margin: 0;
@@ -9,11 +10,19 @@
 }
 
 body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-    "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: 'Poppins', sans-serif;
   background-color: #edf1f5 !important;
 }
+h1, h2, h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+p {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+
 
 .p-button {
   background-color: black !important;
@@ -47,14 +56,9 @@ body {
   left: 260px;
   z-index: 1023;
   min-height: 55px;
-  /* margin: 5px; */
   padding: 4px 25px;
   box-shadow: none;
   background: #ffffff;
-  border-radius: 8px;
-  /* border-style: dashed; */
-  border-radius: 8px;
-  /* border-width: 1px; */
   border-color: #222b45;
   font-weight: 200;
 }
@@ -64,4 +68,52 @@ body {
   background-color: white;
   margin: 14px;
   border-radius: 10px;
+}
+.my-tooltip-style {
+  font-size: 12px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center; /* Vertically align input and button */
+  border: 1px solid #ccc;
+  border-radius: 25px; /* Rounded corners */
+  padding: 1px;
+  max-width: 400px; /* Limit width */  
+}
+
+.search-bar input[type="search"] {
+  flex-grow: 1; /* Input takes up available space */
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  outline: none; /* Remove default focus outline */
+  border-radius: 20px; 
+  width: 336px;
+  height: 43px;
+}
+
+.search-btn {
+  background-color: #0f1729;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 17px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.search-btn:hover {
+  background-color: white; /* Darker blue on hover */
+  color: #191c36;
+}
+
+.search-btn span {
+  display: block; /* Ensure correct padding on span */
+}
+
+@media (max-width: 600px) {
+  .search-bar {
+    max-width: 90%;
+  }
 }
