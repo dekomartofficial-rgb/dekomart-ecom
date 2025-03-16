@@ -1,17 +1,10 @@
-/* Main Container */
-:host ::ng-deep .navbar-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0.5rem 1rem;
-  background-color: white;
-  border-radius: 0;
-  border: none;
-  
-  @media (min-width: 768px) {
-    flex-direction: row;
-    align-items: center;
-  }
+.col-md-1-5 {
+  flex: 0 0 12.5%; /* 1.5 out of 12 columns (1.5 / 12 * 100) */
+  max-width: 12.5%;
+}
+.col-md-10-5 {
+  margin: 0px;
+  max-width: 116.5%;
 }
 
 /* Section Styles */
@@ -19,36 +12,14 @@
   margin: 0.5rem 0;
   display: flex;
   align-items: center;
-  
-  &.brand-nav {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    
-    @media (min-width: 768px) {
-      flex-direction: row;
-      align-items: center;
-    }
-  }
-  
-  &.user-controls {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
 }
 
 /* Brand Logo */
 .brand-logo {
-  color: #2196F3;
+  color: #2196f3;
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  
-  @media (min-width: 768px) {
-    margin-bottom: 0;
-    margin-right: 2rem;
-  }
 }
 
 /* Navigation Links */
@@ -56,7 +27,7 @@
   display: flex;
   flex-direction: column;
   margin: 0.5rem 0;
-  
+
   @media (min-width: 768px) {
     flex-direction: row;
     margin: 0;
@@ -68,24 +39,11 @@
   text-decoration: none;
   padding: 0.5rem 0;
   margin-right: 0;
-  
-  @media (min-width: 768px) {
-    padding: 0.5rem 1rem;
-    margin-right: 0.5rem;
-  }
-  
-  &:hover {
-    color: #2196F3;
-  }
 }
 
 /* Search Box */
 .search-container {
   margin: 0.5rem 0;
-  
-  @media (min-width: 768px) {
-    margin: 0;
-  }
 }
 
 :host ::ng-deep .search-input {
@@ -102,7 +60,7 @@
 }
 
 :host ::ng-deep .user-avatar {
-  border: 2px solid #2196F3;
+  border: 2px solid #2196f3;
 }
 
 :host ::ng-deep .logout-btn {
@@ -115,15 +73,6 @@
 @media (max-width: 767px) {
   :host ::ng-deep .p-toolbar {
     flex-wrap: wrap;
-  }
-  
-  .navbar-section {
-    width: 100%;
-    justify-content: flex-start;
-    
-    &.user-controls {
-      justify-content: flex-start;
-    }
   }
 }
 /* Navbar styles */
@@ -163,9 +112,8 @@
   width: 250px;
   position: fixed;
   z-index: 999;
-  top: 70px; /* Height of the navbar */
   left: 0;
-  background-color: #222b45;
+  background-color: #0f1729;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s;
   overflow-x: hidden;
@@ -182,7 +130,6 @@
 }
 
 .sidebar-content {
-  height: calc(100vh - 70px);
   overflow-y: auto;
 }
 
@@ -199,12 +146,12 @@
 .nav-link {
   display: flex;
   align-items: center;
-  padding: 12px 15px;
+  padding: 11px 24px;
   color: #fff;
   text-decoration: none;
-  transition: all 0.3s;
-  border-radius: 4px;
-  margin: 0 5px;
+  transition: all -0.7s;
+  border-radius: 23px 0px 0px 23px;
+  margin: -2px 5px;
   position: relative;
 }
 
@@ -213,9 +160,10 @@
 }
 
 .nav-link.active {
-  background-color: #0abf53;
+  background-color: #4e50fc;
   color: white;
   font-weight: 500;
+  margin: 0px 0px 0px 6px;
 }
 
 .nav-link i {
@@ -371,4 +319,84 @@
   .main-content {
     margin-left: 0;
   }
-} 
+}
+.top-bar-width {
+  width: 100%;
+  margin-left: 0px;
+}
+.content-shifted {
+  width: 100%;
+  left: 0px;
+}
+.form {
+  position: relative;
+}
+
+.form .fa-search {
+  position: absolute;
+  top: 14px;
+  left: 20px;
+  color: #9ca3af;
+}
+
+.form span {
+  position: absolute;
+  right: 17px;
+  top: 8px;
+  padding: 2px;
+  border-left: 1px solid #d1d5db;
+}
+
+.left-pan {
+  padding-left: 7px;
+}
+
+.left-pan i {
+  padding-left: 10px;
+}
+
+.form-input {
+  height: 43px;
+  text-indent: 51px;
+  border-radius: 25px;
+}
+
+.form-input:focus {
+  box-shadow: none;
+  border: none;
+}
+.top-nav-var {
+  border-bottom: 2px solid #e2e8f0;
+  background-color: white;
+}
+.top-nav-var .list-inline-item {
+  margin-left: 1.5rem !important;
+  width: 35px !important;
+  height: 35px !important;
+}
+.top-nav-var-icon-user {
+  height: 39px !important;
+  outline: 3px solid #ededed;
+  border-radius: 21px;
+}
+.top-nav-var-icon {
+  height: 39px !important;
+  background-color: #ededed;
+  outline: -1px solid #e9ebff;
+  border-radius: 16px;
+  text-decoration: none;
+}
+.top-nav-var-icon:hover,
+.top-nav-var-icon-user
+  :hover
+  .top-nav-var-icon-user
+  :focus
+  .top-nav-var-icon:focus {
+  border: 1px;
+  outline: -1px solid #ededed;
+  border-style: dashed;
+}
+.top-nav-var-icon i:hover,
+.top-nav-var-icon-user i:hover {
+  text-decoration: none;
+}

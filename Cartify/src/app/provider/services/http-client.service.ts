@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { baseUrl } from '../../assets/config.json'
+import { baseUrl } from '../../../assets/config.json'
 import { Router } from '@angular/router';
 
 @Injectable({

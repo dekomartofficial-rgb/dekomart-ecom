@@ -86,7 +86,7 @@ class User {
             request.input('ai_user_id', mssql.BigInt, req.query.UserId)
             const result = await request.execute('PKG_USER$p_get_user_profile')
 
-            res.status(200).json(result.recordsets)
+            res.status(200).json(result.recordsets[0])
         } catch (e) {
             res.status(500).json({ err: 'Error Occur:' + e })
         }
