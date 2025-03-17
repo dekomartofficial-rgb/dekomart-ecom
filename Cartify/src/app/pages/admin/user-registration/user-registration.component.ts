@@ -9,6 +9,7 @@ import { InputMask } from 'primeng/inputmask';
 import { FormsModule } from '@angular/forms';
 import { Checkbox } from 'primeng/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UserModule } from '../../user/user.module';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class UserRegistrationComponent {
   isModalOpen: boolean = false;
+  UserModel: UserModule[] =[];
 
   openModal(): void {
     this.isModalOpen = true;

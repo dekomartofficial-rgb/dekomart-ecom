@@ -1,61 +1,128 @@
-<div class="container">
-  <div class="card">
-    <p-toolbar [style]="{ 'padding': '1rem 1rem 1rem 1.5rem' }">
-      <ng-template #start>
-        <div class="flex items-center gap-2">
-          <svg width="40" height="40" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg"
-            style="width: 10rem; margin-right: -5rem">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-1-5">
+      <div class="sidebar-container" [ngClass]="{ 'content-shifted': !sidebarVisible }">
+        <div class="sidebar" [ngClass]="{ collapsed: isCollapsed, hidden: !sidebarVisible }">
+          <div class="product-icon" style="text-align: center; padding: 10px">
+            <img src="assets/admin-images/icon.png" alt="" width="177px" />
+            <h6>Welcome Cartify</h6>
+          </div>
+          <div class="sidebar-content">
+            <ul class="list-unstyled">
+              @for (item of ScreenList; track item.GroupName) {
+              <li class="nav-item">
+                <!-- Items with children (dropdown) -->
+                @if (item.IsHaveChild === 1) {
+                <a class="nav-link dropdown-toggle" (click)="toggleGroup(item.GroupName)"
+                  [attr.aria-expanded]="isGroupExpanded(item.GroupName)">
+                  <i [class]="item.GroupIcon"></i>
+                  <span *ngIf="!isCollapsed">{{ item.GroupName }}</span>
+                  <i *ngIf="!isCollapsed" class="dropdown-icon"> </i>
+                </a>
 
-            <g transform="translate(10,10)">
-              <circle cx="15" cy="50" r="6" fill="#0ABF53" />
-              <circle cx="45" cy="50" r="6" fill="#0ABF53" />
-              <path d="M10 15 H55 L50 35 H20 Z" fill="none" stroke="#0ABF53" stroke-width="4" stroke-linejoin="round" />
-              <path d="M10 15 L15 50" stroke="#0ABF53" stroke-width="4" />
-            </g>
-
-
-            <text x="90" y="55" font-family="'Montserrat', sans-serif" font-size="36" font-weight="bold" fill="#333">
-              Cartify
-            </text>
-
-
-            <rect x="90" y="60" width="80" height="5" rx="2" fill="#0ABF53" />
-          </svg>
+                <!-- Dropdown children -->
+                <ul class="submenu" [ngClass]="{ show: isGroupExpanded(item.GroupName) }">
+                  @for (child of item.Children; track child.WindowUrl) {
+                  <li class="nav-item">
+                    <a class="nav-link" [routerLink]="child.WindowUrl" routerLinkActive="active"
+                      (click)="setActive(child.WindowUrl)">
+                      <i [class]="child.WindowIcon"></i>
+                      <span *ngIf="!isCollapsed">{{ child.WindowName }}</span>
+                    </a>
+                  </li>
+                  }
+                </ul>
+                }
+                <!-- Items without children (direct links) -->
+                @if (item.IsHaveChild === 0 && item.Children.length > 0) {
+                <a class="nav-link" [routerLink]="item.Children[0].WindowUrl"
+                  (click)="setActive(item.Children[0].WindowUrl)">
+                  <i [class]="item.GroupIcon"></i>
+                  <span *ngIf="!isCollapsed">{{ item.GroupName }}</span>
+                </a>
+                }
+              </li>
+              }
+            </ul>
+          </div>
         </div>
-        <div class="searchbar flex items-center gap-2">
-          <button pButton pRipple class="custom-icon-button p-button-text p-button-warning" type="button"
-            (click)="sidrBarDialog()">
-            <i *ngIf="sidebarVisible" class="pi pi-times"></i>
-            <i *ngIf="!sidebarVisible" class="pi pi-bars"></i>
+      </div>
+    </div>
+    <div class="col-md-10-5 top-nav-var">
+      <div class="d-flex p-2 align-items-center">
+        <!-- Sidebar Toggle Button -->
+        <div class="col-md-1 m-2">
+          <button style="
+              border: none;
+              color: black;
+              font-size: 23px;
+              cursor: pointer;
+              background-color: #ffffff;
+            " (click)="sidrBarDialog()">
+            <i *ngIf="!sidebarVisible" class="fa-solid fa-bars"></i>
+            <i *ngIf="sidebarVisible" class="fa fa-close"></i>
           </button>
         </div>
-        <div class="searchbar flex items-center gap-2">
-          <p-iconfield>
-            <p-inputicon styleClass="pi pi-search" />
-            <input type="text" pInputText placeholder="Search here..." />
-          </p-iconfield>
-        </div>
-      </ng-template>
 
-      <ng-template #end>
-        <div class="notification flex items-center gap-2">
-          <button pButton pRipple type="button" icon="pi pi-bell"
-            class="custom-icon-button p-button-text p-button-warning" (click)="notificationDialog()"></button>
+        <!-- Search Bar -->
+        <div class="col-md-6 m-1 justify-content-between d-flex">
+          <form action="" class="search-bar">
+            <input type="search" name="search" pattern=".*\S.*" required placeholder="Search...">
+            <button class="search-btn" type="submit">
+              <span>Search</span>
+            </button>
+          </form>
         </div>
-        <div class="flex items-center gap-2" (click)="accountDialog()">
-          <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
-            [style]="{ width: '32px', height: '32px' }" />
-        </div>
-      </ng-template>
-    </p-toolbar>
-  </div>
 
-  <p-sidebar [(visible)]="sidebarVisible" [showCloseIcon]="false" styleClass="custom-sidebar"
-    (click)="preventClosing()">
-    <div class="sidebar-content">
-      <ul class="menu">
-        <li *ngFor="let item of menuItems"><i [class]="item.icon"></i>{{ item.label }}</li>
-      </ul>
+        <!-- Navigation Items -->
+        <div class="col-md-5 justify-content-end d-flex" style="margin: -10px">
+          <ul class="list-inline d-flex align-items-end gap-4" style="margin-right: 31px; margin-top: 13px">
+            <li class="nav-item ng-star-inserted top-nav-var-icon">
+              <a class="p-element btn menu-icon">
+                <i class="fa-solid fa-comments" pTooltip="Feedback" tooltipPosition="right"
+                  tooltipStyleClass="my-tooltip-style"></i>
+              </a>
+            </li>
+            <li class="nav-item ng-star-inserted top-nav-var-icon">
+              <a class="p-element btn menu-icon" (click)="notificationDialog()">
+                <i class="fa-solid fa-bell" pTooltip="Notification" tooltipPosition="right"
+                  tooltipStyleClass="my-tooltip-style"></i>
+              </a>
+            </li>
+            <li class="nav-item ng-star-inserted top-nav-var-icon">
+              <a class="p-element btn menu-icon">
+                <i class="fa-solid fa-right-to-bracket" pTooltip="Sign Out" tooltipPosition="right"
+                  tooltipStyleClass="my-tooltip-style"></i>
+              </a>
+            </li>
+            <li class="nav-item position-relative top-nav-var-icon-user">
+              <img style="height: 40px;" src="assets/admin-images/user.png" alt="user-image" />
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </p-sidebar>
+  </div>
 </div>
+
+<!-- Notification Panel -->
+<p-sidebar [(visible)]="notificationVisible" position="right" [style]="{ width: '350px' }">
+  <h3>Notifications</h3>
+  <div class="p-3">
+    <div class="flex justify-content-between align-items-center mb-3">
+      <p-dropdown optionLabel="label"></p-dropdown>
+      <div class="flex align-items-center">
+        <span class="mr-2">Notifications</span>
+        <p-inputSwitch></p-inputSwitch>
+      </div>
+    </div>
+
+    <div class="empty-notifications text-center p-4" *ngIf="true">
+      <i class="pi pi-bell text-5xl text-color-secondary mb-3"></i>
+      <h5>No notifications yet</h5>
+      <p class="text-color-secondary">
+        We'll notify you when something arrives
+      </p>
+    </div>
+  </div>
+</p-sidebar>

@@ -87,8 +87,7 @@
                 "input": "public"
               },
               "src/favicon.ico",
-              "src/assets",
-               "src/images"
+              "src/assets"
             ],
             "styles": [
               "src/styles.css",

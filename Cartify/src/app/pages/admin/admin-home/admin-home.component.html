@@ -1,26 +1,249 @@
-<div class=" container chart-container flex flex-col md:flex-row justify-center items-center gap-8 p-4">
-    <!-- Line Chart -->
-    <div class="card w-full max-w-4xl p-6 shadow-lg rounded-lg bg-white">
-        <h2 class="text-xl font-semibold text-center mb-4">Sales & Revenue</h2>
-        <p-chart type="line" [data]="data" [options]="options" class="h-[30rem] w-full"></p-chart>
+<div class="main-header">
+    <div class="col-md-12 page-header" style="display: block; padding: 15px 1px 4px 28px">
+        @if (UserProfile.length > 0) { @for (item of UserProfile; track $index) {
+        <h6 style="
+        font-size: 18px;
+        font-size: 19px;
+        padding-left: 0px;
+        padding-top: 5px;
+        font-weight: 800;
+      ">
+            Welcome Back, {{ item?.UserName }}!
+        </h6>
+        } }
+        <div>
+            <h6 style="font-size: 13px; font-weight: 400">
+                Here's what happening with your store today
+            </h6>
+        </div>
     </div>
-
- 
-        <div class="row mt-5">
-            <!-- Doughnut Chart-->
-            <div class="col-12 col-md-6 mb-4">
-                <div class="card p-4 shadow-lg rounded-lg bg-white">
-                    <h2 class="text-xl font-semibold text-center mb-4">Category Distribution</h2>
-                    <p-chart type="doughnut" [data]="doughnutData" [options]="doughnutOptions" class="w-full md:w-[30rem]"></p-chart>
-                </div>
-            </div>
-    
-            <!-- Bar Chart -->
-            <div class="col-12 col-md-6 mb-4">
-                <div class="card p-4 shadow-lg rounded-lg bg-white">
-                    <h2 class="text-xl font-semibold text-center mb-4">Quarterly Sales</h2>
-                    <p-chart type="bar" [data]="basicData" [options]="basicOptions" class="w-full md:w-[30rem]"></p-chart>
+    <div class="dashboard">
+        <div class="metric-card revenue">
+            <div class="background-image"></div>
+            <div class="card-content">
+                <div class="card-title">Ecommerce Revenue</div>
+                <div class="card-value">$245,450</div>
+                <div class="card-footer">
+                    <div class="change change-up">
+                        <div class="arrow-up"></div>
+                        14.9 %
+                    </div>
+                    <div class="period">(+43.21 %)</div>
                 </div>
             </div>
         </div>
+
+        <div class="metric-card customers">
+            <div class="background-image"></div>
+            <div class="card-content">
+                <div class="card-title">New Customers</div>
+                <div class="card-value">684</div>
+                <div class="card-footer">
+                    <div class="change change-down">
+                        <div class="arrow-down"></div>
+                        -8.6 %
+                    </div>
+                    <div class="period"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="metric-card repeat-rate">
+            <div class="background-image"></div>
+            <div class="card-content">
+                <div class="card-title">Repeat Purchase Rate</div>
+                <div class="card-value">75.12 %</div>
+                <div class="card-footer">
+                    <div class="change change-up">
+                        <div class="arrow-up"></div>
+                        25.4 %
+                    </div>
+                    <div class="period">(+20.11 %)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="metric-card order-value">
+            <div class="background-image"></div>
+            <div class="card-content">
+                <div class="card-title">Average Order Value</div>
+                <div class="card-value">$2,412.23</div>
+                <div class="card-footer">
+                    <div class="change change-up">
+                        <div class="arrow-up"></div>
+                        35.2 %
+                    </div>
+                    <div class="period">(+ $754)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="metric-card conversion">
+            <div class="background-image"></div>
+            <div class="card-content">
+                <div class="card-title">Conversion rate</div>
+                <div class="card-value">32.65 %</div>
+                <div class="card-footer">
+                    <div class="change change-down">
+                        <div class="arrow-down"></div>
+                        12.42 %
+                    </div>
+                    <div class="period"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="graph-header">
+    <div class="col-md-12 p-2 d-flex" style="gap: 32px">
+        <div class="col-md-8" style="margin: 10px">
+            <div class="card w-full max-w-4xl p-6 rounded-lg bg-white">
+                <div class="col-md-3 d-flex p-2" style="padding: 22px; font-size: 23px; height: 38px">
+                    <div class="p-2 d-flex g-2 col-md-2">
+                        <i class="fa-solid fa-chart-line" style="padding: 0px; padding-right: 9px; margin: -1px;"></i>
+                        <h2>Summary</h2>
+                    </div>
+                </div>
+                <div class="chart" style="padding: 12px;">
+                    <p-chart type="line" width="400" height="150" [data]="data" [options]="options" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3" style="margin: 10px; border-radius: 8px; border: 1px solid #d2d2d2; padding: 17px;">
+            <div class="cards">
+                <div class="card-header">
+                    <h2>Most Selling Products</h2>
+                </div>
+                <div class="product-list">
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="data:image/jpeg;base64,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"
+                                alt="Snicker Vento" />
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Snicker Vento</div>
+                            <div class="product-id">ID: 2441310</div>
+                        </div>
+                        <div class="product-sales">128 Sales</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="https://assets.ajio.com/medias/sys_master/root/20240527/nxpe/6654a8e205ac7d77bb7fd58e/-473Wx593H-4933831210-multi-MODEL.jpg"
+                                alt="Blue Backpack" />
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Blue Backpack</div>
+                            <div class="product-id">ID: 1241318</div>
+                        </div>
+                        <div class="product-sales">401 Sales</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJc5Qo5Q-kpC68bqx3q8hS0nFtd_Xll8nyLA&s"
+                                alt="Blue Backpack" />
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">I Phone</div>
+                            <div class="product-id">ID: 1241318</div>
+                        </div>
+                        <div class="product-sales">401 Sales</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="data:image/jpeg;base64,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"
+                                alt="Blue Backpack" />
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Mac Book</div>
+                            <div class="product-id">ID: 1241318</div>
+                        </div>
+                        <div class="product-sales">401 Sales</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="https://harahoritelecomllp.com/wp-content/uploads/2023/08/61imYpK33qL._SL1500_.jpg"
+                                alt="Water Bottle" />
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Samsung s23</div>
+                            <div class="product-id">ID: 8441573</div>
+                        </div>
+                        <div class="product-sales">1K+ Sales</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-container" style="gap: 32px; padding: 18px;"> 
+        <div class="card orders-card">
+          <div class="card-header1">
+            <h2>Recent Orders</h2>
+            <a href="#" class="view-all">View All</a>
+          </div>
+          
+          <div class="table-container">
+            <table class="orders-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Customer</th>
+                  <th>Order ID</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let order of recentOrders">
+                  <td class="product-cell">
+                    <div class="product-info-2">
+                      <div class="product-icon">
+                        <img [src]="order.productIcon" alt="Product Icon">
+                      </div>
+                      <span>{{order.product}}</span>
+                    </div>
+                  </td>
+                  <td class="customer-name">{{order.customer}}</td>
+                  <td class="order-id">{{order.orderId}}</td>
+                  <td class="date">{{order.date}}</td>
+                  <td>
+                    <span class="status-badge" [ngClass]="{ 
+                      'status-pending': order.status === 'Pending',
+                      'status-canceled': order.status === 'Canceled',
+                      'status-shipped': order.status === 'Shipped'
+                    }">
+                      {{order.status}}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+       
+        <div class="card customers-card">
+          <div class="card-header1">
+            <h2>Weekly Top Customers</h2>
+            <div class="more-options">
+              <button class="more-button">•••</button>
+            </div>
+          </div>
+          
+          <div class="customers-list">
+            <div class="customer-item" *ngFor="let customer of topCustomers">
+              <div class="customer-info">
+                <div class="customer-avatar">
+                  <img [src]="customer.avatar" alt="Customer Avatar">
+                </div>
+                <div class="customer-details">
+                  <div class="customer-name">{{customer.name}}</div>
+                  <div class="customer-orders">{{customer.orders}} Orders</div>
+                </div>
+              </div>
+              <div class="view-button view-icon">
+                <a href="#">View</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 </div>
