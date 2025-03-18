@@ -8,6 +8,7 @@ import { LoaderService } from './provider/services/loader.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
