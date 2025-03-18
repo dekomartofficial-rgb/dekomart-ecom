@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { HttpClientService } from '../provider/services/http-client.service'
 import { RouterLink } from '@angular/router';
 import { BannerHomeComponent } from './section/banner-home/banner-home.component';
-import { GalleryHomeComponent } from './section/gallery-home/gallery-home.component'; 
+import { GalleryHomeComponent } from './section/gallery-home/gallery-home.component';
+import { NavHomeComponent } from "./section/nav-home/nav-home.component";
+import { FooterHomeComponent } from "./section/footer-home/footer-home.component"; 
 
 interface Product {
   id: number;
@@ -16,7 +18,7 @@ interface Product {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink,BannerHomeComponent,GalleryHomeComponent],
+  imports: [RouterLink, BannerHomeComponent, GalleryHomeComponent, NavHomeComponent, FooterHomeComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
