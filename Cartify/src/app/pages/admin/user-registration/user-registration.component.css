@@ -78,10 +78,6 @@ tr:hover {
   height: 1.2em;
   white-space: nowrap;
 }
-.p-floatlabel label {
-  padding-left: 20px !important;
-  font-size: 20px !important;
-}
 
 .popup-child {
   background-color: white;
@@ -107,4 +103,29 @@ tr:hover {
   padding-top: 11px !important;
   /* gap: 2px; */
   /* padding: 7px !important; */
+}
+
+.p-inputmask {
+  width: 100% !important; 
+  padding:  0px;
+  font-size: 14px !important;
+  border-radius: 6px;
+}
+.label h6 {
+  margin: 2px !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  padding: 6px !important;
+}
+.p-floatlabel label {
+  padding-left: 7px !important;
+  font-size: 20px !important;
+  padding-top: 7px !important;
+}
+.sticky-form-layout .form-group .form-label {
+  position: absolute;
+  top: -11px;
+  left: 12px;
+  z-index: 11; 
+  padding: 0 6px
 }

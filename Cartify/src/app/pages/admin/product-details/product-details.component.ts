@@ -38,9 +38,9 @@ export class ProductDetailsComponent {
 
   filters: any;
   statusOptions = [
-  { label: 'In Stock', value: 'In Stock' },
-  { label: 'Low Stock', value: 'Low Stock' },
-  { label: 'Out of Stock', value: 'Out of Stock' }
+    { label: 'In Stock', value: 'In Stock' },
+    { label: 'Low Stock', value: 'Low Stock' },
+    { label: 'Out of Stock', value: 'Out of Stock' }
   ];
 
   products: any[] = [
@@ -48,44 +48,44 @@ export class ProductDetailsComponent {
     { id: '1001', code: 'f230fh0g3', name: 'Bamboo Watch', description: 'Product Description', image: 'bamboo-watch.jpg', price: 65, category: 'Accessories', quantity: 24, inventoryStatus: 'OUT OF STOCK', rating: 5 },];
 
 
-    ngOnInit() {
-  this.filters = {
-    name: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    price: { value: null, matchMode: FilterMatchMode.EQUALS },
-    category: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    inventoryStatus: { value: null, matchMode: FilterMatchMode.EQUALS }
-  };
-}
+  ngOnInit() {
+    this.filters = {
+      name: { value: null, matchMode: FilterMatchMode.CONTAINS },
+      price: { value: null, matchMode: FilterMatchMode.EQUALS },
+      category: { value: null, matchMode: FilterMatchMode.CONTAINS },
+      inventoryStatus: { value: null, matchMode: FilterMatchMode.EQUALS }
+    };
+  }
 
-    getSeverity(status: string): 'success' | 'secondary' | 'info' | 'warn' | 'danger' | 'contrast' | undefined {
-      const mapping: { [key: string]: 'success' | 'secondary' | 'info' | 'warn' | 'danger' | 'contrast' | undefined } = {
-        'in stock': 'success',
-        'low stock': 'warn',
-        'OUT OF STOCK': 'danger'
-      };
-      return mapping[status] || 'info';
-    }
+  getSeverity(status: string): 'success' | 'secondary' | 'info' | 'warn' | 'danger' | 'contrast' | undefined {
+    const mapping: { [key: string]: 'success' | 'secondary' | 'info' | 'warn' | 'danger' | 'contrast' | undefined } = {
+      'in stock': 'success',
+      'low stock': 'warn',
+      'OUT OF STOCK': 'danger'
+    };
+    return mapping[status] || 'info';
+  }
 
   showDialog() {
     this.addProductDialog = true;
   }
 
   onImagesSelect(event: any) {
-      if (event.files && event.files.length > 0) {
-          for (let file of event.files) {
-              const reader = new FileReader();
-              reader.onload = (e: any) => {
-                  this.selectedImages.push(e.target.result);
-              };
-              reader.readAsDataURL(file);
-          }
+    if (event.files && event.files.length > 0) {
+      for (let file of event.files) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.selectedImages.push(e.target.result);
+        };
+        reader.readAsDataURL(file);
       }
+    }
   }
-  
+
   removeImage(index: number) {
-      this.selectedImages.splice(index, 1);
+    this.selectedImages.splice(index, 1);
   }
-  
+
 
   editProduct(product: any) {
     this.addProductDialog = true;
@@ -98,7 +98,7 @@ export class ProductDetailsComponent {
     this.productVariant = product.variant;
     this.productSize = product.size;
     this.productStock = product.stock;
-    this.description = product.description;    
+    this.description = product.description;
   }
 
   deleteProduct(product: any) {

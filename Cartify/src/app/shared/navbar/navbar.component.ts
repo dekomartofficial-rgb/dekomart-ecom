@@ -62,7 +62,7 @@ export class NavbarComponent implements OnInit {
     if (this.UserId) {
       this.httpClient.get<any>('user/GetScreenList', { UserId: this.UserId })
         .subscribe((res) => {
-          this.ScreenList = res.screenList;
+          this.ScreenList = Array.isArray(res.screenList) ? res.screenList : [];  ;
         });
     }
   }

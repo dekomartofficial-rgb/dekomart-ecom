@@ -1,16 +1,19 @@
-export interface User {
-    UserId: '';
-    FirstName?: string | '';
-    SecondName: '';
-    DateOfBirth: Date;
-    Password: string;
-    Email: String;
-    PhoneNumber: number;
-    ProfileImage: string;
-    IsMailVerified: boolean;
-    IsPhoneVerified: boolean;
-    InsertBy: string;
-    InsertDate: Date;
-    UpdateBy: String
-    UpdateDate: Date;
+export class User {
+    UserId: number = 0;
+    FirstName: string = '';
+    SecondName: string = '';
+    DateOfBirth: Date = new Date();
+    Password: string = '';
+    Email: string = '';
+    PhoneNumber: number = 0;
+    ProfileImage: string = '';
+    IsActiveStatus: boolean = false;
+    IsMailVerified: boolean = false;
+    IsPhoneVerified: boolean = false;
+    UserStatus: string = '';
+    InsertBy: string = '';
+    InsertDate: Date = new Date();
+    UpdateBy: string = '';
+    UpdateDate: Date = new Date();
+    OpsMode: string = '';
 }

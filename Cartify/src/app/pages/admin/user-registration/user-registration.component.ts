@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TableModule } from 'primeng/table';
+import { CommonModule } from '@angular/common'; // Import CommonModule
 import { ButtonModule } from 'primeng/button';
 import { FloatLabel } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -9,20 +10,32 @@ import { InputMask } from 'primeng/inputmask';
 import { FormsModule } from '@angular/forms';
 import { Checkbox } from 'primeng/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
-import { UserModule } from '../../user/user.module';
-
+import { User } from '@/app/provider/interface/UserInfterface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClientService } from '@/app/provider/services/http-client.service';
+import { ToastService } from '@/app/provider/services/toast.service';
 
 @Component({
   selector: 'app-user-registration',
   standalone: true,
-  imports: [FloatLabel, TableModule, ButtonModule, FormsModule, InputTextModule, DatePicker, PasswordModule, InputMask, ReactiveFormsModule, Checkbox],
+  imports: [CommonModule, FloatLabel, TableModule, ButtonModule, FormsModule, InputTextModule, DatePicker, PasswordModule, InputMask, ReactiveFormsModule, Checkbox],
   templateUrl: './user-registration.component.html',
   styleUrl: './user-registration.component.css'
 })
 export class UserRegistrationComponent {
   isModalOpen: boolean = false;
-  UserModel: UserModule[] =[];
+  UserForm: FormGroup
+  User: any | User;
 
+  constructor(private fb: FormBuilder, private http: HttpClientService, private toastService: ToastService) {
+    this.UserForm = this.fb.group({
+      FirstName: ['', [Validators.required, Validators.minLength(4)]],
+    })
+  }
+
+  ngOnInit() {
+    this.getUser()
+  }
   openModal(): void {
     this.isModalOpen = true;
   }
@@ -31,27 +44,39 @@ export class UserRegistrationComponent {
     this.isModalOpen = false;
   }
 
+  getUser() {
+    this.http.get<User>('user/GetUser', { User: this.User?.UserId ? 0 : this.User?.UserId }).subscribe({
+      next: (res) => {
+        this.User = res
+        console.log(res)
+      },
+      error: (err) => {
+        this.toastService.showError('Error', err)
+      }
+    })
+  }
 
-  users = [
-    { firstName: 'John', secondName: 'Doe', dob: '1990-01-01', email: 'john.doe@example.com', phone: '+1234567890' },
-    { firstName: 'Jane', secondName: 'Smith', dob: '1992-05-12', email: 'jane.smith@example.com', phone: '+9876543210' },
-    { firstName: 'Alex', secondName: 'Johnson', dob: '1988-11-25', email: 'alex.johnson@example.com', phone: '+1122334455' },
-    { firstName: 'Emily', secondName: 'Davis', dob: '1995-07-19', email: 'emily.davis@example.com', phone: '+5566778899' },
-    { firstName: 'Michael', secondName: 'Brown', dob: '1985-03-30', email: 'michael.brown@example.com', phone: '+6677889900' },
-    { firstName: 'Michael', secondName: 'Brown', dob: '1985-03-30', email: 'michael.brown@example.com', phone: '+6677889900' },
-    { firstName: 'Michael', secondName: 'Brown', dob: '1985-03-30', email: 'michael.brown@example.com', phone: '+6677889900' },
-    { firstName: 'Michael', secondName: 'Brown', dob: '1985-03-30', email: 'michael.brown@example.com', phone: '+6677889900' },
-    { firstName: 'Michael', secondName: 'Brown', dob: '1985-03-30', email: 'michael.brown@example.com', phone: '+6677889900' },
-    { firstName: 'Michael', secondName: 'Brown', dob: '1985-03-30', email: 'michael.brown@example.com', phone: '+6677889900' },
-    { firstName: 'Michael', secondName: 'Brown', dob: '1985-03-30', email: 'michael.brown@example.com', phone: '+6677889900' },
-    { firstName: 'Michael', secondName: 'Brown', dob: '1985-03-30', email: 'michael.brown@example.com', phone: '+6677889900' },
-    { firstName: 'Michael', secondName: 'Brown', dob: '1985-03-30', email: 'michael.brown@example.com', phone: '+6677889900' },
-    { firstName: 'Michael', secondName: 'Brown', dob: '1985-03-30', email: 'michael.brown@example.com', phone: '+6677889900' },
-    { firstName: 'Michael', secondName: 'Brown', dob: '1985-03-30', email: 'michael.brown@example.com', phone: '+6677889900' },
-    { firstName: 'Michael', secondName: 'Brown', dob: '1985-03-30', email: 'michael.brown@example.com', phone: '+6677889900' },
-    { firstName: 'Michael', secondName: 'Brown', dob: '1985-03-30', email: 'michael.brown@example.com', phone: '+6677889900' },
-    { firstName: 'Michael', secondName: 'Brown', dob: '1985-03-30', email: 'michael.brown@example.com', phone: '+6677889900' },
-    { firstName: 'Michael', secondName: 'Brown', dob: '1985-03-30', email: 'michael.brown@example.com', phone: '+6677889900' },
-    { firstName: 'Michael', secondName: 'Brown', dob: '1985-03-30', email: 'michael.brown@example.com', phone: '+6677889900' }
-  ];
+  onSaveUser() {
+    this.User.OpsMode = this.User.UserId > 0 ? 'UPDATE' : 'INSERT';
+    this.User.DateOfBirth = this.User.DateOfBirth.toLocaleString();
+    this.User.ProfileImage = 'https://www.w3schools.com/howto/img_avatar.png';
+    this.User.IsActiveStatus = this.User.IsActiveStatus ? 'Y' : 'N';
+    this.User.IsMailVerified = 1;
+    this.User.IsPhoneVerified = 1;
+
+    this.http.post<any>('user/SaveUser', this.User).subscribe({
+      next: (res) => {
+        if (res.MessageType === 2) {
+          this.toastService.showSuccess('Success', res.Message);
+          this.closeModal();
+        } else {
+          this.toastService.showError('Error', res.Message);
+        }
+      },
+      error: (err) => {
+        this.toastService.showError('Error', err);
+      }
+    })
+  }
+
 }

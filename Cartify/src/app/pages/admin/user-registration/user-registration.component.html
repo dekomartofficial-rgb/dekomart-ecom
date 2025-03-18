@@ -1,7 +1,7 @@
 <div class="main-header">
     <div class="col-md-12 page-header d-flex">
         <i class="fas fa-user fa-xl" style="color: black; padding-top: 22px;"></i>
-        <h6 style="font-size: 18px;font-size: 18px;padding-left: 16px;padding-top: 5px;">User Registration</h6>
+        <h6 style="font-size: 18px; padding-left: 16px; padding-top: 5px;">User Registration</h6>
     </div>
     <div class="main-content-body">
         <div class="table-container d-flex row">
@@ -18,7 +18,7 @@
             </div>
             <div class="col-md-12" style="padding-top: 10px;">
                 <div style="margin-top: 20px;">
-                    <p-table [value]="users" [paginator]="true" [rows]="10" [responsive]="true">
+                    <p-table [value]="User" [paginator]="true" [rows]="10" [responsive]="true">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th>First Name</th>
@@ -29,33 +29,35 @@
                                 <th>Status</th>
                             </tr>
                         </ng-template>
+                        @if (User) {
                         <ng-template pTemplate="body" let-users>
                             <tr>
-                                <td>{{ users.firstName }}</td>
-                                <td>{{ users.secondName }}</td>
-                                <td>{{ users.dob }}</td>
-                                <td>{{ users.email }}</td>
-                                <td>{{ users.phone }}</td>
-                                <td><span style="background-color: green;
-                                    padding: 5px;
-                                    color: white;
-                                    border-radius: 25px;">Status</span></td>
+                                <td>{{ users.FirstName }}</td>
+                                <td>{{ users.SecondName }}</td>
+                                <td>{{ users.DateOfBirth }}</td>
+                                <td>{{ users.Email }}</td>
+                                <td>{{ users.PhoneNumber }}</td>
+                                <td><span
+                                        style="background-color: green; padding: 5px; color: white; border-radius: 25px;">{{
+                                        users.UserStatus }}</span>
+                                </td>
                             </tr>
                         </ng-template>
+                        }
+
                     </p-table>
                     <ng-template #paginatorleft>
-                        <p-button type="button" icon="pi pi-plus" text />
+                        <p-button type="button" icon="pi pi-plus" text></p-button>
                     </ng-template>
                     <ng-template #paginatorright>
-                        <p-button type="button" icon="pi pi-cloud" text />
+                        <p-button type="button" icon="pi pi-cloud" text></p-button>
                     </ng-template>
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal structure -->
-    @if (isModalOpen) {
-    <div class="modal d-flex justify-content-center align-items-center row m-0 p-0">
+    <div *ngIf="isModalOpen" class="modal d-flex justify-content-center align-items-center row m-0 p-0">
         <div class="modal-content">
             <div class="model-header row">
                 <div class="col-md-11">
@@ -66,84 +68,96 @@
                         (click)="closeModal()"></button>
                 </div>
             </div>
-            <div class="modal-body col-md-12 p-0">
-                <div class="col-md-12 m-2 d-flex row">
-                    <div class="col-md-6 p-2">
-                        <p-floatlabel variant="on">
-                            <input pInputText id="on_label" autocomplete="off" style="padding: 9px; width: 100%;" >
-                            <label for="on_label" style="font-size: 13px !important; padding: 9px !important;">First
-                                Name</label>
-                        </p-floatlabel>
-                    </div>
-                    <div class="col-md-6 p-2">
-                        <p-floatlabel variant="on">
-                            <input pInputText id="on_label" autocomplete="off" style="padding: 9px; width: 100%;" />
-                            <label for="on_label" style="font-size: 13px !important; padding: 9px !important;">Last
-                                Name</label>
-                        </p-floatlabel>
-                    </div>
-                    <div class="col-md-3 p-2">
-                        <p-floatlabel variant="on">
-                            <p-datepicker inputId="on_label" showIcon iconDisplay="input" />
-                            <label for="on_label" style="font-size: 13px !important; padding: 9px !important;">Date Of
-                                Birth</label>
-                        </p-floatlabel>
-                    </div>
-                    <div class="col-md-4 p-2">
-                        <p-floatlabel variant="on">
-                            <input pInputText id="on_label" autocomplete="off" style="padding: 8px; width: 100%;" />
-                            <label for="on_label"
-                                style="font-size: 13px !important; padding: 9px !important;">Email</label>
-                        </p-floatlabel>
-                    </div>
-                    <div class="col-md-5 p-2">
-                        <p-floatlabel variant="on" style="width: 100%;">
-                            <p-password inputId="on_label" [style]="{'width': '100%'}"
-                                [inputStyle]="{'width': '100%'}" />
-                            <label for="on_label"
-                                style="font-size: 13px !important; padding: 9px !important;">Password</label>
-                        </p-floatlabel>
-                    </div>
-                    <div class="col-md-3 p-2">
-                        <p-floatlabel variant="on" style="width: 100%;">
-                            <p-inputmask mask="+91 99999-99999" />
-                            <label for="on_label" style="font-size: 13px !important; padding: 9px !important;">Phone
-                                Number</label>
-                        </p-floatlabel>
-                    </div>
-                    <div class="col-md-2 p-2">
-                        <div class="flex items-center">
-                            <p-checkbox inputId="ingredient1" name="pizza" value="Cheese" />
-                            <label for="ingredient1" class="ml-2 label-checkbox">Active Status</label>
+            <form (ngSubmit)="onSaveUser()" #UserReg="ngForm">
+                <div class="modal-body col-md-12 p-0">
+                    <div class="col-md-12 m-2 d-flex row">
+                        <div class="col-md-6 p-2">
+                            <p-floatlabel variant="on">
+                                <input pInputText id="FirstName" autocomplete="off" style="padding: 9px; width: 100%;"
+                                    [(ngModel)]="User.FirstName" name="FirstName" required>
+                                <label for="FirstName" class="form-label">
+                                    <h6>First Name</h6>
+                                </label>
+                            </p-floatlabel>
+                        </div>
+                        <div class="col-md-6 p-2">
+                            <p-floatlabel variant="on">
+                                <input pInputText id="SecondName" autocomplete="off" style="padding: 9px; width: 100%;"
+                                    [(ngModel)]="User.SecondName" name="SecondName" required>
+                                <label for="LastName" style="font-size: 13px !important; padding: 9px !important;">Last
+                                    Name</label>
+                            </p-floatlabel>
+                        </div>
+                        <div class="col-md-6 p-2">
+                            <p-floatlabel variant="on">
+                                <p-datepicker inputId="DateOfBirth" showIcon iconDisplay="input"
+                                    [style]="{'width': '100%'}" [inputStyle]="{'width': '100%'}"
+                                    [(ngModel)]="User.DateOfBirth" name="DateOfBirth" required></p-datepicker>
+                                <label for="DateOfBirth"
+                                    style="font-size: 13px !important; padding: 9px !important;">Date Of Birth</label>
+                            </p-floatlabel>
+                        </div>
+                        <div class="col-md-6 p-2">
+                            <p-floatlabel variant="on">
+                                <input pInputText id="Email" autocomplete="off" style="padding: 8px; width: 100%;"
+                                    [(ngModel)]="User.Email" name="Email" required>
+                                <label for="Email"
+                                    style="font-size: 13px !important; padding: 9px !important;">Email</label>
+                            </p-floatlabel>
+                        </div>
+                        <div class="col-md-6 p-2">
+                            <p-floatlabel variant="on" style="width: 100%;">
+                                <p-password inputId="Password" [style]="{'width': '100%'}"
+                                    [inputStyle]="{'width': '100%'}" [(ngModel)]="User.Password" name="Password"
+                                    required></p-password>
+                                <label for="Password"
+                                    style="font-size: 13px !important; padding: 9px !important;">Password</label>
+                            </p-floatlabel>
+                        </div>
+                        <div class="col-md-6 p-2">
+                            <p-floatlabel variant="on" style="width: 100%;">
+                                <input pInputText [style]="{'width': '100%'}" id="PhoneNumber"
+                                    style="padding: 8px; width: 100%;" [(ngModel)]="User.PhoneNumber" name="PhoneNumber"
+                                    required />
+
+                                <label for="PhoneNumber"
+                                    style="font-size: 13px !important; padding: 9px !important;">Phone Number</label>
+                            </p-floatlabel>
+                        </div>
+                        <div class="col-md-2 p-2">
+                            <div class="flex items-center">
+                                <p-checkbox inputId="IsActiveStatus" name="IsActiveStatus"
+                                    [(ngModel)]="User.IsActiveStatus"></p-checkbox>
+                                <label for="IsActiveStatus" class="ml-2 label-checkbox">Active Status</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2 p-2">
+                            <div class="flex items-center">
+                                <p-checkbox inputId="IsMailVerified" name="IsMailVerified"
+                                    [(ngModel)]="User.IsMailVerified"></p-checkbox>
+                                <label for="IsMailVerified" class="ml-2 label-checkbox">Mail Verified</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2 p-2">
+                            <div class="flex items-center">
+                                <p-checkbox inputId="IsPhoneVerified" name="IsPhoneVerified"
+                                    [(ngModel)]="User.IsPhoneVerified"></p-checkbox>
+                                <label for="IsPhoneVerified" class="ml-2 label-checkbox">Phone Verified</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-2 d-flex m-2">
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-success">
+                                    <i class="bi bi-save" style="padding-right: 5px;"></i> Save
+                                </button>
+                                <button type="button" class="btn btn-danger" (click)="closeModal()">
+                                    <i class="bi bi-x-circle" style="padding-right: 5px;"></i> Cancel
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-2 p-2">
-                        <div class="flex items-center">
-                            <p-checkbox inputId="ingredient1" name="pizza" value="Cheese" />
-                            <label for="ingredient1" class="ml-2 label-checkbox">Mail Verified</label>
-                        </div>
-                    </div>
-                    <div class="col-md-2 p-2">
-                        <div class="flex items-center">
-                            <p-checkbox inputId="ingredient1" name="pizza" value="Cheese" />
-                            <label for="ingredient1" class="ml-2 label-checkbox">Phone Verified</label>
-                        </div>
-                    </div>
-                    <div class="col-md-12 p-2 d-flex m-2">
-                        <div class="d-flex gap-2">
-                            <button type="button" class="btn btn-success">
-                                <i class="bi bi-save" style="padding-right: 5px;"></i> Save
-                            </button>
-                            <button type="button" class="btn btn-danger">
-                                <i class="bi bi-x-circle" style="padding-right: 5px;"></i> Cancel
-                            </button>
-                        </div>
-                    </div>
-                    
                 </div>
-            </div>
+            </form>
         </div>
     </div>
-    }
-
 </div>
