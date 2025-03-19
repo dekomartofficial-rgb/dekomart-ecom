@@ -37,7 +37,7 @@ export class GalleryHomeComponent implements OnInit {
     // { video: 'assets/landing-page-images/v-temple.mp4' },
   ];
 
-  newArrivals = [
+  bestSelling = [
     {
       name: 'Luxury Wall Clock',
       image: 'assets/landing-page-images/home-round1.jpg',
@@ -94,6 +94,67 @@ export class GalleryHomeComponent implements OnInit {
       originalPrice: 4499,
       offerPrice: 3999,
     },
+  ];
+
+  canvasPaintings = [
+    {
+      name: 'Luxury Wall Clock',
+      image: 'images/home-round1.jpg',
+      description: 'Premium wooden clock',
+      originalPrice: 2999,
+      offerPrice: 2499,
+    },
+    {
+      name: 'Modern Art Painting',
+      image: 'images/photo-frame.jpg',
+      description: 'Canvas painting for home',
+      originalPrice: 4499,
+      offerPrice: 3999,
+    },
+    {
+      name: 'Wooden Wall Shelf',
+      image: 'images/shelves.jpg',
+      description: 'Stylish wooden shelf',
+      originalPrice: 1999,
+      offerPrice: 1499,
+    },
+    {
+      name: 'Designer Lamp',
+      image: 'images/metal-wall.jpg',
+      description: 'Ambient LED lamp',
+      originalPrice: 1299,
+      offerPrice: 999,
+    }
+  ];
+     loungeChairs = [
+    {
+      name: 'Luxury Wall Clock',
+      image: 'images/home-round1.jpg',
+      description: 'Premium wooden clock',
+      originalPrice: 2999,
+      offerPrice: 2499,
+    },
+    {
+      name: 'Modern Art Painting',
+      image: 'images/photo-frame.jpg',
+      description: 'Canvas painting for home',
+      originalPrice: 4499,
+      offerPrice: 3999,
+    },
+    {
+      name: 'Wooden Wall Shelf',
+      image: 'images/shelves.jpg',
+      description: 'Stylish wooden shelf',
+      originalPrice: 1999,
+      offerPrice: 1499,
+    },
+    {
+      name: 'Designer Lamp',
+      image: 'images/metal-wall.jpg',
+      description: 'Ambient LED lamp',
+      originalPrice: 1299,
+      offerPrice: 999,
+    }
   ];
 
   getDiscount(original: number, offer: number): number {
