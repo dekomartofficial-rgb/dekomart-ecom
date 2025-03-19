@@ -1,33 +1,20 @@
-<p-carousel 
-  [value]="imageCircle" 
-  [numVisible]="5" 
-  [numScroll]="1" 
-  [circular]="true" 
-  [showNavigators]="false" 
-  [autoplayInterval]="3000" 
-  [showIndicators]="false">
-  
+<p-carousel [value]="imageCircle" [numVisible]="5" [numScroll]="1" [circular]="true" [showNavigators]="false"
+  [autoplayInterval]="3000" [showIndicators]="false">
+
   <ng-template let-item pTemplate="item">
     <div class="text-center   circle-image">
       <img [src]="item.image" alt="{{ item.name }}" class="gallery-img">
       <p class="mt-2">{{ item.name }}</p>
-    </div>  
+    </div>
   </ng-template>
 </p-carousel>
 
 <!-- Auto-scrolling Gallery -->
-<p-carousel
-  [value]="productvdio"
-  [numVisible]="5"
-  [numScroll]="1"
-  [circular]="true"
-  [autoplayInterval]="7000"
-  [showNavigators]="false"
-  [showIndicators]="false"
->
+<p-carousel [value]="productvdio" [numVisible]="5" [numScroll]="1" [circular]="true" [autoplayInterval]="7000"
+  [showNavigators]="false" [showIndicators]="false">
   <ng-template let-item pTemplate="item">
     <div class="gallery-item">
-     <video [src]="item.video" autoplay loop muted  ></video>
+      <video [src]="item.video" autoplay loop muted></video>
     </div>
   </ng-template>
 </p-carousel>
@@ -38,7 +25,7 @@
     <h1 class="section-title">Best Selling</h1>
     <a href="#" class="btn view-all-btn">View All</a>
   </div>
-  
+
 
   <div class="row">
     <div class="col-12 col-md-6 col-lg-3 mb-4" *ngFor="let item of newArrivals">
@@ -47,7 +34,7 @@
         <div class="card-body text-left">
           <h5 class="card-title">{{ item.name }}</h5>
           <p class="card-text text-muted">{{ item.description }}</p>
-          
+
           <!-- Pricing Section -->
           <p class="price">
             <span class="original-price">₹ {{ item.originalPrice }}</span>
@@ -74,7 +61,7 @@
       <div class="card-body text-left">
         <h5 class="card-title">{{ item.name }}</h5>
         <p class="card-text text-muted">{{ item.description }}</p>
-        
+
         <!-- Pricing Section -->
         <p class="price">
           <span class="original-price">₹ {{ item.originalPrice }}</span>

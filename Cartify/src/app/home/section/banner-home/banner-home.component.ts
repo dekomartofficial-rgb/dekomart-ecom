@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class BannerHomeComponent {
   banners = [
-    { image: 'images/banner1.jpg', title: 'Expressive ART PAINTINGS', subtitle: '20% OFF ON ENTIRE RANGE' },
-    { image: 'images/banner2.jpg', title: 'Modern Home Decor', subtitle: 'Best Designs for Your Home' }
+    { image: 'assets/landing-page-images/banner1.jpg', title: 'Expressive ART PAINTINGS', subtitle: '20% OFF ON ENTIRE RANGE' },
+    { image: 'assets/landing-page-images/banner2.jpg', title: 'Modern Home Decor', subtitle: 'Best Designs for Your Home' }
   ];
 }
