@@ -72,6 +72,9 @@
   flex-direction: column;
   justify-content: space-between;
   background: transparent; 
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
 }
 
 .product-image {
@@ -115,4 +118,45 @@
 .discount {
   color: green;
   font-weight: bold;
+}
+
+
+/* Wishlist Button */
+.wishlist-btn {
+  position: absolute;
+  top: 10px; /* Adjust distance from the top */
+  right: 10px; /* Adjust distance from the right */
+  background-color: transparent;
+
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Show the wishlist button on hover */
+.product-card:hover .wishlist-btn {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1.1);
+}
+
+/* Active wishlist (when clicked) */
+.wishlist-btn i.active {
+  color:  #e60000;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+/* Hover effect for heart icon */
+.wishlist-btn:hover {
+  background-color: transparent;
+  transform: scale(1.2);
 }

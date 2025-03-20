@@ -27,6 +27,10 @@ export class HomeComponent {
     // httpClient.LogOut()
   }
 
+  wishlistCount: number = 0;
+
+
+
   featuredProducts: Product[] = [
     {
       id: 1,
@@ -59,4 +63,8 @@ export class HomeComponent {
       isNew: true
     }
   ];
+
+  updateWishlistCount(count: number) {
+    this.wishlistCount = count;  // Updates wishlist count
+  }
 }

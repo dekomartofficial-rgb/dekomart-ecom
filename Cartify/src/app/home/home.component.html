@@ -1,13 +1,13 @@
 
  <!-- nav-->
- <app-nav-home></app-nav-home> 
+ <app-nav-home  [wishlistCount]="wishlistCount"></app-nav-home> 
 
 <!-- Banner -->
 <app-banner-home/>
 
  <!-- Gallery Component -->
 <section class="gallery-section py-5">
-    <app-gallery-home></app-gallery-home>
+    <app-gallery-home (wishlistUpdated)="updateWishlistCount($event)"></app-gallery-home>
 </section>
 
 <!--footer-->
