@@ -45,7 +45,7 @@ export class UserRegistrationComponent {
   }
 
   getUser() {
-    this.http.get<User>('user/GetUser', { User: this.User?.UserId ? 0 : this.User?.UserId }).subscribe({
+    this.http.get<User>('user/GetUser', { User: 0 }).subscribe({
       next: (res) => {
         this.User = res
         console.log(res)
