@@ -37,6 +37,9 @@
     <div class="col-12 col-md-6 col-lg-3 mb-4" *ngFor="let item of bestSelling">
       <div class="card product-card">
         <img [src]="item.image" alt="{{ item.name }}" class="card-img-top product-image">
+        <button class="wishlist-btn" (click)="toggleWishlist(item)">
+          <i class="fas fa-heart" [class.active]="item.wishlisted"></i>
+      </button>
         <div class="card-body text-left">
           <h5 class="card-title">{{ item.name }}</h5>
           <p class="card-text text-muted">{{ item.description }}</p>
