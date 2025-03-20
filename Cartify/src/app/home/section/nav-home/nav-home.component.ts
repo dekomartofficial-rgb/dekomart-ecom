@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-nav-home',
   standalone: true,
-  imports: [],
   templateUrl: './nav-home.component.html',
   styleUrl: './nav-home.component.css'
 })
