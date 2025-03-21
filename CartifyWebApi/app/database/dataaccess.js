@@ -26,7 +26,11 @@ class DataAccess {
       server: this.server,
       database: this.database,
       options: {
-        trustServerCertificate: true,
+        encrypt: true,
+        enableArithAbort: true,
+        useUTC: true,
+        parseBigIntAsNumber: true,
+        trustServerCertificate: true  // Accept self-signed certificates
       },
       pool: {
         max: 10, // Set max number of connections
@@ -78,6 +82,21 @@ class DataAccess {
       throw error;
     }
   }
+
+   bigIntReplacer(key, value) {
+    if (typeof value === "string" && !isNaN(value) && value.match(/^\d+$/)) {
+      // If it's a numeric string, convert to Number if within safe range
+      const numValue = Number(value);
+      if (numValue <= Number.MAX_SAFE_INTEGER) {
+        return numValue;
+      } else {
+        // If exceeds safe range, convert to BigInt
+        return BigInt(value);
+      }
+    }
+    return value;
+  }
+  
 }
 
 module.exports = new DataAccess();

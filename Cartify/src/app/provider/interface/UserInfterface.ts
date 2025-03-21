@@ -2,18 +2,19 @@ export class User {
     UserId: number = 0;
     FirstName: string = '';
     SecondName: string = '';
-    DateOfBirth: Date = new Date();
+    DateOfBirth: Date | null = null;
     Password: string = '';
     Email: string = '';
-    PhoneNumber: number = 0;
+    PhoneNumber: number | null = null;
     ProfileImage: string = '';
-    IsActiveStatus: boolean = false;
-    IsMailVerified: boolean = false;
-    IsPhoneVerified: boolean = false;
+    UserRole: string= '';
+    IsActiveStatus: string = '';
+    IsMailVerified: number = 0;
+    IsPhoneVerified: number = 0;
     UserStatus: string = '';
     InsertBy: string = '';
-    InsertDate: Date = new Date();
+    InsertDate: Date | null = null;
     UpdateBy: string = '';
-    UpdateDate: Date = new Date();
+    UpdateDate: Date | null = null;
     OpsMode: string = '';
 }

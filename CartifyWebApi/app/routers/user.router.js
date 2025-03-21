@@ -5,6 +5,7 @@ const VerifyToken = require("../middleware/authMiddleware");
 router.get("/GetScreenList", VerifyToken, UserController.GetScreenList);
 router.get("/GetUserProfiler", VerifyToken, UserController.GetUserProfile);
 router.get("/GetUser", VerifyToken, UserController.GetUser);
+router.get("/GetUserRole",VerifyToken, UserController.GetUserRole)
 router.post("/Validateuser", UserController.ValidateUser);
 router.post("/SaveUser", VerifyToken, UserController.SaveUser);
 

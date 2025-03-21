@@ -10,20 +10,17 @@
 </p-carousel>
 
 <!-- Auto-scrolling Gallery -->
-<p-carousel [value]="productvdio" [numVisible]="5" [numScroll]="1" [circular]="true" [autoplayInterval]="7000"
+<!-- <p-carousel [value]="productvdio" [numVisible]="5" [numScroll]="1" [circular]="true" [autoplayInterval]="7000"
   [showNavigators]="false" [showIndicators]="false">
   <ng-template let-item pTemplate="item">
     <div class="gallery-item">
-<<<<<<< HEAD
       <video [src]="item.video" autoplay loop muted></video>
-=======
-     <video autoplay loop muted  >
-      <source [src]="item.video" type="video/mp4">
-     </video>
->>>>>>> 074a3526fbff3a4ea14752372df2f62a088d1eaa
+      <video autoplay loop muted>
+        <source [src]="item.video" type="video/mp4">
+      </video>
     </div>
   </ng-template>
-</p-carousel>
+</p-carousel> -->
 
 <!-- Best selling -->
 <div class="p-4 custom-bg">
@@ -39,7 +36,7 @@
         <img [src]="item.image" alt="{{ item.name }}" class="card-img-top product-image">
         <button class="wishlist-btn" (click)="toggleWishlist(item)">
           <i class="fas fa-heart" [class.active]="item.wishlisted"></i>
-      </button>
+        </button>
         <div class="card-body text-left">
           <h5 class="card-title">{{ item.name }}</h5>
           <p class="card-text text-muted">{{ item.description }}</p>
@@ -57,7 +54,7 @@
 
 </div>
 
- <!-- canvas paintings -->
+<!-- canvas paintings -->
 <div class="d-flex justify-content-between align-items-center p-4">
   <h1 class="section-title">Canvas Paintings</h1>
   <a href="#" class="btn view-all-btn">View All</a>
@@ -71,7 +68,7 @@
       <div class="card-body text-left">
         <h5 class="card-title">{{ item.name }}</h5>
         <p class="card-text text-muted">{{ item.description }}</p>
-    
+
         <!-- Pricing Section -->
         <p class="price">
           <span class="original-price">₹ {{ item.originalPrice }}</span>
@@ -90,7 +87,7 @@
   <a href="#" class="btn view-all-btn">View All</a>
 </div>
 
- 
+
 <div class="row p-4">
   <div class="col-12 col-md-6 col-lg-3 mb-4" *ngFor="let item of  loungeChairs">
     <div class="card product-card">
@@ -100,7 +97,7 @@
         <p class="card-text text-muted">{{ item.description }}</p>
 
 
-        
+
         <!-- Pricing Section -->
         <p class="price">
           <span class="original-price">₹ {{ item.originalPrice }}</span>
@@ -118,7 +115,7 @@
   <a href="#" class="btn view-all-btn">View All</a>
 </div>
 
- 
+
 <div class="row p-4">
   <div class="col-12 col-md-6 col-lg-3 mb-4" *ngFor="let item of  loungeChairs">
     <div class="card product-card">

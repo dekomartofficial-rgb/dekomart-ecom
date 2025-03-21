@@ -1,20 +1,20 @@
-import { Component,Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { HttpClientService } from '@/app/provider/services/http-client.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-home',
   standalone: true,
+  imports: [RouterModule],
   templateUrl: './nav-home.component.html',
   styleUrl: './nav-home.component.css'
 })
 export class NavHomeComponent {
-constructor(private router: Router){}
-
   @Input() wishlistCount: number = 0;
+  constructor(private http: HttpClientService, private router: Router) { }
 
-  navigateToLogin() {
-    this.router.navigate(['/login']);
+  onLogin() {
+    return this.http.getUserData() ? this.router.navigateByUrl('/admin') : this.router.navigateByUrl('/login')
   }
-
-
 }

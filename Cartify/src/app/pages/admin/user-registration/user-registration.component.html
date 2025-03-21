@@ -1,24 +1,16 @@
 <div class="main-header">
     <div class="col-md-12 page-header d-flex">
         <i class="fas fa-user fa-xl" style="color: black; padding-top: 22px;"></i>
-        <h6 style="font-size: 18px; padding-left: 16px; padding-top: 5px;">User Registration</h6>
+        <h6 style="font-size: 26px; padding-left: 16px; padding-top: 1px; font-weight: 600;">User Registration</h6>
     </div>
     <div class="main-content-body">
         <div class="table-container d-flex row">
-            <p-floatlabel variant="on">
-                <input pInputText id="on_label" autocomplete="off" required="true" [required]="true" />
-                <label for="on_label">On Label</label>
-            </p-floatlabel>
-        </div>
-    </div>
-    <div class="main-content-body">
-        <div class="table-container d-flex row">
-            <div class="col-md-12">
+            <div class="col-md-12 justify-content-end d-flex">
                 <button type="button" class="btn btn-primary" (click)="openModal()">Add User</button>
             </div>
             <div class="col-md-12" style="padding-top: 10px;">
                 <div style="margin-top: 20px;">
-                    <p-table [value]="User" [paginator]="true" [rows]="10" [responsive]="true">
+                    <p-table [value]="Users" [paginator]="true" [rows]="10" [responsive]="true">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th>First Name</th>
@@ -29,22 +21,20 @@
                                 <th>Status</th>
                             </tr>
                         </ng-template>
-                        @if (User) {
-                        <ng-template pTemplate="body" let-users>
+                        <ng-template pTemplate="body" let-user>
                             <tr>
-                                <td>{{ users.FirstName }}</td>
-                                <td>{{ users.SecondName }}</td>
-                                <td>{{ users.DateOfBirth }}</td>
-                                <td>{{ users.Email }}</td>
-                                <td>{{ users.PhoneNumber }}</td>
-                                <td><span
-                                        style="background-color: green; padding: 5px; color: white; border-radius: 25px;">{{
-                                        users.UserStatus }}</span>
+                                <td>{{ user.FirstName }}</td>
+                                <td>{{ user.SecondName }}</td>
+                                <td>{{ user.DateOfBirth }}</td>
+                                <td>{{ user.Email }}</td>
+                                <td>{{ user.PhoneNumber }}</td>
+                                <td style="text-align: center;"><span
+                                        [ngStyle]="user.UserStatus === 'A' ? {'background-color':'green'} : {'background-color':'red'}"
+                                        style="padding: 8px; color: white; border-radius: 6px;">{{ user.UserStatusDesc
+                                        }}</span>
                                 </td>
                             </tr>
                         </ng-template>
-                        }
-
                     </p-table>
                     <ng-template #paginatorleft>
                         <p-button type="button" icon="pi pi-plus" text></p-button>
@@ -73,18 +63,24 @@
                     <div class="col-md-12 m-2 d-flex row">
                         <div class="col-md-6 p-2">
                             <p-floatlabel variant="on">
-                                <input pInputText id="FirstName" autocomplete="off" style="padding: 9px; width: 100%;"
-                                    [(ngModel)]="User.FirstName" name="FirstName" required>
-                                <label for="FirstName" class="form-label">
-                                    <h6>First Name</h6>
-                                </label>
+                                <input pInputText id="FirstName" autocomplete="off" style="padding: 9px; width: 100%"
+                                    [(ngModel)]="User.FirstName" name="FirstName" #FirstNameRef="ngModel" minlength="4"
+                                    required />
+                                <label for="FirstName" class="form-class">First Name</label>
                             </p-floatlabel>
+                            <!-- @if (FirstNameRef.invalid && FirstNameRef.touched) {
+                            <div class="form-class-required">
+                                <label *ngIf="FirstNameRef.errors?.['required']">First Name is required.</label>
+                                <label *ngIf="FirstNameRef.errors?.['minlength']">Minimum 4 characters required.</label>
+                            </div>
+                            } -->
                         </div>
+
                         <div class="col-md-6 p-2">
                             <p-floatlabel variant="on">
                                 <input pInputText id="SecondName" autocomplete="off" style="padding: 9px; width: 100%;"
-                                    [(ngModel)]="User.SecondName" name="SecondName" required>
-                                <label for="LastName" style="font-size: 13px !important; padding: 9px !important;">Last
+                                    [(ngModel)]="User.SecondName" name="SecondName" #SecondNameRef="ngModel" required>
+                                <label for="SecondName" class="form-class">Last
                                     Name</label>
                             </p-floatlabel>
                         </div>
@@ -92,7 +88,7 @@
                             <p-floatlabel variant="on">
                                 <p-datepicker inputId="DateOfBirth" showIcon iconDisplay="input"
                                     [style]="{'width': '100%'}" [inputStyle]="{'width': '100%'}"
-                                    [(ngModel)]="User.DateOfBirth" name="DateOfBirth" required></p-datepicker>
+                                    [(ngModel)]="User.DateOfBirth" name="DateOfBirth"  #DateOfBirthRef="ngModel" required></p-datepicker>
                                 <label for="DateOfBirth"
                                     style="font-size: 13px !important; padding: 9px !important;">Date Of Birth</label>
                             </p-floatlabel>
@@ -101,51 +97,82 @@
                             <p-floatlabel variant="on">
                                 <input pInputText id="Email" autocomplete="off" style="padding: 8px; width: 100%;"
                                     [(ngModel)]="User.Email" name="Email" required>
-                                <label for="Email"
-                                    style="font-size: 13px !important; padding: 9px !important;">Email</label>
+                                <label for="Email" class="form-class">Email</label>
                             </p-floatlabel>
+                            @if (UserForm.get('Email')?.invalid && UserForm.get('Email')?.touched) {
+                            <label class="form-class-required">
+                                <p>Email required.</p>
+                            </label>}
+                            @if (UserForm.get('Email')?.errors?.['email']) {
+                            <label class="form-class-required">
+                                <p>Enter a valid Email.</p>
+                            </label>}
                         </div>
                         <div class="col-md-6 p-2">
                             <p-floatlabel variant="on" style="width: 100%;">
                                 <p-password inputId="Password" [style]="{'width': '100%'}"
                                     [inputStyle]="{'width': '100%'}" [(ngModel)]="User.Password" name="Password"
                                     required></p-password>
-                                <label for="Password"
-                                    style="font-size: 13px !important; padding: 9px !important;">Password</label>
+                                <label for="Password" class="form-class">Password</label>
                             </p-floatlabel>
+                            @if (UserForm.get('Password')?.invalid && UserForm.get('Password')?.touched) {
+                            <label class="form-class-required">
+                                <p>Password required.</p>
+                            </label>}
                         </div>
                         <div class="col-md-6 p-2">
                             <p-floatlabel variant="on" style="width: 100%;">
-                                <input pInputText [style]="{'width': '100%'}" id="PhoneNumber"
+                                <input pInputText [style]="{ 'width': '100%' }" id="PhoneNumber"
                                     style="padding: 8px; width: 100%;" [(ngModel)]="User.PhoneNumber" name="PhoneNumber"
-                                    required />
-
-                                <label for="PhoneNumber"
-                                    style="font-size: 13px !important; padding: 9px !important;">Phone Number</label>
+                                    required pattern="\\d{10}" minlength="10" maxlength="10" />
+                                <label for="PhoneNumber" class="form-class">Phone Number</label>
                             </p-floatlabel>
+                            @if (UserForm.get('PhoneNumber')?.invalid && UserForm.get('PhoneNumber')?.touched) {
+                            <label class="form-class-required">
+                                <p>Phone Number required.</p>
+                            </label>}
+                        </div>
+                        <div class="col-md-6 p-2">
+                            <p-floatlabel variant="on" style="width: 100%;">
+                                <p-multiSelect [options]="UserRole" [(ngModel)]="SelectedUserRole"
+                                    optionLabel="RoleName" name="UserRole" optionValue="RoleCode" [filter]="true"
+                                    [showToggleAll]="true" [style]="{ width: '100%' }"></p-multiSelect>
+                                <label for="UserRole" class="form-class">User Role</label>
+                            </p-floatlabel>
+                            @if (UserForm.get('UserRole')?.invalid && UserForm.get('UserRole')?.touched) {
+                            <label class="form-class-required">
+                                <p>User Role required.</p>
+                            </label>}
                         </div>
                         <div class="col-md-2 p-2">
                             <div class="flex items-center">
                                 <p-checkbox inputId="IsActiveStatus" name="IsActiveStatus"
-                                    [(ngModel)]="User.IsActiveStatus"></p-checkbox>
+                                    [(ngModel)]="User.IsActiveStatus" binary="true"
+                                    (onChange)="User.IsActiveStatus = $event.checked ? 'A' : 'I'"></p-checkbox>
                                 <label for="IsActiveStatus" class="ml-2 label-checkbox">Active Status</label>
                             </div>
                         </div>
+
                         <div class="col-md-2 p-2">
                             <div class="flex items-center">
                                 <p-checkbox inputId="IsMailVerified" name="IsMailVerified"
-                                    [(ngModel)]="User.IsMailVerified"></p-checkbox>
+                                    [(ngModel)]="User.IsMailVerified" binary="true" [trueValue]="1"
+                                    [falseValue]="null"></p-checkbox>
                                 <label for="IsMailVerified" class="ml-2 label-checkbox">Mail Verified</label>
                             </div>
                         </div>
+
                         <div class="col-md-2 p-2">
                             <div class="flex items-center">
                                 <p-checkbox inputId="IsPhoneVerified" name="IsPhoneVerified"
-                                    [(ngModel)]="User.IsPhoneVerified"></p-checkbox>
+                                    [(ngModel)]="User.IsPhoneVerified" binary="true" [trueValue]="1"
+                                    [falseValue]="null"></p-checkbox>
                                 <label for="IsPhoneVerified" class="ml-2 label-checkbox">Phone Verified</label>
                             </div>
                         </div>
-                        <div class="col-md-12 p-2 d-flex m-2">
+
+
+                        <div class="col-md-12 p-4 d-flex m-2 justify-content-end">
                             <div class="d-flex gap-2">
                                 <button class="btn btn-success">
                                     <i class="bi bi-save" style="padding-right: 5px;"></i> Save

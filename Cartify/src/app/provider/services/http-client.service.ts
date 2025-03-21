@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class HttpClientService {
   private baseUrl = baseUrl
-
+  userRole: [] = [];
   constructor(private http: HttpClient, private Router: Router) { }
 
   get<T>(endpoint: string, params?: { [key: string]: string | number | boolean }): Observable<T> {
@@ -50,5 +50,9 @@ export class HttpClientService {
       return true
     }
     return false
+  }
+
+  getUserRole(UserId: number) {
+    return this.get<any>('user/GetUserRole', { UserId: UserId })
   }
 }
