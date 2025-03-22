@@ -4,12 +4,14 @@ import { UserRegistrationComponent } from './user-registration/user-registration
 import { ProductDashboardComponent } from './product-dashboard/product-dashboard.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
+import { ReferenceDataComponent } from './reference-data/reference-data.component';
 
 const routes: Routes = [
   { path: '', component: AdminHomeComponent},
   { path: 'product-details', component: ProductDetailsComponent }, // Fixed component
   { path: 'user-registration', component: UserRegistrationComponent }, // Removed extra slashes
   { path: 'product-dashboard', component: ProductDashboardComponent }, // Fixed component
+  { path: 'reference-data', component: ReferenceDataComponent },
 ];
 
 @NgModule({
