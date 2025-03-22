@@ -13,11 +13,15 @@ import { FooterHomeComponent } from "./section/footer-home/footer-home.component
 })
 export class HomeComponent {
  
-
+  addtocartCount: number = 0;  
   wishlistCount: number = 0;
 
  
   updateWishlistCount(count: number) {
     this.wishlistCount = count;  // Updates wishlist count
+  }
+
+  updateAddtocartCount(count:number){
+    this.addtocartCount = count;  // Updates addtocart count
   }
 }

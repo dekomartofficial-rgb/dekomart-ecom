@@ -2,14 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
 import { CommonModule } from '@angular/common';
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  originalPrice?: number;
-  reviewCount: number;
-  isNew: boolean;
-}
+
 @Component({
   selector: 'app-gallery-home',
   standalone: true,
@@ -20,6 +13,7 @@ interface Product {
 export class GalleryHomeComponent implements OnInit {
 
  @Output() wishlistUpdated = new EventEmitter<number>() 
+ @Output() addToCartUpdated = new EventEmitter<number>() 
 
 
   imageCircle = [
@@ -48,7 +42,8 @@ export class GalleryHomeComponent implements OnInit {
       description: 'Premium wooden clock',
       originalPrice: 2999,
       offerPrice: 2499,
-      wishlisted: false
+      wishlisted: false,
+      addToCart: false
     },
     {
       name: 'Modern Art Painting',
@@ -56,7 +51,8 @@ export class GalleryHomeComponent implements OnInit {
       description: 'Canvas painting for home',
       originalPrice: 4499,
       offerPrice: 3999,
-      wishlisted: false
+      wishlisted: false,
+      addToCart: false
     },
     {
       name: 'Wooden Wall Shelf',
@@ -64,7 +60,8 @@ export class GalleryHomeComponent implements OnInit {
       description: 'Stylish wooden shelf',
       originalPrice: 1999,
       offerPrice: 1499,
-      wishlisted: false
+      wishlisted: false,
+      addToCart: false
     },
     {
       name: 'Designer Lamp',
@@ -72,7 +69,8 @@ export class GalleryHomeComponent implements OnInit {
       description: 'Ambient LED lamp',
       originalPrice: 1299,
       offerPrice: 999,
-      wishlisted: false
+      wishlisted: false,
+      addToCart: false
     },
     {
       name: 'Vintage Mirror',
@@ -80,7 +78,8 @@ export class GalleryHomeComponent implements OnInit {
       description: 'Classic wall mirror',
       originalPrice: 3499,
       offerPrice: 2799,
-      wishlisted: false
+      wishlisted: false,
+      addToCart: false
     },
     {
       name: 'Wooden Wall Shelf',
@@ -88,7 +87,8 @@ export class GalleryHomeComponent implements OnInit {
       description: 'Stylish wooden shelf',
       originalPrice: 1999,
       offerPrice: 1499,
-      wishlisted: false
+      wishlisted: false,
+      addToCart: false
     },
     {
       name: 'Luxury Wall Clock',
@@ -96,7 +96,8 @@ export class GalleryHomeComponent implements OnInit {
       description: 'Premium wooden clock',
       originalPrice: 2999,
       offerPrice: 2499,
-      wishlisted: false
+      wishlisted: false,
+      addToCart: false
     },
     {
       name: 'Modern Art Painting',
@@ -104,7 +105,8 @@ export class GalleryHomeComponent implements OnInit {
       description: 'Canvas painting for home',
       originalPrice: 4499,
       offerPrice: 3999,
-      wishlisted: false
+      wishlisted: false,
+      addToCart: false
 
     },
   ];
@@ -174,12 +176,13 @@ export class GalleryHomeComponent implements OnInit {
     return Math.round(((original - offer) / original) * 100);
   }
 
+//wishlist
   toggleWishlist(item: any) {
 
     item.wishlisted = !item.wishlisted; 
 
      // Update the bestSelling array with the modified item
-  this.bestSelling = this.bestSelling.map((product) =>
+   this.bestSelling = this.bestSelling.map((product) =>
     product.name === item.name ? { ...product, wishlisted: item.wishlisted } : product
 
   );
@@ -189,6 +192,19 @@ export class GalleryHomeComponent implements OnInit {
   
   this.wishlistUpdated.emit(wishlistCount);  
 
-  }  
+  } 
+
+  // add-to-cart
+  ToggleAddToCart(item:any){
+
+    item.addToCart = !item.addToCart
+    console.log(item)
+
+    const addtocartCount = this.bestSelling.filter(product => product.addToCart).length;
+    this.addToCartUpdated.emit(addtocartCount)
+
+  }
+  
+
   ngOnInit() {}
 }

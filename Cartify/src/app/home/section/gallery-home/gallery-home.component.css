@@ -84,7 +84,8 @@
 }
 
 .product-details {
-  padding: 5px;
+  padding: 10px;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .product-name {
@@ -96,6 +97,28 @@
 .product-description {
   font-size: 13px;
   color: gray;
+}
+
+.add-to-cart-btn {
+  position: absolute;
+  bottom: 30px;
+  left: 65%;
+  transform: translateX(-50%);
+  background: #000;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  display: none; 
+}
+
+.add-to-cart-btn:hover {
+  background-color: blue;
+}
+
+.product-card:hover .add-to-cart-btn {
+  display: block;
 }
 
 .price-section {
@@ -124,8 +147,8 @@
 /* Wishlist Button */
 .wishlist-btn {
   position: absolute;
-  top: 10px; /* Adjust distance from the top */
-  right: 10px; /* Adjust distance from the right */
+  top: 10px; 
+  right: 10px;
   background-color: transparent;
 
   border: none;

@@ -37,6 +37,10 @@
         <button class="wishlist-btn" (click)="toggleWishlist(item)">
           <i class="fas fa-heart" [class.active]="item.wishlisted"></i>
         </button>
+        <button class="add-to-cart-btn" (click)="ToggleAddToCart(item)">
+          {{ item.addToCart ? 'Remove from Cart' : 'Add to Cart' }}
+        </button>
+        
         <div class="card-body text-left">
           <h5 class="card-title">{{ item.name }}</h5>
           <p class="card-text text-muted">{{ item.description }}</p>

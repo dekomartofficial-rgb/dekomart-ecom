@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class NavHomeComponent {
   @Input() wishlistCount: number = 0;
+  @Input () cartCount: number =0;
   constructor(private http: HttpClientService, private router: Router) { }
 
   onLogin() {
