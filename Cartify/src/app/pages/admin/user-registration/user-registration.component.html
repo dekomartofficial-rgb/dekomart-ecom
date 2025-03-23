@@ -10,43 +10,46 @@
             </div>
             <div class="col-md-12" style="padding-top: 10px;">
                 <div style="margin-top: 20px;">
-                    <p-table [value]="Users" [paginator]="true" [rows]="10" [responsive]="true">
+                    <p-table #table [value]="Users" [paginator]="true" [rows]="10" [responsive]="true">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th></th>
-                                <th pSortableColumn="FirstName">
+                                <th>
                                     First Name
-                                    <p-columnFilter field="FirstName" matchMode="contains" />
+                                    <p-columnFilter field="FirstName" matchMode="contains"></p-columnFilter>
                                 </th>
-                                <th pSortableColumn="SecondName">
+                                <th>
                                     Second Name
-                                    <p-columnFilter field="SecondName" matchMode="contains" />
+                                    <p-columnFilter field="SecondName" matchMode="contains"></p-columnFilter>
                                 </th>
-                                <th pSortableColumn="DateOfBirth">
+                                <th>
                                     Date Of Birth
-                                    <p-columnFilter field="DateOfBirth" matchMode="contains" />
+                                    <p-columnFilter field="DateOfBirth" matchMode="contains"></p-columnFilter>
                                 </th>
-                                <th pSortableColumn="Email">
+                                <th>
                                     Email
-                                    <p-columnFilter field="Email" matchMode="contains" />
+                                    <p-columnFilter field="Email" matchMode="contains"></p-columnFilter>
                                 </th>
-                                <th pSortableColumn="PhoneNumber">
+                                <th>
                                     Phone Number
-                                    <p-columnFilter field="PhoneNumber" matchMode="contains" />
+                                    <p-columnFilter field="PhoneNumber" matchMode="contains"></p-columnFilter>
                                 </th>
-                                <th pSortableColumn="UserStatusDesc">
+                                <th>
                                     Status
-                                    <p-columnFilter field="UserStatusDesc" matchMode="contains" />
+                                    <p-columnFilter field="UserStatusDesc" matchMode="contains"></p-columnFilter>
                                 </th>
                             </tr>
                         </ng-template>
+
                         <ng-template pTemplate="body" let-user>
                             <tr>
-                                <td style="text-align: center;">
-                                    <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info"
-                                        (click)="editUser(user)"></button>
-                                    <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"
-                                        (click)="deleteUser(user.UserId)"></button>
+                                <td class="p-3 flex gap-2">
+                                    <div class="action-buttons">
+                                        <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                                            (click)="editUser(user)" severity="success" />
+                                        <p-button icon="pi pi-trash" [rounded]="true" [outlined]="true"
+                                            (click)="deleteUser(user.UserId)" severity="danger" />
+                                    </div>
                                 </td>
                                 <td>{{ user.FirstName }}</td>
                                 <td>{{ user.SecondName }}</td>
@@ -54,7 +57,8 @@
                                 <td>{{ user.Email }}</td>
                                 <td>{{ user.PhoneNumber }}</td>
                                 <td style="text-align: center;">
-                                    <span [ngStyle]="user.UserStatus === 'A' ? {'background-color':'green'} : {'background-color':'red'}"
+                                    <span
+                                        [ngStyle]="user.UserStatus === 'A' ? {'background-color':'green'} : {'background-color':'red'}"
                                         style="padding: 8px; color: white; border-radius: 6px;">
                                         {{ user.UserStatusDesc }}
                                     </span>
@@ -65,7 +69,7 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
     <!-- Modal structure -->
     <div *ngIf="isModalOpen" class="modal d-flex justify-content-center align-items-center row m-0 p-0">
         <div class="modal-content">
@@ -108,7 +112,8 @@
                             <p-floatlabel variant="on">
                                 <p-datepicker inputId="DateOfBirth" showIcon iconDisplay="input"
                                     [style]="{'width': '100%'}" [inputStyle]="{'width': '100%'}"
-                                    [(ngModel)]="User.DateOfBirth" name="DateOfBirth"  #DateOfBirthRef="ngModel" required></p-datepicker>
+                                    [(ngModel)]="User.DateOfBirth" name="DateOfBirth" #DateOfBirthRef="ngModel"
+                                    required></p-datepicker>
                                 <label for="DateOfBirth"
                                     style="font-size: 13px !important; padding: 9px !important;">Date Of Birth</label>
                             </p-floatlabel>
