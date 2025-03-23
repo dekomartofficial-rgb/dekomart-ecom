@@ -108,4 +108,12 @@ export class UserRegistrationComponent {
     this.User = new User(); // Reset to a new instance of User class
   }
 
+  editUser(user: any) {
+    console.log('Editing user:', user);
+}
+
+deleteUser(userId: number) {
+    this.Users = this.Users.filter((user: { UserId: number; }) => user.UserId !== userId);
+}
+
 }
