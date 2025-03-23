@@ -3,10 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClientService } from '../../provider/services/http-client.service';
 import { ScreenList } from '../../provider/interface/AdminInterface';
-import { UserProfile } from '../../provider/interface/AdminInterface' 
-import { AvatarModule } from 'primeng/avatar';
-import { InputIcon } from 'primeng/inputicon';
-import { IconField } from 'primeng/iconfield';
+import { UserProfile } from '../../provider/interface/AdminInterface'
+import { AvatarModule } from 'primeng/avatar'; 
 import { FormsModule } from '@angular/forms';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { DropdownModule } from 'primeng/dropdown';
@@ -37,7 +35,7 @@ export class NavbarComponent implements OnInit {
   constructor(private router: Router, private httpClient: HttpClientService) { }
 
   ngOnInit(): void {
-    this.UserId = this.httpClient.getUserId(); 
+    this.UserId = this.httpClient.getUserId();
     this.GetScreenList();
   }
 
@@ -46,8 +44,6 @@ export class NavbarComponent implements OnInit {
     return userData && userData.UserId > 0 && !['/login', '/', '/home'].includes(this.router.url)
   }
 
-
-  
 
   sidrBarDialog() {
     this.sidebarVisible = !this.sidebarVisible;
@@ -62,7 +58,7 @@ export class NavbarComponent implements OnInit {
     if (this.UserId) {
       this.httpClient.get<any>('user/GetScreenList', { UserId: this.UserId })
         .subscribe((res) => {
-          this.ScreenList = Array.isArray(res.screenList) ? res.screenList : [];  ;
+          this.ScreenList = Array.isArray(res.screenList) ? res.screenList : [];;
         });
     }
   }

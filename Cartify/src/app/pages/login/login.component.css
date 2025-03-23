@@ -1,76 +1,51 @@
-/* login.component.css */
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #f5f5f5;
-  padding: 20px;
-}
-
-.login-card {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  padding: 30px;
+form {
   width: 100%;
   max-width: 400px;
-}
-
-h2 {
-  color: #333;
-  margin-bottom: 8px;
-  font-size: 24px;
-}
-
-.subtitle {
-  color: #666;
-  margin-bottom: 25px;
-  font-size: 14px;
+  margin: 0 auto;
 }
 
 .form-group {
   margin-bottom: 20px;
 }
 
-label {
+.form-group label {
   display: block;
   margin-bottom: 8px;
-  color: #333;
   font-weight: 500;
+  color: #333;
 }
 
-input[type="email"],
-input[type="password"] {
+.form-group input {
   width: 100%;
-  padding: 12px 15px;
+  padding: 12px 16px;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
-  transition: border-color 0.3s;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: border-color 0.3s ease;
 }
 
-input[type="email"]:focus,
-input[type="password"]:focus {
-  border-color: #4285f4;
+.form-group input:focus {
   outline: none;
+  border-color: #e65656;
+  box-shadow: 0 0 0 2px rgba(230, 86, 86, 0.1);
 }
 
 .invalid-input {
-  border-color: #f44336 !important;
+  border-color: #dc3545 !important;
+  background-color: rgba(220, 53, 69, 0.05);
 }
 
 .error-message {
-  color: #f44336;
-  font-size: 12px;
-  margin-top: 5px;
+  color: #dc3545;
+  font-size: 13px;
+  margin-top: 0px;
 }
 
 .form-options {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .remember-me {
@@ -78,50 +53,198 @@ input[type="password"]:focus {
   align-items: center;
 }
 
-.remember-me input {
+.remember-me input[type="checkbox"] {
   margin-right: 8px;
+  accent-color: #e65656;
 }
 
 .forgot-password {
-  color: #4285f4;
+  color: #e65656;
   text-decoration: none;
   font-size: 14px;
+  transition: color 0.2s;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
 }
 
 .login-button {
   width: 100%;
-  padding: 12px;
-  background-color: #4285f4;
+  background-color: #e65656;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
+  padding: 14px;
   font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 .login-button:hover {
-  background-color: #3367d6;
+  background-color: #d44545;
 }
 
 .error-alert {
   background-color: #ffebee;
-  color: #f44336;
-  padding: 10px;
+  color: #c62828;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 20px;
+  font-size: 14px;
+  border-left: 4px solid #c62828;
+}
+
+/* Fix for the extraneous 'S' character in your template */
+/* Remove this from your HTML: @if (formControls['email'].errors['required']) {S */
+
+.login-container {
+  margin-top: 5%;
+  max-width: 1000px;
+}
+
+.login-image {
+  border-radius: 10px 0 0 10px;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px !important;
+}
+
+.login-form {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 0 10px 10px 0;
+}
+
+.login-title {
+  font-weight: 700; 
+}
+
+.form-control {
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
   border-radius: 5px;
-  margin-top: 20px;
-  font-size: 14px;
 }
 
-.signup-link {
-  text-align: center;
-  margin-top: 20px;
-  color: #666;
-  font-size: 14px;
+.login-btn {
+  background-color: #e65656;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: 600;
 }
 
-.signup-link a {
-  color: #4285f4;
+.login-btn:hover {
+  background-color: #d44545;
+}
+
+.forgot-password {
+  color: #e65656;
   text-decoration: none;
-  font-weight: 500;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+  .login-image {
+    border-radius: 10px 10px 0 0;
+  }
+
+  .login-form {
+    border-radius: 0 0 10px 10px;
+  }
+}
+.login-container {
+  /* Remove margin-top and set height to 100vh to fill the screen */
+  margin-top: 0;
+  max-width: 100%;
+  height: 100vh;
+  padding: 0;
+}
+
+.login-image {
+  border-radius: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 !important;
+  height: 100vh;
+}
+
+.login-form {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Keep the rest of your CSS the same */
+
+/* Update media query for mobile devices */
+@media (max-width: 767px) {
+  .login-image {
+    border-radius: 0;
+    height: 40vh; /* Adjust height for mobile */
+  }
+
+  .login-form {
+    border-radius: 0;
+    height: 60vh; /* Adjust height for mobile */
+  }
+}
+
+.login-container {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden; /* Prevents container scrolling */
+}
+
+/* Make sure content fits without scrolling */
+.login-form {
+  overflow: auto; /* Allow scrolling only in the form if needed */
+  max-height: 100vh;
+}
+
+/* Ensure image doesn't force scrolling */
+.login-image img {
+  max-height: 100vh;
+  object-fit: cover;
+}
+
+/* Remove left padding from form container */
+form {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+/* Remove left padding from input fields if needed */
+.form-group input,
+input[type="email"],
+input[type="password"] {
+  padding-left: 12px; /* Smaller padding or adjust as needed */
+}
+
+/* Ensure all form elements align properly */
+.form-group,
+.remember-me,
+.login-button {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/* Ensure container elements don't have padding */
+.login-form,
+.form-container {
+  padding-left: 137px;
 }

@@ -18,16 +18,18 @@ export class LoginComponent {
   loginForm: FormGroup;
   isSubmitted = false;
   errorMessage = '';
+  isAdmin: string = 'AD'
+  isValueExists: any;
   Login: Login = {
-    EmailId: 'sinanruzz9@gmail.com',
-    Password: '12345678',
+    EmailId: '',
+    Password: '',
     AuthType: ''
   }
 
   constructor(private formBuilder: FormBuilder, private httpClient: HttpClientService, private router: Router, private toastService: ToastService) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(1)]]
     });
   }
   ngOnInit(): void {
@@ -40,7 +42,11 @@ export class LoginComponent {
 
   navigateLogin() {
     if (this.httpClient.getUserData()?.UserId > 0) {
-      return this.router.navigate(['admin/']);
+      if (this.httpClient.getUserData().UserId === 'UR') {
+        return this.router.navigate(['user/']);
+      } else {
+        return this.router.navigate(['admin/']);
+      }
     }
     return null
   }
@@ -59,10 +65,15 @@ export class LoginComponent {
               this.toastService.showSuccess('Success', res.Message);
               const UserData = {
                 UserId: res.UserId,
-                Token: res.Token
+                Token: res.Token,
+                UserRole: res.UserRole
               }
-              localStorage.setItem('userData', JSON.stringify(UserData));
-              this.router.navigate(['/admin/']);
+              localStorage.setItem('userData', JSON.stringify(UserData)); 
+              if (this.checkAdmin(res.UserRole)) {
+                this.router.navigate(['/admin/']);
+              } else {
+                this.router.navigate(['/user/'])
+              }
             } else {
               this.toastService.showError('Error', res.Message)
             }
@@ -70,5 +81,11 @@ export class LoginComponent {
           error: (err) => { throw err }
         })
     }
+  }
+
+  checkAdmin(data: string): boolean {
+    const parts: string[] = data.split(',');
+    const adExists: boolean = parts.includes(this.isAdmin)
+    return adExists
   }
 }

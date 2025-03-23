@@ -33,6 +33,9 @@ async function handleReps(response) {
                     case 'p_ret_id':
                         parsedColumn = 'MessageId';
                         break;
+                    case 'p_user_role':
+                        parsedColumn = 'UserRole';
+                        break;
                     case 'p_retid':
                         parsedColumn = 'MessageId';
                         break;
@@ -43,7 +46,7 @@ async function handleReps(response) {
                 }
             }
         }
-  
+
         return res;
     } catch (err) {
         console.error('Error processing response:', err);

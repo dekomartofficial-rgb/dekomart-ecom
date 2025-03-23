@@ -15,6 +15,15 @@ export class NavHomeComponent {
   constructor(private http: HttpClientService, private router: Router) { }
 
   onLogin() {
-    return this.http.getUserData() ? this.router.navigateByUrl('/admin') : this.router.navigateByUrl('/login')
+    if (this.http.getUserData()) {
+      if (this.http.getUserData().UserRole === 'CU') {
+        return this.router.navigateByUrl('/user')
+      }
+      else {
+        return this.router.navigateByUrl('/admin')
+      }
+    } else {
+      return this.router.navigateByUrl('/login')
+    }
   }
 }
