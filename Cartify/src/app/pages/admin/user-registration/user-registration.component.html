@@ -13,39 +13,59 @@
                     <p-table [value]="Users" [paginator]="true" [rows]="10" [responsive]="true">
                         <ng-template pTemplate="header">
                             <tr>
-                                <th>First Name</th>
-                                <th>Second Name</th>
-                                <th>Date Of Birth</th>
-                                <th>Email</th>
-                                <th>Phone Number</th>
-                                <th>Status</th>
+                                <th></th>
+                                <th pSortableColumn="FirstName">
+                                    First Name
+                                    <p-columnFilter field="FirstName" matchMode="contains" />
+                                </th>
+                                <th pSortableColumn="SecondName">
+                                    Second Name
+                                    <p-columnFilter field="SecondName" matchMode="contains" />
+                                </th>
+                                <th pSortableColumn="DateOfBirth">
+                                    Date Of Birth
+                                    <p-columnFilter field="DateOfBirth" matchMode="contains" />
+                                </th>
+                                <th pSortableColumn="Email">
+                                    Email
+                                    <p-columnFilter field="Email" matchMode="contains" />
+                                </th>
+                                <th pSortableColumn="PhoneNumber">
+                                    Phone Number
+                                    <p-columnFilter field="PhoneNumber" matchMode="contains" />
+                                </th>
+                                <th pSortableColumn="UserStatusDesc">
+                                    Status
+                                    <p-columnFilter field="UserStatusDesc" matchMode="contains" />
+                                </th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-user>
                             <tr>
+                                <td style="text-align: center;">
+                                    <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info"
+                                        (click)="editUser(user)"></button>
+                                    <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                                        (click)="deleteUser(user.UserId)"></button>
+                                </td>
                                 <td>{{ user.FirstName }}</td>
                                 <td>{{ user.SecondName }}</td>
                                 <td>{{ user.DateOfBirth }}</td>
                                 <td>{{ user.Email }}</td>
                                 <td>{{ user.PhoneNumber }}</td>
-                                <td style="text-align: center;"><span
-                                        [ngStyle]="user.UserStatus === 'A' ? {'background-color':'green'} : {'background-color':'red'}"
-                                        style="padding: 8px; color: white; border-radius: 6px;">{{ user.UserStatusDesc
-                                        }}</span>
+                                <td style="text-align: center;">
+                                    <span [ngStyle]="user.UserStatus === 'A' ? {'background-color':'green'} : {'background-color':'red'}"
+                                        style="padding: 8px; color: white; border-radius: 6px;">
+                                        {{ user.UserStatusDesc }}
+                                    </span>
                                 </td>
                             </tr>
                         </ng-template>
                     </p-table>
-                    <ng-template #paginatorleft>
-                        <p-button type="button" icon="pi pi-plus" text></p-button>
-                    </ng-template>
-                    <ng-template #paginatorright>
-                        <p-button type="button" icon="pi pi-cloud" text></p-button>
-                    </ng-template>
                 </div>
             </div>
         </div>
-    </div>
+    </div>    
     <!-- Modal structure -->
     <div *ngIf="isModalOpen" class="modal d-flex justify-content-center align-items-center row m-0 p-0">
         <div class="modal-content">
