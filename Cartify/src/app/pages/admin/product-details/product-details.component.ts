@@ -44,7 +44,7 @@ export class ProductDetailsComponent {
   ];
 
   products: any[] = [
-    { id: '1000', name: 'Macbook Pro', category: 'Electronics', quantity: 10, inventoryStatus: 'IN STOCK', rating: 3 },
+    { id: '1000', name: 'Macbook Pro', category: 'Electronics', quantity: 10, inventoryStatus: 'IN STOCK', rating: 3, price: 2500 },
     { id: '1001', code: 'f230fh0g3', name: 'Bamboo Watch', description: 'Product Description', image: 'bamboo-watch.jpg', price: 65, category: 'Accessories', quantity: 24, inventoryStatus: 'OUT OF STOCK', rating: 5 },];
 
 
@@ -71,19 +71,21 @@ export class ProductDetailsComponent {
   }
 
   onImagesSelect(event: any) {
-    if (event.files && event.files.length > 0) {
-      for (let file of event.files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.selectedImages.push(e.target.result);
-        };
-        reader.readAsDataURL(file);
-      }
+    for (let file of event.files) {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.selectedImages.push(reader.result as string);
+      };
     }
   }
 
   removeImage(index: number) {
     this.selectedImages.splice(index, 1);
+  }
+
+  saveProduct() {
+    this.addProductDialog = false;
   }
 
 

@@ -146,10 +146,23 @@ tr:hover {
   margin: 0px;
   height: 0px;
 }
-.required-field{
-  padding: 1px !important;
-  color: red;
-  font-size: 15px;
-  font-weight: 400;
-  margin-left: 12px;
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+:host ::ng-deep .p-button-success {
+  background-color: #28a745 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 50% !important;
+}
+
+:host ::ng-deep .p-button-danger {
+  background-color: #dc3545 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 50% !important;
 }
