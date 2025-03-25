@@ -22,7 +22,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 @Component({
   selector: 'app-user-registration',
   standalone: true,
-  imports: [CommonModule, FloatLabel, TableModule, MultiSelectModule, ButtonModule, FormsModule, InputTextModule, InputIconModule, DatePicker, PasswordModule, IconFieldModule, ReactiveFormsModule, Checkbox, TagModule],
+  imports: [CommonModule, FloatLabel, TableModule, MultiSelectModule, ButtonModule, FormsModule, InputTextModule, InputIconModule, DatePicker, PasswordModule, IconFieldModule, ReactiveFormsModule, Checkbox, FormsModule, TagModule],
   templateUrl: './user-registration.component.html',
   styleUrl: './user-registration.component.css'
 })
@@ -37,12 +37,11 @@ export class UserRegistrationComponent {
 
   constructor(private fb: FormBuilder, private http: HttpClientService, private toastService: ToastService) {
     this.UserForm = this.fb.group({
-      FirstName: new FormControl("", [Validators.required])
     })
   }
 
   ngOnInit() {
-    this.getUser()
+    this.getUser(0)
   }
   openModal(): void {
     this.isModalOpen = true;
@@ -54,10 +53,11 @@ export class UserRegistrationComponent {
     this.resetUser()
     this.SelectedUserRole = []
   }
-  getUser() {
-    this.http.get<User[]>('user/GetUser', { User: 0 }).subscribe({
+  getUser(id?: number) {
+    this.http.get<User[]>('user/GetUser', { User: id ? id : 0 }).subscribe({
       next: (res) => {
         this.Users = res
+        this.SelectedUserRole = this.Users.UserRole && this.Users.UserRole.includes(',') ? this.Users.UserRole.split(',') : this.Users.UserRole
       },
       error: (err) => {
         this.toastService.showError('Error', err)
@@ -70,50 +70,60 @@ export class UserRegistrationComponent {
   }
 
   getUserRole() {
-    this.http.getUserRole(this.User ? this.User.UserId : 0).subscribe({
+    this.http.getUserRole(0).subscribe({
       next: (res: any[]) => {
-        this.UserRole = res || [];
+        this.UserRole = res;
       }
     });
   }
 
-  onSaveUser() { 
-    if (this.UserForm.valid) {
-      this.User.OpsMode = this.User.UserId > 0 ? 'UPDATE' : 'INSERT';
-      this.User.ProfileImage = 'https://www.w3schools.com/howto/img_avatar.png';
-      this.User.UserRole = this.SelectedUserRole.join(',')
-      this.http.post<any>('user/SaveUser', this.User).subscribe({
-        next: (res) => {
-          if (res.MessageType === 2) {
-            this.toastService.showSuccess('Success', res.Message);
-            this.resetUser()
-            this.getUser()
-            this.closeModal();
-          } else {
-            this.toastService.showError('Error', res.Message);
-          }
-        },
-        error: (err) => {
-          this.toastService.showError('Error', err);
+  onSaveUser() {
+    debugger
+    this.User.OpsMode = this.User.UserId > 0 ? 'UPDATE' : 'INSERT';
+    this.User.ProfileImage = 'https://www.w3schools.com/howto/img_avatar.png';
+    this.User.UserRole = this.SelectedUserRole.join(',')
+    this.User.Password = this.User.Password.toString()
+    this.User.UserStatus = this.User.UserStatus === 1 ? 'A' : 'I'
+    this.User.DateOfBirth = this.User.DateOfBirth
+    this.http.post<any>('user/SaveUser', this.User).subscribe({
+      next: (res) => {
+        if (res.MessageType === 2) {
+          this.toastService.showSuccess('Success', res.Message);
+          this.resetUser()
+          this.getUser(0)
+          this.closeModal();
+        } else {
+          this.toastService.showError('Error', res.Message);
         }
-      })
-    } else {
-      this.UserForm.markAllAsTouched(); // Highlight all errors
-      console.log('Form is invalid');
-    }
+      },
+      error: (err) => {
+        this.toastService.showError('Error', err);
+      }
+    })
 
   }
 
   resetUser(): void {
     this.User = new User(); // Reset to a new instance of User class
   }
+  editUser(UserId: number) {
+    this.http.get<User>('user/GetUser', { UserId: UserId }).subscribe({
+      next: (res) => {
+        this.User = res;
+        this.User.UserStatus = this.User.UserStatus === 'A' ? 1 : 0
+        this.User.DateOfBirth = this.User.DateOfBirth
+        this.SelectedUserRole = this.User.UserRole ? this.User.UserRole.includes(',') ? this.User.UserRole.split(',').filter(role => role) : [this.User.UserRole] : [];
+        this.isModalOpen = true;
+        this.getUserRole()
+      },
+      error: (err) => {
+        this.toastService.showError('Error', err);
+      }
+    });
+  }
 
-  editUser(user: any) {
-    console.log('Editing user:', user);
-}
-
-deleteUser(userId: number) {
+  deleteUser(userId: number) {
     this.Users = this.Users.filter((user: { UserId: number; }) => user.UserId !== userId);
-}
+  }
 
 }

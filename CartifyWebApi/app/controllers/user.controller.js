@@ -17,7 +17,7 @@ class User {
       request.output("p_rettype", mssql.Int);
 
       const result = await request.execute("PKG_USER$p_validate_login");
-      const output = await handleReps(result.output); 
+      const output = await handleReps(result.output);
       /**
        * JWT Token Generate
        */
@@ -36,8 +36,8 @@ class User {
   };
   static SaveUser = async (req, res) => {
     try {
-      console.log(req.body);
       const request = await dataAcces.getRequest();
+      console.log(req.body)
 
       request.input("ai_user_id", mssql.BigInt, req.body.UserId);
       request.input("as_first_name", mssql.VarChar(100), req.body.FirstName);
@@ -46,17 +46,12 @@ class User {
       request.input("as_password", mssql.NVarChar(100), req.body.Password);
       request.input("as_email", mssql.NVarChar(100), req.body.Email);
       request.input("ai_phone_number", mssql.BigInt, req.body.PhoneNumber);
-      request.input(
-        "as_profile_image",
-        mssql.NVarChar(mssql.MAX),
-        req.body.ProfileImage
-      );
-      request.input(
-        "as_user_status",
-        mssql.VarChar(1),
-        req.body.IsActiveStatus
-      );
+      request.input("as_profile_image", mssql.NVarChar(mssql.MAX), req.body.ProfileImage);
+      request.input("as_user_status", mssql.VarChar(1), req.body.UserStatus);
       request.input("as_ops_mode", mssql.VarChar(10), req.body.OpsMode);
+      request.input("as_user_role", mssql.VarChar(10), req.body.UserRole);
+      request.input("ai_phone_verified", mssql.TinyInt, req.body.IsPhoneVerified);
+      request.input("ai_mail_verified", mssql.TinyInt, req.body.IsMailVerified)
       request.input("ai_logged_user_id", mssql.BigInt, req.LoggedUserId);
       request.output("p_retmsg", mssql.VarChar(500));
       request.output("p_rettype", mssql.Int);
@@ -109,9 +104,10 @@ class User {
 
       request.input("ai_user_id", mssql.BigInt, req.query.UserId);
 
-      const result = await request.execute("PKG_USER$p_get_users");
+      let result = await request.execute("PKG_USER$p_get_users");
+      result = result.recordsets.length > 1 ? result.recordsets[0] : (result.recordsets[0]?.length === 1 ? result.recordsets[0][0] : result.recordsets[0]);
 
-      res.status(200).json(result.recordsets[0]);
+      res.status(200).json(result);
     } catch (e) {
       res.status(500).json({ err: "Error Occur:" + e });
     }

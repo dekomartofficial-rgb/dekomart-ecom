@@ -43,9 +43,10 @@
                         <ng-template pTemplate="body" let-user>
                             <tr>
                                 <td style="text-align: center;">
-                                    <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info"
-                                        (click)="editUser(user)"></button>
-                                    <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                                    <button pButton type="button" icon="pi pi-pencil"
+                                        class="p-button-rounded p-button-info" (click)="editUser(user.UserId)"></button>
+                                    <button pButton type="button" icon="pi pi-trash"
+                                        class="p-button-rounded p-button-danger"
                                         (click)="deleteUser(user.UserId)"></button>
                                 </td>
                                 <td>{{ user.FirstName }}</td>
@@ -54,7 +55,8 @@
                                 <td>{{ user.Email }}</td>
                                 <td>{{ user.PhoneNumber }}</td>
                                 <td style="text-align: center;">
-                                    <span [ngStyle]="user.UserStatus === 'A' ? {'background-color':'green'} : {'background-color':'red'}"
+                                    <span
+                                        [ngStyle]="user.UserStatus === 'A' ? {'background-color':'green'} : {'background-color':'red'}"
                                         style="padding: 8px; color: white; border-radius: 6px;">
                                         {{ user.UserStatusDesc }}
                                     </span>
@@ -65,7 +67,7 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
     <!-- Modal structure -->
     <div *ngIf="isModalOpen" class="modal d-flex justify-content-center align-items-center row m-0 p-0">
         <div class="modal-content">
@@ -84,73 +86,88 @@
                         <div class="col-md-6 p-2">
                             <p-floatlabel variant="on">
                                 <input pInputText id="FirstName" autocomplete="off" style="padding: 9px; width: 100%"
-                                    [(ngModel)]="User.FirstName" name="FirstName" #FirstNameRef="ngModel" minlength="4"
+                                    [(ngModel)]="User.FirstName" name="FirstName" #FirstName="ngModel" minlength="4"
                                     required />
                                 <label for="FirstName" class="form-class">First Name</label>
                             </p-floatlabel>
-                            <!-- @if (FirstNameRef.invalid && FirstNameRef.touched) {
-                            <div class="form-class-required">
-                                <label *ngIf="FirstNameRef.errors?.['required']">First Name is required.</label>
-                                <label *ngIf="FirstNameRef.errors?.['minlength']">Minimum 4 characters required.</label>
+                            <div *ngIf="FirstName.invalid && FirstName.touched" class="required-field">
+                                <small *ngIf="FirstName.errors?.['required']">First Name is required.</small>
+                                <small *ngIf="FirstName.errors?.['minlength']">
+                                    Minimum 4 characters required.
+                                </small>
                             </div>
-                            } -->
                         </div>
 
+                        <!-- Second Name -->
                         <div class="col-md-6 p-2">
                             <p-floatlabel variant="on">
-                                <input pInputText id="SecondName" autocomplete="off" style="padding: 9px; width: 100%;"
-                                    [(ngModel)]="User.SecondName" name="SecondName" #SecondNameRef="ngModel" required>
-                                <label for="SecondName" class="form-class">Last
-                                    Name</label>
+                                <input pInputText id="SecondName" autocomplete="off" style="padding: 9px; width: 100%"
+                                    [(ngModel)]="User.SecondName" name="SecondName" #SecondName="ngModel" required />
+                                <label for="SecondName" class="form-class">Last Name</label>
                             </p-floatlabel>
+                            <div *ngIf="SecondName.invalid && SecondName.touched" class="required-field">
+                                <small *ngIf="SecondName.errors?.['required']">Last Name is required.</small>
+                            </div>
                         </div>
+
+                        <!-- Date Of Birth -->
                         <div class="col-md-6 p-2">
                             <p-floatlabel variant="on">
                                 <p-datepicker inputId="DateOfBirth" showIcon iconDisplay="input"
-                                    [style]="{'width': '100%'}" [inputStyle]="{'width': '100%'}"
-                                    [(ngModel)]="User.DateOfBirth" name="DateOfBirth"  #DateOfBirthRef="ngModel" required></p-datepicker>
+                                    [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"
+                                    [(ngModel)]="User.DateOfBirth" name="DateOfBirth" #DateOfBirth="ngModel"   dateFormat="dd/mm/yy"
+                                    required></p-datepicker>
                                 <label for="DateOfBirth"
-                                    style="font-size: 13px !important; padding: 9px !important;">Date Of Birth</label>
+                                    style="font-size: 13px !important; padding: 9px !important">Date Of Birth</label>
                             </p-floatlabel>
+                            <div *ngIf="DateOfBirth.invalid && DateOfBirth.touched" class="required-field">
+                                <small *ngIf="DateOfBirth.errors?.['required']">Date of Birth is required.</small>
+                            </div>
                         </div>
+
+                        <!-- Email -->
                         <div class="col-md-6 p-2">
                             <p-floatlabel variant="on">
-                                <input pInputText id="Email" autocomplete="off" style="padding: 8px; width: 100%;"
-                                    [(ngModel)]="User.Email" name="Email" required>
+                                <input pInputText id="Email" autocomplete="off" style="padding: 8px; width: 100%"
+                                    [(ngModel)]="User.Email" name="Email" #Email="ngModel" required email />
                                 <label for="Email" class="form-class">Email</label>
                             </p-floatlabel>
-                            @if (UserForm.get('Email')?.invalid && UserForm.get('Email')?.touched) {
-                            <label class="form-class-required">
-                                <p>Email required.</p>
-                            </label>}
-                            @if (UserForm.get('Email')?.errors?.['email']) {
-                            <label class="form-class-required">
-                                <p>Enter a valid Email.</p>
-                            </label>}
+                            <div *ngIf="Email.invalid && Email.touched" class="required-field">
+                                <small *ngIf="Email.errors?.['required']">Email is required.</small>
+                                <small *ngIf="Email.errors?.['email']">Invalid email format.</small>
+                            </div>
                         </div>
+
+                        <!-- Password -->
                         <div class="col-md-6 p-2">
-                            <p-floatlabel variant="on" style="width: 100%;">
-                                <p-password inputId="Password" [style]="{'width': '100%'}"
-                                    [inputStyle]="{'width': '100%'}" [(ngModel)]="User.Password" name="Password"
-                                    required></p-password>
+                            <p-floatlabel variant="on" style="width: 100%">
+                                <p-password inputId="Password" [style]="{ width: '100%' }"
+                                    [inputStyle]="{ width: '100%' }" [(ngModel)]="User.Password" name="Password"
+                                    #Password="ngModel" required minlength="6"></p-password>
                                 <label for="Password" class="form-class">Password</label>
                             </p-floatlabel>
-                            @if (UserForm.get('Password')?.invalid && UserForm.get('Password')?.touched) {
-                            <label class="form-class-required">
-                                <p>Password required.</p>
-                            </label>}
+                            <div *ngIf="Password.invalid && Password.touched" class="required-field">
+                                <small *ngIf="Password.errors?.['required']">Password is required.</small>
+                                <small *ngIf="Password.errors?.['minlength']">
+                                    Minimum 6 characters required.
+                                </small>
+                            </div>
                         </div>
+
+                        <!-- Phone Number -->
                         <div class="col-md-6 p-2">
-                            <p-floatlabel variant="on" style="width: 100%;">
-                                <input pInputText [style]="{ 'width': '100%' }" id="PhoneNumber"
-                                    style="padding: 8px; width: 100%;" [(ngModel)]="User.PhoneNumber" name="PhoneNumber"
-                                    required pattern="\\d{10}" minlength="10" maxlength="10" />
+                            <p-floatlabel variant="on" style="width: 100%">
+                                <input pInputText id="PhoneNumber" style="padding: 8px; width: 100%"
+                                    [(ngModel)]="User.PhoneNumber" name="PhoneNumber" #PhoneNumber="ngModel"
+                                    [minlength]="10" required pattern="^\d{10}$" />
                                 <label for="PhoneNumber" class="form-class">Phone Number</label>
                             </p-floatlabel>
-                            @if (UserForm.get('PhoneNumber')?.invalid && UserForm.get('PhoneNumber')?.touched) {
-                            <label class="form-class-required">
-                                <p>Phone Number required.</p>
-                            </label>}
+                            <div *ngIf="PhoneNumber.invalid && PhoneNumber.touched" class="required-field">
+                                <small *ngIf="PhoneNumber.errors?.['required']">Phone Number is required.</small>
+                                <small *ngIf="PhoneNumber.errors?.['pattern']">
+                                    Phone number must be 10 digits.
+                                </small>
+                            </div>
                         </div>
                         <div class="col-md-6 p-2">
                             <p-floatlabel variant="on" style="width: 100%;">
@@ -159,20 +176,14 @@
                                     [showToggleAll]="true" [style]="{ width: '100%' }"></p-multiSelect>
                                 <label for="UserRole" class="form-class">User Role</label>
                             </p-floatlabel>
-                            @if (UserForm.get('UserRole')?.invalid && UserForm.get('UserRole')?.touched) {
-                            <label class="form-class-required">
-                                <p>User Role required.</p>
-                            </label>}
                         </div>
                         <div class="col-md-2 p-2">
-                            <div class="flex items-center">
-                                <p-checkbox inputId="IsActiveStatus" name="IsActiveStatus"
-                                    [(ngModel)]="User.IsActiveStatus" binary="true"
-                                    (onChange)="User.IsActiveStatus = $event.checked ? 'A' : 'I'"></p-checkbox>
+                            <div class="flex items-center"> 
+                                <p-checkbox inputId="IsActiveStatus" name="IsActiveStatus" [(ngModel)]="User.UserStatus"
+                                    binary="true" [trueValue]="1" [falseValue]="null"></p-checkbox>
                                 <label for="IsActiveStatus" class="ml-2 label-checkbox">Active Status</label>
                             </div>
                         </div>
-
                         <div class="col-md-2 p-2">
                             <div class="flex items-center">
                                 <p-checkbox inputId="IsMailVerified" name="IsMailVerified"
@@ -181,7 +192,6 @@
                                 <label for="IsMailVerified" class="ml-2 label-checkbox">Mail Verified</label>
                             </div>
                         </div>
-
                         <div class="col-md-2 p-2">
                             <div class="flex items-center">
                                 <p-checkbox inputId="IsPhoneVerified" name="IsPhoneVerified"
@@ -190,14 +200,12 @@
                                 <label for="IsPhoneVerified" class="ml-2 label-checkbox">Phone Verified</label>
                             </div>
                         </div>
-
-
                         <div class="col-md-12 p-4 d-flex m-2 justify-content-end">
                             <div class="d-flex gap-2">
-                                <button class="btn btn-success">
+                                <button class="btn btn-success" [disabled]="UserReg.invalid">
                                     <i class="bi bi-save" style="padding-right: 5px;"></i> Save
                                 </button>
-                                <button type="button" class="btn btn-danger" (click)="closeModal()">
+                                <button type="button" class="btn btn-danger"  (click)="closeModal()">
                                     <i class="bi bi-x-circle" style="padding-right: 5px;"></i> Cancel
                                 </button>
                             </div>

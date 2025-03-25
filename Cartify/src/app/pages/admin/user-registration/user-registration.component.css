@@ -68,10 +68,7 @@ tr:hover {
   font-size: 13px !important;
   padding: 9px !important;
   font-weight: 500;
-}
-.modal-body div {
-  padding: 9px !important;
-}
+} 
 
 .close-btn {
   position: absolute;
@@ -148,4 +145,11 @@ tr:hover {
   padding-left: 15px !important;
   margin: 0px;
   height: 0px;
+}
+.required-field{
+  padding: 1px !important;
+  color: red;
+  font-size: 15px;
+  font-weight: 400;
+  margin-left: 12px;
 }
