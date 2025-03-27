@@ -12,12 +12,22 @@ export interface ScreenList {
 }
 
 export interface Login {
-    EmailId: string ;
+    EmailId: string;
     Password: string;
     AuthType: string;
 }
-export interface UserProfile{
+export interface UserProfile {
     UserName: string;
     Email: string;
     ProfieImage: string
+}
+
+export class Role {
+    RoleId: number = 0;
+    RoleName: string = '';
+    RoleCode: string = '';
+    InsertBy: string = '';
+    InsertDate: Date = new Date();
+    UpdateBy: string = '';
+    UpdateDate: Date = new Date()
 }

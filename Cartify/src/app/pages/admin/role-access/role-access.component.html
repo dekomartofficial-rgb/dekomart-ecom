@@ -1,1 +1,27 @@
-<p>role-access works!</p>
+<div class="main-header">
+    <div class="col-md-12 page-header d-flex"> 
+        <i class="fa-solid fa-screwdriver-wrench fa-xl" style="color: black; padding-top: 22px"></i>
+        <h6 style="font-size: 26px; padding-left: 16px; padding-top: 1px; font-weight: 600;">
+            Role Access
+        </h6>
+    </div>
+    <div class="main-content-body">
+        <div class="table-container d-flex row">
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <h3>Role's</h3>
+                </div>
+                <div class="col-md-12">
+                    @for (item of Role; track $index) {
+                        <h6>{{item.RoleName}}</h6>
+                    }
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="col-md-12">
+                    <h6>Screen List</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
