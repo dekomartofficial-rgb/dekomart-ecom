@@ -1,3 +1,69 @@
+/**************************************
+********SWITCH TO LIGHT MODE***********
+***************************************/
+
+/* Force light mode for PrimeNG table */
+::ng-deep .p-datatable {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid #ddd !important;
+  }
+  
+  /* Table headers */
+  ::ng-deep .p-datatable thead th {
+    background-color: #f1f1f1 !important; /* Light grey */
+    color: black !important;
+    border-bottom: 2px solid #ddd !important;
+  }
+  
+  /* Table rows */
+  /* Apply border to each row */
+  ::ng-deep .p-datatable tbody tr {
+    border-bottom: 1px solid #ddd !important; /* Light grey border */
+    background-color: white !important;
+    color: black !important;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  /* Apply border to each table cell */
+  ::ng-deep .p-datatable tbody td {
+    border-bottom: 1px solid #ddd !important;
+  }
+  
+  /* Alternate row colors (striped effect) */
+  ::ng-deep .p-datatable tbody tr:nth-child(even) {
+    background-color: #f9f9f9 !important; /* Light grey for even rows */
+  }
+  
+  /* Restore hover effect */
+  ::ng-deep .p-datatable tbody tr:hover {
+    background-color: #e0e0e0 !important; /* Slightly darker grey */
+  }
+  
+  /* Restore selection highlight */
+  ::ng-deep .p-datatable tbody tr.p-highlight {
+    background-color: #cce5ff !important; /* Light blue */
+    color: black !important;
+  }
+  
+  /* Fix filter input fields */
+  ::ng-deep .p-columnFilter input {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid black !important;
+  }
+  
+  /* Fix dropdowns */
+  ::ng-deep .p-dropdown,
+  ::ng-deep .p-dropdown-panel {
+    background-color: white !important;
+    color: black !important;
+  }
+  
+  /******************************************
+  /////////////////////////////////////////*/
+
+
 .card {
     margin: 10px 10px;
     background: #ffffff;
@@ -208,6 +274,10 @@
     display: flex;
     gap: 8px;
     align-items: center;
+}
+
+.input{
+    background-color: transparent;
 }
 
 @media (min-width: 768px) {

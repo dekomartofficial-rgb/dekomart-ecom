@@ -112,6 +112,15 @@ p {
   display: block; /* Ensure correct padding on span */
 }
 
+.p-component {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+
+
+
+
 @media (max-width: 600px) {
   .search-bar {
     max-width: 90%;
