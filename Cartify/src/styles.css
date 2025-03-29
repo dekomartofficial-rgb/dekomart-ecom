@@ -118,7 +118,10 @@ p {
 }
 
 
-
+input{
+  background-color: transparent;
+  color: black;
+}
 
 
 @media (max-width: 600px) {

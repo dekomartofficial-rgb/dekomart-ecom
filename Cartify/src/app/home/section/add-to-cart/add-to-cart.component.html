@@ -1,0 +1,27 @@
+<div class="cart-overlay">
+    <div class="cart-container">
+      <div class="cart-header">
+        <h4>Shopping Cart</h4>
+        <button class="close-btn" (click)="close()" >×</button>
+      </div>
+  
+      <div class="cart-body">
+        <div class="empty-cart" *ngIf="cartItems.length === 0">Your cart is empty</div>
+        <div *ngFor="let item of cartItems" class="cart-item">
+          <img [src]="item.image" alt="" class="cart-item-image">
+          <div class="cart-item-details">
+            <h6>{{ item.name }}</h6>
+            <p>{{ item.quantity }}   <span class="price">₹{{ item.offerPrice }}</span></p>
+          </div>
+          <button class="remove-btn" >×</button>
+        </div>
+      </div>
+  
+      <div class="cart-footer">
+        <p class="subtotal">Subtotal: <span >₹{{getTotalPrice()}} </span></p>
+        <button class="view-cart">VIEW CART</button>
+        <button class="checkout">CHECKOUT</button>
+      </div>
+    </div>
+  </div>
+  
