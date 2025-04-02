@@ -2,7 +2,7 @@ export class User {
     UserId: number = 0;
     FirstName: string = '';
     SecondName: string = '';
-    DateOfBirth: Date = new Date();
+    DateOfBirth: string = '';
     Password: string = '';
     Email: string = '';
     PhoneNumber: number | null = null;

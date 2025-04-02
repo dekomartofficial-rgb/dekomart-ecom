@@ -1,175 +1,165 @@
 <div class="main-header">
-    <div class="col-md-12 page-header d-flex">
-        <i class="fas fa-user fa-xl" style="color: black; padding-top: 22px;"></i>
-        <h6 style="font-size: 18px;font-size: 18px;padding-left: 16px;padding-top: 5px;">Add Products</h6>
-    </div>
-    <div class="card p-6 shadow-lg rounded-xl bg-white">
-        <p-table #dt [value]="products" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '60rem' }"
-            class="custom-table">
-            <ng-template pTemplate="caption">
-                <div class="header flex justify-end">
-                    <div class="headerName flex items-center justify-end">
-                    </div>
-                    <div class="addButton flex items-center justify-end">
-                        <p-button label="Add Products" icon="pi pi-plus" size="large" (click)="showDialog()" />
-                    </div>
-                </div>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr class="bg-gray-200 text-gray-800">
-                    <th class="p-3"></th>
-                    <th class="p-3">
-                        Name
-                        <p-columnFilter field="name" matchMode="contains" class="w-full"></p-columnFilter>
-                    </th>
-                    <th class="p-3">
-                        Price
-                        <p-columnFilter field="price" matchMode="equals" class="w-full"></p-columnFilter>
-                    </th>
-                    <th class="p-3">
-                        Category
-                        <p-columnFilter field="category" matchMode="contains" class="w-full"></p-columnFilter>
-                    </th>
-                    <th class="p-3">Reviews</th>
-                    <th class="p-3">
-                        Status
-                        <p-columnFilter field="inventoryStatus" matchMode="equals" class="w-full">
-                            <ng-template pTemplate="filter" let-filter>
-                                <p-dropdown [options]="statusOptions"
-                                    (onChange)="dt.filter($event.value, 'inventoryStatus', 'equals')"
-                                    placeholder="Select Status" class="w-full p-inputtext" />
-                            </ng-template>
-                        </p-columnFilter>
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-product>
-                <tr class="hover:bg-gray-100 transition duration-300 ease-in-out">
-                    <td class="p-3 flex gap-2">
-                        <div class="action-buttons">
-                            <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
-                                (click)="editProduct(product)" severity="success" />
-                            <p-button icon="pi pi-trash" [rounded]="true" [outlined]="true"
-                                (click)="deleteProduct(product)" severity="danger" />
-                        </div>
-                    </td>
-                    <td class="p-3 nameImg">
-                        <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
-                            [alt]="product.name" class="w-10 h-10 rounded-md shadow-sm border" />
-                        {{ product.name }}
-                    </td>
-                    <td class="p-3 font-semibold text-blue-600">{{ product.price | currency: 'USD' }}</td>
-                    <td class="p-3">{{ product.category }}</td>
-                    <td class="p-3"><p-rating [(ngModel)]="product.rating" [readonly]="true" class="text-yellow-500" />
-                    </td>
-                    <td class="p-3">
-                        <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"
-                            class="shadow-sm" />
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
+  <div class="col-md-12 page-header d-flex">
+    <i class="fas fa-user fa-xl" style="color: black; padding-top: 22px;"></i>
+    <h6 style="font-size: 18px;font-size: 18px;padding-left: 16px;padding-top: 5px;">Add Products</h6>
+  </div>
+  <div class="card p-6 shadow-lg rounded-xl bg-white">
+    <p-table #dt [value]="products" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '60rem' }"
+      class="custom-table">
+      <ng-template pTemplate="caption">
+        <div class="header flex justify-end">
+          <div class="headerName flex items-center justify-end">
+          </div>
+          <div class="addButton flex items-center justify-end">
+            <p-button label="Add Products" icon="pi pi-plus" size="large" (click)="showDialog()" />
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr class="bg-gray-200 text-gray-800">
+          <th class="p-3"></th>
+          <th class="p-3">
+            Name
+            <p-columnFilter field="name" matchMode="contains" class="w-full"></p-columnFilter>
+          </th>
+          <th class="p-3">
+            Price
+            <p-columnFilter field="price" matchMode="equals" class="w-full"></p-columnFilter>
+          </th>
+          <th class="p-3">
+            Category
+            <p-columnFilter field="category" matchMode="contains" class="w-full"></p-columnFilter>
+          </th>
+          <th class="p-3">Reviews</th>
+          <th class="p-3">
+            Status
+            <p-columnFilter field="inventoryStatus" matchMode="equals" class="w-full">
+              <ng-template pTemplate="filter" let-filter>
+                <p-dropdown [options]="statusOptions" (onChange)="dt.filter($event.value, 'inventoryStatus', 'equals')"
+                  placeholder="Select Status" class="w-full p-inputtext" />
+              </ng-template>
+            </p-columnFilter>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-product>
+        <tr class="hover:bg-gray-100 transition duration-300 ease-in-out">
+          <td class="p-3 flex gap-2">
+            <div class="action-buttons">
+              <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true" (click)="editProduct(product)"
+                severity="success" />
+              <p-button icon="pi pi-trash" [rounded]="true" [outlined]="true" (click)="deleteProduct(product)"
+                severity="danger" />
+            </div>
+          </td>
+          <td class="p-3 nameImg">
+            <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.name"
+              class="w-10 h-10 rounded-md shadow-sm border" />
+            {{ product.name }}
+          </td>
+          <td class="p-3 font-semibold text-blue-600">{{ product.price | currency: 'USD' }}</td>
+          <td class="p-3">{{ product.category }}</td>
+          <td class="p-3"><p-rating [(ngModel)]="product.rating" [readonly]="true" class="text-yellow-500" />
+          </td>
+          <td class="p-3">
+            <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"
+              class="shadow-sm" />
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </div>
 
-<div class="dialogCard">
-    <p-dialog header="Add Products" [modal]="true" [(visible)]="addProductDialog" [draggable]="false"
-        [breakpoints]="{ '1199px': '60vw', '575px': '90vw' }" [style]="{ width: '50rem' }">
+<p-dialog header="Add New Product" [modal]="true" [(visible)]="addProductDialog" [draggable]="false"
+  [breakpoints]="{ '1199px': '60vw', '575px': '90vw' }" [style]="{ width: '80rem' }">
+  <p-card>
+    <p>Create a new product with variants.</p>
 
-        <div class="form-grid">
-            <div class="form-field">
-                <p-floatlabel variant="on">
-                    <label for="productId">Product Id</label>
-                    <input pInputText id="productId" [(ngModel)]="productId" autocomplete="off" />
-                </p-floatlabel>
-            </div>
-            <div class="form-field">
-                <p-floatlabel variant="on">
-                    <label for="productName">Product Name</label>
-                    <input pInputText id="productName" [(ngModel)]="productName" autocomplete="off" />
-                </p-floatlabel>
-            </div>
+    <form [formGroup]="productForm" (ngSubmit)="submitForm()">
+      <p-fieldset legend="Product Information">
+        <div class="main-form-group">
+          <div class="form-group">
+            <label for="productName">Product Name</label>
+            <input pInputText id="productName" formControlName="productName" placeholder="Enter product name" />
+          </div>
+
+          <div class="form-group">
+            <label for="category">Product Category</label>
+            <p-dropdown id="category" [options]="categoryes" [(ngModel)]="selectedCategory" optionLabel="name"
+              placeholder="Select a Category">
+            </p-dropdown>
+          </div>
         </div>
-
-        <div class="form-grid">
-            <div class="form-field">
-                <p-floatlabel variant="on">
-                    <label for="productPrice">Price</label>
-                    <input pInputText id="productPrice" [(ngModel)]="productPrice" autocomplete="off" />
-                </p-floatlabel>
-            </div>
-            <div class="form-field">
-                <p-floatlabel variant="on">
-                    <input pInputText id="productCategory" [(ngModel)]="productCategory" autocomplete="off" />
-                    <label for="productCategory">Category Name</label>
-                </p-floatlabel>
-            </div>
+        <div class="main-form-group">
+          <div class="form-group">
+            <label for="brand">Product Brand</label>
+            <p-dropdown id="brand" [options]="categoryes" [(ngModel)]="selectedCategory" optionLabel="name"
+              placeholder="Select a Brand">
+            </p-dropdown>
+          </div>
         </div>
+      </p-fieldset>
 
-        <div class="form-grid">
-            <div class="form-field">
-                <p-floatlabel variant="on">
-                    <label for="productBrand">Brand Name</label>
-                    <input pInputText id="productBrand" [(ngModel)]="productBrand" autocomplete="off" />
-                </p-floatlabel>
+      <p-divider></p-divider>
+      <div class="form-actions">
+        <button pButton type="button" label="Add Variant" icon="pi pi-plus" (click)="addVariant()"></button>
+      </div>
+
+      <p-fieldset legend="Product Variants">
+        <div *ngFor="let variant of variants.controls; let i = index" class="variant">
+          <h4>Variant {{ i + 1 }}</h4>
+          <div class="main-form-group">
+            <div class="form-group">
+              <label>Color</label>
+              <p-multiSelect [options]="colors" placeholder="Select Colors" [showToggleAll]="false">
+                <ng-template let-color pTemplate="item">
+                  <div class="color-option">
+                    <span [style.background]="color.value" class="color-box"></span> {{ color.label }}
+                  </div>
+                </ng-template>
+              </p-multiSelect>
             </div>
-            <div class="form-field">
-                <p-floatlabel variant="on">
-                    <label for="productColor">Colour</label>
-                    <input pInputText id="productColor" [(ngModel)]="productColor" autocomplete="off" />
-                </p-floatlabel>
+            <div class="form-group">
+              <label>Size</label>
+              <p-multiSelect [options]="sizes" optionLabel="name" placeholder="Select sizes">
+              </p-multiSelect>
             </div>
-        </div>
-
-        <div class="form-grid">
-            <div class="form-field">
-                <p-floatlabel variant="on">
-                    <label for="productVariant">Variant Type</label>
-                    <input pInputText id="productVariant" [(ngModel)]="productVariant" autocomplete="off" />
-                </p-floatlabel>
+          </div>
+          <div class="main-form-group">
+            <div class="form-group">
+              <label>Price</label>
+              <input pInputText type="number" placeholder="0.00" />
             </div>
-            <div class="form-field">
-                <p-floatlabel variant="on">
-                    <label for="productSize">Size</label>
-                    <input pInputText id="productSize" [(ngModel)]="productSize" autocomplete="off" />
-                </p-floatlabel>
+            <div class="form-group">
+              <label>Stock</label>
+              <input pInputText type="number" placeholder="0" />
             </div>
-        </div>
+          </div>
+          <div class="form-group">
+            <label for="imageUpload">Upload Images</label>
+            <input type="file" id="imageUpload" (change)="onImageSelect($event)" multiple accept="image/*" />
 
-        <div class="form-grid">
-            <div class="form-field">
-                <p-floatlabel variant="on">
-                    <label for="productStock">Stock Count</label>
-                    <input pInputText id="productStock" [(ngModel)]="productStock" autocomplete="off" />
-                </p-floatlabel>
+            <div class="image-preview-container">
+              <div *ngFor="let img of imagePreviews; let i = index" class="image-preview-wrapper">
+                <img [src]="img" class="image-preview" />
+                <button type="button" class="delete-btn" (click)="removeImage(i)">
+                  ✖
+                </button>
+              </div>
             </div>
+          </div>
+          <button pButton type="button" icon="pi pi-trash" (click)="removeVariant(i)"
+            *ngIf="variants.length > 1"></button>
         </div>
+      </p-fieldset>
 
-        <div class="form-field full-width">
-            <label for="description">Description</label>
-            <textarea pTextarea id="description" [(ngModel)]="description" rows="3"></textarea>
-        </div>
+      <p-divider></p-divider>
 
-        <div class="form-field">
-            <label>Upload Images</label>
-            <p-fileUpload name="images" accept="image/*" [showUploadButton]="false" [customUpload]="true" mode="basic"
-                chooseLabel="Choose Images" [multiple]="true" (onSelect)="onImagesSelect($event)">
-            </p-fileUpload>
-
-            <div *ngIf="selectedImages.length > 0" class="preview-container">
-                <div class="image-preview-box" *ngFor="let image of selectedImages; let i = index">
-                    <p-image [src]="image" alt="Preview" [preview]="true"></p-image>
-                    <button (click)="removeImage(i)" class="img-delete-btn">
-                        🗑 Delete Selected
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="button-container">
-            <p-button label="Save" class="save-button" (click)="addProductDialog = false" severity="success" />
-            <p-button label="Cancel" class="cancel-button" (click)="addProductDialog = false" severity="danger" />
-        </div>
-
-    </p-dialog>
-</div>
+      <div class="form-actions">
+        <button pButton type="button" label="Cancel" class="p-button-text"></button>
+        <button pButton type="submit" label="Create Product" class="p-button-primary"></button>
+      </div>
+    </form>
+  </p-card>
+</p-dialog>

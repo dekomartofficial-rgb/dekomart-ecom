@@ -28,6 +28,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 })
 export class UserRegistrationComponent {
   isModalOpen: boolean = false;
+  userToSendDob: Date = new Date();
   UserForm: FormGroup
   UserRole: any[] = [];
   SelectedUserRole: any[] = [];
@@ -78,7 +79,9 @@ export class UserRegistrationComponent {
   }
 
   onSaveUser() {
-    debugger
+    this.User.DateOfBirth = new Date(this.userToSendDob.getTime() - this.userToSendDob.getTimezoneOffset() * 60000)
+      .toISOString()
+      .split('T')[0];
     this.User.OpsMode = this.User.UserId > 0 ? 'UPDATE' : 'INSERT';
     this.User.ProfileImage = 'https://www.w3schools.com/howto/img_avatar.png';
     this.User.UserRole = this.SelectedUserRole.join(',')
@@ -110,8 +113,10 @@ export class UserRegistrationComponent {
     this.http.get<User>('user/GetUser', { UserId: UserId }).subscribe({
       next: (res) => {
         this.User = res;
+        const dateParts = this.User.DateOfBirth.split("/");
+        const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+        this.userToSendDob = new Date(formattedDate + "T00:00:00");
         this.User.UserStatus = this.User.UserStatus === 'A' ? 1 : 0
-        this.User.DateOfBirth = this.User.DateOfBirth
         this.SelectedUserRole = this.User.UserRole ? this.User.UserRole.includes(',') ? this.User.UserRole.split(',').filter(role => role) : [this.User.UserRole] : [];
         this.isModalOpen = true;
         this.getUserRole()
