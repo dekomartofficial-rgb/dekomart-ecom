@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 export class GalleryHomeComponent implements OnInit {
 
  @Output() wishlistUpdated = new EventEmitter<number>() 
- @Output() addToCartUpdated = new EventEmitter<number>() 
+ @Output() addToCartUpdated = new EventEmitter<any[]>() 
 
 
   imageCircle = [
@@ -198,11 +198,12 @@ export class GalleryHomeComponent implements OnInit {
   ToggleAddToCart(item:any){
 
     item.addToCart = !item.addToCart
-    console.log(item)
+  
 
-    const addtocartCount = this.bestSelling.filter(product => product.addToCart).length;
-    this.addToCartUpdated.emit(addtocartCount)
-
+    const cartitem = this.bestSelling.filter(product => product.addToCart);
+    console.log(cartitem)
+    
+   this.addToCartUpdated.emit(cartitem)
   }
   
 

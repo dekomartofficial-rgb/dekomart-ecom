@@ -10,8 +10,8 @@
             </div>
             <div class="col-md-12" style="padding-top: 10px;">
                 <div style="margin-top: 20px;">
-                    <p-table #table [value]="Users" [paginator]="true" [rows]="10" [responsive]="true">
-                        <ng-template pTemplate="header">
+                    <p-table #table [value]="Users" [paginator]="true" [rows]="10" [responsive]="true" class="force-light-mode">
+                        <ng-template pTemplate="header" >
                             <tr>
                                 <th></th>
                                 <th>
@@ -55,8 +55,10 @@
                                 <td>{{ user.DateOfBirth }}</td>
                                 <td>{{ user.Email }}</td>
                                 <td>{{ user.PhoneNumber }}</td>
-                                <td style="text-align: center;">s
+                                <td style="text-align: center;">
                                     <span
+                                        [ngStyle]="user.UserStatus === 'A' ? {'background-color':'green'} : {'background-color':'red'}"
+                                  
                                         [ngStyle]="user.UserStatus === 'A' ? {'background-color':'green'} : {'background-color':'red'}"
                                         style="padding: 8px; color: white; border-radius: 6px;">
                                         {{ user.UserStatusDesc }}

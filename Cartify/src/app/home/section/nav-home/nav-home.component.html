@@ -21,13 +21,14 @@
                 <i class="fas fa-heart"></i>
                 <span class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle ">{{ wishlistCount }}</span>
             </a>
-            <a href="#" class="text-dark position-relative">
+            <a href="#" class="text-dark position-relative" (click)="toggleCart()">
                 <i class="fas fa-shopping-bag"></i>
-                <span class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle ">{{cartCount}}</span>
+                <span class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle ">{{cartItem.length}}</span>
             </a>
             <span class="mx-3">₹0</span>
         </div>
     </div>
+    <app-add-to-cart *ngIf="showCart" (closeCart)="CloseCart()" [cartItems]="cartItem" ></app-add-to-cart>
 </nav>
 
 <!-- Categories -->
@@ -83,5 +84,7 @@
                 </a>
             </li>
         </ul>
+        
     </div>
+    
 </div>

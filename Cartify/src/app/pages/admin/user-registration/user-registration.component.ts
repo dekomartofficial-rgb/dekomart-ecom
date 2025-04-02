@@ -42,6 +42,12 @@ export class UserRegistrationComponent {
   }
 
   ngOnInit() {
+  
+      document.documentElement.style.setProperty('color-scheme', 'light');
+      document.body.style.backgroundColor = "white";
+      document.body.style.color = "black";
+    
+    
     this.getUser(0)
   }
   openModal(): void {

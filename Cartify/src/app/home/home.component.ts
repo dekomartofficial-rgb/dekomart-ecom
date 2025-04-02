@@ -12,8 +12,7 @@ import { FooterHomeComponent } from "./section/footer-home/footer-home.component
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
- 
-  addtocartCount: number = 0;  
+  cartItems: any[] = [] 
   wishlistCount: number = 0;
 
  
@@ -21,7 +20,7 @@ export class HomeComponent {
     this.wishlistCount = count;  // Updates wishlist count
   }
 
-  updateAddtocartCount(count:number){
-    this.addtocartCount = count;  // Updates addtocart count
+  updateAddtocart(item:any []){
+    this.cartItems =item;
   }
 }
