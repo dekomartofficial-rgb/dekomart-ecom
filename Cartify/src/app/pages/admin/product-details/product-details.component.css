@@ -155,43 +155,6 @@
     min-width: 15rem;
 }
 
-.preview-container {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.image-preview-box {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.image-preview-box img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 5px;
-}
-
-.img-delete-btn {
-    background: #f44336;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    font-size: 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .img-delete-btn:hover {
-    background: #D32F2F;
-  }
-
 .custom-table {
     width: 100%;
     border-collapse: collapse;
@@ -276,9 +239,187 @@
     align-items: center;
 }
 
-.input{
-    background-color: transparent;
+p-dialog {
+    font-family: 'Arial', sans-serif;
 }
+
+p-card {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    width: 50%;
+    padding-left: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #444;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+p-fieldset {
+    border-radius: 6px;
+    background: #f9f9f9;
+}
+
+p-fieldset legend {
+    font-weight: bold;
+    color: #333;
+}
+
+.variant {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #f5f5f5;
+}
+
+.variant h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.variant .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.variant button {
+    margin-top: 0.5rem;
+    align-self: flex-end;
+}
+
+button[pButton] {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    transition: 0.3s ease-in-out;
+}
+
+button.p-button-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+button.p-button-primary:hover {
+    background-color: #0056b3;
+}
+
+button.p-button-text {
+    color: #555;
+}
+
+button.p-button-text:hover {
+    background-color: #f0f0f0;
+}
+
+button.p-button-icon-only {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+}
+
+button.p-button-icon-only:hover {
+    background: #cc0000;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-bottom: 5px;
+}
+
+.main-form-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.image-preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.image-preview-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.image-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.delete-btn {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.color-option {
+    display: flex;
+    align-items: center;
+}
+
+.color-box {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 8px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+}
+
 
 @media (min-width: 768px) {
     .col-md-12 {

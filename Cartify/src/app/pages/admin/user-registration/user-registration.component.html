@@ -118,8 +118,8 @@
                             <p-floatlabel variant="on">
                                 <p-datepicker inputId="DateOfBirth" showIcon iconDisplay="input"
                                     [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"
-                                    [(ngModel)]="User.DateOfBirth" name="DateOfBirth" #DateOfBirth="ngModel"   dateFormat="dd/mm/yy"
-                                    required></p-datepicker>
+                                    [(ngModel)]="userToSendDob" name="DateOfBirth" #DateOfBirth="ngModel"
+                                    dateFormat="dd/mm/yy" required></p-datepicker>
                                 <label for="DateOfBirth"
                                     style="font-size: 13px !important; padding: 9px !important">Date Of Birth</label>
                             </p-floatlabel>
@@ -181,7 +181,7 @@
                             </p-floatlabel>
                         </div>
                         <div class="col-md-2 p-2">
-                            <div class="flex items-center"> 
+                            <div class="flex items-center">
                                 <p-checkbox inputId="IsActiveStatus" name="IsActiveStatus" [(ngModel)]="User.UserStatus"
                                     binary="true" [trueValue]="1" [falseValue]="null"></p-checkbox>
                                 <label for="IsActiveStatus" class="ml-2 label-checkbox">Active Status</label>
@@ -208,7 +208,7 @@
                                 <button class="btn btn-success" [disabled]="UserReg.invalid">
                                     <i class="bi bi-save" style="padding-right: 5px;"></i> Save
                                 </button>
-                                <button type="button" class="btn btn-danger"  (click)="closeModal()">
+                                <button type="button" class="btn btn-danger" (click)="closeModal()">
                                     <i class="bi bi-x-circle" style="padding-right: 5px;"></i> Cancel
                                 </button>
                             </div>
