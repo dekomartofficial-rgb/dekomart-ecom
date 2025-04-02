@@ -1,7 +1,6 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
 @import "primeicons/primeicons.css";
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 * {
   margin: 0;
@@ -10,19 +9,23 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: #edf1f5 !important;
 }
-h1, h2, h3 {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
+h1,
+h2,
+h3 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500 !important;
+}
+h2 {
+  font-size: 24px !important;
 }
 
 p {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 400;
 }
-
 
 .p-button {
   background-color: black !important;
@@ -61,6 +64,7 @@ p {
   background: #ffffff;
   border-color: #222b45;
   font-weight: 200;
+  gap: 23px;
 }
 
 .main-content-body {
@@ -79,7 +83,7 @@ p {
   border: 1px solid #ccc;
   border-radius: 25px; /* Rounded corners */
   padding: 1px;
-  max-width: 400px; /* Limit width */  
+  max-width: 400px; /* Limit width */
 }
 
 .search-bar input[type="search"] {
@@ -88,7 +92,7 @@ p {
   padding: 10px 15px;
   font-size: 16px;
   outline: none; /* Remove default focus outline */
-  border-radius: 20px; 
+  border-radius: 20px;
   width: 336px;
   height: 43px;
 }
@@ -117,12 +121,10 @@ p {
   color: #000000 !important;
 }
 
-
-input{
+input {
   background-color: transparent;
   color: black;
 }
-
 
 @media (max-width: 600px) {
   .search-bar {

@@ -63,11 +63,7 @@ export class LoginComponent {
           next: (res) => {
             if (res.MessageType === 2) {
               this.toastService.showSuccess('Success', res.Message);
-              const UserData = {
-                UserId: res.UserId,
-                Token: res.Token,
-                UserRole: res.UserRole
-              }
+              const UserData = { UserId: res.UserId, Token: res.Token, UserRole: res.UserRole }
               localStorage.setItem('userData', JSON.stringify(UserData)); 
               if (this.checkAdmin(res.UserRole)) {
                 this.router.navigate(['/admin/']);

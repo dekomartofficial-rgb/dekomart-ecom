@@ -1,9 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './pages/login/login.component';
-import { NavbarComponent } from './shared/navbar/navbar.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { NavHomeComponent } from './home/section/nav-home/nav-home.component';
+import { LoginComponent } from './pages/login/login.component'; 
+import { NotFoundComponent } from './pages/not-found/not-found.component'; 
 
 
 export const routes: Routes = [
@@ -12,5 +10,6 @@ export const routes: Routes = [
     { path: "", component: HomeComponent },
     { path: "login", component: LoginComponent },
     { path: '**', component: NotFoundComponent },
-
 ];
+
+

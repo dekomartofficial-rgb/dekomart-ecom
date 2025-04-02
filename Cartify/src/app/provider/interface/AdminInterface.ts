@@ -31,3 +31,13 @@ export class Role {
     UpdateBy: string = '';
     UpdateDate: Date = new Date()
 }
+
+export class RoleScreen {
+    RoleCode: string = '';
+    ModuleCode: string = '';
+    ScreenGroupName: string = '';
+    WindowName: string = '';
+    IsAccess: string = '';
+    WindowIcon: string = '';
+    GroupIcon: string = '';
+}

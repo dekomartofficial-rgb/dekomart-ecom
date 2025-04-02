@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './shared/navbar/navbar.component'
 import { ToastModule } from 'primeng/toast';
@@ -7,13 +7,12 @@ import { CommonModule } from '@angular/common';
 import { LoaderService } from './provider/services/loader.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UserNavBarComponent } from './pages/user/user-home/user-nav-bar/user-nav-bar.component';
-import { UserHomeComponent } from "./pages/user/user-home/user-home.component";
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NavbarComponent, ToastModule, FontAwesomeModule, UserHomeComponent, UserNavBarComponent],
+  imports: [CommonModule, RouterOutlet, NavbarComponent, ToastModule, FontAwesomeModule,  UserNavBarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -40,6 +39,7 @@ export class AppComponent {
     let userData = this.httpClient.getUserData()
     return userData && userData.UserRole !== 'CU'
   }
+  
   validateInspect() {
     let date = Date.now();
     debugger

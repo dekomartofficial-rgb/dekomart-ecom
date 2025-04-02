@@ -3,5 +3,6 @@ const AdminController = require('../controllers/admin.controller')
 const VerifyToken = require("../middleware/authMiddleware");
 
 router.get("/GetRole", VerifyToken, AdminController.GetRole);
+router.get("/GetScreenRoleAccess", VerifyToken, AdminController.GetRoleScreenAccess)
 
 module.exports = router

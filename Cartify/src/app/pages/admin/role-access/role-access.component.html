@@ -1,27 +1,58 @@
 <div class="main-header">
-    <div class="col-md-12 page-header d-flex"> 
-        <i class="fa-solid fa-screwdriver-wrench fa-xl" style="color: black; padding-top: 22px"></i>
-        <h6 style="font-size: 26px; padding-left: 16px; padding-top: 1px; font-weight: 600;">
-            Role Access
-        </h6>
-    </div>
-    <div class="main-content-body">
-        <div class="table-container d-flex row">
-            <div class="col-md-3">
-                <div class="col-md-12">
-                    <h3>Role's</h3>
-                </div>
-                <div class="col-md-12">
-                    @for (item of Role; track $index) {
-                        <h6>{{item.RoleName}}</h6>
-                    }
-                </div>
-            </div>
-            <div class="col-md-9">
-                <div class="col-md-12">
-                    <h6>Screen List</h6>
-                </div>
-            </div>
+  <div class="col-md-12 page-header d-flex">
+    <i class="fa-solid fa-screwdriver-wrench fa-xl"style="color: black; padding-top: 22px"></i>
+    <h6 style="font-weight: 500; font-size: 24px;">Role Access</h6>
+  </div>
+  <div class="main-content-body">
+    <div class="table-container d-flex row" style="padding: 14px;">
+      <div class="col-md-3 roles-screen">
+        <div class="col-md-12">
+          <h2>Role's</h2>
         </div>
+        <div class="col-md-12">
+          @for (item of Role; track $index) {
+          <div class="col-md-12 roles-list" (click)="getRoleScreen(item.RoleCode)" [className]="clickedRole === item.RoleCode ? 'clicked-role roles-list': 'roles-list' ">
+            <h6>{{ item.RoleName }}</h6>
+          </div>
+          }
+        </div>
+      </div>
+      <div class="col-md-9 screen-list-header">
+        <div class="col-md-12 screen-list parent-container">
+          <h2 class="screen-list-title">Screen List</h2>
+          @if (RoleScreen && RoleScreen.length > 0) {
+            @for (item of groupName; track $index) {
+              <div class="role-screen-group d-flex align-items-center" (click)="onShowChild(item.ScreenGroupName)">  
+                  <div><i [className]="item.GroupIcon"></i></div>
+                  <h3 class="group-name" style="padding-top: 3px;">{{ item.ScreenGroupName }}</h3> 
+                  <span class="toggle-icon ms-auto"><i class="bi bi-arrow-down-circle-fill"></i></span> 
+              </div> 
+              @if (showCildDropDown && clickGroupName === item.ScreenGroupName) {
+                  @for (item of GroupChildList; track $index) {
+                    <div class="child-container">
+                      <div class="child-item">
+                        <div class="item-icon">
+                          <i class="fa-solid" [className]="item.WindowIcon"></i>
+                        </div>
+                        <h3>{{ item.WindowName }}</h3>
+                        <div class="access-toggle">
+                          <input type="checkbox"  #IsAccess [checked]="item.IsAccess === 'true'" (change)="updateAccess($event, item.index)" id="access-{{ item.WindowName }}" class="access-checkbox" />                          <label for="access-{{ item.WindowName }}">
+                            <span class="toggle-text">{{ item.IsAccess === 'true' ? 'Access' : 'No Access' }}</span>
+                          </label>
+                        </div>
+                      </div> 
+                    </div>
+                  }
+              } 
+            }
+            <div class="col-md-12 justify-content-end d-flex">
+              <button type="button" class="btn btn-success" (click)="saveRole()">Save Role</button>
+            </div>
+            
+          } @else {
+            <div class="no-role-message">Please select at least one role</div>
+          }
+        </div>  
     </div>
+  </div>
 </div>

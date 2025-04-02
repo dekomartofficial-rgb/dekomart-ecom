@@ -4,7 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClientService } from '../../provider/services/http-client.service';
 import { ScreenList } from '../../provider/interface/AdminInterface';
 import { UserProfile } from '../../provider/interface/AdminInterface'
-import { AvatarModule } from 'primeng/avatar'; 
+import { AvatarModule } from 'primeng/avatar';
 import { FormsModule } from '@angular/forms';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { DropdownModule } from 'primeng/dropdown';
@@ -31,6 +31,8 @@ export class NavbarComponent implements OnInit {
   notificationVisible: boolean = false;
   selectedType: any = '';
   isMobile: boolean = false;
+  userRole: string = ''
+
 
   constructor(private router: Router, private httpClient: HttpClientService) { }
 
@@ -56,12 +58,18 @@ export class NavbarComponent implements OnInit {
 
   GetScreenList() {
     if (this.UserId) {
-      this.httpClient.get<any>('user/GetScreenList', { UserId: this.UserId })
+      this.userRole = this.httpClient.getUserData().UserRole as string;
+      if (this.userRole.includes(',') && this.userRole.split(',').includes('AD')) {
+        this.userRole = 'AD'
+      }
+      this.httpClient.get<any>('user/GetScreenList', { UserId: this.UserId, RoleCode: this.userRole })
         .subscribe((res) => {
-          this.ScreenList = Array.isArray(res.screenList) ? res.screenList : [];;
+          this.ScreenList = Array.isArray(res.screenList) ? res.screenList : [];
         });
     }
   }
+
+
 
   toggleGroup(groupName: string) {
     if (this.expandedGroups.includes(groupName)) {
