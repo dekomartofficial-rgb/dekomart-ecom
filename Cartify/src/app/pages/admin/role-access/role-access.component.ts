@@ -3,24 +3,37 @@ import { HttpClientService } from '@/app/provider/services/http-client.service';
 import { CommonService } from '@/app/provider/services/common.service';
 import { Role, RoleScreen } from '@/app/provider/interface/AdminInterface';
 import { FormsModule } from '@angular/forms';
+import { ToastService } from '@/app/provider/services/toast.service';
+
+interface RoleRight {
+  ROLE_CODE: string;
+  SCREEN_CODE: string;
+  IS_HAVE_ACCESS: number;
+}
+
 
 @Component({
   selector: 'app-role-access',
   standalone: true,
-  imports: [FormsModule],  
+  imports: [FormsModule],
   templateUrl: './role-access.component.html',
   styleUrl: './role-access.component.css'
 })
 export class RoleAccessComponent implements OnInit {
+  clickedRole: string = '';
+  clickGroupName: string = '';
+  RoleCode: string = ''
+  ScreenCode: string = ''
+  IshaveAcess: number = 0
+  showCildDropDown: boolean = true;
   Role: Role[] = [];
   RoleScreen: RoleScreen[] = [];
+  RoleRight: RoleRight[] = [];
   groupName: any[] = [];
   GroupChildList: any[] = [];
-  clickedRole: string = '';
-  showCildDropDown: boolean = false;
-  clickGroupName: string = '';
 
-  constructor(private httpClient: HttpClientService, private commonService: CommonService) {}
+
+  constructor(private httpClient: HttpClientService, private commonService: CommonService, private toastService: ToastService) { }
 
   ngOnInit() {
     this.getRole();
@@ -40,7 +53,6 @@ export class RoleAccessComponent implements OnInit {
     this.clickedRole = rolecode;
     this.groupName = [];
     this.GroupChildList = [];
-    
     if (rolecode) {
       this.httpClient.get<any[]>('admin/GetScreenRoleAccess', { RoleCode: rolecode }).subscribe((res) => {
         if (res && res.length > 0) {
@@ -48,28 +60,37 @@ export class RoleAccessComponent implements OnInit {
           this.groupName = [...new Set(
             this.RoleScreen.map((item) => JSON.stringify({ ScreenGroupName: item.ScreenGroupName, GroupIcon: item.GroupIcon }))
           )].map(item => JSON.parse(item));
+          this.GroupChildList = [...this.RoleScreen];
         }
       });
     }
   }
-
-  onShowChild(groupname: string) { 
-    this.showCildDropDown = true;
-    this.clickGroupName = groupname;
-    this.GroupChildList = this.RoleScreen.filter(item => item.ScreenGroupName === this.clickGroupName);
-  }
-
-  updateAccess(event: any, item: any) {
-    item.IsAccess = event.target.checked ? 'true' : 'false';
+  updateAccess(event: any, index: number) {
+    if (this.GroupChildList && this.GroupChildList[index]) {
+      this.GroupChildList[index].IsAccess = event.target.checked === true ? 'true' : 'false';
+    }
   }
 
   saveRole() {
-    const selectedScreens = this.GroupChildList
-      .filter(item => item.IsAccess === 'true')
-      .map(item => item.WindowName);
+    this.RoleRight = this.GroupChildList
+      .map(item => ({
+        ROLE_CODE: item.RoleCode,
+        SCREEN_CODE: item.ScreenCode,
+        IS_HAVE_ACCESS: item.IsAccess === 'true' ? 1 : 0
+      }));
 
-    console.log('Selected Screens:', selectedScreens);
-
-    // Send selectedScreens to API
+    this.httpClient.post<any>('admin/SaveRoleRight', { RoleRight: this.RoleRight }).subscribe({
+      next: (res) => {
+        if (res.MessageType === 2) {
+          this.toastService.showSuccess('Success', res.Message);
+          this.getRole();
+        } else {
+          this.toastService.showError('Error', res.Message);
+        }
+      },
+      error: (err) => {
+        this.toastService.showError('Error', err);
+      }
+    })
   }
 }

@@ -4,5 +4,6 @@ const VerifyToken = require("../middleware/authMiddleware");
 
 router.get("/GetRole", VerifyToken, AdminController.GetRole);
 router.get("/GetScreenRoleAccess", VerifyToken, AdminController.GetRoleScreenAccess)
+router.post("/SaveRoleRight", VerifyToken, AdminController.SaveRoleRight)
 
 module.exports = router

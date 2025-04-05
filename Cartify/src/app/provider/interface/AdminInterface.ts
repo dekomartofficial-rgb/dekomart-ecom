@@ -34,9 +34,11 @@ export class Role {
 
 export class RoleScreen {
     RoleCode: string = '';
+    Role:string = ''
     ModuleCode: string = '';
     ScreenGroupName: string = '';
     WindowName: string = '';
+    ScreenCode: string = '';
     IsAccess: string = '';
     WindowIcon: string = '';
     GroupIcon: string = '';

@@ -1,96 +1,131 @@
-.roles-screen {
-  /* padding: 1.5rem; */
+/* Main layout styles */
+.main-content-body {
+  height: 83vh !important;
+  padding: 14px;
+  background-color: white;
+  margin: 14px;
+  border-radius: 10px;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 }
-.screen-list {
-  padding: 8px;
+
+/* Roles section styles */
+.roles-container {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 5px;
 }
-.roles-screen h2,
-.screen-list h2 {
-  font-weight: 500;
-  font-size: 24px;
+
+.child-item h3 {
+  font-size: 15px !important; 
 }
-.screen-list-header {
-  background-color: #edf1f5;
-  border-radius: 9px;
-}
+
 .roles-list {
-  padding: 11px;
-  background-color: #f3f4f6;
-  color: black;
-  border-radius: 5px;
-  margin-top: 7px;
+  padding: 12px 15px;
+  background-color: #f8f9fa;
+  color: #333;
+  border-radius: 6px;
+  margin-top: 8px;
+  transition: all 0.1s ease;
+  cursor: pointer;
+  border-left: 0px solid;
 }
+
 .roles-list:hover {
-  background-color: #e5e7eb;
+  background-color: #e9ecef;
+  border-left: 0px solid #6c757d;
+  color: black;
 }
+
+.clicked-role {
+  background-color: #153477;
+  color: white;
+  border-left: 3px solid #0d2456;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Screen list section */
+.screen-list-header {
+  background-color: #f8f9fa;
+  border-radius: 9px;
+  height: 74vh;
+  padding: 12px;
+}
+
+.parent-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 72vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 5px;
+}
+
+/* Custom scrollbar */
+.parent-container::-webkit-scrollbar,
+.roles-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.parent-container::-webkit-scrollbar-track,
+.roles-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.parent-container::-webkit-scrollbar-thumb,
+.roles-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+.parent-container::-webkit-scrollbar-thumb:hover,
+.roles-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Group styling */
+.role-screen-group {
+  border: 1px dashed #6c757d;
+  border-radius: 8px;
+  padding: 12px 16px;
+  gap: 12px;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.role-screen-group:hover {
+  background-color: #e9ecef;
+}
+
 .group-name {
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   flex: 1;
   color: #212529;
 }
-.clicked-role {
-  background-color: #153477;
-  color: white;
-}
 
-.main-content-body {
-  height: 100% auto;
-}
-.role-screen-group {
-  border: 1px solid black;
-  border-radius: 8px;
-  padding: 12px 16px;
-  border-style: dashed;
-  gap: 12px;
-}
-.parent-container {
+.group-icon {
+  width: 24px;
+  height: 24px;
   display: flex;
-  flex-direction: column;
-  gap: 10px; /* Adjust spacing as needed */
+  align-items: center;
+  justify-content: center;
 }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-.dropdown-content.show {
-  display: block;
-}
-
-.dropdown-item {
-  padding: 8px 16px;
-  cursor: pointer;
-}
-
-.dropdown-item:hover {
-  background-color: #f1f1f1;
-}
-
-.role-screen-group {
-  position: relative;
-  display: inline-block;
-}
+/* Child items styling */
 .child-item {
   display: flex;
   align-items: center;
-  padding: 12px 16px;
-  border-bottom: 1px solid #e9ecef;
-  background-color: white;
+  padding: 6px 12px;
+   background-color: white;
   transition: background-color 0.2s ease;
   margin-left: 33px;
-  border-radius: 10px;
-}
-
-.child-item{
-  border-bottom: none;
-  border: 1px solid #bfa9a9;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
 }
 
 .child-item:hover {
@@ -101,11 +136,14 @@
   color: #6c757d;
   margin-right: 12px;
   font-size: 14px;
-  width: 20px;
-  text-align: center;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.child-item h3 {
+.screen-name {
   margin: 0;
   font-size: 14px;
   font-weight: 500;
@@ -113,65 +151,70 @@
   color: #212529;
 }
 
-.access-toggle {
-  display: flex;
-  align-items: center;
-}
-
-.access-checkbox {
-  position: absolute;
-  opacity: 0;
-}
-
-.access-toggle label {
-  position: relative;
-  display: flex;
-  align-items: center;
+/* Toggle switch styling */
+.form-check-input {
   cursor: pointer;
+  width: 45px;
+  height: 22px;
 }
 
-.access-toggle label:before {
-  content: "";
-  display: inline-block;
-  width: 40px;
-  height: 20px;
-  background-color: #e0e0e0;
-  border-radius: 20px;
-  margin-right: 8px;
-  transition: all 0.2s ease;
+.form-check-input:checked {
+  background-color: #198754;
+  border-color: #198754;
 }
 
-.access-toggle label:after {
-  content: "";
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background-color: white;
-  top: 2px;
-  left: 2px;
-  transition: all 0.2s ease;
-}
-
-.access-checkbox:checked + label:before {
-  background-color: black;
-}
-
-.access-checkbox:checked + label:after {
-  left: 22px;
-}
-
-.toggle-text {
+.form-check-label {
   font-size: 12px;
   color: #6c757d;
+  margin-left: 8px;
 }
 
-.access-checkbox:checked + label .toggle-text {
-  color: black;
+/* No role message */
+.no-role-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6c757d;
+  font-weight: 500;
 }
-.toggle-icon {
-  margin-right: 22px !important;
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-content-body {
+    height: auto !important;
+    min-height: 83vh;
+  }
+
+  .screen-list-header {
+    height: auto;
+    min-height: 50vh;
+  }
+
+  .parent-container {
+    max-height: none;
+  }
+
+  .roles-container {
+    max-height: 40vh;
+  }
 }
-.main-content-body{
-  height: 75vh !important;
+
+@media (max-width: 576px) {
+  .screen-list-title {
+    font-size: 18px;
+  }
+
+  .child-item {
+    margin-left: 15px;
+    padding: 10px;
+  }
+
+  .form-check-label {
+    display: none;
+  }
+
+  .role-screen-group {
+    padding: 10px;
+  }
 }
