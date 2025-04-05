@@ -35,7 +35,7 @@ export class ProductDetailsComponent {
   addProductDialog: boolean = false;
   selectedColor: string = '#ff0000';
   imagePreviews: string[] = [];
-  variantCount : number = 1;
+  variantCount : number = 0;
   filters: any;
   statusOptions = [
     { label: 'In Stock', value: 'In Stock' },
@@ -90,20 +90,14 @@ export class ProductDetailsComponent {
     imageUrl: ''
   }
 
-  constructor(private fb: FormBuilder,  private toastService: ToastService) {
-
+  constructor(private fb: FormBuilder, private toastService: ToastService) {
     this.productForm = this.fb.group({
       productName: ['', Validators.required],
       category: [null, Validators.required],
       brand: [null, Validators.required],
-      color: [[], Validators.required],
-      size: [[], Validators.required],
-      price: ['', [Validators.required, Validators.min(0)]],
-      stock: ['', [Validators.required, Validators.min(0)]],
-      imageUrl: [''],
-      variants: this.fb.array([])
+      variants: this.fb.array([this.createVariantGroup()])
     });
-  }
+  }  
 
   ngOnInit() {
 
@@ -119,14 +113,39 @@ export class ProductDetailsComponent {
   get variants(): FormArray {
     return this.productForm.get('variants') as FormArray;
   }
-
-  addVariant(): void {
-    this.variantCount++;
+  
+  addVariant() {
+    this.variants.push(this.createVariantGroup());
+  }
+  
+  removeVariant(index: number) {
+    this.variants.removeAt(index);
   }
 
-  removeVariant(): void {
-    this.variantCount--; 
+  onSubmit(): void {
+    console.log("Form Value:", this.productForm.value);
+    console.log("Form Status:", this.productForm.status);
+    console.log("Form Errors:", this.productForm.errors);
+    console.log("Variants Errors:", this.variants.errors);
+  
+    if (this.productForm.invalid) {
+      console.log("Form is invalid! Please check the required fields.");
+      return;
+    }
+  
+    console.log("Form is valid! Submitting...");
   }
+
+  createVariantGroup(): FormGroup {
+    return this.fb.group({
+      color: [[]],
+      size: [[]],
+      price: [0],
+      stock: [0],
+      imageUrl: ['']
+    });
+  }
+  
 
   getSeverity(status: string): 'success' | 'secondary' | 'info' | 'warn' | 'danger' | 'contrast' | undefined {
     const mapping: { [key: string]: 'success' | 'secondary' | 'info' | 'warn' | 'danger' | 'contrast' | undefined } = {

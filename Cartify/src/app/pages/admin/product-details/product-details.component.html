@@ -46,10 +46,8 @@
         <tr class="hover:bg-gray-100 transition duration-300 ease-in-out">
           <td class="p-3 flex gap-2">
             <div class="action-buttons">
-              <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
-                severity="success" />
-              <p-button icon="pi pi-trash" [rounded]="true" [outlined]="true"
-                severity="danger" />
+              <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true" severity="success" />
+              <p-button icon="pi pi-trash" [rounded]="true" [outlined]="true" severity="danger" />
             </div>
           </td>
           <td class="p-3 nameImg">
@@ -72,92 +70,87 @@
 </div>
 
 <p-dialog header="Add New Product" [modal]="true" [(visible)]="addProductDialog" [draggable]="false"
-  [breakpoints]="{ '1199px': '60vw', '575px': '90vw' }" [style]="{ width: '80rem' }">
+  [breakpoints]="{ '1199px': '60vw', '575px': '90vw' }" [style]="{ width: '70rem' }">
   <p-card>
-    <p>Create a new product with variants.</p>
-      <p-fieldset legend="Product Information">
-        <div class="main-form-group">
-          <div class="form-group">
-            <label for="productName">Product Name</label>
-            <input pInputText id="productName" [ngModel]="savedProduct.ProductName" placeholder="Enter product name" />
-          </div>
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="dialog-content">
+        <h2>Add New Product</h2>
+        <p class="subtitle">Create a new product with variants</p>
 
-          <div class="form-group">
-            <label for="category">Product Category</label>
-            <p-dropdown id="category" [options]="categories" [ngModel]="savedProduct.CategoryCode" optionLabel="name"
-              placeholder="Select a Category">
-            </p-dropdown>
+        <p-fieldset legend="Product Information">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="productName">Product Name</label>
+              <input pInputText id="productName" formControlName="productName" placeholder="Enter product name" />
+            </div>
+
+            <div class="form-group">
+              <label for="category">Product Category</label>
+              <p-dropdown id="category" [options]="categories" formControlName="category" optionLabel="name"
+                placeholder="Select a Category">
+              </p-dropdown>
+            </div>
+
+            <div class="form-group">
+              <label for="brand">Product Brand</label>
+              <p-dropdown id="brand" [options]="brands" formControlName="brand" optionLabel="name"
+                placeholder="Select a Brand">
+              </p-dropdown>
+            </div>
           </div>
+        </p-fieldset>
+
+        <div class="add-variant-btn">
+          <button pButton type="button" label="Add Variant" icon="pi pi-plus" (click)="addVariant()"></button>
         </div>
-        <div class="main-form-group">
-          <div class="form-group">
-            <label for="brand">Product Brand</label>
-            <p-dropdown id="brand" [options]="brands" [ngModel]="savedProduct.BrandCode" optionLabel="name"
-              placeholder="Select a Brand">
-            </p-dropdown>
-          </div>
-        </div>
-      </p-fieldset>
 
-      <p-divider></p-divider>
-      <div class="form-actions">
-        <button pButton type="button" label="Add Variant" icon="pi pi-plus" (click)="addVariant()"></button>
-      </div>
+        <p-fieldset legend="Product Variants">
+          <div formArrayName="variants">
+            <div *ngFor="let variant of variants.controls; let i = index" [formGroupName]="i" class="variant-group">
+              <h4>Variant {{ i + 1 }}</h4>
 
-      <p-fieldset legend="Product Variants">
-        <div class="variant">
-          <h4>Variant {{ variantCount }}</h4>
-          <div class="main-form-group">
-            <div class="form-group">
-              <label>Color</label>
-              <p-multiSelect [options]="colors" [ngModel]="productVariantDetails.Color" placeholder="Select Colors"
-                [showToggleAll]="false">
-                <ng-template let-color pTemplate="item">
-                  <div class="color-option">
-                    <span [style.background]="color.value" class="color-box"></span> {{ color.label }}
-                  </div>
-                </ng-template>
-              </p-multiSelect>
-            </div>
-            <div class="form-group">
-              <label>Size</label>
-              <p-multiSelect [options]="sizes" [ngModel]="productVariantDetails.Size" optionLabel="name" placeholder="Select sizes">
-              </p-multiSelect>
-            </div>
-          </div>
-          <div class="main-form-group">
-            <div class="form-group">
-              <label>Price</label>
-              <input pInputText type="number" [ngModel]="productVariantDetails.Price" placeholder="0.00" />
-            </div>
-            <div class="form-group">
-              <label>Stock</label>
-              <input pInputText type="number" [ngModel]="productVariantDetails.Stock" placeholder="0" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="imageUpload">Upload Images</label>
-            <input type="file" id="imageUpload" [ngModel]="productVariantDetails.imageUrl" (change)="onImageSelect($event)" multiple accept="image/*" />
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Color</label>
+                  <p-multiSelect formControlName="color" [options]="colors" placeholder="Select Colors"></p-multiSelect>
+                </div>
 
-            <div class="image-preview-container">
-              <div *ngFor="let img of imagePreviews; let i = index" class="image-preview-wrapper">
-                <img [src]="img" class="image-preview" />
-                <button type="button" class="delete-btn" (click)="removeImage(i)">
-                  ✖
-                </button>
+                <div class="form-group">
+                  <label>Size</label>
+                  <p-multiSelect formControlName="size" [options]="sizes" placeholder="Select Sizes"></p-multiSelect>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Price</label>
+                  <input pInputText type="number" formControlName="price" />
+                </div>
+
+                <div class="form-group">
+                  <label>Stock</label>
+                  <input pInputText type="number" formControlName="stock" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Upload Images</label>
+                <input type="file" formControlName="imageUrl" (change)="onImageSelect($event)" />
+              </div>
+
+              <div class="remove-btn">
+                <button pButton type="button" icon="pi pi-trash" class="p-button-danger" (click)="removeVariant(i)"
+                  *ngIf="variants.length > 1"></button>
               </div>
             </div>
           </div>
-          <button pButton type="button" icon="pi pi-trash" (click)="removeVariant()"
-            *ngIf="variants.length > 1"></button>
+        </p-fieldset>
+
+        <div class="form-actions">
+          <button pButton type="button" label="Cancel" class="p-button-text" (click)="addProductDialog = false"></button>
+          <button pButton type="submit" label="Create Product" class="p-button-primary"></button>
         </div>
-      </p-fieldset>
-
-      <p-divider></p-divider>
-
-      <div class="form-actions">
-        <button pButton type="button" label="Cancel" class="p-button-text"></button>
-        <button pButton type="submit" label="Create Product" class="p-button-primary"></button>
       </div>
+    </form>
   </p-card>
 </p-dialog>
