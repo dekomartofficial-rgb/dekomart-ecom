@@ -18,6 +18,8 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastService } from '@/app/provider/services/toast.service';
+import { Product, ProductVariant } from '@/app/provider/interface/AdminInterface';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -32,106 +34,98 @@ export class ProductDetailsComponent {
   selectedImages: string[] = [];
   addProductDialog: boolean = false;
   selectedColor: string = '#ff0000';
-  sizes: any[] = [];
   imagePreviews: string[] = [];
-  productName: string = '';
-  productId: string = '';
-  productPrice: string = '';
-  productCategory: string = '';
-  productBrand: string = '';
-  productColor: string = '';
-  productVariant: string = '';
-  productSize: string = '';
-  productStock: string = '';
-  description: string = '';
-
+  variantCount : number = 1;
   filters: any;
   statusOptions = [
     { label: 'In Stock', value: 'In Stock' },
     { label: 'Low Stock', value: 'Low Stock' },
     { label: 'Out of Stock', value: 'Out of Stock' }
   ];
-
   products: any[] = [
     { id: '1000', name: 'Macbook Pro', category: 'Electronics', quantity: 10, inventoryStatus: 'IN STOCK', rating: 3, price: 2500 },
-    { id: '1001', code: 'f230fh0g3', name: 'Bamboo Watch', description: 'Product Description', image: 'bamboo-watch.jpg', price: 65, category: 'Accessories', quantity: 24, inventoryStatus: 'OUT OF STOCK', rating: 5 },];
-
-  selectedCategory: any = '';
-  categoryes = [
-    { name: 'Clothing', code: 'CL' },
-    { name: 'Electronics', code: 'EL' },
-    { name: 'Foods', code: 'FOD' },
-    { name: 'Toyes', code: 'TOY' },
+    { id: '1001', code: 'f230fh0g3', name: 'Bamboo Watch', description: 'Product Description', image: 'bamboo-watch.jpg', price: 65, category: 'Accessories', quantity: 24, inventoryStatus: 'OUT OF STOCK', rating: 5 },
   ];
-
+  categories = [
+    { name: 'Electronics', code: 'ELEC' },
+    { name: 'Clothing', code: 'CLOTH' }
+  ];
+  brands = [
+    { name: 'Nike', code: 'NIKE' },
+    { name: 'Apple', code: 'APPLE' }
+  ];
   colors = [
-    { label: 'Red', value: '#FF0000' },
-    { label: 'Green', value: '#008000' },
-    { label: 'Blue', value: '#0000FF' },
-    { label: 'Yellow', value: '#FFFF00' },
-    { label: 'Black', value: '#000000' },
-    { label: 'White', value: '#FFFFFF' }
+    { label: 'Red', value: 'red' },
+    { label: 'Blue', value: 'blue' }
+  ];
+  sizes = [
+    { name: 'Small', code: 'S' },
+    { name: 'Medium', code: 'M' },
+    { name: 'Large', code: 'L' }
   ];
 
   selectedSize: any = '';
-
-
   productForm: FormGroup;
+  
+  savedProduct: Product = {
+    ProductId: 0,
+    ProductName: '',
+    CategoryCode: '',
+    BrandCode: '',
+    CompanyId: 0,
+    About: '',
+    LoggedUserId: 0,
+    OpsMode: '',
+    Variants: []
+  };
 
-  constructor(private fb: FormBuilder) {
-    this.sizes = [
-      { name: 'Small', code: 'S' },
-      { name: 'Medium', code: 'M' },
-      { name: 'Large', code: 'L' },
-      { name: 'Xtra Large', code: 'XL' },
-    ];
+  productVariantDetails: ProductVariant = {
+    VariantId: 0,
+    VariantName: '',
+    Description: '',
+    Price: 0,
+    Stock: 0,
+    Color: '',
+    Size: '',
+    imageUrl: ''
+  }
+
+  constructor(private fb: FormBuilder,  private toastService: ToastService) {
 
     this.productForm = this.fb.group({
       productName: ['', Validators.required],
-      category: ['', Validators.required],
-      brand: ['', Validators.required],
+      category: [null, Validators.required],
+      brand: [null, Validators.required],
+      color: [[], Validators.required],
+      size: [[], Validators.required],
+      price: ['', [Validators.required, Validators.min(0)]],
+      stock: ['', [Validators.required, Validators.min(0)]],
+      imageUrl: [''],
       variants: this.fb.array([])
     });
-
-    this.addVariant();
   }
-
-  get variants(): FormArray {
-    return this.productForm.get('variants') as FormArray;
-  }
-
-  addVariant(): void {
-    const variantForm = this.fb.group({
-      color: [[]],
-      size: [[]],
-      price: ['', Validators.required],
-      stock: ['', [Validators.required, Validators.min(0)]],
-      imageUrl: ['']
-    });
-
-    this.variants.push(variantForm);
-  }
-
-  removeVariant(index: number): void {
-    this.variants.removeAt(index);
-  }
-
-  submitForm(): void {
-    if (this.productForm.valid) {
-      console.log('Product Data:', this.productForm.value);
-    } else {
-      console.log('Form is invalid!');
-    }
-  }
-
 
   ngOnInit() {
+
     this.filters = {
       name: { value: null, matchMode: FilterMatchMode.CONTAINS },
       price: { value: null, matchMode: FilterMatchMode.EQUALS },
       category: { value: null, matchMode: FilterMatchMode.CONTAINS },
       inventoryStatus: { value: null, matchMode: FilterMatchMode.EQUALS }
     };
+  }
+
+ 
+  get variants(): FormArray {
+    return this.productForm.get('variants') as FormArray;
+  }
+
+  addVariant(): void {
+    this.variantCount++;
+  }
+
+  removeVariant(): void {
+    this.variantCount--; 
   }
 
   getSeverity(status: string): 'success' | 'secondary' | 'info' | 'warn' | 'danger' | 'contrast' | undefined {
@@ -165,30 +159,5 @@ export class ProductDetailsComponent {
     this.imagePreviews.splice(index, 1);
   }
 
-  saveProduct() {
-    this.addProductDialog = false;
-  }
-
-
-  editProduct(product: any) {
-    this.addProductDialog = true;
-    this.productName = product.name;
-    this.productId = product.id;
-    this.productPrice = product.price;
-    this.productCategory = product.category;
-    this.productBrand = product.brand;
-    this.productColor = product.color;
-    this.productVariant = product.variant;
-    this.productSize = product.size;
-    this.productStock = product.stock;
-    this.description = product.description;
-  }
-
-  deleteProduct(product: any) {
-    if (confirm(`Are you sure you want to delete ${product.name}?`)) {
-      this.products = this.products.filter(p => p !== product);
-      console.log("Deleted Product:", product);
-    }
-  }
 
 }

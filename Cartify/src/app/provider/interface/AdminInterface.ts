@@ -41,3 +41,27 @@ export class RoleScreen {
     WindowIcon: string = '';
     GroupIcon: string = '';
 }
+
+export interface ProductVariant {
+    VariantId?: number;
+    VariantName: string;
+    Description: string;
+    Price: number;
+    Stock: number;
+    Color?: string;
+    Size?: string;
+    imageUrl?: string;
+  }
+  
+  export interface Product {
+    ProductId?: number;
+    ProductName: string;
+    CompanyId: number;
+    CategoryCode: string;
+    BrandCode: string;
+    About: string;
+    LoggedUserId: number;
+    OpsMode: string;
+    Variants: ProductVariant[];
+  }
+  
