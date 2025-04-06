@@ -19,8 +19,8 @@ import { ColorPickerModule } from 'primeng/colorpicker';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastService } from '@/app/provider/services/toast.service';
-import { Product, ProductVariant } from '@/app/provider/interface/AdminInterface';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClientService } from '@/app/provider/services/http-client.service';
 
 @Component({
   selector: 'app-product-details',
@@ -31,11 +31,11 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ProductDetailsComponent {
 
-  selectedImages: string[] = [];
+  imagePreviews: { [key: number]: string[] } = {};
+  imageFiles: { [key: number]: File[] } = {};
   addProductDialog: boolean = false;
   selectedColor: string = '#ff0000';
-  imagePreviews: string[] = [];
-  variantCount : number = 0;
+  variantCount: number = 0;
   filters: any;
   statusOptions = [
     { label: 'In Stock', value: 'In Stock' },
@@ -66,38 +66,15 @@ export class ProductDetailsComponent {
 
   selectedSize: any = '';
   productForm: FormGroup;
-  
-  savedProduct: Product = {
-    ProductId: 0,
-    ProductName: '',
-    CategoryCode: '',
-    BrandCode: '',
-    CompanyId: 0,
-    About: '',
-    LoggedUserId: 0,
-    OpsMode: '',
-    Variants: []
-  };
 
-  productVariantDetails: ProductVariant = {
-    VariantId: 0,
-    VariantName: '',
-    Description: '',
-    Price: 0,
-    Stock: 0,
-    Color: '',
-    Size: '',
-    imageUrl: ''
-  }
-
-  constructor(private fb: FormBuilder, private toastService: ToastService) {
+  constructor(private fb: FormBuilder, private http: HttpClientService, private toastService: ToastService) {
     this.productForm = this.fb.group({
       productName: ['', Validators.required],
       category: [null, Validators.required],
       brand: [null, Validators.required],
       variants: this.fb.array([this.createVariantGroup()])
     });
-  }  
+  }
 
   ngOnInit() {
 
@@ -109,31 +86,67 @@ export class ProductDetailsComponent {
     };
   }
 
- 
   get variants(): FormArray {
     return this.productForm.get('variants') as FormArray;
   }
-  
+
   addVariant() {
     this.variants.push(this.createVariantGroup());
   }
-  
+
   removeVariant(index: number) {
     this.variants.removeAt(index);
   }
 
   onSubmit(): void {
-    console.log("Form Value:", this.productForm.value);
-    console.log("Form Status:", this.productForm.status);
-    console.log("Form Errors:", this.productForm.errors);
-    console.log("Variants Errors:", this.variants.errors);
+    if (this.productForm.valid) {
+      const formData = new FormData();
+
+      const productData = this.productForm.value;
+      formData.append('productId', '0');
+      formData.append('productName', productData.productName);
+      formData.append('category', productData.category);
+      formData.append('brand', productData.brand);
+      formData.append('OPSMode', 'INSERT');
   
-    if (this.productForm.invalid) {
-      console.log("Form is invalid! Please check the required fields.");
-      return;
+      const variants = productData.variants.map((variant: any, i: number) => {
+        const variantData = {
+          color: variant.color,
+          size: variant.size,
+          price: variant.price,
+          stock: variant.stock,
+        };
+  
+        if (this.imageFiles[i]) {
+          this.imageFiles[i].forEach((file, index) => {
+            formData.append(`variantImages[${i}]`, file, file.name);
+          });
+        }
+        return variantData;
+      });
+      formData.append('variants', JSON.stringify(variants));
+
+      interface SaveProductResponse {
+        MessageType: number;
+        Message: string;
+      }
+  
+      this.http.post<SaveProductResponse>('admin/SaveProduct', formData).subscribe({
+        next: (res: SaveProductResponse) => {
+        if (res.MessageType === 2) {
+          this.toastService.show('Success', res.Message);
+        } else {
+          this.toastService.show('Error', res.Message);
+        }
+        },
+        error: (err: string) => {
+        this.toastService.show('Error', err);
+        }
+      });
+    } else {
+      this.toastService.show('Error', 'Please fill all required fields.');
     }
-  
-    console.log("Form is valid! Submitting...");
+    
   }
 
   createVariantGroup(): FormGroup {
@@ -142,10 +155,10 @@ export class ProductDetailsComponent {
       size: [[]],
       price: [0],
       stock: [0],
-      imageUrl: ['']
+      imageUrl: [[]]
     });
   }
-  
+
 
   getSeverity(status: string): 'success' | 'secondary' | 'info' | 'warn' | 'danger' | 'contrast' | undefined {
     const mapping: { [key: string]: 'success' | 'secondary' | 'info' | 'warn' | 'danger' | 'contrast' | undefined } = {
@@ -160,22 +173,26 @@ export class ProductDetailsComponent {
     this.addProductDialog = true;
   }
 
-  onImageSelect(event: any) {
-    if (event.target.files) {
-      const files = Array.from(event.target.files) as File[];
+  onImageSelect(event: Event, variantIndex: number): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length) return;
 
-      files.forEach((file) => {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.imagePreviews.push(e.target.result);
-        };
-        reader.readAsDataURL(file);
-      });
-    }
+    const files = Array.from(input.files);
+    this.imageFiles[variantIndex] = files;
+    this.imagePreviews[variantIndex] = [];
+
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreviews[variantIndex].push(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    });
   }
 
-  removeImage(index: number) {
-    this.imagePreviews.splice(index, 1);
+  removeImage(variantIndex: number, imageIndex: number): void {
+    this.imagePreviews[variantIndex].splice(imageIndex, 1);
+    this.imageFiles[variantIndex].splice(imageIndex, 1);
   }
 
 

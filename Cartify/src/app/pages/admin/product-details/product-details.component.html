@@ -135,9 +135,15 @@
 
               <div class="form-group">
                 <label>Upload Images</label>
-                <input type="file" formControlName="imageUrl" (change)="onImageSelect($event)" />
+                <input type="file" multiple (change)="onImageSelect($event, i)" />
+                <div class="image-preview" *ngIf="imagePreviews[i]?.length">
+                  <div class="thumb-wrapper" *ngFor="let img of imagePreviews[i]; let j = index">
+                    <img [src]="img" class="preview-thumb" />
+                    <button type="button" pButton icon="pi pi-times" class="remove-thumb-btn"
+                      (click)="removeImage(i, j)" tooltip="Remove image"></button>
+                  </div>
+                </div>
               </div>
-
               <div class="remove-btn">
                 <button pButton type="button" icon="pi pi-trash" class="p-button-danger" (click)="removeVariant(i)"
                   *ngIf="variants.length > 1"></button>
@@ -145,9 +151,9 @@
             </div>
           </div>
         </p-fieldset>
-
         <div class="form-actions">
-          <button pButton type="button" label="Cancel" class="p-button-text" (click)="addProductDialog = false"></button>
+          <button pButton type="button" label="Cancel" class="p-button-text"
+            (click)="addProductDialog = false"></button>
           <button pButton type="submit" label="Create Product" class="p-button-primary"></button>
         </div>
       </div>
