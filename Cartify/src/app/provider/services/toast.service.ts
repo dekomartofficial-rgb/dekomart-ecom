@@ -1,41 +1,35 @@
 import { Injectable } from '@angular/core';
-import { MessageService } from 'primeng/api';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ToastService {
-  constructor(private messageService: MessageService) {}
+  toasts: any[] = [];
+  delay: number = 3000
 
-  showSuccess(summary: string, detail: string) {
-    this.messageService.add({
-      severity: 'success', 
-      summary: summary, 
-      detail: detail
-    });
+  show(header: string, body: string) {
+    const classname = this.getIconClass(header.toLowerCase());
+    const toast = { header, body, type :header.toLowerCase(), classname, closing: false };
+
+    this.toasts.push(toast);
+
+    setTimeout(() => this.startClose(toast), this.delay);
   }
 
-  showError(summary: string, detail: string) {
-    this.messageService.add({
-      severity: 'error', 
-      summary: summary, 
-      detail: detail
-    });
+  startClose(toast: any) {
+    toast.closing = true;
+    setTimeout(() => this.remove(toast), 500);
   }
 
-  showWarning(summary: string, detail: string) {
-    this.messageService.add({
-      severity: 'warn', 
-      summary: summary, 
-      detail: detail
-    });
+  remove(toast: any) {
+    this.toasts = this.toasts.filter(t => t !== toast);
   }
 
-  showInfo(summary: string, detail: string) {
-    this.messageService.add({
-      severity: 'info', 
-      summary: summary, 
-      detail: detail
-    });
+  private getIconClass(type: string): string {
+    switch (type) {
+      case 'success': return 'fa-check-circle';
+      case 'error': return 'fa-times-circle';
+      case 'info': return 'fa-info-circle';
+      case 'warning': return 'fa-exclamation-circle';
+      default: return 'fa-info-circle';
+    }
   }
 }

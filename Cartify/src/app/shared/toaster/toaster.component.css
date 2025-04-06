@@ -1,0 +1,107 @@
+.toast-wrapper {
+  max-width: 380px;
+}
+
+.toast-box {
+  width: 357px;
+  padding: 20px;
+  border: 1px solid #d0cbcb;
+  border-style: dashed;
+  background-color: #ffffff;
+  border-radius: 7px;
+  display: grid;
+  grid-template-columns: 1.3fr 6fr 0.5fr;
+  box-shadow: 0 63px 62px rgb(0 0 0 / 8%);
+  margin-bottom: 16px;
+  animation: 0.3s ease-out;
+}
+
+.toast-box.success {
+  border-left: 8px solid #47d764;
+}
+
+.toast-box.error {
+  border-left: 8px solid #ff355b;
+}
+
+.toast-box.info {
+  border-left: 8px solid #2f86eb;
+}
+
+.toast-box.warning {
+  border-left: 8px solid #ffc021;
+}
+
+.toast-box i {
+  font-size: 35px;
+  align-self: center;
+}
+
+.toast-box.success i {
+  color: #47d764;
+}
+.toast-box.error i {
+  color: #ff355b;
+}
+.toast-box.info i {
+  color: #2f86eb;
+}
+.toast-box.warning i {
+  color: #ffc021;
+}
+
+.container-2 p:first-child {
+  /* font-size: 14px; */
+  /* font-weight: 400; */
+  color: #656565;
+  margin: 0;
+}
+
+.header{
+  font-weight: 700 !important;
+}
+.body{
+  font-size: 14px;
+}
+.container-2 p:last-child {
+  /* font-size: 12px; */
+  /* font-weight: 400; */
+  color: #656565;
+  margin: 0;
+}
+
+.toast-box button {
+  align-self: start;
+  background-color: transparent;
+  font-size: 25px;
+  color: #656565;
+  line-height: 0;
+  cursor: pointer;
+  border: none;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.toast-box {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: all 0.5s ease;
+}
+
+.toast-box.fade-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.toast-box.fade-out {
+  opacity: 0;
+  transform: translateX(30px);
+}

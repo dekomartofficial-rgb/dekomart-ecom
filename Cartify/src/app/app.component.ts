@@ -7,12 +7,13 @@ import { CommonModule } from '@angular/common';
 import { LoaderService } from './provider/services/loader.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UserNavBarComponent } from './pages/user/user-home/user-nav-bar/user-nav-bar.component';
+import { ToasterComponent } from './shared/toaster/toaster.component';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NavbarComponent, ToastModule, FontAwesomeModule,  UserNavBarComponent],
+  imports: [CommonModule, RouterOutlet, NavbarComponent, ToastModule, FontAwesomeModule,  UserNavBarComponent, ToasterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

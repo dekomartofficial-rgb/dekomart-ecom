@@ -70,7 +70,9 @@ export class RoleAccessComponent implements OnInit {
       this.GroupChildList[index].IsAccess = event.target.checked === true ? 'true' : 'false';
     }
   }
-
+  addRole() {
+    this.toastService.show('Info', 'We Will Add Soon');
+  }
   saveRole() {
     this.RoleRight = this.GroupChildList
       .map(item => ({
@@ -82,14 +84,14 @@ export class RoleAccessComponent implements OnInit {
     this.httpClient.post<any>('admin/SaveRoleRight', { RoleRight: this.RoleRight }).subscribe({
       next: (res) => {
         if (res.MessageType === 2) {
-          this.toastService.showSuccess('Success', res.Message);
+         this.toastService.show('Success', res.Message);
           this.getRole();
         } else {
-          this.toastService.showError('Error', res.Message);
+          this.toastService.show('Error', res.Message);
         }
       },
       error: (err) => {
-        this.toastService.showError('Error', err);
+        this.toastService.show('Error', err);
       }
     })
   }

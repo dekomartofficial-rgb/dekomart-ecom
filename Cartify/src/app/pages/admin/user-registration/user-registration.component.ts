@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,  ViewEncapsulation } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { ButtonModule } from 'primeng/button';
@@ -17,6 +17,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { TagModule } from 'primeng/tag';
 import { MultiSelectModule } from 'primeng/multiselect';
+ // <-- This allows global-style behavior
 
 
 @Component({
@@ -24,7 +25,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
   standalone: true,
   imports: [CommonModule, FloatLabel, TableModule, MultiSelectModule, ButtonModule, FormsModule, InputTextModule, InputIconModule, DatePicker, PasswordModule, IconFieldModule, ReactiveFormsModule, Checkbox, FormsModule, TagModule],
   templateUrl: './user-registration.component.html',
-  styleUrl: './user-registration.component.css'
+  styleUrl: './user-registration.component.css',
+  encapsulation: ViewEncapsulation.None
 })
 export class UserRegistrationComponent {
   isModalOpen: boolean = false;
@@ -67,7 +69,7 @@ export class UserRegistrationComponent {
         this.SelectedUserRole = this.Users.UserRole && this.Users.UserRole.includes(',') ? this.Users.UserRole.split(',') : this.Users.UserRole
       },
       error: (err) => {
-        this.toastService.showError('Error', err)
+         this.toastService.show('Error', err)
       }
     })
   }
@@ -97,16 +99,16 @@ export class UserRegistrationComponent {
     this.http.post<any>('user/SaveUser', this.User).subscribe({
       next: (res) => {
         if (res.MessageType === 2) {
-          this.toastService.showSuccess('Success', res.Message);
+          this.toastService.show('Success', res.Message);
           this.resetUser()
           this.getUser(0)
           this.closeModal();
         } else {
-          this.toastService.showError('Error', res.Message);
+           this.toastService.show('Error', res.Message);
         }
       },
       error: (err) => {
-        this.toastService.showError('Error', err);
+        this.toastService.show('Error', err);
       }
     })
 
@@ -128,7 +130,7 @@ export class UserRegistrationComponent {
         this.getUserRole()
       },
       error: (err) => {
-        this.toastService.showError('Error', err);
+         this.toastService.show('Error', err);
       }
     });
   }

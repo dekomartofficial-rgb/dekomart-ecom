@@ -62,7 +62,7 @@ export class LoginComponent {
         .subscribe({
           next: (res) => {
             if (res.MessageType === 2) {
-              this.toastService.showSuccess('Success', res.Message);
+              this.toastService.show('Success', res.Message);
               const UserData = { UserId: res.UserId, Token: res.Token, UserRole: res.UserRole }
               localStorage.setItem('userData', JSON.stringify(UserData)); 
               if (this.checkAdmin(res.UserRole)) {
@@ -71,7 +71,7 @@ export class LoginComponent {
                 this.router.navigate(['/user/'])
               }
             } else {
-              this.toastService.showError('Error', res.Message)
+               this.toastService.show('Error', res.Message)
             }
           },
           error: (err) => { throw err }

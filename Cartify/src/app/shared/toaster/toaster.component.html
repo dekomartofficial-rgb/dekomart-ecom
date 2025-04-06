@@ -1,0 +1,14 @@
+<div class="toast-wrapper position-fixed top-0 end-0 p-3" style="z-index: 1200;">
+  <div *ngFor="let toast of toastService.toasts"
+       class="toast-box {{ toast.type }}"
+       [ngClass]="{ 'fade-in': !toast.closing, 'fade-out': toast.closing }">
+    <div class="container-1">
+      <i class="fa {{ toast.classname }}"></i>
+    </div>
+    <div class="container-2">
+      <p class="header">{{ toast.header }}</p>
+      <p class="body">{{ toast.body }}</p>
+    </div>
+    <button (click)="toastService.startClose(toast)">&times;</button>
+  </div>
+</div>

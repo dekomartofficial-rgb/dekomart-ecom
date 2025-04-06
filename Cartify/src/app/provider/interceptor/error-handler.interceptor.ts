@@ -45,7 +45,7 @@ export const ErrorHandlerInterceptor: HttpInterceptorFn = (req, next) => {
       }
 
       // Show error message
-      toastService.showError("Server Error", errorMessage);
+       toastService.show("Server Error", errorMessage);
 
       // Log error for debugging
       console.error('HTTP Error:', error);
