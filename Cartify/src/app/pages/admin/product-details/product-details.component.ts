@@ -103,12 +103,13 @@ export class ProductDetailsComponent {
       const formData = new FormData();
 
       const productData = this.productForm.value;
-      formData.append('productId', '0');
+      formData.append('productId', productData.productId || '0');
       formData.append('productName', productData.productName);
-      formData.append('category', productData.category);
-      formData.append('brand', productData.brand);
-      formData.append('OPSMode', 'INSERT');
-  
+      formData.append('category', productData.category.code);
+      formData.append('brand', productData.brand.code);
+      const opsMode = +productData.productId > 0 ? 'UPDATE' : 'INSERT';
+      formData.append('OPSMode', opsMode);
+
       const variants = productData.variants.map((variant: any, i: number) => {
         const variantData = {
           color: variant.color,
@@ -116,7 +117,7 @@ export class ProductDetailsComponent {
           price: variant.price,
           stock: variant.stock,
         };
-  
+
         if (this.imageFiles[i]) {
           this.imageFiles[i].forEach((file, index) => {
             formData.append(`variantImages[${i}]`, file, file.name);
@@ -130,23 +131,23 @@ export class ProductDetailsComponent {
         MessageType: number;
         Message: string;
       }
-  
+
       this.http.post<SaveProductResponse>('admin/SaveProduct', formData).subscribe({
         next: (res: SaveProductResponse) => {
-        if (res.MessageType === 2) {
-          this.toastService.show('Success', res.Message);
-        } else {
-          this.toastService.show('Error', res.Message);
-        }
+          if (res.MessageType === 2) {
+            this.toastService.show('Success', res.Message);
+          } else {
+            this.toastService.show('Error', res.Message);
+          }
         },
         error: (err: string) => {
-        this.toastService.show('Error', err);
+          this.toastService.show('Error', err);
         }
       });
     } else {
       this.toastService.show('Error', 'Please fill all required fields.');
     }
-    
+
   }
 
   createVariantGroup(): FormGroup {
