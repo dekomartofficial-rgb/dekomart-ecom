@@ -146,6 +146,8 @@ export class ProductDetailsComponent {
       });
     } else {
       this.toastService.show('Error', 'Please fill all required fields.');
+      this.productForm.markAllAsTouched();
+      return;
     }
 
   }
@@ -171,8 +173,16 @@ export class ProductDetailsComponent {
   }
 
   showDialog() {
+    this.resetProductForm();
     this.addProductDialog = true;
   }
+
+  resetProductForm() {
+    this.productForm.reset();
+    this.imagePreviews = [];
+    this.productForm.setControl('variants', this.fb.array([this.createVariantGroup()]));
+  }
+  
 
   onImageSelect(event: Event, variantIndex: number): void {
     const input = event.target as HTMLInputElement;

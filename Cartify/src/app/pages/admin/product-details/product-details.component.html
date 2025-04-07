@@ -82,6 +82,9 @@
             <div class="form-group">
               <label for="productName">Product Name</label>
               <input pInputText id="productName" formControlName="productName" placeholder="Enter product name" />
+              <small class="p-error" *ngIf="productForm.get('productName')?.invalid && productForm.get('productName')?.touched">
+                Product Name is required.
+              </small>
             </div>
 
             <div class="form-group">
@@ -89,6 +92,9 @@
               <p-dropdown id="category" [options]="categories" formControlName="category" optionLabel="name"
                 placeholder="Select a Category">
               </p-dropdown>
+              <small class="p-error" *ngIf="productForm.get('category')?.invalid && productForm.get('category')?.touched">
+                Category is required.
+              </small>
             </div>
 
             <div class="form-group">
@@ -96,6 +102,9 @@
               <p-dropdown id="brand" [options]="brands" formControlName="brand" optionLabel="name"
                 placeholder="Select a Brand">
               </p-dropdown>
+              <small class="p-error" *ngIf="productForm.get('brand')?.invalid && productForm.get('brand')?.touched">
+                Brand is required.
+              </small>
             </div>
           </div>
         </p-fieldset>
@@ -117,7 +126,7 @@
 
                 <div class="form-group">
                   <label>Size</label>
-                  <p-multiSelect formControlName="size" [options]="sizes" placeholder="Select Sizes"></p-multiSelect>
+                  <p-multiSelect formControlName="size" [options]="sizes" optionLabel="name" placeholder="Select Sizes"></p-multiSelect>
                 </div>
               </div>
 
