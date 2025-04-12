@@ -185,8 +185,11 @@
     box-shadow: none;
     border: none;
   }
-
-:host ::ng-deep .p-datatable-thead > tr > th { 
-    background-color: white !important;
-    color: black !important;
+ 
+.p-component {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+} 
+.p-datatable-thead > tr > th {
+  background-color: #d1d5db !important;
 }

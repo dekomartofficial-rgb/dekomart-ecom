@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { HttpClientService } from '@/app/provider/services/http-client.service';
 import { TableModule } from 'primeng/table';
@@ -9,6 +9,7 @@ import { SortEvent } from 'primeng/api';
     selector: 'app-reference-data',
     imports: [CommonModule, TableModule],
     templateUrl: './reference-data.component.html',
+    encapsulation: ViewEncapsulation.None,
     styleUrl: './reference-data.component.css'
 })
 export class ReferenceDataComponent implements OnInit {

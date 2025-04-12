@@ -9,7 +9,7 @@ import { RatingModule } from 'primeng/rating';
 import { FilterMatchMode } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { DividerModule } from 'primeng/divider';
-import { FloatLabel } from 'primeng/floatlabel';
+// import { FloatLabel } from 'primeng/floatlabel';
 import { FieldsetModule } from 'primeng/fieldset';
 import { TextareaModule } from 'primeng/textarea';
 import { DropdownModule } from 'primeng/dropdown';
@@ -24,7 +24,7 @@ import { HttpClientService } from '@/app/provider/services/http-client.service';
 
 @Component({
     selector: 'app-product-details',
-    imports: [CommonModule, TableModule, ButtonModule, Dialog, InputTextModule, FormsModule, FloatLabel, RatingModule, TagModule, TextareaModule, ImageModule, FileUploadModule, DropdownModule, CardModule, FieldsetModule, DividerModule, ReactiveFormsModule, ColorPickerModule, MultiSelectModule],
+    imports: [CommonModule, TableModule, ButtonModule, Dialog, InputTextModule, FormsModule,  RatingModule, TagModule, TextareaModule, ImageModule, FileUploadModule, DropdownModule, CardModule, FieldsetModule, DividerModule, ReactiveFormsModule, ColorPickerModule, MultiSelectModule],
     templateUrl: './product-details.component.html',
     styleUrl: './product-details.component.css'
 })

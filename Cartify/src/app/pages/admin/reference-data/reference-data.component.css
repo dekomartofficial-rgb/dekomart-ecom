@@ -76,7 +76,41 @@
   padding: 2px 9px 0px 35px;
 }
 
-::ng-deep .p-datatable .p-datatable-tbody > tr {
-  --p-datatable-row-background: white !important;
-  --p-datatable-row-color: black !important;
+.p-datatable-thead > tr > th {
+  font-size: 13px;
+  border-style: none !important;
+}
+.p-datatable-sortable-column {
+  background-color: #153477 !important;
+}
+
+.p-icon {
+  color: white;
+  background-color: #153477 !important;
+}
+.p-datatable-tbody > tr {
+  background-color: white !important;
+  color: black !important;
+  border-style: none !important;
+}
+.p-datatable-tbody > tr > td {
+  border-style: solid !important;
+  border-width: 0px !important;
+}
+
+/* Target even rows in the table body */
+.p-datatable-tbody > tr:nth-child(even) {
+  background-color: #f2f2f2 !important;
+}
+
+/* Target odd rows in the table body */
+.p-datatable-tbody > tr:nth-child(odd) {
+  background-color: #ffffff !important;
+}
+.p-datatable-table { 
+  padding-top: 17px;
+}
+
+.p-datatable-table {
+  font-size: 15px;
 }

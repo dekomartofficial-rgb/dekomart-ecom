@@ -26,17 +26,19 @@
                 <div class="col-md-8 ref-data-child-data-header">
                     <div class="col-md-12 ref-data-child-data">
                         <h6> {{ ActiveGroupDesc }}</h6>
-                        <p-table #dt [value]="ChildData" class="custom-table"
-                         [customSort]="true">
+                        <p-table  [value]="ChildData" class="custom-table" >
                             <ng-template #header>
-                                <tr>
+                                <tr class="table-tr">
+                                    <th pSortableColumn=" ">
+                                        Action
+                                    </th>
                                     <th pSortableColumn="code">
                                         Code <p-sortIcon field="code" />
                                     </th>
-                                    <th pSortableColumn="description">
+                                    <th pSortableColumn="description" [ngStyle]="{'min-width':' 402px'}">
                                         Description <p-sortIcon field="description" />
                                     </th>
-                                    <th pSortableColumn="displayOrder">
+                                    <th pSortableColumn="displayOrder" >
                                         Display Order <p-sortIcon field="displayOrder" />
                                     </th>
                                     <th pSortableColumn="colorCode">
@@ -49,9 +51,10 @@
                             </ng-template>
                             <ng-template #body let-ChildData>
                                 <tr>
+                                    <td>Action</td>
                                     <td>{{ ChildData.code }}</td>
                                     <td>{{ ChildData.description }}</td>
-                                    <td>{{ ChildData.displayOrder }}</td>
+                                    <td [ngStyle]="{'text-align':'center'}">{{ ChildData.displayOrder }}</td>
                                     <td>{{ ChildData.colorCode }}</td>
                                     <td>{{ ChildData.codeActicveDesc }}</td>
                                 </tr>
