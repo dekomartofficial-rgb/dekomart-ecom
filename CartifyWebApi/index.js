@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 var cors = require("cors");
 const errorHandler = require("./app/helper/error-handler");
 const DataAccess = require("./app/database/dataaccess");
-const convertBigIntMiddleware = require("./app/middleware/commonMiddleware");
+const {convertBigIntMiddleware} = require("./app/middleware/CommonMiddleware");
 
 app.use(cors());
 app.use(express.json()); // deal with json data
@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 dotenv.config();
 app.use(logger("dev"));
 app.use(errorHandler);
-app.use(convertBigIntMiddleware);
+app.use(convertBigIntMiddleware); 
 
 /**
  * @author Mohammed Sinan

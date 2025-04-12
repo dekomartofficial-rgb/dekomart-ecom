@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'product-details', component: ProductDetailsComponent }, // Fixed component
   { path: 'user-registration', component: UserRegistrationComponent }, // Removed extra slashes
   { path: 'product-dashboard', component: ProductDashboardComponent }, // Fixed component
-  { path: 'refference-data', component: ReferenceDataComponent },
+  { path: 'reference-data', component: ReferenceDataComponent },
   { path: 'role-access', component: RoleAccessComponent }
 ];
 

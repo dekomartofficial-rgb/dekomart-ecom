@@ -55,7 +55,50 @@ form {
 
 .remember-me input[type="checkbox"] {
   margin-right: 8px;
-  accent-color: #e65656;
+  accent-color: #000000;
+  background-color: white !important;
+}
+
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.custom-checkbox .checkmark {
+  height: 16px;
+  width: 16px;
+  background-color: white;
+  border: 1px solid #000;
+  margin-right: 8px;
+  display: inline-block;
+  position: relative;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkmark {
+  background-color: #000;
+}
+
+.custom-checkbox .checkmark::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 0px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  display: none;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
+  display: block;
 }
 
 .forgot-password {
@@ -248,3 +291,4 @@ input[type="password"] {
 .form-container {
   padding-left: 137px;
 }
+

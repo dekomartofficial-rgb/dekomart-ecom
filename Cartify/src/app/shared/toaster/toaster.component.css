@@ -1,40 +1,43 @@
 .toast-wrapper {
-  max-width: 380px;
+  max-width: 400px;
 }
 
 .toast-box {
   width: 357px;
   padding: 20px;
-  border: 1px solid #d0cbcb;
-  border-style: dashed;
+  border: 1px dashed #d0cbcb;
   background-color: #ffffff;
   border-radius: 7px;
   display: grid;
-  grid-template-columns: 1.3fr 6fr 0.5fr;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  column-gap: 15px;
   box-shadow: 0 63px 62px rgb(0 0 0 / 8%);
   margin-bottom: 16px;
-  animation: 0.3s ease-out;
+  animation: slideIn 0.3s ease-out;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: all 0.5s ease;
+  max-width: 100%;              /* responsive toast */
+  word-break: break-word;       /* ensure long words break */
 }
 
 .toast-box.success {
   border-left: 8px solid #47d764;
 }
-
 .toast-box.error {
   border-left: 8px solid #ff355b;
 }
-
 .toast-box.info {
   border-left: 8px solid #2f86eb;
 }
-
 .toast-box.warning {
   border-left: 8px solid #ffc021;
 }
 
 .toast-box i {
-  font-size: 35px;
-  align-self: center;
+  font-size: 28px;
+  color: inherit;
 }
 
 .toast-box.success i {
@@ -50,34 +53,44 @@
   color: #ffc021;
 }
 
-.container-2 p:first-child {
-  /* font-size: 14px; */
-  /* font-weight: 400; */
-  color: #656565;
-  margin: 0;
+/* Toast content container (title + message) */
+.container-2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  max-width: 250px; /* prevents overflow */
 }
 
-.header{
+.container-2 p {
+  margin: 0;
+  color: #656565;
+}
+
+.header {
   font-weight: 700 !important;
-}
-.body{
-  font-size: 14px;
-}
-.container-2 p:last-child {
-  /* font-size: 12px; */
-  /* font-weight: 400; */
-  color: #656565;
-  margin: 0;
+  font-size: 15px;
+  color: #333333;
 }
 
+.body {
+  font-size: 14px;
+  line-height: 1.4;
+  word-break: break-word;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* Close button */
 .toast-box button {
-  align-self: start;
   background-color: transparent;
-  font-size: 25px;
+  font-size: 20px;
   color: #656565;
-  line-height: 0;
+  line-height: 1;
   cursor: pointer;
   border: none;
+  align-self: start;
+  margin-top: 4px;
 }
 
 @keyframes slideIn {
@@ -89,11 +102,6 @@
     opacity: 1;
     transform: translateX(0);
   }
-}
-.toast-box {
-  opacity: 0;
-  transform: translateX(30px);
-  transition: all 0.5s ease;
 }
 
 .toast-box.fade-in {

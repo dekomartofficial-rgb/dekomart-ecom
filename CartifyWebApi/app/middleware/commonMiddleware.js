@@ -22,4 +22,5 @@ const convertBigIntMiddleware = (req, res, next) => {
   next();
 };
 
-module.exports = convertBigIntMiddleware;
+
+module.exports = { convertBigIntMiddleware };

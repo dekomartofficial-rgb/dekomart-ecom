@@ -1,3 +1,51 @@
+/* user-management.component.css */
+.filter-container {
+  margin-top: 5px;
+}
+
+.filter-input {
+  width: 100%;
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+.action-cell {
+  display: flex;
+  gap: 8px;
+}
+
+table thead th {
+  position: relative;
+}
+
+.status-active {
+  background-color: green;
+  color: white;
+  border-radius: 6px;
+  padding: 6px 12px;
+  display: inline-block;
+  min-width: 80px;
+}
+
+.status-inactive {
+  background-color: red;
+  color: white;
+  border-radius: 6px;
+  padding: 6px 12px;
+  display: inline-block;
+  min-width: 80px;
+}
+
+.status-deleted {
+  background-color: #dc3545;
+  color: white;
+  border-radius: 6px;
+  padding: 6px 12px;
+  display: inline-block;
+  min-width: 80px;
+}
+
+/* Modal Styles */
 .modal {
   position: fixed;
   top: 0;
@@ -20,440 +68,35 @@
   color: white;
   padding: 0px;
 }
-.modal-content .form-class {
-  padding: 9px !important;
-}
 
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 24px;
-  cursor: pointer;
-}
-.data-cell {
-  width: 150px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  height: 1.2em;
-  white-space: nowrap;
-}
-
-.popup-child {
-  background-color: white;
-  color: black;
-}
 .model-header {
   padding: 15px 0px 0px 17px;
   font-size: 18px;
 }
+
 .modal-body {
   background-color: white;
   color: black;
   padding: 19px !important;
   font-size: 18px;
-  font-weight: 0px;
-}
-.btn-close {
-  text-decoration: none;
-}
-.label-checkbox {
-  font-size: 13px !important;
-  padding-left: 9px;
-  padding-top: 11px !important;
-  /* gap: 2px; */
-  /* padding: 7px !important; */
+  font-weight: normal;
 }
 
-.p-datepicker-trigger {
-  display: none !important;
+.form-floating > label {
+  padding: 0.5rem 0.75rem;
 }
 
-.p-inputmask {
-  width: 100% !important;
-  padding: 0px;
-  font-size: 14px !important;
-  border-radius: 6px;
-}
-.label h6 {
-  margin: 2px !important;
-  font-weight: 600 !important;
-  font-size: 13px !important;
-  padding: 6px !important;
-}
-.p-floatlabel label {
-  padding-left: 7px !important;
-  font-size: 20px !important;
-  padding-top: 7px !important;
-}
-.sticky-form-layout .form-group .form-label {
-  position: absolute;
-  top: -11px;
-  left: 12px;
-  z-index: 11;
-  padding: 0 6px;
-}
-.form-class-required {
-  color: red;
+.text-danger {
+  color: #dc3545;
   font-size: 12px;
-  padding-left: 15px !important;
-  margin: 0px;
-  height: 0px;
+  margin-top: 4px;
 }
 
-.action-buttons {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-/* PrimeNG Components Default Styling with ::ng-deep */
-
-/* Button */
-::ng-deep .p-button {
-  background: #3B82F6 !important;
-  color: #ffffff !important;
-  border: 1px solid #3B82F6 !important;
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
 }
 
-::ng-deep .p-button:hover {
-  background: #2563EB !important;
-  color: #ffffff !important;
-  border: 1px solid #2563EB !important;
-}
-
-::ng-deep .p-button.p-button-secondary {
-  background: #64748B !important;
-  color: #ffffff !important;
-  border: 1px solid #64748B !important;
-}
-
-::ng-deep .p-button.p-button-success {
-  background: #22C55E !important;
-  color: #ffffff !important;
-  border: 1px solid #22C55E !important;
-}
-
-::ng-deep .p-button.p-button-info {
-  background: #0EA5E9 !important;
-  color: #ffffff !important;
-  border: 1px solid #0EA5E9 !important;
-}
-
-::ng-deep .p-button.p-button-warning {
-  background: #F59E0B !important;
-  color: #ffffff !important;
-  border: 1px solid #F59E0B !important;
-}
-
-::ng-deep .p-button.p-button-danger {
-  background: #EF4444 !important;
-  color: #ffffff !important;
-  border: 1px solid #EF4444 !important;
-}
-
-/* Input */
-::ng-deep .p-inputtext {
-  color: #495057 !important;
-  background: #ffffff !important;
-  border: 1px solid #ced4da !important;
-}
-
-::ng-deep .p-inputtext:enabled:focus {
-  border-color: #3B82F6 !important;
-  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25) !important;
-}
-
-/* Dropdown */
-::ng-deep .p-dropdown {
-  background: #ffffff !important;
-  border: 1px solid #ced4da !important;
-}
-
-::ng-deep .p-dropdown:not(.p-disabled).p-focus {
-  border-color: #3B82F6 !important;
-  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25) !important;
-}
-
-::ng-deep .p-dropdown-panel {
-  background: #ffffff !important;
-  border: 1px solid #e9ecef !important;
-}
-
-::ng-deep .p-dropdown-item.p-highlight {
-  background: #EFF6FF !important;
-  color: #1D4ED8 !important;
-}
-
-/* MultiSelect */
-::ng-deep .p-multiselect {
-  background: #ffffff !important;
-  border: 1px solid #ced4da !important;
-}
-
-::ng-deep .p-multiselect:not(.p-disabled).p-focus {
-  border-color: #3B82F6 !important;
-  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25) !important;
-}
-
-::ng-deep .p-multiselect-panel {
-  background: #ffffff !important;
-  border: 1px solid #e9ecef !important;
-}
-
-::ng-deep .p-multiselect-item.p-highlight {
-  background: #EFF6FF !important;
-  color: #1D4ED8 !important;
-}
-
-/* Checkbox */
-::ng-deep .p-checkbox .p-checkbox-box {
-  border: 2px solid #ced4da !important;
-  background: #ffffff !important;
-  color: black;
-}
-
-::ng-deep .p-checkbox .p-checkbox-box.p-highlight {
-  border-color: #3B82F6 !important;
-  background: #3B82F6 !important;
-}
-
-/* RadioButton */
-::ng-deep .p-radiobutton .p-radiobutton-box {
-  border: 2px solid #ced4da !important;
-  background: #ffffff !important;
-}
-
-::ng-deep .p-radiobutton .p-radiobutton-box.p-highlight {
-  border-color: #3B82F6 !important;
-  background: #3B82F6 !important;
-}
-
-/* Calendar */
-::ng-deep .p-calendar .p-inputtext {
-  background: #ffffff !important;
-  border: 1px solid #ced4da !important;
-}
-
-::ng-deep .p-calendar-w-btn .p-datepicker-trigger {
-  background: #3B82F6 !important;
-  border: 1px solid #3B82F6 !important;
-}
-
-::ng-deep .p-datepicker {
-  background: #ffffff !important;
-  border: 1px solid #e9ecef !important;
-}
-
-::ng-deep .p-datepicker table td.p-datepicker-today > span {
-  background: #EFF6FF !important;
-  color: #1D4ED8 !important;
-  border-color: transparent !important;
-}
-
-::ng-deep .p-datepicker table td > span.p-highlight {
-  background: #3B82F6 !important;
-  color: #ffffff !important;
-}
-
-/* Toast */
-::ng-deep .p-toast .p-toast-message {
-  margin: 0 0 1rem 0 !important;
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
-}
-
-::ng-deep .p-toast .p-toast-message-success {
-  background: #e6ffed !important;
-  color: #155724 !important;
-  border-left: 5px solid #28a745 !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
-}
-
-::ng-deep .p-toast .p-toast-message-info {
-  background: #e6f7ff !important;
-  color: #0c5460 !important;
-  border-left: 5px solid #17a2b8 !important;
-}
-
-::ng-deep .p-toast .p-toast-message-warn {
-  background: #fff8e6 !important;
-  color: #856404 !important;
-  border-left: 5px solid #ffc107 !important;
-}
-
-::ng-deep .p-toast .p-toast-message-error {
-  background: #ffebe6 !important;
-  color: #721c24 !important;
-  border-left: 5px solid #dc3545 !important;
-}
-
-::ng-deep .p-toast-message .p-toast-summary {
-  font-weight: bold !important;
-}
-
-::ng-deep .p-toast-detail {
-  color: black !important;
-  font-size: 0.95rem !important;
-}
-
-/* Table */
-::ng-deep .p-datatable .p-datatable-thead > tr > th {
-  background: #f8f9fa !important;
-  color: #495057 !important;
-  border: 1px solid #dee2e6 !important;
-}
-
-::ng-deep .p-datatable .p-datatable-tbody > tr {
-  background: #ffffff !important;
-  color: #495057 !important;
-  border: 1px solid #dee2e6 !important;
-}
-
-::ng-deep .p-datatable .p-datatable-tbody > tr.p-highlight {
-  background: #EFF6FF !important;
-  color: #1D4ED8 !important;
-}
-
-::ng-deep .p-datatable .p-paginator {
-  background: #ffffff !important;
-}
-
-/* Dialog */
-::ng-deep .p-dialog {
-  background: #ffffff !important;
-  border: 1px solid rgba(0, 0, 0, 0.2) !important;
-}
-
-::ng-deep .p-dialog .p-dialog-header {
-  background: #ffffff !important;
-  color: #495057 !important;
-  border-bottom: 1px solid #dee2e6 !important;
-}
-
-::ng-deep .p-dialog .p-dialog-content {
-  background: #ffffff !important;
-  color: #495057 !important;
-}
-
-::ng-deep .p-dialog .p-dialog-footer {
-  background: #ffffff !important;
-  border-top: 1px solid #dee2e6 !important;
-}
-
-/* Card */
-::ng-deep .p-card {
-  background: #ffffff !important;
-  color: #495057 !important;
-  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2) !important;
-}
-
-/* Menu */
-::ng-deep .p-menu {
-  background: #ffffff !important;
-  border: 1px solid #dee2e6 !important;
-}
-
-::ng-deep .p-menu .p-menuitem-link:focus {
-  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25) !important;
-}
-
-::ng-deep .p-menu .p-menuitem-link .p-menuitem-text {
-  color: #495057 !important;
-}
-
-::ng-deep .p-menu .p-menuitem-link:not(.p-disabled):hover {
-  background: #f8f9fa !important;
-}
-
-/* TabView */
-::ng-deep .p-tabview .p-tabview-nav {
-  background: #ffffff !important;
-  border: 1px solid #dee2e6 !important;
-}
-
-::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link {
-  background: #ffffff !important;
-  color: #6c757d !important;
-  border: 1px solid #dee2e6 !important;
-}
-
-::ng-deep .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
-  background: #ffffff !important;
-  color: #3B82F6 !important;
-  border-color: #3B82F6 !important;
-}
-
-::ng-deep .p-tabview .p-tabview-panels {
-  background: #ffffff !important;
-}
-
-/* Accordion */
-::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link {
-  background: #f8f9fa !important;
-  color: #495057 !important;
-  border: 1px solid #dee2e6 !important;
-}
-
-::ng-deep .p-accordion .p-accordion-content {
-  border: 1px solid #dee2e6 !important;
-  background: #ffffff !important;
-}
-
-/* Panel */
-::ng-deep .p-panel {
-  background: #ffffff !important;
-  color: #495057 !important;
-  border: 1px solid #dee2e6 !important;
-}
-
-::ng-deep .p-panel .p-panel-header {
-  background: #f8f9fa !important;
-  color: #495057 !important;
-  border: 1px solid #dee2e6 !important;
-}
-
-::ng-deep .p-panel .p-panel-content {
-  background: #ffffff !important;
-  color: #495057 !important;
-  border: 1px solid #dee2e6 !important;
-}
-
-/* Paginator */
-::ng-deep .p-paginator {
-  background: #ffffff !important;
-  border: 1px solid #dee2e6 !important;
-}
-
-::ng-deep .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-  background: #3B82F6 !important;
-  color: #ffffff !important;
-}
-
-/* ProgressBar */
-::ng-deep .p-progressbar {
-  background: #dee2e6 !important;
-}
-
-::ng-deep .p-progressbar .p-progressbar-value {
-  background: #3B82F6 !important;
-}
-
-/* Tooltip */
-::ng-deep .p-tooltip .p-tooltip-text {
-  background: #495057 !important;
-  color: #ffffff !important;
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
-}
-
-/* Slider */
-::ng-deep .p-slider .p-slider-handle {
-  background: #ffffff !important;
-  border: 2px solid #3B82F6 !important;
-}
-
-::ng-deep .p-slider .p-slider-range {
-  background: #3B82F6 !important;
-}
-::ng-deep .p-toast-message-success,
-::ng-deep .p-toast-detail{
-  color: black !important;
+.btn-close-white {
+  filter: invert(1) grayscale(100%) brightness(200%);
 }

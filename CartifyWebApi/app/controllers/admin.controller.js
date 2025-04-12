@@ -3,6 +3,7 @@ const mssql = require('mssql')
 const { handleReps } = require('./common.controller')
 
 class Admin {
+    
     static GetRole = async (req, res) => {
         try {
             const req = await dataAcces.getRequest()
@@ -22,6 +23,28 @@ class Admin {
             const result = await request.execute("PKG_USER_ACCESS$p_get_role_screen_access");
 
             res.status(200).json(result.recordsets[0])
+        } catch (e) {
+            res.status(500).json({ err: "Error Occur" + e })
+        }
+    }
+    static GetAllGroupName = async (req, res) =>{
+        try {
+            const request = await dataAcces.getRequest() 
+
+            const result = await request.execute("PKG_DDL$p_get_ref_group");
+
+            res.status(200).json(result.recordsets[0])
+        } catch (e) {
+            res.status(500).json({ err: "Error Occur" + e })
+        }
+    }
+    static GetRefData = async (req, res) =>{
+        try {
+            const request = await dataAcces.getRequest() 
+            request.input('as_group_name', mssql.VarChar(50), req.query.GroupName)
+            const result = await request.execute("PKG_DDL$p_get_ref_data"); 
+            res.status(200).json(result.recordsets[0])
+
         } catch (e) {
             res.status(500).json({ err: "Error Occur" + e })
         }
@@ -70,6 +93,8 @@ class Admin {
           request.input("as_about", mssql.NVarChar(mssql.MAX), req.body.About);
           request.input("ai_logged_user_id", mssql.BigInt, req.LoggedUserId);
           request.input("as_ops_mode", mssql.NVarChar(mssql.MAX), req.body.OPS);
+
+          console.log(req.body)
       
           request.output("p_retmsg", mssql.VarChar(500));
           request.output("p_rettype", mssql.Int);
@@ -80,6 +105,7 @@ class Admin {
           res.status(200).json(output);
         } catch (e) {
           res.status(500).json({ err: "Error Occurred: " + e.message });
+          console.log({ err: "Error Occurred: " + e.message })
         }
       };
 

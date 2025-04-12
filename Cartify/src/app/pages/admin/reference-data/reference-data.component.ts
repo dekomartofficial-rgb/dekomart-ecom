@@ -1,143 +1,46 @@
-import { Component } from '@angular/core';
-import { TreeNode } from 'primeng/api';
-import { Dialog } from 'primeng/dialog';
-import { TreeModule } from 'primeng/tree';
-import { FormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { CommonModule } from '@angular/common';
-import { FloatLabel } from 'primeng/floatlabel';
-import { PanelMenuModule } from 'primeng/panelmenu';
-import { InputTextModule } from 'primeng/inputtext';
-import { ContextMenuModule } from 'primeng/contextmenu';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common'; 
+import { HttpClientService } from '@/app/provider/services/http-client.service';
+import { TableModule } from 'primeng/table';
+import { Table } from 'primeng/table';
+import { SortEvent } from 'primeng/api';
 
 @Component({
   selector: 'app-reference-data',
   standalone: true,
-  imports: [Dialog, FormsModule, TreeModule, ButtonModule, CommonModule, FloatLabel, PanelMenuModule, InputTextModule, ContextMenuModule],
+  imports: [CommonModule, TableModule],
   templateUrl: './reference-data.component.html',
   styleUrl: './reference-data.component.css'
 })
-export class ReferenceDataComponent {
-  selectedCategory: string = 'Construction';
-  selectedSubCategory: string = '';
-  subCategoryName: string = '';
-  addCategoryVisible: boolean = false;
-  subCategoryVisible: boolean = false;
-  allCategoriesVisible: boolean = false;
-  selectedDepartments: TreeNode[] = [];
-  departments: TreeNode[] = [];
-  categoryName: string = '';
-  categoryId: string = '';
-  searchTerm: string = '';
-  searchQuery = '';
+export class ReferenceDataComponent implements OnInit {
+  GroupData: any[] = [];
+  ChildData: any[] = [];
+  ActiveGroup: string = ''
+  ActiveGroupDesc: string = ''
+  constructor(private httpClient: HttpClientService) { }
 
-  menuItems = [
-    { label: 'Construction', icon: 'pi pi-home', command: () => this.selectCategory('Construction') },
-    { label: 'Power Tools', icon: 'pi pi-bolt', command: () => this.selectCategory('Power Tools') },
-    { label: 'Garden', icon: 'pi pi-leaf', command: () => this.selectCategory('Garden') },
-    { label: 'Protective clothing', icon: 'pi pi-shield', command: () => this.selectCategory('Protective clothing') },
-    { label: 'Industry', icon: 'pi pi-cog', command: () => this.selectCategory('Industry') },
-    { label: 'Home and Workshop', icon: 'pi pi-tools', command: () => this.selectCategory('Home and Workshop') },
-    { label: 'Measuring devices', icon: 'pi pi-ruler', command: () => this.selectCategory('Measuring devices') }
-  ];
-
-  categories = [
-    { name: 'Paving tools', items: ['Grabs', 'Guillotines', 'Paving carts'] },
-    { name: 'Trailers', items: ['Cargo trailers', 'Open trailers', 'Tipper trailers'] },
-    { name: 'Cutters', items: ['Tile cutters', 'Floor cutters', 'Manual cutters'] },
-    { name: 'Hand tools', items: ['Hammers', 'Toolboxes', 'Scissors'] },
-    { name: 'Compactors', items: ['Reversible compactors', 'Alloy compactors'] },
-    { name: 'Lighting', items: ['Lighting masts', 'Workshop lamps'] },
-    { name: 'Concrete equipment', items: ['Concrete mixers', 'Vibrating bars', 'Trowels'] },
-    { name: 'High pressure washers', items: ['Mobile washers', 'Stationary washers'] },
-    { name: 'Levelers', items: ['Electronic levels', 'Laser levels', 'Optical levels'] }
-  ];
-
-  filteredMenuItems: any = [...this.menuItems];
-  files: TreeNode[] = [
-    {
-      label: 'Finance',
-      selectable: false,
-      children: [
-        { label: 'Chief Financial Officer', data: 'CFO', key: '1' },
-        { label: 'Something Finance', data: 'Finance1', key: '2' },
-        { label: 'Finance Minance', data: 'Finance2', key: '3' },
-        { label: 'Finance Binance Minance', data: 'Finance3', key: '4' },
-        { label: 'Binny Winny Minny', data: 'Finance4', key: '5' },
-        { label: 'Zinny Finny Kinny', data: 'Finance5', key: '6' }
-      ]
-    }
-  ];
-
-  selectedNodes: TreeNode[] = [];
-
-  isSingleSelection(): boolean {
-    return this.selectedNodes.length === 1;
+  ngOnInit() {
+    this.getAllGroupName()
   }
 
-  isMultiSelection(): boolean {
-    return this.selectedNodes.length > 1;
+  getAllGroupName() {
+    this.httpClient.get<any>('admin/GetAllGroupName').subscribe((res) => {
+      this.GroupData = res
+      this.ActiveGroup = this.GroupData[0].GroupName
+      this.ActiveGroupDesc = this.GroupData[0].GroupNameDesc
+      this.getChildData(this.ActiveGroup)
+      console.log(this.ActiveGroup)
+    })
   }
 
-  editNode(node: TreeNode) {
-    console.log('Editing:', node.label);
+  getChildData(GroupData: string) {
+    this.ActiveGroup = GroupData
+    this.ActiveGroupDesc = this.GroupData.find((r) => r.GroupName === GroupData)?.GroupNameDesc
+
+    this.httpClient.get<any>('admin/GetRefData', { GroupName: this.ActiveGroup }).subscribe((res) => {
+      this.ChildData = res
+    })
   }
 
-  deleteNode(node: TreeNode, parent?: TreeNode) {
-    if (parent?.children) {
-      parent.children = parent.children.filter(child => child !== node);
-    }
-  }
-
-  deleteSelectedNodes() {
-    this.selectedNodes.forEach(node => {
-      this.files.forEach(parent => {
-        if (parent.children) {
-          parent.children = parent.children.filter(child => !this.selectedNodes.includes(child));
-        }
-      });
-    });
-    this.selectedNodes = [];
-  }
-
-  addCategoryDialog() {
-    this.addCategoryVisible = true;
-  }
-
-  subCategoryDialog() {
-    this.subCategoryVisible = true;
-  }
-
-  editCategory(category: any) {
-    console.log('Editing:', category);
-  }
-
-  deleteCategory(category: any) {
-    console.log('Deleting:', category);
-    this.categories = this.categories.filter(cat => cat !== category);
-  }
-
-
-  viewAllCategories(category: any) {
-    this.allCategoriesVisible = true;
-    this.selectedSubCategory = category.name;
-  }
-
-  closeviewAllCategories() {
-    this.allCategoriesVisible = false;
-  }
-
-  filterMenu() {
-    if (!this.searchTerm) {
-      this.filteredMenuItems = [...this.menuItems];
-    } else {
-      this.filteredMenuItems = this.menuItems.filter((item: { label: string; }) =>
-        item.label.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-    }
-  }
-
-  selectCategory(category: string) {
-    this.selectedCategory = category;
-  }
+  
 }

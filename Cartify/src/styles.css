@@ -1,6 +1,7 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
 @import "primeicons/primeicons.css";
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"); 
+
 
 * {
   margin: 0;
@@ -12,19 +13,13 @@ body {
   font-family: "Poppins", sans-serif;
   background-color: #edf1f5 !important;
 }
-h1,
-h2,
-h3 {
-  font-family: "Poppins", sans-serif;
-  font-weight: 500 !important;
-}
-h2 {
-  font-size: 24px !important;
-}
-
-p {
-  font-family: "Poppins", sans-serif;
-  font-weight: 400;
+ 
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  margin-top: 0px;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--bs-heading-color);
 }
 
 .p-button {
@@ -65,6 +60,31 @@ p {
   border-color: #222b45;
   font-weight: 200;
   gap: 23px;
+}
+
+.page-header-1 {
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  top: 70px;
+  left: 260px;
+  z-index: 1023;
+  min-height: 55px;
+  padding: 4px 25px;
+  box-shadow: none;
+  background: #ffffff;
+  border-color: #222b45;
+  font-weight: 200;
+  gap: 23px;
+}
+
+ 
+:host :host ::ng-deep .page-header h6{
+  padding-left: 0px;
+  margin-top: -7px;
+  margin-bottom: 0 !important;
+  font-size: 19px !important;
+  font-weight: 600 !important;
 }
 
 .main-content-body {
@@ -130,4 +150,23 @@ input {
   .search-bar {
     max-width: 90%;
   }
+}
+
+:host ::ng-deep .p-datatable-thead > tr > th { 
+  background-color: white !important;
+  color: black !important;
+}
+ 
+::ng-deep .p-datatable .p-datatable-tbody > tr {
+  --p-datatable-row-background: white !important;
+  --p-datatable-row-color: black !important;
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr {
+  --p-datatable-row-background: white !important;
+  --p-datatable-row-color: black !important;
+}
+
+::ng-deep .p-datatable-thead {
+  height: 1px !important;
 }

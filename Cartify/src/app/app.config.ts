@@ -16,6 +16,7 @@ import { authInterceptor } from './provider/interceptor/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideAnimationsAsync(),
     provideHttpClient(
       withInterceptors([ErrorHandlerInterceptor, authInterceptor]), 
     ),
