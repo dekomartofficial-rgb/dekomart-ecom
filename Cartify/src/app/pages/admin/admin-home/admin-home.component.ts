@@ -21,11 +21,10 @@ interface TopCustomer {
 }
 
 @Component({
-  selector: 'app-admin-home',
-  standalone: true,
-  imports: [ChartModule, CommonModule],
-  templateUrl: './admin-home.component.html',
-  styleUrl: './admin-home.component.css'
+    selector: 'app-admin-home',
+    imports: [ChartModule, CommonModule],
+    templateUrl: './admin-home.component.html',
+    styleUrl: './admin-home.component.css'
 })
 export class AdminHomeComponent implements OnInit { // Implement OnInit
   UserId: number = 0;

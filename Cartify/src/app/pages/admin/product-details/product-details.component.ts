@@ -23,11 +23,10 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClientService } from '@/app/provider/services/http-client.service';
 
 @Component({
-  selector: 'app-product-details',
-  standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, Dialog, InputTextModule, FormsModule, FloatLabel, RatingModule, TagModule, TextareaModule, ImageModule, FileUploadModule, DropdownModule, CardModule, FieldsetModule, DividerModule, ReactiveFormsModule, ColorPickerModule, MultiSelectModule],
-  templateUrl: './product-details.component.html',
-  styleUrl: './product-details.component.css'
+    selector: 'app-product-details',
+    imports: [CommonModule, TableModule, ButtonModule, Dialog, InputTextModule, FormsModule, FloatLabel, RatingModule, TagModule, TextareaModule, ImageModule, FileUploadModule, DropdownModule, CardModule, FieldsetModule, DividerModule, ReactiveFormsModule, ColorPickerModule, MultiSelectModule],
+    templateUrl: './product-details.component.html',
+    styleUrl: './product-details.component.css'
 })
 export class ProductDetailsComponent {
 

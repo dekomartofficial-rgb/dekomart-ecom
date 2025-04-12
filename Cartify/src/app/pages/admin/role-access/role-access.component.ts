@@ -13,11 +13,10 @@ interface RoleRight {
 
 
 @Component({
-  selector: 'app-role-access',
-  standalone: true,
-  imports: [FormsModule],
-  templateUrl: './role-access.component.html',
-  styleUrl: './role-access.component.css'
+    selector: 'app-role-access',
+    imports: [FormsModule],
+    templateUrl: './role-access.component.html',
+    styleUrl: './role-access.component.css'
 })
 export class RoleAccessComponent implements OnInit {
   clickedRole: string = '';

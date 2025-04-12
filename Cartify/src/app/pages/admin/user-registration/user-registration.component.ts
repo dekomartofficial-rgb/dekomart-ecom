@@ -21,12 +21,11 @@ import { MultiSelectModule } from 'primeng/multiselect';
 
 
 @Component({
-  selector: 'app-user-registration',
-  standalone: true,
-  imports: [CommonModule, FloatLabel, TableModule, MultiSelectModule, ButtonModule, FormsModule, InputTextModule, InputIconModule, DatePicker, PasswordModule, IconFieldModule, ReactiveFormsModule, Checkbox, FormsModule, TagModule],
-  templateUrl: './user-registration.component.html',
-  styleUrl: './user-registration.component.css',
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-user-registration',
+    imports: [CommonModule, FloatLabel, TableModule, MultiSelectModule, ButtonModule, FormsModule, InputTextModule, InputIconModule, DatePicker, PasswordModule, IconFieldModule, ReactiveFormsModule, Checkbox, FormsModule, TagModule],
+    templateUrl: './user-registration.component.html',
+    styleUrl: './user-registration.component.css',
+    encapsulation: ViewEncapsulation.None
 })
 export class UserRegistrationComponent {
   isModalOpen: boolean = false;

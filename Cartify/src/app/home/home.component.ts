@@ -5,11 +5,10 @@ import { NavHomeComponent } from "./section/nav-home/nav-home.component";
 import { FooterHomeComponent } from "./section/footer-home/footer-home.component";
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [BannerHomeComponent, GalleryHomeComponent, NavHomeComponent, FooterHomeComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+    selector: 'app-home',
+    imports: [BannerHomeComponent, GalleryHomeComponent, NavHomeComponent, FooterHomeComponent],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.css'
 })
 export class HomeComponent {
   cartItems: any[] = [] 

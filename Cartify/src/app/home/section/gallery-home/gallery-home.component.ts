@@ -4,11 +4,10 @@ import { CommonModule } from '@angular/common';
 
 
 @Component({
-  selector: 'app-gallery-home',
-  standalone: true,
-  imports: [CarouselModule, CommonModule],
-  templateUrl: './gallery-home.component.html',
-  styleUrl: './gallery-home.component.css',
+    selector: 'app-gallery-home',
+    imports: [CarouselModule, CommonModule],
+    templateUrl: './gallery-home.component.html',
+    styleUrl: './gallery-home.component.css'
 })
 export class GalleryHomeComponent implements OnInit {
 

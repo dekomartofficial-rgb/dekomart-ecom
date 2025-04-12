@@ -6,11 +6,10 @@ import { Table } from 'primeng/table';
 import { SortEvent } from 'primeng/api';
 
 @Component({
-  selector: 'app-reference-data',
-  standalone: true,
-  imports: [CommonModule, TableModule],
-  templateUrl: './reference-data.component.html',
-  styleUrl: './reference-data.component.css'
+    selector: 'app-reference-data',
+    imports: [CommonModule, TableModule],
+    templateUrl: './reference-data.component.html',
+    styleUrl: './reference-data.component.css'
 })
 export class ReferenceDataComponent implements OnInit {
   GroupData: any[] = [];

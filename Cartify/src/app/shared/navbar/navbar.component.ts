@@ -13,11 +13,10 @@ import { TooltipModule } from 'primeng/tooltip';
 
 
 @Component({
-  selector: 'app-navbar',
-  standalone: true,
-  imports: [CommonModule, RouterModule, TooltipModule, AvatarModule, FormsModule, InputSwitchModule, DropdownModule, SidebarModule],
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
+    selector: 'app-navbar',
+    imports: [CommonModule, RouterModule, TooltipModule, AvatarModule, FormsModule, InputSwitchModule, DropdownModule, SidebarModule],
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
   @Output() sendDataToParent: EventEmitter<boolean> = new EventEmitter<boolean>();

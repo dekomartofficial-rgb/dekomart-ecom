@@ -6,11 +6,10 @@ import { AddToCartComponent } from "../add-to-cart/add-to-cart.component";
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-nav-home',
-  standalone: true,
-  imports: [RouterModule, AddToCartComponent,CommonModule],
-  templateUrl: './nav-home.component.html',
-  styleUrl: './nav-home.component.css'
+    selector: 'app-nav-home',
+    imports: [RouterModule, AddToCartComponent, CommonModule],
+    templateUrl: './nav-home.component.html',
+    styleUrl: './nav-home.component.css'
 })
 export class NavHomeComponent {
   @Input() wishlistCount: number = 0;

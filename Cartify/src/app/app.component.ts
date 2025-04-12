@@ -11,11 +11,10 @@ import { ToasterComponent } from './shared/toaster/toaster.component';
 
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet, NavbarComponent, ToastModule, FontAwesomeModule,  UserNavBarComponent, ToasterComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    imports: [CommonModule, RouterOutlet, NavbarComponent, ToastModule, FontAwesomeModule, UserNavBarComponent, ToasterComponent],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css'
 })
 export class AppComponent {
   LoggerId: boolean = false;

@@ -2,12 +2,10 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 
 @Component({
-  selector: 'app-banner-home',
-  templateUrl: './banner-home.component.html',
-  standalone: true,
-  imports: [CommonModule], 
-  styleUrls: ['./banner-home.component.css'],
-  
+    selector: 'app-banner-home',
+    templateUrl: './banner-home.component.html',
+    imports: [CommonModule],
+    styleUrls: ['./banner-home.component.css']
 })
 export class BannerHomeComponent {
   banners = [
