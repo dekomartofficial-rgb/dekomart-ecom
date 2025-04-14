@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LoaderService } from '@/app/provider/services/loader.service';
 
 @Component({
     selector: 'app-loader',
@@ -8,9 +9,5 @@ import { CommonModule } from '@angular/common';
     styleUrl: './loader.component.css'
 })
 export class LoaderComponent {
-  @Input() isFullscreen: boolean = false;
-  @Input() size: number = 50;
-  @Input() color: string = '#3498db';
-  @Input() text: string = '';
-  @Input() textColor: string = '#333333';
+   constructor(public LoaderService: LoaderService){}
 }

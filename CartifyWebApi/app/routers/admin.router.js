@@ -6,6 +6,7 @@ router.get("/GetRole", VerifyToken, AdminController.GetRole);
 router.get("/GetScreenRoleAccess", VerifyToken, AdminController.GetRoleScreenAccess);
 router.get("/GetAllGroupName", VerifyToken, AdminController.GetAllGroupName)
 router.get("/GetRefData", VerifyToken, AdminController.GetRefData)
+router.post("/SaveRefData", VerifyToken, AdminController.SaveRefData)
 
 // router.post("/SaveProduct", upload.any(),VerifyToken, AdminController.SaveProduct);
 // router.get("/DeleteProduct", VerifyToken, AdminController.DeleteProduct) 

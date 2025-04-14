@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core'; // Import OnInit
 import { Router } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
 import { CommonModule } from '@angular/common'; // Add this import
+import { LoaderService } from '@/app/provider/services/loader.service';
 
 interface Order {
   product: string;
@@ -79,7 +80,7 @@ export class AdminHomeComponent implements OnInit { // Implement OnInit
       avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQru3J5pHhqHu9_CC0kG-UcKHfyIrv5VTTyZA&s'
     }
   ];
-  constructor(private router: Router, private httpClient: HttpClientService) { }
+  constructor(private router: Router, private httpClient: HttpClientService, private LoaderService: LoaderService) { }
 
   ngOnInit() {
     this.UserId = this.httpClient.getUserData().UserId;
@@ -88,13 +89,15 @@ export class AdminHomeComponent implements OnInit { // Implement OnInit
   }
 
   getUserProfile(): Promise<any> {
+    this.LoaderService.show()
     return new Promise((resolve, reject) => {
       const userId = this.httpClient.getUserData()?.UserId;
       this.httpClient.get<UserProfile[]>('user/GetUserProfiler', { UserId: userId })
         .subscribe(
           (res) => {
             this.UserProfile = res;
-            resolve(res);
+            this.LoaderService.hide()
+            resolve(res); 
           },
           (error) => {
             reject(error);

@@ -1,0 +1,110 @@
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.dialog-container {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  max-width: 90%;
+  padding: 24px 16px;
+  text-align: center;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dialog-header {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+}
+
+.icon-circle {
+  width: 48px;
+  height: 48px;
+  background-color: #e6ecff;
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-inside {
+  color: #2c5de0;
+  font-size: 20px;
+}
+
+.dialog-title h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 8px 0;
+}
+
+.dialog-content p {
+  color: #555;
+  font-size: 14px;
+  margin: 0 0 24px;
+}
+
+.dialog-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.confirm-button {
+  padding: 12px;
+  background-color: #2c5de0;
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.confirm-button:hover {
+  background-color: #234bc4;
+}
+
+.cancel-link {
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #333;
+  /* text-decoration: underline; */
+  cursor: pointer;
+  background: #ededed52;
+  padding: 8px;
+  border-radius: 20px;
+}

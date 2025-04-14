@@ -8,11 +8,12 @@ import { LoaderService } from './provider/services/loader.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UserNavBarComponent } from './pages/user/user-home/user-nav-bar/user-nav-bar.component';
 import { ToasterComponent } from './shared/toaster/toaster.component';
-
+import { ConfirmationDialogComponent } from "./shared/confirmation-dialog/confirmation-dialog.component";
+import { LoaderComponent } from "./shared/loader/loader.component"; 
 
 @Component({
     selector: 'app-root',
-    imports: [CommonModule, RouterOutlet, NavbarComponent, ToastModule, FontAwesomeModule, UserNavBarComponent, ToasterComponent],
+    imports: [CommonModule, RouterOutlet, NavbarComponent, ToastModule, FontAwesomeModule, UserNavBarComponent, ToasterComponent, ConfirmationDialogComponent, LoaderComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })

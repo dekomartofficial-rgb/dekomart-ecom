@@ -4,14 +4,14 @@ import { CommonService } from '@/app/provider/services/common.service';
 import { Role, RoleScreen } from '@/app/provider/interface/AdminInterface';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '@/app/provider/services/toast.service';
+import { LoaderService } from '@/app/provider/services/loader.service';
 
 interface RoleRight {
   ROLE_CODE: string;
   SCREEN_CODE: string;
   IS_HAVE_ACCESS: number;
 }
-
-
+ 
 @Component({
     selector: 'app-role-access',
     imports: [FormsModule],
@@ -32,18 +32,20 @@ export class RoleAccessComponent implements OnInit {
   GroupChildList: any[] = [];
 
 
-  constructor(private httpClient: HttpClientService, private commonService: CommonService, private toastService: ToastService) { }
+  constructor(private httpClient: HttpClientService, private commonService: CommonService, private toastService: ToastService, private LoaderService: LoaderService) { }
 
   ngOnInit() {
     this.getRole();
   }
 
   getRole() {
+    this.LoaderService.show()
     this.commonService.getRole().subscribe((res) => {
       if (res && res.length > 0) {
         this.Role = res;
         this.clickedRole = this.Role[0].RoleCode;
         this.getRoleScreen(this.clickedRole);
+        this.LoaderService.hide()
       }
     });
   }

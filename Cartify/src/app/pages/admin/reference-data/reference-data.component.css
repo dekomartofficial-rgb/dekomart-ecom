@@ -1,6 +1,6 @@
 .ref-data-group {
   padding: 12px 0px 6px 11px;
-  background: #f3f6f9;
+  background: #d8e4ed;
   border-radius: 8px;
   height: calc(100vh - 188px);
   min-height: 250px;
@@ -19,10 +19,13 @@
   overflow: auto;
   padding: 17px;
 }
-.ref-data-group h6,
-.ref-data-child-data h6 {
-  font-size: 1rem;
+.ref-data-child-data h6,
+.ref-data-group h6 {
+  font-size: x-large;
   font-weight: 500;
+}
+.group-data h6 {
+  font-size: medium;
 }
 .add-group-btn {
   display: inline-flex;
@@ -67,6 +70,7 @@
 }
 .group-data-header {
   padding: 1px 0px 1px 11px;
+  margin-top: 13px;
 }
 .group-data-active {
   background-color: #ffffff;
@@ -96,6 +100,8 @@
 .p-datatable-tbody > tr > td {
   border-style: solid !important;
   border-width: 0px !important;
+  font-size: 13px;
+  font-weight: 400;
 }
 
 /* Target even rows in the table body */
@@ -107,10 +113,261 @@
 .p-datatable-tbody > tr:nth-child(odd) {
   background-color: #ffffff !important;
 }
-.p-datatable-table { 
+.p-datatable-table {
   padding-top: 17px;
 }
 
 .p-datatable-table {
   font-size: 15px;
+}
+.delete-button:active {
+  border: aliceblue !important;
+  border-radius: 1px !important;
+}
+
+.row {
+  transition: transform 0.2s ease;
+}
+
+.row-transform {
+  transform: scale(0.95); /* Slight shrink effect */
+  /* Alternatively: transform: translateY(5px); for a move effect */
+}
+
+.delete-button {
+  font-size: 15px;
+}
+
+.delete-button i {
+  color: #fa0000;
+}
+
+/* reference-item-modal.component.scss */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+}
+
+.modal-content {
+  width: 654px;
+  background-color: white;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #0f1729;
+  color: white;
+}
+.p-inputtext {
+  padding: 8px !important;
+  width: 448px !important;
+  border-radius: 6px !important;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.modal-body {
+  padding: 20px;
+  background-color: white;
+}
+
+.form-group {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 15px;
+}
+
+label {
+  width: 140px;
+  /* font-weight: 500; */
+  font-size: 17px;
+  color: #000000;
+}
+
+.separator {
+  margin: 0 10px;
+  color: #666;
+}
+
+.form-control {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-control-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+}
+
+.required {
+  color: red;
+  margin-left: 2px;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  margin-left: 154px; /* align with input */
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px 20px;
+}
+
+.btn-cancel,
+.btn-save {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.btn-cancel {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  margin-right: 10px;
+}
+.btn-save {
+  background-color: #008995; /* Teal color as seen in the image */
+  color: white;
+  border: none;
+}
+.icon-cancel,
+.icon-save {
+  margin-right: 5px;
+}
+ 
+.active-colour {
+  padding: 6px;
+  color: white;
+  border-radius: 8px;
+  text-align: center;
+}
+
+::ng-deep .p-datatable-tbody > tr {
+  background-color: white !important;
+  color: black !important;
+}
+
+::ng-deep .p-datatable-tbody > tr > td {
+  border-color: white !important;
+  border-style: none !important;
+  border-width: 0 0 0 0 !important;
+}
+
+
+.p-inputtext:disabled {
+  color: black !important;
+  border-color: #00000024 !important;
+  background: #00000024 !important;
+}
+
+.checkbox-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; 
+}
+
+.hidden-checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.custom-checkbox {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  user-select: none; /* Prevent text selection on click */
+}
+
+.custom-checkbox svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.2s ease;
+}
+
+/* Style when the checkbox is checked */
+.hidden-checkbox:checked + .custom-checkbox {
+  background-color: #2196F3; /* Example active color */
+  border-color: #2196F3;
+}
+
+.hidden-checkbox:checked + .custom-checkbox svg {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Optional: Style on hover */
+.custom-checkbox:hover {
+  border-color: #64b5f6;
+}
+
+.hidden-checkbox:focus + .custom-checkbox {
+  box-shadow: 0 0 5px rgba(33, 150, 243, 0.5); /* Add focus indicator */
 }

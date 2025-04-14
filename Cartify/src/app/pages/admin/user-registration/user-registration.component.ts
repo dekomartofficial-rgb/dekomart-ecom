@@ -6,18 +6,18 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePicker } from 'primeng/datepicker';
 import { PasswordModule } from 'primeng/password';
-import { FormControl, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Checkbox } from 'primeng/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { User } from '@/app/provider/interface/UserInfterface';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClientService } from '@/app/provider/services/http-client.service';
 import { ToastService } from '@/app/provider/services/toast.service';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { TagModule } from 'primeng/tag';
 import { MultiSelectModule } from 'primeng/multiselect';
- // <-- This allows global-style behavior
+import { LoaderService } from '@/app/provider/services/loader.service';
 
 
 @Component({
@@ -37,18 +37,12 @@ export class UserRegistrationComponent {
   Users: any | User;
 
 
-  constructor(private fb: FormBuilder, private http: HttpClientService, private toastService: ToastService) {
+  constructor(private fb: FormBuilder, private http: HttpClientService, private toastService: ToastService, private LoaderService: LoaderService) {
     this.UserForm = this.fb.group({
     })
   }
 
-  ngOnInit() {
-  
-      document.documentElement.style.setProperty('color-scheme', 'light');
-      document.body.style.backgroundColor = "white";
-      document.body.style.color = "black";
-    
-    
+  ngOnInit() {  
     this.getUser(0)
   }
   openModal(): void {
@@ -62,10 +56,12 @@ export class UserRegistrationComponent {
     this.SelectedUserRole = []
   }
   getUser(id?: number) {
+    this.LoaderService.show()
     this.http.get<User[]>('user/GetUser', { User: id ? id : 0 }).subscribe({
       next: (res) => {
         this.Users = res
         this.SelectedUserRole = this.Users.UserRole && this.Users.UserRole.includes(',') ? this.Users.UserRole.split(',') : this.Users.UserRole
+        this.LoaderService.hide()
       },
       error: (err) => {
          this.toastService.show('Error', err)
@@ -78,17 +74,18 @@ export class UserRegistrationComponent {
   }
 
   getUserRole() {
+    this.LoaderService.show()
     this.http.getUserRole(0).subscribe({
       next: (res: any[]) => {
         this.UserRole = res;
+        this.LoaderService.hide()
       }
     });
   }
 
   onSaveUser() {
-    this.User.DateOfBirth = new Date(this.userToSendDob.getTime() - this.userToSendDob.getTimezoneOffset() * 60000)
-      .toISOString()
-      .split('T')[0];
+    this.LoaderService.show()
+    this.User.DateOfBirth = new Date(this.userToSendDob.getTime() - this.userToSendDob.getTimezoneOffset() * 60000).toISOString().split('T')[0];
     this.User.OpsMode = this.User.UserId > 0 ? 'UPDATE' : 'INSERT';
     this.User.ProfileImage = 'https://www.w3schools.com/howto/img_avatar.png';
     this.User.UserRole = this.SelectedUserRole.join(',')
@@ -100,8 +97,9 @@ export class UserRegistrationComponent {
         if (res.MessageType === 2) {
           this.toastService.show('Success', res.Message);
           this.resetUser()
-          this.getUser(0)
+          this.getUser()
           this.closeModal();
+          this.LoaderService.hide()
         } else {
            this.toastService.show('Error', res.Message);
         }
@@ -117,6 +115,7 @@ export class UserRegistrationComponent {
     this.User = new User(); // Reset to a new instance of User class
   }
   editUser(UserId: number) {
+    this.LoaderService.show()
     this.http.get<User>('user/GetUser', { UserId: UserId }).subscribe({
       next: (res) => {
         this.User = res;
@@ -127,6 +126,7 @@ export class UserRegistrationComponent {
         this.SelectedUserRole = this.User.UserRole ? this.User.UserRole.includes(',') ? this.User.UserRole.split(',').filter(role => role) : [this.User.UserRole] : [];
         this.isModalOpen = true;
         this.getUserRole()
+        this.LoaderService.hide()
       },
       error: (err) => {
          this.toastService.show('Error', err);

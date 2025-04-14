@@ -80,6 +80,31 @@ class Admin {
             res.status(500).json({ err: "Error Occur" + e })
         }
     }
+    static SaveRefData = async (req, res) =>{
+        try {
+            const request = await dataAcces.getRequest();
+
+            console.log(req.body)
+
+            request.input('as_group_name', mssql.VarChar(50), req.body.GroupName);
+            request.input('as_code', mssql.VarChar(20), req.body.Code);
+            request.input('as_code_active', mssql.TinyInt, req.body.CodeActive);
+            request.input('as_description', mssql.NVarChar(510), req.body.Description);
+            request.input('as_disp_order', mssql.Int, req.body.DispOrder);
+            request.input('as_colour', mssql.VarChar(7), req.body.Colour);
+            request.input('as_ops_mode', mssql.VarChar(10), req.body.OpsMode);
+            request.input('ai_user_id', mssql.BigInt, req.LoggedUserId);
+            request.output("p_retmsg", mssql.VarChar(500));
+            request.output("p_rettype", mssql.Int); 
+
+            const result = await request.execute("PKG_SETTINGS$p_save_ref_data")
+            const output = await handleReps(result.output);
+
+            res.status(200).json(output) 
+        } catch (error) {
+            res.status(500).json({ err: "Error Occur" + error })
+        } 
+    }
     static SaveProduct = async (req, res) => {
         try {
           const request = await dataAcces.getRequest();

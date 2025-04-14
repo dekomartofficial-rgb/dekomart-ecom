@@ -1,6 +1,6 @@
 <div class="main-header">
     <div class="col-md-12 page-header d-flex">
-        <i class="fa-solid fa-database fa-xl" style="color: black; padding-top: 22px;"></i>
+        <i class="fa-solid fa-database fa-xl" style="color: black; padding-top: 22px"></i>
         <h6>Reference Data</h6>
     </div>
     <div class="main-content-body">
@@ -9,36 +9,42 @@
                 <div class="col-md-4 ref-data-group">
                     <div class="col-md-12 d-flex justify-content-between">
                         <div class="col-md-12 d-flex">
-                            <i class="fa-regular fa-object-group me-2"></i>
+                            <i class="fa-regular fa-object-group me-2" style="padding-top: 7px"></i>
                             <h6>Group</h6>
                         </div>
                     </div>
                     <div class="col-md-12 group-data-header">
-                        @for (item of GroupData; track $index) {
-                        <div class="col-md-12 group-data"
-                            [ngClass]="ActiveGroup === item.GroupName ? 'group-data-active' : ''"
-                            (click)="getChildData(item.GroupName)">
-                            <h6>{{item.GroupNameDesc}}</h6>
+                        @if (GroupData ? GroupData.length > 0 : 0) { @for (item of
+                        GroupData; track $index) {
+                        <div class="col-md-12 group-data" [ngClass]="
+                            ActiveGroup === item.GroupName ? 'group-data-active' : ''
+                        " (click)="getChildData(item.GroupName)">
+                            <h6>{{ item.GroupNameDesc }}</h6>
                         </div>
-                        }
+                        } }
                     </div>
                 </div>
                 <div class="col-md-8 ref-data-child-data-header">
                     <div class="col-md-12 ref-data-child-data">
-                        <h6> {{ ActiveGroupDesc }}</h6>
-                        <p-table  [value]="ChildData" class="custom-table" >
+                        <div class="col-md-12 d-flex justify-content-between">
+                            <h6>{{ ActiveGroupDesc }}</h6>
+                            <div class="add-ref-data">
+                                <button type="button" class="btn btn-success" (click)="addRefData()">
+                                    <i class="fa-solid fa-plus me-1"></i>Add New
+                                </button>
+                            </div>
+                        </div>
+                        <p-table [value]="ChildData" class="custom-table">
                             <ng-template #header>
                                 <tr class="table-tr">
-                                    <th pSortableColumn=" ">
-                                        Action
-                                    </th>
+                                    <th pSortableColumn=" ">Action</th>
                                     <th pSortableColumn="code">
                                         Code <p-sortIcon field="code" />
                                     </th>
-                                    <th pSortableColumn="description" [ngStyle]="{'min-width':' 402px'}">
+                                    <th pSortableColumn="description" [ngStyle]="{ 'min-width': ' 402px' }">
                                         Description <p-sortIcon field="description" />
                                     </th>
-                                    <th pSortableColumn="displayOrder" >
+                                    <th pSortableColumn="displayOrder">
                                         Display Order <p-sortIcon field="displayOrder" />
                                     </th>
                                     <th pSortableColumn="colorCode">
@@ -51,12 +57,23 @@
                             </ng-template>
                             <ng-template #body let-ChildData>
                                 <tr>
-                                    <td>Action</td>
+                                    <td>
+                                        <i class="fas fa-edit fa-sm" style="color: #0d6efd; font-size: 15px"
+                                            (click)="onEdit(ChildData)"></i>
+                                        <i class="fa-solid fa-trash" style="color: #fa0000; padding-left: 12px"
+                                            (click)="onDelete(ChildData)"></i>
+                                    </td>
                                     <td>{{ ChildData.code }}</td>
                                     <td>{{ ChildData.description }}</td>
-                                    <td [ngStyle]="{'text-align':'center'}">{{ ChildData.displayOrder }}</td>
+                                    <td [ngStyle]="{ 'text-align': 'center' }">
+                                        {{ ChildData.displayOrder }}
+                                    </td>
                                     <td>{{ ChildData.colorCode }}</td>
-                                    <td>{{ ChildData.codeActicveDesc }}</td>
+                                    <td>
+                                        <div class="active-colour"
+                                            [ngStyle]=" {'background-color': ChildData.codeActive === 0 ? '#ed3737' : '#29915d'} ">
+                                            {{ ChildData.codeActicveDesc }}</div>
+                                    </td>
                                 </tr>
                             </ng-template>
                         </p-table>
@@ -66,3 +83,80 @@
         </div>
     </div>
 </div>
+
+@if (isAddPopUp) {
+<div class="modal-backdrop"></div>
+<div class="modal-container">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add Reference Item</h2>
+        </div>
+        <div class="modal-body">
+            <form (ngSubmit)="saveRefData()" #RefDataChildForm="ngForm">
+                <div class="form-group">
+                    <label for="code">Code<span class="required">*</span></label>
+                    <div class="separator">:</div>
+                    <div class="d-block">
+                        <p-floatlabel variant="on">
+                            <input pInputText id="code" autocomplete="off" class="p-input-style"
+                                [(ngModel)]="RefDataChild.Code" name="code" #Code="ngModel" required
+                                [disabled]="isDisableCode" />
+                        </p-floatlabel>
+                        <div *ngIf="Code.invalid && Code.touched" class="required-field">
+                            <small *ngIf="Code.errors?.['required']">Code required.</small>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description<span class="required">*</span></label>
+                    <div class="separator">:</div>
+                    <div class="d-block">
+                        <p-floatlabel variant="on">
+                            <input pInputText id="description" autocomplete="off" class="p-input-style"
+                                [(ngModel)]="RefDataChild.Description" name="description" #Description="ngModel"
+                                required />
+                        </p-floatlabel>
+                        <div *ngIf="Description.invalid && Description.touched" class="required-field">
+                            <small *ngIf="Description.errors?.['required']">Description required.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="displaySequence">Display Sequence</label>
+                    <div class="separator">:</div>
+                    <p-floatlabel variant="on">
+                        <input pInputText id="displaySequence" autocomplete="off" class="p-input-style"
+                            [(ngModel)]="RefDataChild.DispOrder" type="number" name="displaySequence" [min]="0"
+                            [max]="99" />
+                    </p-floatlabel>
+                </div>
+
+                <div class="form-group">
+                    <label for="active">Active</label>
+                    <div class="separator">:</div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="active" [(ngModel)]="RefDataChild.CodeActive" name="active"
+                            class="hidden-checkbox" [checked]="RefDataChild.CodeActive === 1 ? true: false" />
+                        <label for="active" class="custom-checkbox">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-cancel" type="button" (click)="closePopup()"> <i
+                            class="fa-solid fa-xmark me-1"></i>Cancel</button>
+                    <button class="btn btn-save" type="submit" [disabled]="RefDataChildForm.invalid"><i
+                            class="fa-solid fa-floppy-disk me-1"></i>
+                        Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+}

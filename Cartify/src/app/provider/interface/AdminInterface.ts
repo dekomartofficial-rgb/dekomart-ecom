@@ -34,7 +34,7 @@ export class Role {
 
 export class RoleScreen {
     RoleCode: string = '';
-    Role:string = ''
+    Role: string = ''
     ModuleCode: string = '';
     ScreenGroupName: string = '';
     WindowName: string = '';
@@ -53,9 +53,9 @@ export interface ProductVariant {
     Color?: string;
     Size?: string;
     imageUrl?: string;
-  }
-  
-  export interface Product {
+}
+
+export interface Product {
     ProductId?: number;
     ProductName: string;
     CompanyId: number;
@@ -65,5 +65,14 @@ export interface ProductVariant {
     LoggedUserId: number;
     OpsMode: string;
     Variants: ProductVariant[];
-  }
-  
+}
+
+export  class RefDataChild {
+    GroupName: string = '';
+    Code: string = '';
+    CodeActive: boolean | number = false;
+    Description: string = '';
+    DispOrder: Number = 0;
+    Colour: string = '';
+    OpsMode: string = '';
+}

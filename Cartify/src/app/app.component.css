@@ -1,195 +1,203 @@
-  
+.sidebar {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  padding-top: 56px; /* Adjust based on your navbar height */
+  overflow-y: auto;
+}
+
+.main-content {
+  margin-left: 16.666667%; /* Corresponds to col-md-2 width */
+  padding-top: 56px; /* Match sidebar top padding */
+}
+
+@media (max-width: 768px) {
   .sidebar {
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    padding-top: 56px; /* Adjust based on your navbar height */
-    overflow-y: auto;
-  }
-
-  .main-content {
-    margin-left: 16.666667%; /* Corresponds to col-md-2 width */
-    padding-top: 56px; /* Match sidebar top padding */
-  }
-
-  @media (max-width: 768px) {
-    .sidebar {
-      display: none;
-    }
-    .main-content {
-      margin-left: 0;
-    }
-  }
-
-  .container-fluid-main {
-    margin-left: 249px;
-    width: calc(100% - 249px);
-  }
-
-  .admin-container {
-    display: flex;
-    height: 100vh;
-    background-color: #f4f7f6;
-  }
-
-  .sidebar {
-    width: 250px;
-    transition: width 0.3s ease;
-  }
-
-  .main-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  .main-header {
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-  }
-
-  .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-
-  .user-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
-
-  .header-actions {
-    display: flex;
-    gap: 10px;
-  }
-
-  .notification-btn,
-  .settings-btn {
-    background: none;
-    border: none;
-    position: relative;
-    cursor: pointer;
-  }
-
-  .badge {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 2px 6px;
-    font-size: 10px;
-  }
-
-  .content-wrapper {
-    flex-grow: 1;
-    padding: 20px;
-    overflow-y: auto;
-    background-color: #f4f7f6;
-  }
-
-  .main-footer {
-    background-color: white;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-  }
-  .container-fluid {
-    margin-top: 40px;
-    margin-left: 200px; /* Adjust according to your sidebar width */
-    width: calc(100% - 200px); /* Adjust the width accordingly */
-  }
-
-  .container-fluid.expanded {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .sidebar {
-    width: 200px; /* Adjust this based on your sidebar width */
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background-color: white;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    padding-top: 20px;
-  }
-  .container-fluid-main.expanded {
-    width: 100%;
-    margin-left: 0;
-  }
-  .disable-header {
     display: none;
   }
-  .p-inputtext .p-component {
-    position: relative !important;
+  .main-content {
+    margin-left: 0;
   }
-  .height {
-    height: 100vh;
-  }
+}
 
-  .form {
-    position: relative;
-  }
+.container-fluid-main {
+  margin-left: 249px;
+  width: calc(100% - 249px);
+}
 
-  .form .fa-search {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    color: #9ca3af;
-  }
+.admin-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f4f7f6;
+}
 
-  .form span {
-    position: absolute;
-    right: 17px;
-    top: 13px;
-    padding: 2px;
-    border-left: 1px solid #d1d5db;
-  }
+.sidebar {
+  width: 250px;
+  transition: width 0.3s ease;
+}
 
-  .left-pan {
-    padding-left: 7px;
-  }
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
-  .left-pan i {
-    padding-left: 10px;
-  }
+.main-header {
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+}
 
-  .form-input {
-    height: 55px;
-    text-indent: 33px;
-    border-radius: 10px;
-  }
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  .form-input:focus {
-    box-shadow: none;
-    border: none;
-  }
- 
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.notification-btn,
+.settings-btn {
+  background: none;
+  border: none;
+  position: relative;
+  cursor: pointer;
+}
+
+.badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 10px;
+}
+
+.content-wrapper {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #f4f7f6;
+}
+
+.main-footer {
+  background-color: white;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+.container-fluid {
+  margin-top: 40px;
+  margin-left: 200px; /* Adjust according to your sidebar width */
+  width: calc(100% - 200px); /* Adjust the width accordingly */
+}
+
+.container-fluid.expanded {
+  width: 100%;
+  margin-left: 0;
+}
+
+.sidebar {
+  width: 200px; /* Adjust this based on your sidebar width */
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding-top: 20px;
+}
+.container-fluid-main.expanded {
+  width: 100%;
+  margin-left: 0;
+}
+.disable-header {
+  display: none;
+}
+.p-inputtext .p-component {
+  position: relative !important;
+}
+.height {
+  height: 100vh;
+}
+
+.form {
+  position: relative;
+}
+
+.form .fa-search {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #9ca3af;
+}
+
+.form span {
+  position: absolute;
+  right: 17px;
+  top: 13px;
+  padding: 2px;
+  border-left: 1px solid #d1d5db;
+}
+
+.left-pan {
+  padding-left: 7px;
+}
+
+.left-pan i {
+  padding-left: 10px;
+}
+
+.form-input {
+  height: 55px;
+  text-indent: 33px;
+  border-radius: 10px;
+}
+
+.form-input:focus {
+  box-shadow: none;
+  border: none;
+}
+
 .p-component {
-    background-color: #000000 !important;
-    color: #ffffff !important;
-} 
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
 .p-datatable-thead > tr > th {
   background-color: #d1d5db !important;
 }
+
+:host ::ng-deep .required-field small {
+  color: red !important;
+}
+:host ::ng-deep .ng-invalid .ng-touched {
+  border-color: red !important;
+}
+
+ 

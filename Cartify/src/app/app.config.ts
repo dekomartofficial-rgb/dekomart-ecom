@@ -4,8 +4,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import { importProvidersFrom } from '@angular/core';
-
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,8 +20,8 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([ErrorHandlerInterceptor, authInterceptor]), 
     ),
     provideRouter(routes),
-    provideAnimationsAsync(),
     providePrimeNG({ theme: { preset: Aura } }),
+    importProvidersFrom(NgbModule), // ✅ This is the alternative to provideNgbModal()
     importProvidersFrom(ToastModule),
     MessageService,
     importProvidersFrom(BrowserAnimationsModule), 
