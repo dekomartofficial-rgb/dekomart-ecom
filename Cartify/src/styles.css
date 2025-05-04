@@ -1,35 +1,18 @@
-@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
+/* @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
 @import "primeicons/primeicons.css";
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"); */
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
-  font-family: "Poppins", sans-serif;
-  background-color: #edf1f5 !important;
+  background-color: #ffffff !important;
 }
 
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin-top: 0px;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  line-height: 1.2;
-  color: var(--bs-heading-color);
+:host ::ng-deep body {
+  font-family: "Open Sans", sans-serif !important; /* Or 'Roboto', 'Lato', or another similar sans-serif font */
 }
 
 .p-button {
@@ -86,14 +69,6 @@ h6 {
   border-color: #222b45;
   font-weight: 200;
   gap: 23px;
-}
-
-:host :host ::ng-deep .page-header h6 {
-  padding-left: 0px;
-  margin-top: -7px;
-  margin-bottom: 0 !important;
-  font-size: 19px !important;
-  font-weight: 600 !important;
 }
 
 .main-content-body {
@@ -160,43 +135,6 @@ input {
   }
 }
 
-:host ::ng-deep .p-datatable-thead > tr > th {
-  background-color: white !important;
-  color: black !important;
-}
-
-::ng-deep .p-datatable .p-datatable-tbody > tr {
-  --p-datatable-row-background: white !important;
-  --p-datatable-row-color: black !important;
-}
-
-::ng-deep .p-datatable .p-datatable-tbody > tr {
-  --p-datatable-row-background: white !important;
-  --p-datatable-row-color: black !important;
-}
-
-::ng-deep .p-datatable-thead {
-  height: 1px !important;
-}
-
-:host ::ng-deep .p-datatable-tbody > tr {
-  background-color: white !important;
-  color: black !important;
-}
-:host ::ng-deep .required-field small {
-  color: red !important;
-}
-:host ::ng-deep .p-datatable-tbody > tr {
-  background-color: white !important;
-  color: black !important;
-}
-
-:host ::ng-deep .p-datatable-tbody > tr > td {
-  border-color: white !important;
-  border-style: none !important;
-  border-width: 0 0 0 0 !important;
-}
-
 .p-datatable-table {
   padding: 13px 0px 0px 0px;
 }
@@ -218,18 +156,105 @@ input {
 }
 
 /* Hide default spinner arrows in Chrome, Edge, Safari */
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {  
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
- 
 
 /* Optional: set background and text color */
-input[type=number] {
+input[type="number"] {
   background-color: white; /* black */
-  color: black;            /* white text */
+  color: black; /* white text */
 }
-:host ::ng-deep .p-select{
+:host ::ng-deep .p-select {
   background-color: white !important;
   color: white !important;
+}
+:host ::ng-deep .p-dropdown {
+  border-style: none;
+  border-radius: 6px;
+  height: 35px !important;
+  color: black;
+  background-color: #d5d2d2 !important;
+  padding: 0px !important;
+  font-size: 16px;
+}
+
+::ng-deep .p-select-option-selected {
+  background-color: #d5d2d2 !important;
+  color: #212529 !important;
+}
+
+.file-upload-wrapper {
+  width: 400px;
+  height: 200px;
+  position: relative;
+}
+
+.file-upload-wrapper input[type="file"] {
+  display: none;
+}
+
+.file-upload-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  border: 2px dashed #cbd5e1;
+  border-radius: 16px;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.3s ease;
+}
+
+.file-upload-label:hover {
+  border-color: rgb(96, 96, 96);
+}
+
+.file-upload-label img {
+  width: 40px;
+  margin-bottom: 10px;
+}
+
+.file-upload-label p {
+  margin: 0;
+  color: #64748b;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+}
+
+.file-upload-label .browse {
+  color: #3b82f6;
+  text-decoration: underline;
+}
+
+.file-upload-label small {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.file-button-wrapper input[type="file"] {
+  display: none;
+}
+
+.file-button {
+  display: inline-block;
+  padding: 6px 19px;
+  background-color: #3b82f6;
+  color: white;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.file-button:hover {
+  background-color: #2563eb;
 }

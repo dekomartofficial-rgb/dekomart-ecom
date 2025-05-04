@@ -30,7 +30,7 @@ class DataAccess {
         enableArithAbort: true,
         useUTC: true,
         parseBigIntAsNumber: true,
-        trustServerCertificate: true  // Accept self-signed certificates
+        trustServerCertificate: true // ← this disables strict TLS checks
       },
       pool: {
         max: 10, // Set max number of connections

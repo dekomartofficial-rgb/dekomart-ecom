@@ -1,0 +1,236 @@
+<div class="col-md-12 comp-page-header ">
+    <div class="main-header d-flex gap-3 justify-content-between">
+        <div class="comp-page-header-icon d-flex gap-3">
+            <i class="fa-solid fa-shop fa-xl pt-3"></i>
+            <h6>Add New Product</h6>
+        </div>
+        <div class="comp-page-header-name d-flex">
+            <div class="add-product-details gap-2 align-items-center d-flex">
+                <button type="button" class="btn btn-success" (click)="saveProductDetails()"><i class="fa-solid fa-floppy-disk gap-2 p-1"
+                        ></i>Save</button>
+            </div>
+        </div>
+    </div>
+    <div class="main-body">
+        <form [formGroup]="productForm">
+            <div class="col-md-12 d-flex gap-2">
+                <div class="add-product-body d-flex gap-md-2 mt-1 col-md-7 ">
+                    <div class="general-info-div col-md-12">
+                        <div class="col-md-12">
+                            <h6>General Information</h6>
+                        </div>
+                        <div class="col-md-12 name-product">
+                            <h5>Name Product</h5>
+                            <div class="card flex justify-center">
+                                <input type="text" pInputText formControlName="ProductName" type="text"
+                                    [(ngModel)]="ProductDetails.ProductName"
+                                    style="border-style: none;border-radius: 6px;" name="ProductName" />
+                            </div>
+                        </div>
+                        <div class="col-md-12 description-product">
+                            <h5>Desription Product</h5>
+                            <div class="card flex justify-center">
+                                <textarea rows="13" cols="30" pTextarea [autoResize]="true"
+                                    [(ngModel)]="ProductDetails.ProductDesc" formControlName="ProductDesc"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 d-flex product-size-gender-div">
+                            <div class="col-md-6 product-size">
+                                <h5>Size</h5>
+                                <p class="p-div" style="font-size: 11px; color: #716a6a; margin: -5px 0px 0px 0px;">Pick
+                                    Avaliable Size</p>
+                                <div class="size-picker">
+                                    @for (Size of ClothingSize; track $index) {
+                                    <div class="size-option" (click)="selectProductSize(Size.code)"  
+                                        [ngClass]="ProductDetails.ProductSize.split(',').includes(Size.code) ? 'available' : 'unavailable'" >
+                                        {{Size.code}}</div>
+                                    }
+                                </div>
+
+                            </div>
+                            <div class="col-md-6 product-gender">
+                                <h5>Gender</h5>
+                                <p class="p-div" style="font-size: 11px; color: #716a6a; margin: -5px 0px 0px 0px;">Pick
+                                    Avaliable Gender</p>
+                                <div class="card flex justify-center">
+                                    <div class="flex flex-wrap gap-4 d-flex"
+                                        style="padding: 17px; background-color: #f8f8f8;">
+                                        @for (item of Gender; track $index) {
+                                        <div class="flex items-center gap-2 d-flex">
+                                            <p-radiobutton name="gender" [(ngModel)]="ProductDetails.Gender"
+                                                [value]="item.code" type="radio" formControlName="Gender"
+                                                name="Gender" />
+                                            <label for="men" class="ml-2 pt-1">{{item.descritpion}}</label>
+                                        </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 d-flex gap-md-2 pt-2">
+                            <div class="col-md-12 price-and-stock">
+                                <div class="price-and-stock-card">
+                                    <h2>Pricing And Stock</h2>
+                                    <div class="col-md-12 gap-2 pt-2 d-flex">
+                                        <div class="col-md-3">
+                                            <h5>Base Price</h5>
+                                            <div class="card flex justify-center">
+                                                <input type="text" pInputText formControlName="BasePricing"
+                                                    [(ngModel)]="ProductDetails.BasePricing"
+                                                    style="border-style: none;border-radius: 6px;" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <h5>Total Stock</h5>
+                                            <div class="card flex justify-center">
+                                                <input type="text" pInputText formControlName="Stock"
+                                                    [(ngModel)]="ProductDetails.Stock"
+                                                    style="border-style: none;border-radius: 6px;" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <h5>Discount</h5>
+                                            <div class="card flex justify-center">
+                                                <input type="text" pInputText formControlName="Discount"
+                                                    [(ngModel)]="ProductDetails.Discount"
+                                                    style="border-style: none;border-radius: 6px;" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3" style="width: 233px;">
+                                            <h5>Discount Type</h5>
+                                            <div class="card flex justify-center">
+                                                <p-dropdown [options]="DiscountType" optionLabel="descritpion"
+                                                    [(ngModel)]="ProductDetails.DiscountType"
+                                                    placeholder="Select Discount Type" formControlName="DiscountType"
+                                                    optionValue="code" class="discount-type-dropdown">
+                                                </p-dropdown>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 pt-2 d-flex gap-2">
+                                    <div class="col-md-3">
+                                        <h5>Category</h5>
+                                        <div class="card flex justify-center">
+                                            <p-dropdown [options]="Category" optionLabel="descritpion"
+                                                [(ngModel)]="ProductDetails.Catogery" placeholder="Select Catogery"
+                                                formControlName="Catogery" [style]="{'width':'100%'}" optionValue="code"
+                                                class="discount-type-dropdown">
+                                            </p-dropdown>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 upload-image-div">
+                    <div class="col-md-12 d-flex">
+                        <h6>Upload Image</h6>
+                    </div>
+                    <div class="upload-image-header">
+                        @if (imagePreviews.length > 0) {
+                        @for (item of imagePreviews; track $index;) {
+                        @if (ClickedImage === $index) {
+                        <div class="image-container d-flex justify-content-center1">
+                            <img [src]="item" alt="Gallery Image" srcset="">
+                        </div>
+                        }
+                        }
+                        <div class="image-header-2 d-flex flex-wrap gap-4 col-md-12">
+                            @for (item of imagePreviews; track $index) {
+                            <div class="image-container-2" (mouseenter)="imageHover === true"
+                                (mouseleave)="imageHover === false">
+                                <img [src]="item" alt="Gallery Image" (click)="changeImage($index)" />
+                                <div class="image-overlay" *ngIf="imageHover">
+                                    <button type="button" class="delete-button">Delete</button>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                        } @else {
+                        <div class="image-container d-flex justify-content-center1"
+                            style="background-color: transparent;">
+                            <img src="assets/common-images/no-image-data.jpg" alt="Gallery Image" srcset="">
+                        </div>
+                        }
+                        <div class="file-upload-wrapper d-flex justify-content-center align-items-center col-md-12 mt-2"
+                            style="height: 127px;">
+                            <input type="file" id="fileInput" (change)="onFilesSelected($event)" accept="image/*" />
+                            <label for="fileInput" class="file-upload-label d-flex justify-content-center">
+                                <img src="https://cdn-icons-png.flaticon.com/512/1829/1829586.png" alt="Upload Icon" />
+                                <p>Drop your image here, or <span class="browse">browse</span></p>
+                                <small>Supports: JPG, JPEG2000, PNG</small>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 product-varient mt-2" style="min-height: 37vh;">
+                <div class="col-md-12 p-3 d-flex justify-content-between">
+                    <h2>Product Varient</h2>
+                    <div class="add-varient-button">
+                        <button type="button" class="btn btn-success" (click)="addProductVariantRow()"><i
+                                class="fa-solid fa-plus gap-2 p-1"></i>Add Variant</button>
+                    </div>
+                </div>
+                @for (item of ProductVariants; track $index) {
+                <div class="p-3 m-2" style="border-radius: 11px; border: 1px solid #8b8383; border-style: dashed;">
+                    <div class="col-md-12 gap-2 d-flex">
+                        <div class="col-md-1">
+                            <h5>Color</h5>
+                            <div class="card flex justify-center" style="background-color: #f8f8f8;">
+                                <p-colorpicker [(ngModel)]="item.Colour" formControlName="ProductColor"
+                                    [style]="{'width':'100%','height':'100%','color':'red'}" />
+                            </div>
+                        </div>  
+                        <div class="col-md-2">
+                            <h5>Size</h5>
+                            <div class="card flex justify-content-center">
+                                <p-dropdown [options]="ClothingSize" optionLabel="descritpion" [(ngModel)]="item.Size"
+                                    placeholder="Select Size" formControlName="ProductSize" [style]="{'width':'100%'}"
+                                    optionValue="code" class="discount-type-dropdown">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <h5>Price</h5>
+                            <div class="card flex justify-center">
+                                <input type="text" pInputText formControlName="Price" [(ngModel)]="item.Price"
+                                    style="border-style: none;border-radius: 6px;" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <h5>Stock</h5>
+                            <div class="card flex justify-center">
+                                <input type="text" pInputText formControlName="Stock" [(ngModel)]="item.Stock"
+                                    style="border-style: none;border-radius: 6px;" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <h5>Upload Image</h5>
+                            <div class="card d-flex justify-content-start"
+                                style="background-color: #f8f8f8;color: black;">
+                                <div class="file-button-wrapper d-flex gap-1" style="align-items: center;">
+                                    <input type="file" id="fileInput" (change)="onFilesSelected($event)"
+                                        accept="image/*" />
+                                    <label for="fileInput" class="file-button">Upload Image</label>
+                                    <div><i class="fa-solid fa-eye"
+                                            style="padding: 6px; background-color: #efefef; border-radius: 30px; align-items: center;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 d-flex justify-content-end mt-2">
+                        <button type="button" class="delete-button"
+                            (click)="removeProductVaiantRow($index)">Delete</button>
+                    </div>
+                </div>
+                }
+
+            </div>
+        </form>
+    </div>
+</div>

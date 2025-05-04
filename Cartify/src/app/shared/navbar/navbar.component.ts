@@ -10,6 +10,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { DropdownModule } from 'primeng/dropdown';
 import { SidebarModule } from 'primeng/sidebar';
 import { TooltipModule } from 'primeng/tooltip';
+import { LoaderService } from '@/app/provider/services/loader.service';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class NavbarComponent implements OnInit {
   userRole: string = ''
 
 
-  constructor(private router: Router, private httpClient: HttpClientService) { }
+  constructor(private router: Router, private httpClient: HttpClientService, private LoaderService: LoaderService) { }
 
   ngOnInit(): void {
     this.UserId = this.httpClient.getUserId();
@@ -56,6 +57,7 @@ export class NavbarComponent implements OnInit {
   }
 
   GetScreenList() {
+    this.LoaderService.show()
     if (this.UserId) {
       this.userRole = this.httpClient.getUserData().UserRole as string;
       if (this.userRole.includes(',') && this.userRole.split(',').includes('AD')) {
@@ -64,6 +66,7 @@ export class NavbarComponent implements OnInit {
       this.httpClient.get<any>('user/GetScreenList', { UserId: this.UserId, RoleCode: this.userRole })
         .subscribe((res) => {
           this.ScreenList = Array.isArray(res.screenList) ? res.screenList : [];
+          this.LoaderService.hide()
         });
     }
   }
