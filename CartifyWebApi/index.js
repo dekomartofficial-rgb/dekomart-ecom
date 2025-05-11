@@ -28,7 +28,7 @@ app.use("/user", userRoutes);
 app.use("/admin", adminRoutes);
 
 app.get('/', (req, res) => {
-  res.send('API is running...');
+  res.send('API is running...connected to database');
 });
 
 
