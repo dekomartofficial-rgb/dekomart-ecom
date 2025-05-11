@@ -20,8 +20,8 @@ export class LoginComponent {
   isAdmin: string = 'AD'
   isValueExists: any;
   Login: Login = {
-    EmailId: '',
-    Password: '',
+    EmailId: 'admin@gmail.com',
+    Password: '1',
     AuthType: ''
   }
 

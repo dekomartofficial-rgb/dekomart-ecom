@@ -18,12 +18,16 @@ class User {
 
       const result = await request.execute("PKG_USER$p_validate_login");
       const output = await handleReps(result.output);
-      
+
       if (output.UserId > 0) {
         const secret = process.env.SECRET_TOKERN;
-        const token = jwt.sign({ UserId: output.UserId, RoleCode: output.UserRole }, secret, {
-          expiresIn: process.env.TOKEN_EXPIRE,
-        });
+        const token = jwt.sign(
+          { UserId: output.UserId, RoleCode: output.UserRole },
+          secret,
+          {
+            expiresIn: process.env.TOKEN_EXPIRE,
+          }
+        );
         res.json({ ...output, Token: token });
         return;
       }
@@ -75,7 +79,7 @@ class User {
       const request = await dataAcces.getRequest();
 
       request.input("ai_user_id", mssql.BigInt, req.query.UserId);
-      request.input("as_role_code", mssql.VarChar(5), req.query.RoleCode)
+      request.input("as_role_code", mssql.VarChar(5), req.query.RoleCode);
       const result = await request.execute("PKG_USER_ACCESS$p_get_role_screen");
 
       const screenList = result.recordsets[0].map((s) => {
@@ -112,11 +116,7 @@ class User {
       request.input("ai_user_id", mssql.BigInt, req.query.UserId);
 
       let result = await request.execute("PKG_USER$p_get_users");
-      result =
-        result.recordsets.length > 1
-          ? result.recordsets[0]
-          : result.recordsets[0]?.length === 1
-            ? result.recordsets[0][0]
+      result = result.recordsets.length > 1 ? result.recordsets[0] : result.recordsets[0]?.length === 1  ? result.recordsets[0][0]
             : result.recordsets[0];
 
       res.status(200).json(result);

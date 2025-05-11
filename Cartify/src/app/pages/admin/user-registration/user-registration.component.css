@@ -82,7 +82,7 @@ table thead th {
   font-weight: normal;
 }
 
-.form-floating > label {
+.form-floating  label {
   padding: 0.5rem 0.75rem;
 }
 

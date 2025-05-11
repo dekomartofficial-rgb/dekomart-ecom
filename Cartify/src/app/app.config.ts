@@ -12,18 +12,23 @@ import Aura from '@primeng/themes/aura';
 import { routes } from './app.routes';
 import { ErrorHandlerInterceptor } from './provider/interceptor/error-handler.interceptor';
 import { authInterceptor } from './provider/interceptor/auth.interceptor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimationsAsync(),
     provideHttpClient(
-      withInterceptors([ErrorHandlerInterceptor, authInterceptor]), 
+      withInterceptors([ErrorHandlerInterceptor, authInterceptor]),
     ),
     provideRouter(routes),
     providePrimeNG({ theme: { preset: Aura } }),
-    importProvidersFrom(NgbModule), // ✅ This is the alternative to provideNgbModal()
+    importProvidersFrom(NgbModule),
     importProvidersFrom(ToastModule),
+    importProvidersFrom(FormsModule, ReactiveFormsModule), // Add this line
     MessageService,
-    importProvidersFrom(BrowserAnimationsModule), 
-  ]
+    importProvidersFrom(BrowserAnimationsModule),
+    providePrimeNG({
+      theme: { preset: Aura, options: { darkModeSelector: '.p-dark' } },
+    }),
+  ],
 };

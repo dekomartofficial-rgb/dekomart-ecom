@@ -1,0 +1,289 @@
+/*Common css for the page*/
+.comp-page-header {
+  background-color: white !important;
+  padding: 20px;
+}
+.main-header h6 {
+  font-size: 22px !important;
+  font-weight: 400;
+}
+
+/*component image style*/
+.general-info-div,
+.product-varient,
+.upload-image-div,
+.price-and-stock,
+.category .product-variant {
+  padding: 15px;
+  background-color: #f8f8f8;
+  border-radius: 13px;
+  max-height: fit-content;
+}
+
+.product-gender {
+  background-color: #f8f8f8;
+}
+
+.general-info-div h6,
+.upload-image-div h6,
+.product-varient h6 {
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.general-info-div h5,
+.upload-image-div h5,
+.price-and-stock-card h5,
+.product-varient h5 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.name-product,
+.description-product,
+.product-size-gender-div {
+  padding: 9px;
+}
+input {
+  border-style: none;
+  border-radius: 6px;
+  height: 35px !important;
+  color: black;
+  background-color: #efefef;
+  padding: 8px;
+  font-size: 16px;
+}
+textarea {
+  border-style: none;
+  border-radius: 6px;
+  color: black;
+  padding: 8px;
+  background-color: #efefef;
+  font-size: 16px;
+}
+input:focus,
+textarea {
+  border: 1px;
+  outline: none;
+}
+.description-product input {
+  padding: 0px !important;
+  height: 200px !important;
+}
+input[type="text"] {
+  border: 0px solid white !important;
+}
+::ng-deep .p-textarea {
+  color: black !important;
+}
+.card {
+  border: none;
+}
+.product-size-chart {
+  width: 10px;
+  height: 10px;
+  background-color: #efefef;
+}
+.size-picker {
+  display: flex;
+  gap: 10px;
+  margin: 7px 0px 0px 0px;
+}
+
+.size-option {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  border: 1px solid #f1f1f1;
+  background-color: #f1f1f1;
+  color: #333;
+  font-weight: 500;
+}
+
+.size-option.available {
+  background-color: #a8f0b0; /* light green */
+  border-color: #a8f0b0;
+}
+
+/* Target PrimeNG's internal elements */
+:host ::ng-deep .p-radiobutton .p-radiobutton-box {
+  border-radius: 50%;
+  border: 2px solid #ced4da;
+}
+
+:host ::ng-deep .p-radiobutton .p-radiobutton-box.p-highlight {
+  border-color: #6366f1;
+  background: #6366f1;
+}
+
+:host ::ng-deep .p-radiobutton .p-radiobutton-box.p-highlight:hover {
+  border-color: #4f46e5;
+  background: #4f46e5;
+}
+:host ::ng-deep .p-radiobutton-checked .p-radiobutton-box .p-radiobutton-icon {
+  background-color: #10b981 !important;
+}
+:host
+  ::ng-deep
+  .p-radiobutton-checked:not(.p-disabled):has(.p-radiobutton-input:hover)
+  .p-radiobutton-box {
+  background-color: #10b981 !important;
+}
+
+.image-container {
+  overflow: hidden;
+  position: relative;
+  background-color: #efefef;
+  margin: 14px;
+  border-radius: 9px;
+  justify-content: center;
+  height: 420px;
+}
+
+.image-container img {
+  width: 60%;
+  height: 100%;
+  object-fit: cover; /* options: contain | fill | none */
+  display: block;
+}
+.price-and-stock-card {
+  border-radius: 12px;
+  margin: auto;
+}
+.price-and-stock-card h2,
+.product-varient h2 {
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 600;
+}
+input {
+  width: 100% !important;
+}
+.p-select {
+  border: 0px;
+  background-color: #efefef;
+  height: 35px;
+}
+
+:host ::ng-deep .p-iconwrapper {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #959090;
+  padding: 2px;
+  border-radius: 50%;
+  font-size: 5px;
+}
+:host ::ng-deep .filelabel.ng-star-inserted {
+  color: black !important;
+}
+:host ::ng-deep .p-colorpicker-preview {
+  height: 34px !important;
+  width: 143px !important;
+  background-color: rebeccapurple;
+}
+:host ::ng-deep .p-fileupload-basic {
+  width: 200px !important;
+}
+:host ::ng-deep .p-icon {
+  width: 15px !important;
+  padding: 2px !important;
+}
+.image-header-2 {
+  display: flex;
+  flex-wrap: wrap; /* Enables wrapping to next line */
+  gap: 1rem; /* Adjust spacing between thumbnails */
+}
+
+.image-container-2 {
+  width: 22%; /* You can use a fixed px value or % */
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid #ccc;
+}
+
+.image-container-2 img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.upload-box {
+  width: 400px;
+  height: 200px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem auto;
+  transition: border-color 0.3s ease;
+}
+
+.upload-box:hover {
+  border-color: #60a5fa;
+}
+
+.upload-content {
+  text-align: center;
+  color: #64748b;
+  font-family: Arial, sans-serif;
+}
+
+.upload-content img {
+  width: 40px;
+  margin-bottom: 10px;
+}
+
+.upload-content p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.upload-content .browse {
+  color: #3b82f6;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.upload-content small {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+:host ::ng-deep .filelabel {
+  display: none !important;
+}
+:host ::ng-deep .p-fileupload-basic {
+  justify-content: left !important;
+}
+ 
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 150px;
+  height: 150px;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-button {
+  background: red;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+:host ::ng-deep .p-fileupload-choose-button .p-button { 
+  background-color: red !important;
+}

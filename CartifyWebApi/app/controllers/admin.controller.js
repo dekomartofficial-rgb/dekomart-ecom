@@ -3,7 +3,7 @@ const mssql = require('mssql')
 const { handleReps } = require('./common.controller')
 
 class Admin {
-    
+
     static GetRole = async (req, res) => {
         try {
             const req = await dataAcces.getRequest()
@@ -16,7 +16,7 @@ class Admin {
         }
     }
     static GetRoleScreenAccess = async (req, res) => {
-        try { 
+        try {
             const request = await dataAcces.getRequest()
             request.input("as_role_code", mssql.VarChar(3), req.query.RoleCode);
 
@@ -27,9 +27,9 @@ class Admin {
             res.status(500).json({ err: "Error Occur" + e })
         }
     }
-    static GetAllGroupName = async (req, res) =>{
+    static GetAllGroupName = async (req, res) => {
         try {
-            const request = await dataAcces.getRequest() 
+            const request = await dataAcces.getRequest()
 
             const result = await request.execute("PKG_DDL$p_get_ref_group");
 
@@ -38,25 +38,37 @@ class Admin {
             res.status(500).json({ err: "Error Occur" + e })
         }
     }
-    static GetRefData = async (req, res) =>{
+    static GetRefData = async (req, res) => {
         try {
-            const request = await dataAcces.getRequest() 
+            const request = await dataAcces.getRequest()
             request.input('as_group_name', mssql.VarChar(50), req.query.GroupName)
-            const result = await request.execute("PKG_DDL$p_get_ref_data"); 
+            const result = await request.execute("PKG_DDL$p_get_ref_data");
             res.status(200).json(result.recordsets[0])
 
         } catch (e) {
             res.status(500).json({ err: "Error Occur" + e })
         }
     }
-    static SaveRoleRight = async (req, res) =>{
-        try { 
+    static GetRefGroupData = async (req, res) => {
+        try {
+            console.log(req.query.GroupName)
+            const request = await dataAcces.getRequest()
+            request.input('as_group_name', mssql.VarChar(mssql.MAX), req.query.GroupName)
+            const result = await request.execute("PKG_DDL$get_ref_group_data");
+            res.status(200).json(result.recordsets[0])
+
+        } catch (e) {
+            res.status(500).json({ err: "Error Occur" + e })
+        }
+    } 
+    static SaveRoleRight = async (req, res) => {
+        try {
             const request = await dataAcces.getRequest()
             const tableType = new mssql.Table();
-            tableType.columns.add('ROLE_CODE',mssql.VarChar(3))
+            tableType.columns.add('ROLE_CODE', mssql.VarChar(3))
             tableType.columns.add('SCREEN_CODE', mssql.VarChar(10))
             tableType.columns.add('IS_HAVE_ACCESS', mssql.TinyInt)
-            
+
             const RoleTable = req.body.RoleRight;
             RoleTable.forEach(RoleTable => {
                 tableType.rows.add(
@@ -66,21 +78,21 @@ class Admin {
                 )
             });
 
-
+            console.log(tableType)
             //add parameter and table type to procedure
-            request.input('tt_role_right', tableType);              
+            request.input('tt_role_right', tableType);
             request.input('ai_user_id', mssql.BigInt, req.LoggedUserId);
             request.output("p_retmsg", mssql.VarChar(500));
-            request.output("p_rettype", mssql.Int); 
+            request.output("p_rettype", mssql.Int);
             const result = await request.execute("PKG_USER_ACCESS$p_save_role_right")
             const output = await handleReps(result.output);
-            
+
             res.status(200).json(output)
         } catch (e) {
             res.status(500).json({ err: "Error Occur" + e })
         }
     }
-    static SaveRefData = async (req, res) =>{
+    static SaveRefData = async (req, res) => {
         try {
             const request = await dataAcces.getRequest();
 
@@ -95,61 +107,78 @@ class Admin {
             request.input('as_ops_mode', mssql.VarChar(10), req.body.OpsMode);
             request.input('ai_user_id', mssql.BigInt, req.LoggedUserId);
             request.output("p_retmsg", mssql.VarChar(500));
-            request.output("p_rettype", mssql.Int); 
+            request.output("p_rettype", mssql.Int);
 
             const result = await request.execute("PKG_SETTINGS$p_save_ref_data")
             const output = await handleReps(result.output);
 
-            res.status(200).json(output) 
+            res.status(200).json(output)
         } catch (error) {
             res.status(500).json({ err: "Error Occur" + error })
-        } 
+        }
     }
-    static SaveProduct = async (req, res) => {
+    static SaveProductHeader = async (req, res) => {
         try {
-          const request = await dataAcces.getRequest();
-      
-          request.input("ai_product_id",  mssql.BigInt, req.body.productId);
-          request.input("as_product_name", mssql.NVarChar(255), req.body.ProductName);
-          request.input("ai_company_id", mssql.Int, req.body.CompanyId);
-          request.input("as_description", mssql.NVarChar(mssql.MAX), req.body.Description);
-          request.input("as_category_code", mssql.NVarChar(50), req.body.CategoryCode);
-          request.input("as_brand", mssql.NVarChar(50), req.body.BrandCode);
-          request.input("as_about", mssql.NVarChar(mssql.MAX), req.body.About);
-          request.input("ai_logged_user_id", mssql.BigInt, req.LoggedUserId);
-          request.input("as_ops_mode", mssql.NVarChar(mssql.MAX), req.body.OPS);
+            const request = await dataAcces.getRequest();
+            const VariantTableType = new mssql.Table();
+            VariantTableType.columns.add('VARIENT_ID', mssql.BigInt);
+            VariantTableType.columns.add('COLOR', mssql.VarChar(10));
+            VariantTableType.columns.add('SIZE',  mssql.VarChar(20));
+            VariantTableType.columns.add('PRICE', mssql.BigInt);
+            VariantTableType.columns.add('STOCK_COUNT', mssql.BigInt);
 
-          console.log(req.body)
-      
-          request.output("p_retmsg", mssql.VarChar(500));
-          request.output("p_rettype", mssql.Int);
-      
-          const result = await request.execute("PKG_PRODUCT$p_save_product_header");
-          const output = await handleReps(result.output);
-      
-          res.status(200).json(output);
-        } catch (e) {
-          res.status(500).json({ err: "Error Occurred: " + e.message });
-          console.log({ err: "Error Occurred: " + e.message })
+            const ProductVarient = req.body.ProductVariants;
+            ProductVarient.forEach(variant => {
+                VariantTableType.rows.add(
+                    variant.VariantID,
+                    variant.Colour,
+                    variant.Size,
+                    variant.Price,
+                    variant.Stock
+                );
+            });
+            const ProdctDetails = req.body.ProductDetails;
+            console.log(VariantTableType)
+            //add parameter and table type to procedure
+            request.input('ai_product_id', mssql.BigInt, ProdctDetails.ProductID);
+            request.input('ai_company_id', mssql.BigInt, 1);
+            request.input('as_product_name', mssql.VarChar(150), ProdctDetails.ProductName);
+            request.input('as_product_desc', mssql.VarChar(mssql.MAX), ProdctDetails.ProductDesc);
+            request.input('as_product_size', mssql.VarChar(200), ProdctDetails.ProductSize);
+            request.input('as_genders', mssql.VarChar(200), ProdctDetails.Gender);
+            request.input('an_base_price', mssql.BigInt, ProdctDetails.BasePricing);
+            request.input('an_total_stock', mssql.BigInt, ProdctDetails.Stock);
+            request.input('an_discount', mssql.BigInt, ProdctDetails.Discount);
+            request.input('as_discount_type', mssql.VarChar(200), ProdctDetails.DiscountType);
+            request.input('as_category', mssql.VarChar(200), ProdctDetails.Catogery);
+            request.input('tt_product_varient', VariantTableType);
+            request.input('as_ops_mode', mssql.VarChar(15), ProdctDetails.OpsMode);
+            request.input('ai_user_id', mssql.BigInt, req.LoggedUserId);
+            request.output("p_retmsg", mssql.VarChar(500));
+            request.output("p_rettype", mssql.TinyInt);
+            request.output("p_retid", mssql.Int);
+
+            const result = await request.execute("PKG_PROD$p_save_product_header")
+            const output = await handleReps(result.output);
+
+            res.status(200).json(output)
+        } catch (error) {
+            res.status(500).json({ err: "Error Occur" + error })
+
         }
-      };
-
-      static DeleteProduct = async (req, res) => {
+    }
+    static GetAllProductsdashboard = async (req, res) => {
         try {
-          const request = await dataAcces.getRequest();
-      
-          request.input("ai_product_id", mssql.BigInt, req.body.ProductId);
-          request.output("p_retmsg", mssql.VarChar(500));
-          request.output("p_rettype", mssql.Int);
-      
-          const result = await request.execute("PKG_PRODUCT$p_save_product_header");
-          const output = await handleReps(result.output);
-      
-          res.status(200).json(output);
+            const request = await dataAcces.getRequest()
+            request.input('ai_user_id', mssql.BigInt, req.LoggedUserId)
+            request.input('as_search_keyword', mssql.VarChar(200), req.query.SearchKeyword)
+            const result = await request.execute("PKG_PROD$p_get_all_product_and_dashboard")
+
+            res.status(200).json(result.recordsets)
         } catch (e) {
-          res.status(500).json({ err: "Error Occurred: " + e.message });
+            res.status(500).json({ err: "Error Occur" + e })
         }
-      };
+    }
 }
 
 module.exports = Admin
