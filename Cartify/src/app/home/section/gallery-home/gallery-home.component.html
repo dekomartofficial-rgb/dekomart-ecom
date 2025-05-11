@@ -1,140 +1,56 @@
-<p-carousel [value]="imageCircle" [numVisible]="5" [numScroll]="1" [circular]="true" [showNavigators]="false"
-  [autoplayInterval]="3000" [showIndicators]="false">
+<div class="container-fluid px-0">
 
-  <ng-template let-item pTemplate="item">
-    <div class="text-center   circle-image">
-      <img [src]="item.image" alt="{{ item.name }}" class="gallery-img">
-      <p class="mt-2">{{ item.name }}</p>
-    </div>
-  </ng-template>
-</p-carousel>
-
-<!-- Auto-scrolling Gallery -->
-<!-- <p-carousel [value]="productvdio" [numVisible]="5" [numScroll]="1" [circular]="true" [autoplayInterval]="7000"
-  [showNavigators]="false" [showIndicators]="false">
-  <ng-template let-item pTemplate="item">
-    <div class="gallery-item">
-      <video [src]="item.video" autoplay loop muted></video>
-      <video autoplay loop muted>
-        <source [src]="item.video" type="video/mp4">
-      </video>
-    </div>
-  </ng-template>
-</p-carousel> -->
-
-<!-- Best selling -->
-<div class="p-4 custom-bg">
-  <div class="d-flex justify-content-between align-items-center">
-    <h1 class="section-title">Best Selling</h1>
-    <a href="#" class="btn view-all-btn">View All</a>
+  <!-- ======= Image Circle Carousel ======= -->
+  <div class="px-3 px-md-5">
+    <p-carousel [value]="imageCircle" [numVisible]="5" [numScroll]="1" [circular]="true" [autoplayInterval]="3000"
+      [showNavigators]="false" [showIndicators]="false">
+      <ng-template let-item pTemplate="item">
+        <div class="text-center circle-image">
+          <img [src]="item.image" [alt]="item.name" class="gallery-img" />
+          <p class="mt-2">{{ item.name }}</p>
+        </div>
+      </ng-template>
+    </p-carousel>
   </div>
 
+  <!-- ======= Section Template Start ======= -->
+  <div class="section" *ngFor="let section of sections">
+    <div class="d-flex justify-content-between align-items-center px-3 px-md-5 pt-5">
+      <h2 class="section-title">{{ section.title }}</h2>
+      <a href="#" class="btn view-all-btn">View All</a>
+    </div>
 
-  <div class="row">
-    <div class="col-12 col-md-6 col-lg-3 mb-4" *ngFor="let item of bestSelling">
-      <div class="card product-card">
-        <img [src]="item.image" alt="{{ item.name }}" class="card-img-top product-image">
-        <button class="wishlist-btn" (click)="toggleWishlist(item)">
-          <i class="fas fa-heart" [class.active]="item.wishlisted"></i>
-        </button>
-        <button class="add-to-cart-btn" (click)="ToggleAddToCart(item)">
-          {{ item.addToCart ? 'Remove from Cart' : 'Add to Cart' }}
-        </button>
-        
-        <div class="card-body text-left">
-          <h5 class="card-title">{{ item.name }}</h5>
-          <p class="card-text text-muted">{{ item.description }}</p>
+    <div class="row gx-4 gy-4 px-3 px-md-5">
+      <div class="col-12 col-md-6 col-lg-3" *ngFor="let item of section.items">
+        <div class="card product-card shadow-sm rounded-0 border-0 h-100 d-flex flex-column">
+          <div class="position-relative">
+            <img [src]="item.image" [alt]="item.name" class="product-image rounded-top-0" />
+          </div>
+          <div class="card-body">
+            <h5 class="card-title fw-semibold mb-1">{{ item.name }}</h5>
+            <p class="card-text text-muted small mb-2">{{ item.description }}</p>
+            <p class="price mb-2">
+              <span class="original-price text-muted text-decoration-line-through me-2">₹{{ item.originalPrice }}</span>
+              <span class="offer-price fw-bold text-dark">₹{{ item.offerPrice }}</span>
+              <span class="discount text-success">({{ getDiscount(item.originalPrice, item.offerPrice) }}% OFF)</span>
+            </p>
+          </div>
+          <div class="product-actions d-flex justify-content-center gap-3 mt-2">
+            <!-- Wishlist Button -->
+            <button class="action-btn wishlist" [class.active]="isWishlisted(item)" (click)="toggleWishlist(item)">
+              <i [ngClass]="isWishlisted(item) ? 'fas fa-heart' : 'far fa-heart'"></i>
+            </button>
 
-          <!-- Pricing Section -->
-          <p class="price">
-            <span class="original-price">₹ {{ item.originalPrice }}</span>
-            <span class="offer-price">₹ {{ item.offerPrice }}</span>
-            <span class="discount">({{ getDiscount(item.originalPrice, item.offerPrice) }}% OFF)</span>
-          </p>
+            <!-- Cart Button -->
+            <button class="action-btn cart" [class.active]="isInCart(item)" (click)="toggleAddToCart(item)">
+              <i class="fas fa-shopping-cart"></i>
+            </button>
+
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <!-- ======= Section Template End ======= -->
 
-</div>
-
-<!-- canvas paintings -->
-<div class="d-flex justify-content-between align-items-center p-4">
-  <h1 class="section-title">Canvas Paintings</h1>
-  <a href="#" class="btn view-all-btn">View All</a>
-</div>
-
-
-<div class="row p-4">
-  <div class="col-12 col-md-6 col-lg-3 mb-4" *ngFor="let item of  canvasPaintings">
-    <div class="card product-card">
-      <img [src]="item.image" alt="{{ item.name }}" class="card-img-top product-image">
-      <div class="card-body text-left">
-        <h5 class="card-title">{{ item.name }}</h5>
-        <p class="card-text text-muted">{{ item.description }}</p>
-
-        <!-- Pricing Section -->
-        <p class="price">
-          <span class="original-price">₹ {{ item.originalPrice }}</span>
-          <span class="offer-price">₹ {{ item.offerPrice }}</span>
-          <span class="discount">({{ getDiscount(item.originalPrice, item.offerPrice) }}% OFF)</span>
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Lounge Chairs -->
-<div class="d-flex justify-content-between align-items-center p-4">
-  <h1 class="section-title">Lounge Chairs</h1>
-  <a href="#" class="btn view-all-btn">View All</a>
-</div>
-
-
-<div class="row p-4">
-  <div class="col-12 col-md-6 col-lg-3 mb-4" *ngFor="let item of  loungeChairs">
-    <div class="card product-card">
-      <img [src]="item.image" alt="{{ item.name }}" class="card-img-top product-image">
-      <div class="card-body text-left">
-        <h5 class="card-title">{{ item.name }}</h5>
-        <p class="card-text text-muted">{{ item.description }}</p>
-
-
-
-        <!-- Pricing Section -->
-        <p class="price">
-          <span class="original-price">₹ {{ item.originalPrice }}</span>
-          <span class="offer-price">₹ {{ item.offerPrice }}</span>
-          <span class="discount">({{ getDiscount(item.originalPrice, item.offerPrice) }}% OFF)</span>
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Lounge Chairs -->
-<div class="d-flex justify-content-between align-items-center p-4">
-  <h1 class="section-title">Designer Mirrors</h1>
-  <a href="#" class="btn view-all-btn">View All</a>
-</div>
-
-
-<div class="row p-4">
-  <div class="col-12 col-md-6 col-lg-3 mb-4" *ngFor="let item of  loungeChairs">
-    <div class="card product-card">
-      <img [src]="item.image" alt="{{ item.name }}" class="card-img-top product-image">
-      <div class="card-body text-left">
-        <h5 class="card-title">{{ item.name }}</h5>
-        <p class="card-text text-muted">{{ item.description }}</p>
-
-        <!-- Pricing Section -->
-        <p class="price">
-          <span class="original-price">₹ {{ item.originalPrice }}</span>
-          <span class="offer-price">₹ {{ item.offerPrice }}</span>
-          <span class="discount">({{ getDiscount(item.originalPrice, item.offerPrice) }}% OFF)</span>
-        </p>
-      </div>
-    </div>
-  </div>
 </div>

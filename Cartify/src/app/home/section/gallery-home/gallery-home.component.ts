@@ -4,15 +4,17 @@ import { CommonModule } from '@angular/common';
 
 
 @Component({
-    selector: 'app-gallery-home',
-    imports: [CarouselModule, CommonModule],
-    templateUrl: './gallery-home.component.html',
-    styleUrl: './gallery-home.component.css'
+  selector: 'app-gallery-home',
+  imports: [CarouselModule, CommonModule],
+  templateUrl: './gallery-home.component.html',
+  styleUrl: './gallery-home.component.css'
 })
 export class GalleryHomeComponent implements OnInit {
 
- @Output() wishlistUpdated = new EventEmitter<number>() 
- @Output() addToCartUpdated = new EventEmitter<any[]>() 
+  @Output() wishlistUpdated = new EventEmitter<number>()
+  @Output() addToCartUpdated = new EventEmitter<any[]>()
+  wishlistedItems = new Set<number>();
+  cartItems = new Set<number>();
 
 
   imageCircle = [
@@ -42,7 +44,7 @@ export class GalleryHomeComponent implements OnInit {
       originalPrice: 2999,
       offerPrice: 2499,
       wishlisted: false,
-      addToCart: false
+      addToCart: false,
     },
     {
       name: 'Modern Art Painting',
@@ -140,7 +142,7 @@ export class GalleryHomeComponent implements OnInit {
       offerPrice: 999,
     }
   ];
-     loungeChairs = [
+  loungeChairs = [
     {
       name: 'Luxury Wall Clock',
       image: 'assets/landing-page-images/home-round1.jpg',
@@ -171,40 +173,51 @@ export class GalleryHomeComponent implements OnInit {
     }
   ];
 
+  sections = [
+    {
+      title: 'Best Selling',
+      items: this.bestSelling
+    },
+    {
+      title: 'Canvas Paintings',
+      items: this.canvasPaintings
+    },
+    {
+      title: 'Lounge Chairs',
+      items: this.loungeChairs
+    }
+  ];
+
+
   getDiscount(original: number, offer: number): number {
     return Math.round(((original - offer) / original) * 100);
   }
 
-//wishlist
   toggleWishlist(item: any) {
-
-    item.wishlisted = !item.wishlisted; 
-
-     // Update the bestSelling array with the modified item
-   this.bestSelling = this.bestSelling.map((product) =>
-    product.name === item.name ? { ...product, wishlisted: item.wishlisted } : product
-
-  );
-
-
-  const wishlistCount = this.bestSelling.filter(product => product.wishlisted).length;
-  
-  this.wishlistUpdated.emit(wishlistCount);  
-
-  } 
-
-  // add-to-cart
-  ToggleAddToCart(item:any){
-
-    item.addToCart = !item.addToCart
-  
-
-    const cartitem = this.bestSelling.filter(product => product.addToCart);
-    console.log(cartitem)
-    
-   this.addToCartUpdated.emit(cartitem)
+    if (this.wishlistedItems.has(item.id)) {
+      this.wishlistedItems.delete(item.id);
+    } else {
+      this.wishlistedItems.add(item.id);
+    }
   }
-  
 
-  ngOnInit() {}
+  toggleAddToCart(item: any) {
+    if (this.cartItems.has(item.id)) {
+      this.cartItems.delete(item.id);
+    } else {
+      this.cartItems.add(item.id);
+    }
+  }
+
+  isWishlisted(item: any): boolean {
+    return this.wishlistedItems.has(item.id);
+  }
+
+  isInCart(item: any): boolean {
+    return this.cartItems.has(item.id);
+  }
+
+
+
+  ngOnInit() { }
 }
