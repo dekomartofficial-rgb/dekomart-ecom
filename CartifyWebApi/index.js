@@ -27,6 +27,11 @@ const adminRoutes = require("./app/routers/admin.router");
 app.use("/user", userRoutes);
 app.use("/admin", adminRoutes);
 
+app.get('/', (req, res) => {
+  res.send('API is running...');
+});
+
+
 app.listen(PORT, () => {
   console.log(`http://localhost:${process.env.PORT}`);
   DataAccess.getPool()
