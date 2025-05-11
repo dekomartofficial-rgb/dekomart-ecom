@@ -1,5 +1,6 @@
 export class ProductDetails {
     ProductID: number = 0;
+    ProductNo: string = '';
     ProductName: string = '';
     ProductDesc: string = '';
     ProductSize: string = '';
@@ -9,13 +10,13 @@ export class ProductDetails {
     Discount: number = 0;
     DiscountType: string = '';
     Catogery: string = '';
-    OpsMode: string = ''; 
+    OpsMode: string = '';
 }
 
-export class ProductVairant{
+export class ProductVairant {
     VariantID: number = 0;
     Colour: string = '';
     Size: number = 0;
     Price: number = 0;
-    Stock: number = 0; 
+    Stock: number = 0;
 }

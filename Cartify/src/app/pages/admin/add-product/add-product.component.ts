@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TextareaModule } from 'primeng/textarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ProductDetails, ProductVairant } from '@/app/provider/class/ProductClass';
@@ -12,6 +12,7 @@ import { ToastService } from '@/app/provider/services/toast.service';
 import { LoaderService } from '@/app/provider/services/loader.service';
 import { HttpClientService } from '@/app/provider/services/http-client.service';
 import { Router } from '@angular/router';
+import { LocationStrategy } from '@angular/common';
 
 @Component({
   selector: 'app-add-product',
@@ -25,41 +26,54 @@ import { Router } from '@angular/router';
     FileUploadModule,
     ColorPickerModule
   ],
+  standalone: true,
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent implements OnInit {
   ProductDetails: ProductDetails = new ProductDetails();
-  ProductVariants: ProductVairant[] = [new ProductVairant()];
+  Product: any[] = [];
+  Variants: any[] = [];
+  ProductVariants: ProductVairant[] = new Array<ProductVairant>();
   ClickedImage: number = 0;
   DiscountType: any[] = [];
   Gender: any[] = [];
   ClothingSize: any[] = [];
-  Category: any[] = [];
+  Catogery: any[] = [];
   AddVariantsRow: any[] = [0];
   ProductImages: any[] = [];
   selectedFiles: File[] = [];
   imagePreviews: any[] = [];
   imageHover: boolean = false;
-
+  isVariantValidate: boolean = false;
   selectedGender: string = '';
-  productForm = new FormGroup({
-    ProductName: new FormControl(''),
-    ProductDesc: new FormControl(''),
-    ProductSize: new FormControl(''),
-    ProductColor: new FormControl(''),
-    Gender: new FormControl(''),
-    BasePricing: new FormControl(0),
-    Stock: new FormControl(0),
-    Discount: new FormControl(0),
-    DiscountType: new FormControl(''),
-    Catogery: new FormControl(''),
-    Price: new FormControl(0),
-  })
+  productForm: FormGroup
 
 
-  constructor(private commonService: CommonService, private _messageservice: ToastService, private loader: LoaderService, private httpService: HttpClientService, private Router: Router) { }
+  constructor(private commonService: CommonService, private _messageservice: ToastService, private loader: LoaderService, private httpService: HttpClientService, private _router: Router,
+    private fb: FormBuilder) {
+    this.productForm = this.fb.group({
+      ProductName: [''],
+      ProductDesc: [''],
+      BasePricing: [''],
+      Catogery: [''],
+      ProductSize: [''],
+      Gender: [''],
+      Discount: [''],
+      DiscountTypeModel: [''],
+      description: [''],
+      Stock: [''],
+      Price: [''],
+
+    });
+
+  }
   ngOnInit() {
+    this.addProductVariantRow();
+    const ProductId = history.state['productId'];
+    if (ProductId ?? ProductId > 0) {
+      this.getProductVariantDetails(ProductId);
+    }
     this.GetRefData();
   }
   GetRefData() {
@@ -68,9 +82,12 @@ export class AddProductComponent implements OnInit {
         this.DiscountType = res.filter(item => item.groupName === 'DISCOUNT_TYPE');
         this.ClothingSize = res.filter(item => item.groupName === 'CLOTH_SIZE');
         this.Gender = res.filter(item => item.groupName === 'GENDER');
-        this.Category = res.filter(item => item.groupName === 'CATEGORY');
+        this.Catogery = res.filter(item => item.groupName === 'CATEGORY');
+        console.log(this.DiscountType)
+
       }
     });
+
   }
 
   changeImage(index: number) {
@@ -105,6 +122,30 @@ export class AddProductComponent implements OnInit {
     this.saveProduct();
   }
 
+  getProductVariantDetails(productId: number) {
+    this.loader.show()
+    this.httpService.get('admin/GetProductAndVariant', { ProductId: productId }).subscribe((res: any) => {
+      this.Product = res[0];
+      this.Variants = res[1];
+      this.ProductDetails.ProductID = this.Product[0].ProductId;
+      this.ProductDetails.ProductName = this.Product[0].ProductName;
+      this.ProductDetails.ProductNo = this.Product[0].ProductNo;
+      this.ProductDetails.ProductDesc = this.Product[0].ProductDesc;
+      this.ProductDetails.ProductSize = this.Product[0].ProductSize;
+      this.ProductDetails.Gender = this.Product[0].Genders;
+      this.ProductDetails.BasePricing = this.Product[0].TotalStock;
+      this.ProductDetails.BasePricing = this.Product[0].BasePrice
+      this.ProductDetails.Stock = this.Product[0].TotalStock;
+      this.ProductDetails.Discount = this.Product[0].Discount;
+      this.ProductDetails.DiscountType = this.Product[0].DiscountType;
+      this.ProductDetails.Catogery = this.Product[0].Category;
+      this.ProductVariants.push(...this.Variants)
+      console.log(this.ProductVariants)
+      this.loader.hide()
+    });
+
+  }
+
   onFilesSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files) {
@@ -127,14 +168,32 @@ export class AddProductComponent implements OnInit {
       }
     }
   }
+  validateProductVariant() {
+    this.isVariantValidate = true;
+    for (let i = 0; i < this.ProductVariants.length; i++) {
+      const variant = this.ProductVariants[i];
+      if (!variant.Colour || !variant.Price || !variant.Size || !variant.Stock) {
+        this.isVariantValidate = false;
+        break;
+      }
+    }
+    return this.isVariantValidate;
+  }
 
   saveProduct() {
-    this.loader.show() 
-    this.httpService.post('admin/SaveProductHeader',  { ProductDetails: this.ProductDetails, ProductVariants: this.ProductVariants }).subscribe((res: any) => {
+    this.loader.show()
+    this.validateProductVariant();
+    if (this.isVariantValidate === false) {
+      this._messageservice.show('Error', 'Atleast one product variant is required!');
+      this.loader.hide()
+      return;
+    }
+    this.ProductDetails.OpsMode = this.ProductDetails.ProductID > 0 ? 'UPDATE' : 'INSERT';
+    this.httpService.post('admin/SaveProductHeader', { ProductDetails: this.ProductDetails, ProductVariants: this.ProductVariants, ProductFile: this.selectedFiles }).subscribe((res: any) => {
       if (res.MessageType === 2) {
         this._messageservice.show('Success', res.Message);
         this.loader.hide()
-        this.Router.navigate(['/admin/product-details']);
+        this._router.navigate(['/admin/product-details']);
       } else {
         this._messageservice.show('Error', res.Message);
         this.loader.hide()

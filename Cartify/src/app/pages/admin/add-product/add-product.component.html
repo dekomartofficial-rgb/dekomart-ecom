@@ -6,32 +6,42 @@
         </div>
         <div class="comp-page-header-name d-flex">
             <div class="add-product-details gap-2 align-items-center d-flex">
-                <button type="button" class="btn btn-success" (click)="saveProductDetails()"><i class="fa-solid fa-floppy-disk gap-2 p-1"
-                        ></i>Save</button>
+                <button type="button" class="btn btn-success" (click)="saveProductDetails()"><i
+                        class="fa-solid fa-floppy-disk gap-2 p-1"></i>Save</button>
             </div>
         </div>
     </div>
     <div class="main-body">
-        <form [formGroup]="productForm">
+        <form #ProductDetailsForm="ngForm">
             <div class="col-md-12 d-flex gap-2">
                 <div class="add-product-body d-flex gap-md-2 mt-1 col-md-7 ">
                     <div class="general-info-div col-md-12">
                         <div class="col-md-12">
                             <h6>General Information</h6>
+                            @if (this.ProductDetails.ProductNo) {
+                            <p class="p-div" style="font-size: 11px; color: #716a6a; margin: -5px 0px 0px 0px;">Product
+                                No : {{this.ProductDetails.ProductNo}}</p>
+                            }
                         </div>
                         <div class="col-md-12 name-product">
                             <h5>Name Product</h5>
                             <div class="card flex justify-center">
-                                <input type="text" pInputText formControlName="ProductName" type="text"
-                                    [(ngModel)]="ProductDetails.ProductName"
-                                    style="border-style: none;border-radius: 6px;" name="ProductName" />
+                                <input type="text" pInputText type="text" [(ngModel)]="ProductDetails.ProductName"
+                                    id="ProductName" style="border-style: none;border-radius: 6px;" name="ProductName"
+                                    #ProductName="ngModel" required />
+                            </div>
+                            <div *ngIf="ProductName.invalid && ProductName.touched" class="required-field">
+                                <small *ngIf="ProductName.errors?.['required']">Code required.</small>
                             </div>
                         </div>
                         <div class="col-md-12 description-product">
                             <h5>Desription Product</h5>
                             <div class="card flex justify-center">
-                                <textarea rows="13" cols="30" pTextarea [autoResize]="true"
-                                    [(ngModel)]="ProductDetails.ProductDesc" formControlName="ProductDesc"></textarea>
+                                <textarea rows="13" cols="30" pTextarea [autoResize]="true" name="ProductDesc"
+                                    [(ngModel)]="ProductDetails.ProductDesc" #ProductDesc="ngModel"></textarea>
+                            </div>
+                            <div *ngIf="ProductDesc.invalid && ProductDesc.touched" class="required-field">
+                                <small *ngIf="ProductDesc.errors?.['required']">Code required.</small>
                             </div>
                         </div>
                         <div class="col-md-12 d-flex product-size-gender-div">
@@ -40,12 +50,14 @@
                                 <p class="p-div" style="font-size: 11px; color: #716a6a; margin: -5px 0px 0px 0px;">Pick
                                     Avaliable Size</p>
                                 <div class="size-picker">
-                                    @for (Size of ClothingSize; track $index) {
-                                    <div class="size-option" (click)="selectProductSize(Size.code)"  
-                                        [ngClass]="ProductDetails.ProductSize.split(',').includes(Size.code) ? 'available' : 'unavailable'" >
-                                        {{Size.code}}</div>
-                                    }
+                                    <div class="size-option" *ngFor="let Size of ClothingSize"
+                                        (click)="selectProductSize(Size.code)"
+                                        [ngStyle]="{'background-color': Size.color}"
+                                        [ngClass]="selectedGender.includes(Size.code) ? 'available' : 'unavailable'">
+                                        {{Size.code}}
+                                    </div>
                                 </div>
+
 
                             </div>
                             <div class="col-md-6 product-gender">
@@ -58,8 +70,7 @@
                                         @for (item of Gender; track $index) {
                                         <div class="flex items-center gap-2 d-flex">
                                             <p-radiobutton name="gender" [(ngModel)]="ProductDetails.Gender"
-                                                [value]="item.code" type="radio" formControlName="Gender"
-                                                name="Gender" />
+                                                [value]="item.code" type="radio" name="Gender" #Gender="ngModel" />
                                             <label for="men" class="ml-2 pt-1">{{item.descritpion}}</label>
                                         </div>
                                         }
@@ -73,38 +84,39 @@
                                 <div class="price-and-stock-card">
                                     <h2>Pricing And Stock</h2>
                                     <div class="col-md-12 gap-2 pt-2 d-flex">
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 col-sm-12  ">
                                             <h5>Base Price</h5>
                                             <div class="card flex justify-center">
-                                                <input type="text" pInputText formControlName="BasePricing"
-                                                    [(ngModel)]="ProductDetails.BasePricing"
+                                                <input type="text" pInputText #BasePrice="ngModel" id="basePrice"
+                                                    [(ngModel)]="ProductDetails.BasePricing" name="BasePricing"
                                                     style="border-style: none;border-radius: 6px;" />
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3" col-sm-12>
                                             <h5>Total Stock</h5>
                                             <div class="card flex justify-center">
-                                                <input type="text" pInputText formControlName="Stock"
-                                                    [(ngModel)]="ProductDetails.Stock"
+                                                <input type="text" pInputText #Stock="ngModel" id="stock"
+                                                    [(ngModel)]="ProductDetails.Stock" name="Stock"
                                                     style="border-style: none;border-radius: 6px;" />
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 col-sm-12">
                                             <h5>Discount</h5>
                                             <div class="card flex justify-center">
-                                                <input type="text" pInputText formControlName="Discount"
-                                                    [(ngModel)]="ProductDetails.Discount"
+                                                <input type="text" pInputText #Discount="ngModel" id="Discount"
+                                                    [(ngModel)]="ProductDetails.Discount" name="Discount"
                                                     style="border-style: none;border-radius: 6px;" />
                                             </div>
                                         </div>
-                                        <div class="col-md-3" style="width: 233px;">
+                                        <div class="col-md-3 col-sm-12">
                                             <h5>Discount Type</h5>
-                                            <div class="card flex justify-center">
-                                                <p-dropdown [options]="DiscountType" optionLabel="descritpion"
-                                                    [(ngModel)]="ProductDetails.DiscountType"
-                                                    placeholder="Select Discount Type" formControlName="DiscountType"
-                                                    optionValue="code" class="discount-type-dropdown">
-                                                </p-dropdown>
+                                            <div class="card flex justify-center"> 
+                                            <p-dropdown [options]="DiscountType" optionLabel="description"
+                                                [(ngModel)]="ProductDetails.DiscountType" placeholder="Select Discount Type" id="DiscountType"
+                                                #DiscountTypeModel="ngModel" [style]="{'width':'100%'}" optionValue="code"
+                                                name="DiscountType" class="discount-type-dropdown">
+                                            </p-dropdown>
+
                                             </div>
                                         </div>
                                     </div>
@@ -113,10 +125,10 @@
                                     <div class="col-md-3">
                                         <h5>Category</h5>
                                         <div class="card flex justify-center">
-                                            <p-dropdown [options]="Category" optionLabel="descritpion"
+                                            <p-dropdown [options]="Catogery" optionLabel="descritpion"
                                                 [(ngModel)]="ProductDetails.Catogery" placeholder="Select Catogery"
-                                                formControlName="Catogery" [style]="{'width':'100%'}" optionValue="code"
-                                                class="discount-type-dropdown">
+                                                #CatogeryModel="ngModel" [style]="{'width':'100%'}" optionValue="code"
+                                                name="Catogery" class="discount-type-dropdown">
                                             </p-dropdown>
                                         </div>
                                     </div>
@@ -174,38 +186,39 @@
                         <button type="button" class="btn btn-success" (click)="addProductVariantRow()"><i
                                 class="fa-solid fa-plus gap-2 p-1"></i>Add Variant</button>
                     </div>
-                </div>
+                </div> 
                 @for (item of ProductVariants; track $index) {
                 <div class="p-3 m-2" style="border-radius: 11px; border: 1px solid #8b8383; border-style: dashed;">
                     <div class="col-md-12 gap-2 d-flex">
                         <div class="col-md-1">
                             <h5>Color</h5>
                             <div class="card flex justify-center" style="background-color: #f8f8f8;">
-                                <p-colorpicker [(ngModel)]="item.Colour" formControlName="ProductColor"
-                                    [style]="{'width':'100%','height':'100%','color':'red'}" />
+                                <p-colorpicker [(ngModel)]="item.Colour" #ProductColor="ngModel" id="ProductColor"
+                                    [style]="{'width':'100%','height':'100%','color':'red'}" name="ProductColor" />
                             </div>
-                        </div>  
+                        </div>
                         <div class="col-md-2">
                             <h5>Size</h5>
                             <div class="card flex justify-content-center">
                                 <p-dropdown [options]="ClothingSize" optionLabel="descritpion" [(ngModel)]="item.Size"
-                                    placeholder="Select Size" formControlName="ProductSize" [style]="{'width':'100%'}"
-                                    optionValue="code" class="discount-type-dropdown">
+                                    placeholder="Select Size" #Discount="ngModel" id="Discount"
+                                    [style]="{'width':'100%'}" optionValue="code" class="discount-type-dropdown"
+                                    name="DiscountType">
                                 </p-dropdown>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <h5>Price</h5>
                             <div class="card flex justify-center">
-                                <input type="text" pInputText formControlName="Price" [(ngModel)]="item.Price"
-                                    style="border-style: none;border-radius: 6px;" />
+                                <input type="text" pInputText [(ngModel)]="item.Price" #Price="ngModel" id="price"
+                                    style="border-style: none;border-radius: 6px;" name="price" />
                             </div>
                         </div>
                         <div class="col-md-2">
                             <h5>Stock</h5>
                             <div class="card flex justify-center">
-                                <input type="text" pInputText formControlName="Stock" [(ngModel)]="item.Stock"
-                                    style="border-style: none;border-radius: 6px;" />
+                                <input type="text" pInputText #Stock="ngModel" id="stock" [(ngModel)]="item.Stock"
+                                    style="border-style: none;border-radius: 6px;" name="Stock" />
                             </div>
                         </div>
                         <div class="col-md-2">

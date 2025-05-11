@@ -60,7 +60,7 @@ class Admin {
         } catch (e) {
             res.status(500).json({ err: "Error Occur" + e })
         }
-    } 
+    }
     static SaveRoleRight = async (req, res) => {
         try {
             const request = await dataAcces.getRequest()
@@ -121,16 +121,17 @@ class Admin {
         try {
             const request = await dataAcces.getRequest();
             const VariantTableType = new mssql.Table();
+            VariantTableType.type = 'tt_product_varient';
             VariantTableType.columns.add('VARIENT_ID', mssql.BigInt);
             VariantTableType.columns.add('COLOR', mssql.VarChar(10));
-            VariantTableType.columns.add('SIZE',  mssql.VarChar(20));
+            VariantTableType.columns.add('SIZE', mssql.VarChar(20));
             VariantTableType.columns.add('PRICE', mssql.BigInt);
             VariantTableType.columns.add('STOCK_COUNT', mssql.BigInt);
 
             const ProductVarient = req.body.ProductVariants;
             ProductVarient.forEach(variant => {
                 VariantTableType.rows.add(
-                    variant.VariantID,
+                    variant.VariantId,
                     variant.Colour,
                     variant.Size,
                     variant.Price,
@@ -151,7 +152,7 @@ class Admin {
             request.input('an_discount', mssql.BigInt, ProdctDetails.Discount);
             request.input('as_discount_type', mssql.VarChar(200), ProdctDetails.DiscountType);
             request.input('as_category', mssql.VarChar(200), ProdctDetails.Catogery);
-            request.input('tt_product_varient', VariantTableType);
+            request.input('tt_product_varient', mssql.TVP, VariantTableType);
             request.input('as_ops_mode', mssql.VarChar(15), ProdctDetails.OpsMode);
             request.input('ai_user_id', mssql.BigInt, req.LoggedUserId);
             request.output("p_retmsg", mssql.VarChar(500));
@@ -173,6 +174,18 @@ class Admin {
             request.input('ai_user_id', mssql.BigInt, req.LoggedUserId)
             request.input('as_search_keyword', mssql.VarChar(200), req.query.SearchKeyword)
             const result = await request.execute("PKG_PROD$p_get_all_product_and_dashboard")
+
+            res.status(200).json(result.recordsets)
+        } catch (e) {
+            res.status(500).json({ err: "Error Occur" + e })
+        }
+    }
+    static GetProductAndVariant = async (req, res) => {
+        try {
+            const request = await dataAcces.getRequest()
+            request.input('ai_product_id', mssql.BigInt, req.query.ProductId)
+            request.input('ai_user_id', mssql.BigInt, req.LoggedUserId)
+            const result = await request.execute("PKG_PROD$p_get_product_and_variant")
 
             res.status(200).json(result.recordsets)
         } catch (e) {

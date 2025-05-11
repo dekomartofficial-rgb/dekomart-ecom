@@ -4,7 +4,7 @@
 
 .toast-box {
   width: 357px;
-  padding: 20px;
+  padding: 16px;
   border: 1px dashed #d0cbcb;
   background-color: #ffffff;
   border-radius: 7px;
@@ -18,8 +18,8 @@
   opacity: 0;
   transform: translateX(30px);
   transition: all 0.5s ease;
-  max-width: 100%;              /* responsive toast */
-  word-break: break-word;       /* ensure long words break */
+  max-width: 100%; /* responsive toast */
+  word-break: break-word; /* ensure long words break */
 }
 
 .toast-box.success {
@@ -75,10 +75,8 @@
 
 .body {
   font-size: 14px;
+  font-weight: 400;
   line-height: 1.4;
-  word-break: break-word;
-  white-space: normal;
-  overflow-wrap: anywhere;
 }
 
 /* Close button */

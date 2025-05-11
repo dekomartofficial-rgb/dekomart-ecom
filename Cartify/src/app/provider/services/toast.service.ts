@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class ToastService {
   toasts: any[] = [];
-  delay: number = 3000
+  delay: number = 3000; // 3 seconds
 
   show(header: string, body: string) {
     const classname = this.getIconClass(header.toLowerCase());

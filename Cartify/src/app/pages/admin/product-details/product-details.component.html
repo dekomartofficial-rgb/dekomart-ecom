@@ -61,7 +61,8 @@
                             </div>
                         </td>
                         <td><span [style.background-color]="item.ProductColour"
-                                style="padding: 6px; border-radius: 14px; background-color: rgb(131, 65, 196); display: block; width: 87px; height: 39px;"></span></td>
+                                style="padding: 6px; border-radius: 14px; background-color: rgb(131, 65, 196); display: block; width: 87px; height: 39px;"></span>
+                        </td>
                         <td>{{item.ProductPrice}}</td>
                         <td>{{item.Revenue}}</td>
                         <td>{{item.TotalSock}}pcs</td>
@@ -82,14 +83,15 @@
                         <td class="text-end">
                             <div class="d-flex">
                                 <div class="view-icon me-1">
-                                    <i class="fas fa-eye" pTooltip="View Product" oltipPosition="right"
-                                        tooltipStyleClass="my-tooltip-style"></i>
+                                    <button (click)="redirectToProductDetails(item.ProductId)" style="border: 0; background: none;">
+                                        <i class="fas fa-eye" pTooltip="View Product" oltipPosition="right"
+                                            tooltipStyleClass="my-tooltip-style"></i>
+                                    </button>
                                 </div>
                             </div>
                         </td>
                     </tr>
                     }
-
                 </tbody>
             </table>
         </div>

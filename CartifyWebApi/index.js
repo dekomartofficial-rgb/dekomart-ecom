@@ -30,6 +30,6 @@ app.use("/admin", adminRoutes);
 app.listen(PORT, () => {
   console.log(`http://localhost:${process.env.PORT}`);
   DataAccess.getPool()
-    .then(console.log("Database Connected"))
+    .then(console.log(`Database Connected Successfully -  ${process.env.NODE_ENV}`))
     .catch((e) => console.log("Error : Database Connection Failed"));
 });

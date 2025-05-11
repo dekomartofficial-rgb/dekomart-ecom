@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
 import { CommonService } from '@/app/provider/services/common.service';
-
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class ProductDetailsComponent implements OnInit {
   ProductDetails: any[] = [];
   ProductDashboard: any[] = [];
   Rating: any[] = [];
-  constructor(private httpService: HttpClientService, private Loader: LoaderService, private CommonService: CommonService) { }
+  constructor(private httpService: HttpClientService, private Loader: LoaderService, private CommonService: CommonService, private router: Router) { }
 
   ngOnInit(): void {
     this.getProductsHeader();
@@ -38,6 +38,9 @@ export class ProductDetailsComponent implements OnInit {
     return this.CommonService.getLightColour(value, 0.6);
   }
 
-
+  redirectToProductDetails(id: number) {
+    // Navigate to the product details page with the product ID as state 
+    this.router.navigate(['/admin/add-products'], { state: { productId: id } });
+  }
 
 }

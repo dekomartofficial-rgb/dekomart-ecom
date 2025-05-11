@@ -8,10 +8,10 @@ import { Router } from '@angular/router';
 import { ToastService } from '../../provider/services/toast.service';
 
 @Component({
-    selector: 'app-login',
-    imports: [CommonModule, ReactiveFormsModule],
-    templateUrl: './login.component.html',
-    styleUrl: './login.component.css'
+  selector: 'app-login',
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css'
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -61,16 +61,16 @@ export class LoginComponent {
         .subscribe({
           next: (res) => {
             if (res.MessageType === 2) {
-              this.toastService.show('Success', res.Message);
               const UserData = { UserId: res.UserId, Token: res.Token, UserRole: res.UserRole }
-              localStorage.setItem('userData', JSON.stringify(UserData)); 
+              localStorage.setItem('userData', JSON.stringify(UserData));
               if (this.checkAdmin(res.UserRole)) {
                 this.router.navigate(['/admin/']);
+                this.toastService.show('Success', res.Message); 
               } else {
                 this.router.navigate(['/user/'])
               }
             } else {
-               this.toastService.show('Error', res.Message)
+              this.toastService.show('Error', res.Message)
             }
           },
           error: (err) => { throw err }

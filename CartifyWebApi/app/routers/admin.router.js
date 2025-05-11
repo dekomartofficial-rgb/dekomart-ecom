@@ -11,5 +11,6 @@ router.get("/GetProductsDashboard", VerifyToken, AdminController.GetAllProductsd
 router.post("/SaveRefData", VerifyToken, AdminController.SaveRefData)
 router.post("/SaveProductHeader", VerifyToken, AdminController.SaveProductHeader) 
 router.post("/SaveRoleRight", VerifyToken, AdminController.SaveRoleRight)
+router.get("/GetProductAndVariant", VerifyToken, AdminController.GetProductAndVariant)
 
 module.exports = router
