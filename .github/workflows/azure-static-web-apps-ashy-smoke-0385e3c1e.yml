@@ -33,7 +33,7 @@ jobs:
       - name: Build Angular App
         run: |
           cd Cartify # Navigate to the project directory
-          npm run build -- --prod # Build the Angular app
+          npm run build # Build the Angular app
       - name: Install OIDC Client from Core Package
         run: |
           cd Cartify
