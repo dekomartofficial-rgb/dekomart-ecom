@@ -2,7 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const app = express();
 const logger = require("morgan");
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 3000;
 var cors = require("cors");
 const errorHandler = require("./app/helper/error-handler");
 const DataAccess = require("./app/database/dataaccess");
@@ -29,6 +29,7 @@ app.use("/admin", adminRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running...connected to database');
+  
 });
 
 
