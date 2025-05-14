@@ -6,8 +6,7 @@ const { handleReps } = require("./common.controller");
 class User {
   static ValidateUser = async (req, res) => {
     try {
-      const request = await dataAcces.getRequest();
-
+      const request = await dataAcces.getRequest(); 
       request.input("as_email_id", mssql.NVarChar(100), req.body.EmailId);
       request.input("as_password", mssql.NVarChar(100), req.body.Password);
       request.input("as_auth_type", mssql.VarChar(1), req.body.AuthType);
@@ -18,6 +17,7 @@ class User {
 
       const result = await request.execute("PKG_USER$p_validate_login");
       const output = await handleReps(result.output);
+
 
       if (output.UserId > 0) {
         const secret = process.env.SECRET_TOKERN;

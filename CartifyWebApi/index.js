@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 var cors = require("cors");
 const errorHandler = require("./app/helper/error-handler");
 const DataAccess = require("./app/database/dataaccess");
-const {convertBigIntMiddleware, convertBigIntRequestMiddleware} = require("./app/middleware/CommonMiddleware");
+const {convertBigIntMiddleware} = require("./app/middleware/CommonMiddleware");
 
 app.use(cors());
 app.use(express.json()); // deal with json data
@@ -15,8 +15,15 @@ dotenv.config();
 app.use(logger("dev"));
 app.use(errorHandler);
 app.use(convertBigIntMiddleware); 
-app.use(convertBigIntRequestMiddleware); // Convert incoming BigInt
 
+const customJsonParser = express.json({
+  reviver: (key, value) => {
+    // If value is a string, keep it as string (no conversion to number)
+    return typeof value === 'string' ? value : value;
+  }
+});
+
+app.use(customJsonParser); // Custom JSON parser to handle BigInt
 
 /**
  * @author Mohammed Sinan

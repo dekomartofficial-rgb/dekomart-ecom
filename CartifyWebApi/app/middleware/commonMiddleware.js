@@ -1,3 +1,4 @@
+
 // Middleware to convert BigInt and numeric strings to Number globally
 function bigIntReplacer(key, value) {
   if (typeof value === "string" && !isNaN(value) && value.match(/^\d+$/)) {
@@ -30,6 +31,4 @@ const convertBigIntRequestMiddleware = (req, res, next) => {
   }
   next();
 };
-
-
 module.exports = { convertBigIntMiddleware, convertBigIntRequestMiddleware };
