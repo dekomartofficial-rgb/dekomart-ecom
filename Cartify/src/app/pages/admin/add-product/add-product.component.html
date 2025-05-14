@@ -186,7 +186,7 @@
                         <button type="button" class="btn btn-success" (click)="addProductVariantRow()"><i
                                 class="fa-solid fa-plus gap-2 p-1"></i>Add Variant</button>
                     </div>
-                </div> 
+                </div>  
                 @for (item of ProductVariants; track $index) {
                 <div class="p-3 m-2" style="border-radius: 11px; border: 1px solid #8b8383; border-style: dashed;">
                     <div class="col-md-12 gap-2 d-flex">
@@ -194,7 +194,7 @@
                             <h5>Color</h5>
                             <div class="card flex justify-center" style="background-color: #f8f8f8;">
                                 <p-colorpicker [(ngModel)]="item.Colour" #ProductColor="ngModel" id="ProductColor"
-                                    [style]="{'width':'100%','height':'100%','color':'red'}" name="ProductColor" />
+                                    [style]="{'width':'100%','height':'100%','color':'red'}" name="ProductColor_{{$index}}" />
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -203,7 +203,7 @@
                                 <p-dropdown [options]="ClothingSize" optionLabel="descritpion" [(ngModel)]="item.Size"
                                     placeholder="Select Size" #Discount="ngModel" id="Discount"
                                     [style]="{'width':'100%'}" optionValue="code" class="discount-type-dropdown"
-                                    name="DiscountType">
+                                    name="DiscountType_{{$index}}">
                                 </p-dropdown>
                             </div>
                         </div>
@@ -211,14 +211,14 @@
                             <h5>Price</h5>
                             <div class="card flex justify-center">
                                 <input type="text" pInputText [(ngModel)]="item.Price" #Price="ngModel" id="price"
-                                    style="border-style: none;border-radius: 6px;" name="price" />
+                                    style="border-style: none;border-radius: 6px;" name="price_{{$index}}" />
                             </div>
                         </div>
                         <div class="col-md-2">
                             <h5>Stock</h5>
                             <div class="card flex justify-center">
                                 <input type="text" pInputText #Stock="ngModel" id="stock" [(ngModel)]="item.Stock"
-                                    style="border-style: none;border-radius: 6px;" name="Stock" />
+                                    style="border-style: none;border-radius: 6px;" name="Stock_{{$index}}" />
                             </div>
                         </div>
                         <div class="col-md-2">

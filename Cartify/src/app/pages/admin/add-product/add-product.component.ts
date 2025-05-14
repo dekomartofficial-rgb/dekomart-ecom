@@ -139,6 +139,7 @@ export class AddProductComponent implements OnInit {
       this.ProductDetails.Discount = this.Product[0].Discount;
       this.ProductDetails.DiscountType = this.Product[0].DiscountType;
       this.ProductDetails.Catogery = this.Product[0].Category;
+      this.ProductVariants = [];
       this.ProductVariants.push(...this.Variants)
       console.log(this.ProductVariants)
       this.loader.hide()
@@ -170,6 +171,10 @@ export class AddProductComponent implements OnInit {
   }
   validateProductVariant() {
     this.isVariantValidate = true;
+    if (this.ProductVariants.length > 0 && this.ProductVariants.some((variant) => variant.Colour.length > 0)) {
+      return this.isVariantValidate = true;
+
+    }
     for (let i = 0; i < this.ProductVariants.length; i++) {
       const variant = this.ProductVariants[i];
       if (!variant.Colour || !variant.Price || !variant.Size || !variant.Stock) {

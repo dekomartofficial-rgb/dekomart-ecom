@@ -23,4 +23,13 @@ const convertBigIntMiddleware = (req, res, next) => {
 };
 
 
-module.exports = { convertBigIntMiddleware };
+const convertBigIntRequestMiddleware = (req, res, next) => {
+  if (req.body && typeof req.body === 'object') {
+    const convertedBody = JSON.parse(JSON.stringify(req.body, bigIntReplacer));
+    req.body = convertedBody;
+  }
+  next();
+};
+
+
+module.exports = { convertBigIntMiddleware, convertBigIntRequestMiddleware };
