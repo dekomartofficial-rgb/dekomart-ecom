@@ -258,3 +258,6 @@ input[type="number"] {
 .file-button:hover {
   background-color: #2563eb;
 }
+button i {
+  padding-right: 5px;
+}

@@ -7,10 +7,12 @@ router.get("/GetScreenRoleAccess", VerifyToken, AdminController.GetRoleScreenAcc
 router.get("/GetAllGroupName", VerifyToken, AdminController.GetAllGroupName)
 router.get("/GetRefData", VerifyToken, AdminController.GetRefData)
 router.get("/GetRefGroupData", VerifyToken, AdminController.GetRefGroupData)
-router.get("/GetProductsDashboard", VerifyToken, AdminController.GetAllProductsdashboard)
-router.post("/SaveRefData", VerifyToken, AdminController.SaveRefData)
-router.post("/SaveProductHeader", VerifyToken, AdminController.SaveProductHeader) 
-router.post("/SaveRoleRight", VerifyToken, AdminController.SaveRoleRight)
 router.get("/GetProductAndVariant", VerifyToken, AdminController.GetProductAndVariant)
+router.get("/GetProductsDashboard", VerifyToken, AdminController.GetAllProductsdashboard)
+router.get("/GetSystemParm", VerifyToken, AdminController.GetSystemParm)
+router.post("/SaveRefData", VerifyToken, AdminController.SaveRefData)
+router.post("/SaveProductHeader", VerifyToken, AdminController.SaveProductHeader)
+router.post("/SaveRoleRight", VerifyToken, AdminController.SaveRoleRight)
 
 module.exports = router
+

@@ -263,7 +263,6 @@ input {
 :host ::ng-deep .p-fileupload-basic {
   justify-content: left !important;
 }
- 
 
 .image-overlay {
   position: absolute;
@@ -284,6 +283,6 @@ input {
   padding: 6px 12px;
   cursor: pointer;
 }
-:host ::ng-deep .p-fileupload-choose-button .p-button { 
+:host ::ng-deep .p-fileupload-choose-button .p-button {
   background-color: red !important;
 }

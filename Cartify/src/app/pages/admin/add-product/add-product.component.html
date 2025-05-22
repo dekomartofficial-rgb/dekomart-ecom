@@ -4,10 +4,14 @@
             <i class="fa-solid fa-shop fa-xl pt-3"></i>
             <h6>Add New Product</h6>
         </div>
-        <div class="comp-page-header-name d-flex">
+        <div class="comp-page-header-name d-flex p-2 gap-1">
             <div class="add-product-details gap-2 align-items-center d-flex">
-                <button type="button" class="btn btn-success" (click)="saveProductDetails()"><i
+                <button type="button" class="btn button-style save-button" (click)="saveProductDetails()"><i
                         class="fa-solid fa-floppy-disk gap-2 p-1"></i>Save</button>
+            </div>
+            <div class="add-product-details gap-2 align-items-center d-flex">
+                <button type="button" class="btn button-style reset-button" (click)="resetProdct()"><i
+                        class="fa-solid fa-rotate-left"></i>Reset</button>
             </div>
         </div>
     </div>
@@ -53,7 +57,7 @@
                                     <div class="size-option" *ngFor="let Size of ClothingSize"
                                         (click)="selectProductSize(Size.code)"
                                         [ngStyle]="{'background-color': Size.color}"
-                                        [ngClass]="selectedGender.includes(Size.code) ? 'available' : 'unavailable'">
+                                        [ngClass]="isCheckedProduct(Size.code) === true ? 'available' : 'unavailable'">
                                         {{Size.code}}
                                     </div>
                                 </div>
@@ -110,13 +114,13 @@
                                         </div>
                                         <div class="col-md-3 col-sm-12">
                                             <h5>Discount Type</h5>
-                                            <div class="card flex justify-center"> 
-                                            <p-dropdown [options]="DiscountType" optionLabel="description"
-                                                [(ngModel)]="ProductDetails.DiscountType" placeholder="Select Discount Type" id="DiscountType"
-                                                #DiscountTypeModel="ngModel" [style]="{'width':'100%'}" optionValue="code"
-                                                name="DiscountType" class="discount-type-dropdown">
-                                            </p-dropdown>
-
+                                            <div class="card flex justify-center">
+                                                <p-dropdown [options]="DiscountType" optionLabel="descritpion"
+                                                    [(ngModel)]="ProductDetails.DiscountType"
+                                                    placeholder="Select Discount Type" #DiscountTypeModel="ngModel"
+                                                    [style]="{'width':'100%'}" optionValue="code" name="DiscountType"
+                                                    class="discount-type-dropdown">
+                                                </p-dropdown>
                                             </div>
                                         </div>
                                     </div>
@@ -146,7 +150,7 @@
                         @for (item of imagePreviews; track $index;) {
                         @if (ClickedImage === $index) {
                         <div class="image-container d-flex justify-content-center1">
-                            <img [src]="item" alt="Gallery Image" srcset="">
+                            <img [src]="item" alt="Gallery Image" srcset="">Size
                         </div>
                         }
                         }
@@ -186,7 +190,7 @@
                         <button type="button" class="btn btn-success" (click)="addProductVariantRow()"><i
                                 class="fa-solid fa-plus gap-2 p-1"></i>Add Variant</button>
                     </div>
-                </div>  
+                </div>
                 @for (item of ProductVariants; track $index) {
                 <div class="p-3 m-2" style="border-radius: 11px; border: 1px solid #8b8383; border-style: dashed;">
                     <div class="col-md-12 gap-2 d-flex">
@@ -194,7 +198,8 @@
                             <h5>Color</h5>
                             <div class="card flex justify-center" style="background-color: #f8f8f8;">
                                 <p-colorpicker [(ngModel)]="item.Colour" #ProductColor="ngModel" id="ProductColor"
-                                    [style]="{'width':'100%','height':'100%','color':'red'}" name="ProductColor_{{$index}}" />
+                                    [style]="{'width':'100%','height':'100%','color':'red'}"
+                                    name="ProductColor_{{$index}}" />
                             </div>
                         </div>
                         <div class="col-md-2">
