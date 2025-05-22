@@ -1,9 +1,11 @@
 const dataAcces = require('../database/dataaccess')
 const mssql = require('mssql')
 const { handleReps } = require('./common.controller')
+const { getFilePath, getSystemParm } = require('../controllers/main.controller')
+const multer = require('multer');
+
 
 class Admin {
-
     static GetRole = async (req, res) => {
         try {
             const req = await dataAcces.getRequest()
@@ -21,6 +23,18 @@ class Admin {
             request.input("as_role_code", mssql.VarChar(3), req.query.RoleCode);
 
             const result = await request.execute("PKG_USER_ACCESS$p_get_role_screen_access");
+
+            res.status(200).json(result.recordsets[0])
+        } catch (e) {
+            res.status(500).json({ err: "Error Occur" + e })
+        }
+    }
+    static GetSystemParm = async (req, res) => {
+        try {
+            const request = await dataAcces.getRequest()
+            request.input("as_parm_code", mssql.VarChar(20), req.query.ParmCode);
+            console.log(getSystemParm('FILE_STORAGE',req))
+            const result = await request.execute("PKG_SETTINGS$p_get_sys_parm");
 
             res.status(200).json(result.recordsets[0])
         } catch (e) {
@@ -121,6 +135,10 @@ class Admin {
         try {
             const request = await dataAcces.getRequest();
             const VariantTableType = new mssql.Table();
+            const ProdctDetails = JSON.parse(req.body.ProductDetails);
+            const ProductVarient = JSON.parse(req.body.ProductVariants);
+            // const ProductImage = multer
+
             VariantTableType.type = 'tt_product_varient';
             VariantTableType.columns.add('VARIENT_ID', mssql.BigInt);
             VariantTableType.columns.add('COLOR', mssql.VarChar(10));
@@ -128,7 +146,7 @@ class Admin {
             VariantTableType.columns.add('PRICE', mssql.BigInt);
             VariantTableType.columns.add('STOCK_COUNT', mssql.BigInt);
 
-            const ProductVarient = req.body.ProductVariants;
+
             ProductVarient.forEach(variant => {
                 VariantTableType.rows.add(
                     variant.VariantId,
@@ -138,9 +156,7 @@ class Admin {
                     variant.Stock
                 );
             });
-            const ProdctDetails = req.body.ProductDetails;
-            console.log(VariantTableType)
-            console.log(ProdctDetails)
+
             //add parameter and table type to procedure
             request.input('ai_product_id', mssql.BigInt, ProdctDetails.ProductID);
             request.input('ai_company_id', mssql.BigInt, 1);

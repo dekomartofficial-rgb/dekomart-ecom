@@ -31,8 +31,7 @@ form {
 }
 
 .invalid-input {
-  border-color: #dc3545 !important;
-  background-color: rgba(220, 53, 69, 0.05);
+  border-color: #dc3545 !important; 
 }
 
 .error-message {
@@ -59,7 +58,6 @@ form {
   background-color: white !important;
 }
 
-
 .custom-checkbox {
   display: flex;
   align-items: center;
@@ -85,7 +83,7 @@ form {
 }
 
 .custom-checkbox .checkmark::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 4px;
   top: 0px;
@@ -163,7 +161,7 @@ form {
 }
 
 .login-title {
-  font-weight: 700; 
+  font-weight: 700;
 }
 
 .form-control {
@@ -292,3 +290,67 @@ input[type="password"] {
   padding-left: 137px;
 }
 
+.container {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 320px;
+}
+
+.container p {
+  font-size: 16px;
+  color: #333;
+}
+
+.container a {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 12px 25px;
+  background-color: #4caf50;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 25px;
+  transition: background-color 0.3s;
+}
+
+.container a:hover {
+  background-color: #45a049;
+}
+.social-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.social-buttons button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.google-btn {
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.facebook-btn {
+  background-color: #1877f2;
+  color: #fff;
+}
+
+.google-btn img,
+.facebook-btn img {
+  width: 20px;
+  height: 20px;
+}

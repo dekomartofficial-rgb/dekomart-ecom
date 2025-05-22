@@ -12,7 +12,7 @@ import { ToastService } from '@/app/provider/services/toast.service';
 import { LoaderService } from '@/app/provider/services/loader.service';
 import { HttpClientService } from '@/app/provider/services/http-client.service';
 import { Router } from '@angular/router';
-import { LocationStrategy } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-product',
@@ -46,12 +46,13 @@ export class AddProductComponent implements OnInit {
   imagePreviews: any[] = [];
   imageHover: boolean = false;
   isVariantValidate: boolean = false;
-  selectedGender: string = '';
-  productForm: FormGroup
+  selectedGender: any[] = [];
+  productForm: FormGroup;
+  SizeArray: any[] = []
 
 
   constructor(private commonService: CommonService, private _messageservice: ToastService, private loader: LoaderService, private httpService: HttpClientService, private _router: Router,
-    private fb: FormBuilder) {
+    private fb: FormBuilder, private http: HttpClient) {
     this.productForm = this.fb.group({
       ProductName: [''],
       ProductDesc: [''],
@@ -83,8 +84,6 @@ export class AddProductComponent implements OnInit {
         this.ClothingSize = res.filter(item => item.groupName === 'CLOTH_SIZE');
         this.Gender = res.filter(item => item.groupName === 'GENDER');
         this.Catogery = res.filter(item => item.groupName === 'CATEGORY');
-        console.log(this.DiscountType)
-
       }
     });
 
@@ -106,16 +105,36 @@ export class AddProductComponent implements OnInit {
     this.loader.hide()
   }
 
-  selectProductSize(size: any) {
-    let sizes = this.ProductDetails.ProductSize ? this.ProductDetails.ProductSize.split(',').filter(s => s.trim() !== '') : [];
-    const index = sizes.indexOf(size);
+  selectProductSize(size: string) {
+    if (!size) return;
+    this.SizeArray = this.ProductDetails.ProductSize?.includes(',') ? this.ProductDetails.ProductSize.split(',') : this.ProductDetails.ProductSize ? [this.ProductDetails.ProductSize] : [];
+
+    // Trim whitespace from sizes
+    this.SizeArray = this.SizeArray.map(s => s.trim());
+    const index = this.SizeArray.indexOf(size);
+
     if (index > -1) {
-      sizes.splice(index, 1);
+      this.SizeArray.splice(index, 1);
     } else {
-      sizes.push(size);
+      this.SizeArray.push(size);
     }
-    this.ProductDetails.ProductSize = sizes.join(',');
+    this.ProductDetails.ProductSize = this.SizeArray.join(',');
+    this.selectedGender = [this.ProductDetails.ProductSize]
   }
+
+  isCheckedProduct(size: string): boolean {
+    this.SizeArray = this.ProductDetails.ProductSize?.includes(',') ? this.ProductDetails.ProductSize.split(',') : this.ProductDetails.ProductSize ? [this.ProductDetails.ProductSize] : [];
+
+    this.SizeArray = this.SizeArray.map(s => s.trim());
+    const index = this.SizeArray.indexOf(size);
+
+    if (index > -1) {
+      return true
+    } else {
+      return false
+    }
+  }
+
 
   saveProductDetails() {
     this.ProductDetails.OpsMode = 'INSERT';
@@ -141,7 +160,6 @@ export class AddProductComponent implements OnInit {
       this.ProductDetails.Catogery = this.Product[0].Category;
       this.ProductVariants = [];
       this.ProductVariants.push(...this.Variants)
-      console.log(this.ProductVariants)
       this.loader.hide()
     });
 
@@ -168,17 +186,20 @@ export class AddProductComponent implements OnInit {
         }
       }
     }
+
   }
+
   validateProductVariant() {
     this.isVariantValidate = true;
     if (this.ProductVariants.length > 0 && this.ProductVariants.some((variant) => variant.Colour.length > 0)) {
       return this.isVariantValidate = true;
-
     }
     for (let i = 0; i < this.ProductVariants.length; i++) {
       const variant = this.ProductVariants[i];
       if (!variant.Colour || !variant.Price || !variant.Size || !variant.Stock) {
         this.isVariantValidate = false;
+        this._messageservice.show('Error', 'Atleast one product variant is required!');
+        this.loader.hide()
         break;
       }
     }
@@ -186,15 +207,18 @@ export class AddProductComponent implements OnInit {
   }
 
   saveProduct() {
+    let fd = new FormData();
     this.loader.show()
     this.validateProductVariant();
-    if (this.isVariantValidate === false) {
-      this._messageservice.show('Error', 'Atleast one product variant is required!');
-      this.loader.hide()
-      return;
+
+    for (var i = 0; i < this.selectedFiles.length; i++) {
+      fd.append("uploads[]", this.selectedFiles[i], this.selectedFiles[i].name);
     }
+    fd.append('ProductDetails', JSON.stringify(this.ProductDetails));
+    fd.append('ProductVariants', JSON.stringify(this.ProductVariants));
+
     this.ProductDetails.OpsMode = this.ProductDetails.ProductID > 0 ? 'UPDATE' : 'INSERT';
-    this.httpService.post('admin/SaveProductHeader', { ProductDetails: this.ProductDetails, ProductVariants: this.ProductVariants, ProductFile: this.selectedFiles }).subscribe((res: any) => {
+    this.httpService.post('admin/SaveProductHeader', fd).subscribe((res: any) => {
       if (res.MessageType === 2) {
         this._messageservice.show('Success', res.Message);
         this.loader.hide()
@@ -204,6 +228,12 @@ export class AddProductComponent implements OnInit {
         this.loader.hide()
       }
     });
+  }
+
+  resetProdct() {
+    this.ProductDetails = new ProductDetails;
+    this.ProductVariants = new Array<ProductVairant>();
+    this.ProductImages = []
   }
 
 }
