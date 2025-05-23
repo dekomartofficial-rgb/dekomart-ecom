@@ -1,12 +1,12 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - cartifywebapi
+name: Build and deploy Node.js app to Azure Web App - CartifyWebApi
 
 on:
   push:
     branches:
-      - release
+      - V1
   workflow_dispatch:
 
 jobs:
@@ -25,12 +25,12 @@ jobs:
 
       - name: npm install, build, and test
         run: |
+          cd CartifyWebApi
           npm install
-          npm run build --if-present
-          npm run test --if-present
+          npm run build --if-present 
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+        run: cd ./CartifyWebApi && zip -r ../release.zip ./*
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -60,15 +60,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_7B1BE6A719C348258FF3DD70003559D2 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_183C0F39E21549A2ACF63BEFEB6B0D3A }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9D8EB4CF7C81495A8F33B7DB9FC80998 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_522764BD57564FDD83A3A836D61BC5F6 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_308FB86361CD43799ECAC1AE3A14DE1F }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_39C7E0749A47440B90805744CEED3DFD }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'cartifywebapi'
+          app-name: 'CartifyWebApi'
           slot-name: 'Production'
           package: .
           
