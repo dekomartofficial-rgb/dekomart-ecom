@@ -133,11 +133,13 @@ class Admin {
     }
     static SaveProductHeader = async (req, res) => {
         try {
-            const request = await dataAcces.getRequest();
-            const VariantTableType = new mssql.Table();
-            const ProdctDetails = JSON.parse(req.body.ProductDetails);
-            const ProductVarient = JSON.parse(req.body.ProductVariants);
-            // const ProductImage = multer
+             const request = await dataAcces.getRequest();
+             const VariantTableType = new mssql.Table();
+            // const ProdctDetails = JSON.parse(req.body.ProductDetails);
+            // const ProductVarient = JSON.parse(req.body.ProductVariants);
+            // // const ProductImage = multer
+            const ProdctDetails = req.body.ProductDetails
+            const ProductVarient = req.body.ProductVarient
 
             VariantTableType.type = 'tt_product_varient';
             VariantTableType.columns.add('VARIENT_ID', mssql.BigInt);
@@ -145,7 +147,7 @@ class Admin {
             VariantTableType.columns.add('SIZE', mssql.VarChar(20));
             VariantTableType.columns.add('PRICE', mssql.BigInt);
             VariantTableType.columns.add('STOCK_COUNT', mssql.BigInt);
-
+ 
 
             ProductVarient.forEach(variant => {
                 VariantTableType.rows.add(

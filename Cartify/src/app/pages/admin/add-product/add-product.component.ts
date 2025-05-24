@@ -211,14 +211,15 @@ export class AddProductComponent implements OnInit {
     this.loader.show()
     this.validateProductVariant();
 
-    for (var i = 0; i < this.selectedFiles.length; i++) {
-      fd.append("uploads[]", this.selectedFiles[i], this.selectedFiles[i].name);
-    }
-    fd.append('ProductDetails', JSON.stringify(this.ProductDetails));
-    fd.append('ProductVariants', JSON.stringify(this.ProductVariants));
+    // for (var i = 0; i < this.selectedFiles.length; i++) {
+    //   fd.append("uploads[]", this.selectedFiles[i], this.selectedFiles[i].name);
+    // }
+    // fd.append('ProductDetails', JSON.stringify(this.ProductDetails));
+    // fd.append('ProductVariants', JSON.stringify(this.ProductVariants));
+
 
     this.ProductDetails.OpsMode = this.ProductDetails.ProductID > 0 ? 'UPDATE' : 'INSERT';
-    this.httpService.post('admin/SaveProductHeader', fd).subscribe((res: any) => {
+    this.httpService.post('admin/SaveProductHeader', { ProductDetails : this.ProductDetails, ProductVarient : this.ProductVariants }).subscribe((res: any) => {
       if (res.MessageType === 2) {
         this._messageservice.show('Success', res.Message);
         this.loader.hide()
