@@ -1,0 +1,54 @@
+<div class="main-header">
+    <div class="col-md-12 page-header d-flex">
+        <i class="fa-solid fa-database fa-xl" style="color: black; padding-top: 22px"></i>
+        <h6>System Param</h6>
+    </div>
+    <div class="main-content-body">
+        <div class="table-container d-flex row">
+        
+    
+                        <p-table class="custom-table">
+                            <ng-template #header>
+                                <tr class="table-tr">
+                                    <th pSortableColumn=" ">Action</th>
+                                    <th pSortableColumn="code">
+                                        Code <p-sortIcon field="code" />
+                                    </th>
+                                    <th pSortableColumn="description">
+                                        Param Value <p-sortIcon field="description" />
+                                    </th>
+                                    <th pSortableColumn="displayOrder">
+                                        Display Order <p-sortIcon field="displayOrder" />
+                                    </th>
+                                  
+                                    <th pSortableColumn="codeActicveDesc">
+                                        Status <p-sortIcon field="codeActicveDesc" />
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template #body >
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-edit fa-sm" style="color: #0d6efd; font-size: 15px"
+                                          ></i>
+                                        <i class="fa-solid fa-trash" style="color: #fa0000; padding-left: 12px"
+                                           ></i>
+                                    </td>
+                                    <td>Parm</td>
+                                    <td>Parm Parm</td>
+                                    <td [ngStyle]="{ 'text-align': 'center' }">
+                                       1
+                                    </td>
+                                    <td>red</td>
+                                    <td>
+                                        <div class="active-colour"
+                                            [ngStyle]=" {'background-color':0=== 0 ? '#ed3737' : '#29915d'} ">  #ed3737</div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>         
+            </div>
+        </div>
+    </div>
+
+

@@ -7,6 +7,7 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { ReferenceDataComponent } from './reference-data/reference-data.component';
 import { RoleAccessComponent } from './role-access/role-access.component';
 import { AddProductComponent } from './add-product/add-product.component';
+import { SystemParamComponent } from './system-param/system-param.component';
 
 const routes: Routes = [
   { path: '', component: AdminHomeComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'product-dashboard', component: ProductDashboardComponent }, // Fixed component
   { path: 'reference-data', component: ReferenceDataComponent },
   { path: 'role-access', component: RoleAccessComponent },
-  { path: 'add-products', component: AddProductComponent }
+  { path: 'add-products', component: AddProductComponent },
+  { path: 'system-parm', component: SystemParamComponent } 
 ];
 
 @NgModule({
