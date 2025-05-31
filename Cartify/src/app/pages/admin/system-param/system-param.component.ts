@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component , OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
+import { HttpClientService } from '@/app/provider/services/http-client.service';
+import { LoaderService } from '@/app/provider/services/loader.service';
 import { FormsModule } from '@angular/forms'; // Needed for [(ngModel)]
 
 @Component({
@@ -13,9 +15,30 @@ import { FormsModule } from '@angular/forms'; // Needed for [(ngModel)]
   templateUrl: './system-param.component.html',
   styleUrl: './system-param.component.css'
 })
-export class SystemParamComponent {
+export class SystemParamComponent implements OnInit {
 isEditPopupVisible = false;
+sysData: any[] = [];
 sysParmChild: any = {};
+
+// constructor(private httpClient: HttpClientService, private LoaderService: LoaderService) {
+//   this.sysParmChild = {
+//     code: '',
+//     description: '',
+//     displayOrder: 0,
+//     codeActicveDesc: '',
+//     status: 0
+//   }}
+ngOnInit() {
+    this. getParmData() 
+  }
+ getParmData() {
+    // this.LoaderService.show()
+    // this.httpClient.get<any>('admin/GetSysParm').subscribe((res) => {
+    //   this.sysData = res
+    //   this.LoaderService.hide()
+    // })
+  }
+
 
 systemParams = [
     {

@@ -137,6 +137,21 @@ class User {
       res.status(500).json({ err: "Error Occur:" + e });
     }
   };
+
+  static GetSysParm = async (req, res)=>{
+    try{
+         const request = await dataAcces.getRequest();
+
+         request.input("as_parm_code", mssql.VarChar(20),req.query.ParmCode);
+
+        const result = await request.execute("PKG_USER$p_get_sys_parm");
+        res.status(200).json(result.recordsets[0]);
+      
+    } catch (e){
+      res.status(500).json({ err: "Error Occur:" + e });
+    }
+
+  };
 }
 
 module.exports = User;
