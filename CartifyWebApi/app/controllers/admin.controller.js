@@ -1,9 +1,7 @@
 const dataAcces = require('../database/dataaccess')
-const mssql = require('mssql')
 const { handleReps } = require('./common.controller')
-const { getFilePath, getSystemParm } = require('../controllers/main.controller')
-const multer = require('multer');
-
+const MainController = require('./main.controller')
+const mssql = require('mssql')
 
 class Admin {
     static GetRole = async (req, res) => {
@@ -33,9 +31,7 @@ class Admin {
         try {
             const request = await dataAcces.getRequest()
             request.input("as_parm_code", mssql.VarChar(20), req.query.ParmCode);
-            console.log(getSystemParm('FILE_STORAGE',req))
             const result = await request.execute("PKG_SETTINGS$p_get_sys_parm");
-
             res.status(200).json(result.recordsets[0])
         } catch (e) {
             res.status(500).json({ err: "Error Occur" + e })
@@ -75,6 +71,19 @@ class Admin {
             res.status(500).json({ err: "Error Occur" + e })
         }
     }
+    static GetDocument = async (req, res) => {
+        try {
+            const request = await dataAcces.getRequest()
+            request.input('ai_key_id', mssql.BigInt, req.query.KeyId)
+            request.input('as_key_id', mssql.VarChar(10), req.query.KeyType)
+            request.input('ai_user_id', mssql.BigInt, req.LoggedUserId)
+            const result = await request.execute("PKG_BASE$p_get_document");
+            res.status(200).json(result.recordsets[0])
+
+        } catch (e) {
+            res.status(500).json({ err: "Error Occur" + e })
+        }
+    }
     static SaveRoleRight = async (req, res) => {
         try {
             const request = await dataAcces.getRequest()
@@ -92,7 +101,6 @@ class Admin {
                 )
             });
 
-            console.log(tableType)
             //add parameter and table type to procedure
             request.input('tt_role_right', tableType);
             request.input('ai_user_id', mssql.BigInt, req.LoggedUserId);
@@ -133,13 +141,11 @@ class Admin {
     }
     static SaveProductHeader = async (req, res) => {
         try {
-             const request = await dataAcces.getRequest();
-             const VariantTableType = new mssql.Table();
-            // const ProdctDetails = JSON.parse(req.body.ProductDetails);
-            // const ProductVarient = JSON.parse(req.body.ProductVariants);
-            // // const ProductImage = multer
-            const ProdctDetails = req.body.ProductDetails
-            const ProductVarient = req.body.ProductVarient
+            const request = await dataAcces.getRequest();
+            const VariantTableType = new mssql.Table();
+            const ProdctDetails = JSON.parse(req.body.ProductDetails || '{}');
+            const ProductVarient = JSON.parse(req.body.ProductVariants || '[]');
+            console.log(req.files)
 
             VariantTableType.type = 'tt_product_varient';
             VariantTableType.columns.add('VARIENT_ID', mssql.BigInt);
@@ -147,18 +153,18 @@ class Admin {
             VariantTableType.columns.add('SIZE', mssql.VarChar(20));
             VariantTableType.columns.add('PRICE', mssql.BigInt);
             VariantTableType.columns.add('STOCK_COUNT', mssql.BigInt);
- 
 
-            ProductVarient.forEach(variant => {
-                VariantTableType.rows.add(
-                    variant.VariantId,
-                    variant.Colour,
-                    variant.Size,
-                    variant.Price,
-                    variant.Stock
-                );
-            });
-
+            if (ProductVarient != undefined && ProductVarient.length > 0) {
+                ProductVarient.forEach(variant => {
+                    VariantTableType.rows.add(
+                        variant.VariantId,
+                        variant.Colour,
+                        variant.Size,
+                        variant.Price,
+                        variant.Stock
+                    );
+                });
+            }
             //add parameter and table type to procedure
             request.input('ai_product_id', mssql.BigInt, ProdctDetails.ProductID);
             request.input('ai_company_id', mssql.BigInt, 1);
@@ -180,7 +186,8 @@ class Admin {
 
             const result = await request.execute("PKG_PROD$p_save_product_header")
             const output = await handleReps(result.output);
-
+            const fileUploadRtn = await MainController.saveAttachment(req.files, result.output.p_retid, 'PRODUCT', req.LoggedUserId)
+            if (fileUploadRtn === false) return;
             res.status(200).json(output)
         } catch (error) {
             res.status(500).json({ err: "Error Occur" + error })

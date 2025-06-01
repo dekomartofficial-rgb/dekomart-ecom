@@ -26,7 +26,7 @@ class DataAccess {
       server: this.server,
       database: this.database,
       options: {
-        encrypt: true,
+        encrypt: this.env === "DEV" ? false : true,
         enableArithAbort: true,
         useUTC: true,
         parseBigIntAsNumber: true,

@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const logger = require("morgan");
 const app = express();
 const bodyParser = require('body-parser')
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 3000;
 const errorHandler = require("./app/helper/error-handler");
 const DataAccess = require("./app/database/dataaccess");
 const { convertBigIntMiddleware } = require("./app/middleware/CommonMiddleware");
@@ -32,9 +32,11 @@ app.use(customJsonParser); // Custom JSON parser to handle BigInt
 
 const userRoutes = require("./app/routers/user.router");
 const adminRoutes = require("./app/routers/admin.router");
+ 
 
 app.use("/user", userRoutes);
-app.use("/admin", adminRoutes);
+app.use("/admin", adminRoutes); 
+
 
 app.get('/', (req, res) => {
   res.send('API is running...');
