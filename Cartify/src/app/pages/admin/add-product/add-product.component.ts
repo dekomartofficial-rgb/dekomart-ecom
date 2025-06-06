@@ -74,6 +74,7 @@ export class AddProductComponent implements OnInit {
     const ProductId = history.state['productId'];
     if (ProductId ?? ProductId > 0) {
       this.getProductVariantDetails(ProductId);
+      this.getProductImage(ProductId)
     }
     this.GetRefData();
   }
@@ -87,6 +88,14 @@ export class AddProductComponent implements OnInit {
       }
     });
 
+  }
+
+  getProductImage(ProductId: number) {
+    this.loader.show()
+    this.commonService.getDocument(ProductId, 'PRODUCT').subscribe((files: any[]) => {
+      this.imagePreviews = files;
+      this.loader.hide()
+    });
   }
 
   changeImage(index: number) {
@@ -180,7 +189,7 @@ export class AddProductComponent implements OnInit {
 
           const reader = new FileReader();
           reader.onload = (e: any) => {
-            this.imagePreviews.push(e.target.result);
+            this.imagePreviews.push({ docPath: e.target.result });
           };
           reader.readAsDataURL(file);
         }
@@ -210,16 +219,14 @@ export class AddProductComponent implements OnInit {
     let fd = new FormData();
     this.loader.show()
     this.validateProductVariant();
-
-    // for (var i = 0; i < this.selectedFiles.length; i++) {
-    //   fd.append("uploads[]", this.selectedFiles[i], this.selectedFiles[i].name);
-    // }
-    // fd.append('ProductDetails', JSON.stringify(this.ProductDetails));
-    // fd.append('ProductVariants', JSON.stringify(this.ProductVariants));
-
-
     this.ProductDetails.OpsMode = this.ProductDetails.ProductID > 0 ? 'UPDATE' : 'INSERT';
-    this.httpService.post('admin/SaveProductHeader', { ProductDetails : this.ProductDetails, ProductVarient : this.ProductVariants }).subscribe((res: any) => {
+    for (var i = 0; i < this.selectedFiles.length; i++) {
+      fd.append("ProductUpload", this.selectedFiles[i], this.selectedFiles[i].name);
+    }
+    fd.append('ProductDetails', JSON.stringify(this.ProductDetails));
+    fd.append('ProductVariants', JSON.stringify(this.ProductVariants));
+
+    this.httpService.post('admin/SaveProductHeader', fd).subscribe((res: any) => {
       if (res.MessageType === 2) {
         this._messageservice.show('Success', res.Message);
         this.loader.hide()
@@ -236,6 +243,8 @@ export class AddProductComponent implements OnInit {
     this.ProductVariants = new Array<ProductVairant>();
     this.ProductImages = []
   }
+
+
 
 }
 

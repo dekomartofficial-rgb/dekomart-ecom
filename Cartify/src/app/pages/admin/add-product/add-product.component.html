@@ -147,25 +147,27 @@
                     </div>
                     <div class="upload-image-header">
                         @if (imagePreviews.length > 0) {
-                        @for (item of imagePreviews; track $index;) {
+                        @for (item of imagePreviews; track $index) {
                         @if (ClickedImage === $index) {
-                        <div class="image-container d-flex justify-content-center1">
-                            <img [src]="item" alt="Gallery Image" srcset="">Size
+                        <div class="image-container d-flex justify-content-center">
+                            <img [src]="item.docPath" alt="Gallery Image" alt="Image" />
                         </div>
                         }
                         }
+
                         <div class="image-header-2 d-flex flex-wrap gap-4 col-md-12">
                             @for (item of imagePreviews; track $index) {
-                            <div class="image-container-2" (mouseenter)="imageHover === true"
-                                (mouseleave)="imageHover === false">
-                                <img [src]="item" alt="Gallery Image" (click)="changeImage($index)" />
-                                <div class="image-overlay" *ngIf="imageHover">
+                            <div class="image-container-2">
+                                <img [src]="item.docPath" alt="Gallery Image" (click)="changeImage($index)"
+                                    alt="Image" />
+                                <div class="image-overlay" *ngIf="ClickedImage === $index">
                                     <button type="button" class="delete-button">Delete</button>
                                 </div>
                             </div>
                             }
                         </div>
-                        } @else {
+                        }
+                        @else {
                         <div class="image-container d-flex justify-content-center1"
                             style="background-color: transparent;">
                             <img src="assets/common-images/no-image-data.jpg" alt="Gallery Image" srcset="">

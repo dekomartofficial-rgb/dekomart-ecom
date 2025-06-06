@@ -57,8 +57,8 @@ export class ReferenceDataComponent implements OnInit {
     this.ActiveGroupDesc = this.GroupData.find((r) => r.GroupName === GroupData)?.GroupNameDesc 
     this.httpClient.get<any>('admin/GetRefData', { GroupName: this.ActiveGroup }).subscribe((res) => {
       this.ChildData = res
-      this.LoaderService.hide()
     })
+    this.LoaderService.hide()
   }
 
   onEdit(ChildData: any) { 

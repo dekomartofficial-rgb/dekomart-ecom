@@ -31,13 +31,13 @@ async function handleReps(response) {
                         parsedColumn = "UserId";
                         break;
                     case 'p_ret_id':
-                        parsedColumn = 'MessageId';
+                        parsedColumn = 'RetunId';
                         break;
                     case 'p_user_role':
                         parsedColumn = 'UserRole';
                         break;
                     case 'p_retid':
-                        parsedColumn = 'MessageId';
+                        parsedColumn = 'RetunId';
                         break;
                 }
 

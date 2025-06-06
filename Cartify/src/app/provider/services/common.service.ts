@@ -32,4 +32,7 @@ export class CommonService {
     return `#${(r << 16 | g << 8 | b).toString(16).padStart(6, '0')}`;
   }
 
+  getDocument(KeyId: number, KeyType: string): Observable<any> {
+    return this.http.get<any>('admin/GetDocument', { KeyId: KeyId, KeyType: KeyType })
+  }
 }
