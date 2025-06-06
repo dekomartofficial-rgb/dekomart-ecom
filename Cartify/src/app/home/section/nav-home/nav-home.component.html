@@ -1,90 +1,47 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white">
-    <div class="container">
-        <!-- Logo -->
-        <h1><a class="navbar-brand fw-bold" href="#"><span class="text-black">C</span><span
-                    class="text-danger">artify</span>
-            </a></h1>
-
-        <!-- Search Bar -->
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search for products">
-            <i class="fa fa-search search-icon"></i>
-        </div>
-
-
-        <!-- Right Side Icons -->
-        <div class="d-flex align-items-center">
-            <a class="text-dark me-3 ">
-                <button class="btn btn-primary" type="button" (click)="onLogin()">Login</button>
-            </a>
-            <a href="#" class="text-dark position-relative me-3">
-                <i class="fas fa-heart"></i>
-                <span class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle ">{{ wishlistCount }}</span>
-            </a>
-            <a href="#" class="text-dark position-relative" (click)="toggleCart()">
-                <i class="fas fa-shopping-bag"></i>
-                <span class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle ">{{cartItem.length}}</span>
-            </a>
-            <span class="mx-3">₹0</span>
-        </div>
+<!-- navbar.component.html -->
+<nav class="navbar">
+  <div class="navbar-container">
+    <!-- Logo Section -->
+    <div class="logo" routerLink="/">
+      <img src="assets/nave-bar-images/logo.png" alt="Deko Mart" class="logo-image">
     </div>
-    <app-add-to-cart *ngIf="showCart" (closeCart)="CloseCart()" [cartItems]="cartItem" ></app-add-to-cart>
+
+    <!-- Main Navigation Links -->
+    <div class="main-links">
+      <a *ngFor="let link of mainNavLinks" 
+         [routerLink]="link.path"
+         routerLinkActive="active">
+        {{ link.label }}
+      </a>
+    </div>
+
+    <!-- Action Icons -->
+    <div class="action-icons">
+      <button class="icon-button" aria-label="Search">
+        <i class="pi pi-search"></i>
+      </button>
+      <button class="icon-button" aria-label="Wishlist">
+        <i class="pi pi-heart"></i>
+      </button>
+      <button class="icon-button" aria-label="Account" (click)="onLogin()">
+        <i class="pi pi-user"></i>
+      </button>
+      <button class="icon-button" aria-label="Cart">
+        <i class="pi pi-shopping-cart"></i>
+        <span class="cart-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Category Navigation with Images -->
+  <div class="category-nav">
+    <div *ngFor="let category of categories" class="category-item">
+      <a [routerLink]="category.path" class="category-link">
+        <img [src]="'assets/nave-bar-images/' + category.image" 
+             [alt]="category.label" 
+             class="category-image">
+        <span class="category-label">{{ category.label }}</span>
+      </a>
+    </div>
+  </div>
 </nav>
-
-<!-- Categories -->
-<div class="navbar navbar-expand-lg bg-dark">
-    <div class="container">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link text-white" href="#">Paintings</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-white" href="#" id="interiorDropdown" role="button"
-                    data-bs-toggle="dropdown">
-                    Interior
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Decor Items</a></li>
-                    <li><a class="dropdown-item" href="#">Lighting</a></li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="#">Photo Frames</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="#">Mirrors</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white position-relative" href="#">
-                    Wallpapers <span class="badge bg-danger">POPULAR</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white position-relative" href="#">
-                    Lounge Chairs <span class="badge bg-danger">HOT</span>
-                </a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link text-white" href="#">Metal Art</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link text-white" href="#">Furniture</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link text-white" href="#">Wall Art</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link text-white" href="#">Clock</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <a class="nav-link text-white position-relative" href="#">
-                    Buy Bulk <span class="badge bg-danger">30% OFF</span>
-                </a>
-            </li>
-        </ul>
-        
-    </div>
-    
-</div>

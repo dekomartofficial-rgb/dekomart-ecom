@@ -1,213 +1,495 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
 import { CommonModule } from '@angular/common';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-gallery-home',
-  imports: [CarouselModule, CommonModule],
+  imports: [CarouselModule, CommonModule, DialogModule, ButtonModule, CardModule],
   templateUrl: './gallery-home.component.html',
-  styleUrl: './gallery-home.component.css'
+  styleUrl: './gallery-home.component.css',
 })
-export class GalleryHomeComponent implements OnInit {
+export class GalleryHomeComponent implements OnInit, AfterViewInit {
+
+  constructor(private router: Router) { }
+
+  @ViewChild('reelVideo') reelVideoRef!: ElementRef<HTMLVideoElement>;
+  @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
+
+
+  currentPage = 0;
+  productsPerPage = 4;
+  selectedProduct: any;
+  selectedVariant: any;
+  productCardWidth = 180;
+  isPaused: boolean = false;
+  selectedSize: string = '';
+  displayModal: boolean = false;
+  displayDialog: boolean = false;
+  filter: string = 'BEST SELLER';
+  sizes = ['S - 38', 'M - 40', 'L - 42', 'XL - 44', '2XL - 46'];
 
   @Output() wishlistUpdated = new EventEmitter<number>()
   @Output() addToCartUpdated = new EventEmitter<any[]>()
   wishlistedItems = new Set<number>();
   cartItems = new Set<number>();
 
-
-  imageCircle = [
-    { name: 'Metal Wall Art', image: 'assets/landing-page-images/metal-wall.jpg' },
-    { name: 'Designer Shelves', image: 'assets/landing-page-images/shelves.jpg' },
-    { name: 'Wall Clocks', image: 'assets/landing-page-images/home-round1.jpg' },
-    { name: 'Designer Tables', image: 'assets/landing-page-images/table-round.jpg' },
-    { name: 'Photo Frame Sets', image: 'assets/landing-page-images/photo-frame.jpg' },
-    { name: 'Wallpaper', image: 'assets/landing-page-images/wallpaper.jpg' },
-    { name: 'Temples', image: 'assets/landing-page-images/temple.jpg' },
+  variants = [
+    { id: 1, color: 'Grey', image: 'assets/grey-variant.jpg' },
+    { id: 2, color: 'Black', image: 'assets/black-variant.jpg' },
+    { id: 3, color: 'Blue', image: 'assets/blue-variant.jpg' }
   ];
 
-  productvdio = [
-    { video: 'assets/landing-page-images/hsv-temple.mp4' },
-    { video: 'assets/landing-page-images/hmetal-art.mp4' },
-    { video: 'assets/landing-page-images/hv-shelves.mp4' },
-    { video: 'assets/landing-page-images/hv-clock.mp4' },
-    { video: 'assets/landing-page-images/hv-table.mp4' },
-    { video: 'assets/landing-page-images/hv-temple.mp4' },
-  ];
-
-  bestSelling = [
+  listingProducts = [
     {
-      name: 'Luxury Wall Clock',
-      image: 'assets/landing-page-images/home-round1.jpg',
-      description: 'Premium wooden clock',
-      originalPrice: 2999,
-      offerPrice: 2499,
-      wishlisted: false,
-      addToCart: false,
+      image: 'assets/landing-page-images/carpet.png',
+      title: 'Carpet',
+      brand: 'Lujo',
+      price: 2599,
+      tag: 'BEST SELLER',
+      isWishlisted: false,
     },
     {
-      name: 'Modern Art Painting',
-      image: 'assets/landing-page-images/photo-frame.jpg',
-      description: 'Canvas painting for home',
-      originalPrice: 4499,
-      offerPrice: 3999,
-      wishlisted: false,
-      addToCart: false
+      image: 'assets/landing-page-images/indian-blue-pottery-rug.png',
+      title: 'Indian Blue Pottery Rug',
+      brand: 'Lujo',
+      price: 2599,
+      tag: 'BEST SELLER',
+      isWishlisted: false,
     },
     {
-      name: 'Wooden Wall Shelf',
-      image: 'assets/landing-page-images/shelves.jpg',
-      description: 'Stylish wooden shelf',
-      originalPrice: 1999,
-      offerPrice: 1499,
-      wishlisted: false,
-      addToCart: false
+      image: 'assets/landing-page-images/minimalist-wooden-altar.png',
+      title: 'Mininalist Wooden Altar',
+      brand: 'Lujo',
+      price: 2799,
+      tag: 'BEST SELLER',
+      isWishlisted: true,
     },
     {
-      name: 'Designer Lamp',
-      image: 'assets/landing-page-images/metal-wall.jpg',
-      description: 'Ambient LED lamp',
-      originalPrice: 1299,
-      offerPrice: 999,
-      wishlisted: false,
-      addToCart: false
+      image: 'assets/landing-page-images/office-sofa-set.png',
+      title: 'Office Sofa Set',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
     },
     {
-      name: 'Vintage Mirror',
-      image: 'assets/landing-page-images/wallpaper.jpg',
-      description: 'Classic wall mirror',
-      originalPrice: 3499,
-      offerPrice: 2799,
-      wishlisted: false,
-      addToCart: false
+      image: 'assets/landing-page-images/parametric-wood-wall.png',
+      title: 'Parametric Wood Wall',
+      brand: 'Lujo',
+      price: 2799,
+      tag: 'BEST SELLER',
+      isWishlisted: true,
     },
     {
-      name: 'Wooden Wall Shelf',
-      image: 'assets/landing-page-images/shelves.jpg',
-      description: 'Stylish wooden shelf',
-      originalPrice: 1999,
-      offerPrice: 1499,
-      wishlisted: false,
-      addToCart: false
+      image: 'assets/landing-page-images/photo-border.png',
+      title: 'Photo Border',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
     },
     {
-      name: 'Luxury Wall Clock',
-      image: 'assets/landing-page-images/home-round1.jpg',
-      description: 'Premium wooden clock',
-      originalPrice: 2999,
-      offerPrice: 2499,
-      wishlisted: false,
-      addToCart: false
+      image: 'assets/landing-page-images/photo-frame.png',
+      title: 'Photo Frame',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
     },
     {
-      name: 'Modern Art Painting',
-      image: 'assets/landing-page-images/photo-frame.jpg',
-      description: 'Canvas painting for home',
-      originalPrice: 4499,
-      offerPrice: 3999,
-      wishlisted: false,
-      addToCart: false
-
-    },
-  ];
-
-  canvasPaintings = [
-    {
-      name: 'Luxury Wall Clock',
-      image: 'assets/landing-page-images/home-round1.jpg',
-      description: 'Premium wooden clock',
-      originalPrice: 2999,
-      offerPrice: 2499,
+      image: 'assets/landing-page-images/sustainable-carry-bags.png',
+      title: 'Sustainable Carry Bags',
+      brand: 'Lujo',
+      price: 2799,
+      tag: 'BEST SELLER',
+      isWishlisted: true,
     },
     {
-      name: 'Modern Art Painting',
-      image: 'assets/landing-page-images/photo-frame.jpg',
-      description: 'Canvas painting for home',
-      originalPrice: 4499,
-      offerPrice: 3999,
+      image: 'assets/landing-page-images/T-shirt.png',
+      title: 'Black Printed T-Shirt',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
     },
     {
-      name: 'Wooden Wall Shelf',
-      image: 'assets/landing-page-images/shelves.jpg',
-      description: 'Stylish wooden shelf',
-      originalPrice: 1999,
-      offerPrice: 1499,
+      image: 'assets/landing-page-images/carpet.png',
+      title: 'Carpet',
+      brand: 'Lujo',
+      price: 2599,
+      tag: 'BEST SELLER',
+      isWishlisted: false,
     },
     {
-      name: 'Designer Lamp',
-      image: 'assets/landing-page-images/metal-wall.jpg',
-      description: 'Ambient LED lamp',
-      originalPrice: 1299,
-      offerPrice: 999,
-    }
-  ];
-  loungeChairs = [
-    {
-      name: 'Luxury Wall Clock',
-      image: 'assets/landing-page-images/home-round1.jpg',
-      description: 'Premium wooden clock',
-      originalPrice: 2999,
-      offerPrice: 2499,
+      image: 'assets/landing-page-images/indian-blue-pottery-rug.png',
+      title: 'Indian Blue Pottery Rug',
+      brand: 'Lujo',
+      price: 2599,
+      tag: 'BEST SELLER',
+      isWishlisted: false,
     },
     {
-      name: 'Modern Art Painting',
-      image: 'assets/landing-page-images/photo-frame.jpg',
-      description: 'Canvas painting for home',
-      originalPrice: 4499,
-      offerPrice: 3999,
+      image: 'assets/landing-page-images/minimalist-wooden-altar.png',
+      title: 'Mininalist Wooden Altar',
+      brand: 'Lujo',
+      price: 2799,
+      tag: 'BEST SELLER',
+      isWishlisted: true,
     },
     {
-      name: 'Wooden Wall Shelf',
-      image: 'assets/landing-page-images/shelves.jpg',
-      description: 'Stylish wooden shelf',
-      originalPrice: 1999,
-      offerPrice: 1499,
+      image: 'assets/landing-page-images/office-sofa-set.png',
+      title: 'Office Sofa Set',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
     },
     {
-      name: 'Designer Lamp',
-      image: 'assets/landing-page-images/metal-wall.jpg',
-      description: 'Ambient LED lamp',
-      originalPrice: 1299,
-      offerPrice: 999,
-    }
+      image: 'assets/landing-page-images/parametric-wood-wall.png',
+      title: 'Parametric Wood Wall',
+      brand: 'Lujo',
+      price: 2799,
+      tag: 'BEST SELLER',
+      isWishlisted: true,
+    },
+    {
+      image: 'assets/landing-page-images/photo-border.png',
+      title: 'Photo Border',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
+    },
+    {
+      image: 'assets/landing-page-images/photo-frame.png',
+      title: 'Photo Frame',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
+    },
+    {
+      image: 'assets/landing-page-images/sustainable-carry-bags.png',
+      title: 'Sustainable Carry Bags',
+      brand: 'Lujo',
+      price: 2799,
+      tag: 'BEST SELLER',
+      isWishlisted: true,
+    },
+    {
+      image: 'assets/landing-page-images/T-shirt.png',
+      title: 'Black Printed T-Shirt',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
+    },
   ];
 
   sections = [
+  {
+    header: 'FEATURED COLLECTION',
+    subheader: 'CASUAL',
+    products: [
     {
-      title: 'Best Selling',
-      items: this.bestSelling
+      image: 'assets/landing-page-images/carpet.png',
+      title: 'Carpet',
+      brand: 'Lujo',
+      price: 2599,
+      tag: 'BEST SELLER',
+      isWishlisted: false,
     },
     {
-      title: 'Canvas Paintings',
-      items: this.canvasPaintings
+      image: 'assets/landing-page-images/indian-blue-pottery-rug.png',
+      title: 'Indian Blue Pottery Rug',
+      brand: 'Lujo',
+      price: 2599,
+      tag: 'BEST SELLER',
+      isWishlisted: false,
     },
     {
-      title: 'Lounge Chairs',
-      items: this.loungeChairs
-    }
-  ];
+      image: 'assets/landing-page-images/minimalist-wooden-altar.png',
+      title: 'Mininalist Wooden Altar',
+      brand: 'Lujo',
+      price: 2799,
+      tag: 'BEST SELLER',
+      isWishlisted: true,
+    },
+    {
+      image: 'assets/landing-page-images/office-sofa-set.png',
+      title: 'Office Sofa Set',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
+    },
+    {
+      image: 'assets/landing-page-images/parametric-wood-wall.png',
+      title: 'Parametric Wood Wall',
+      brand: 'Lujo',
+      price: 2799,
+      tag: 'BEST SELLER',
+      isWishlisted: true,
+    },
+    {
+      image: 'assets/landing-page-images/photo-border.png',
+      title: 'Photo Border',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
+    },
+    {
+      image: 'assets/landing-page-images/photo-frame.png',
+      title: 'Photo Frame',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
+    },
+    {
+      image: 'assets/landing-page-images/sustainable-carry-bags.png',
+      title: 'Sustainable Carry Bags',
+      brand: 'Lujo',
+      price: 2799,
+      tag: 'BEST SELLER',
+      isWishlisted: true,
+    },
+    {
+      image: 'assets/landing-page-images/T-shirt.png',
+      title: 'Black Printed T-Shirt',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
+    },
+    ]
+  },
+  {
+    header: 'SUMMER SPECIAL',
+    subheader: 'BEACHWEAR',
+    products: [
+    {
+      image: 'assets/landing-page-images/carpet.png',
+      title: 'Carpet',
+      brand: 'Lujo',
+      price: 2599,
+      tag: 'BEST SELLER',
+      isWishlisted: false,
+    },
+    {
+      image: 'assets/landing-page-images/indian-blue-pottery-rug.png',
+      title: 'Indian Blue Pottery Rug',
+      brand: 'Lujo',
+      price: 2599,
+      tag: 'BEST SELLER',
+      isWishlisted: false,
+    },
+    {
+      image: 'assets/landing-page-images/minimalist-wooden-altar.png',
+      title: 'Mininalist Wooden Altar',
+      brand: 'Lujo',
+      price: 2799,
+      tag: 'BEST SELLER',
+      isWishlisted: true,
+    },
+    {
+      image: 'assets/landing-page-images/office-sofa-set.png',
+      title: 'Office Sofa Set',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
+    },
+    {
+      image: 'assets/landing-page-images/parametric-wood-wall.png',
+      title: 'Parametric Wood Wall',
+      brand: 'Lujo',
+      price: 2799,
+      tag: 'BEST SELLER',
+      isWishlisted: true,
+    },
+    {
+      image: 'assets/landing-page-images/photo-border.png',
+      title: 'Photo Border',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
+    },
+    {
+      image: 'assets/landing-page-images/photo-frame.png',
+      title: 'Photo Frame',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
+    },
+    {
+      image: 'assets/landing-page-images/sustainable-carry-bags.png',
+      title: 'Sustainable Carry Bags',
+      brand: 'Lujo',
+      price: 2799,
+      tag: 'BEST SELLER',
+      isWishlisted: true,
+    },
+    {
+      image: 'assets/landing-page-images/T-shirt.png',
+      title: 'Black Printed T-Shirt',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
+    },
+    ]
+  },
+   {
+    header: 'SUMMER SPECIAL',
+    subheader: 'BEACHWEAR',
+    products: [
+    {
+      image: 'assets/landing-page-images/carpet.png',
+      title: 'Carpet',
+      brand: 'Lujo',
+      price: 2599,
+      tag: 'BEST SELLER',
+      isWishlisted: false,
+    },
+    {
+      image: 'assets/landing-page-images/indian-blue-pottery-rug.png',
+      title: 'Indian Blue Pottery Rug',
+      brand: 'Lujo',
+      price: 2599,
+      tag: 'BEST SELLER',
+      isWishlisted: false,
+    },
+    {
+      image: 'assets/landing-page-images/minimalist-wooden-altar.png',
+      title: 'Mininalist Wooden Altar',
+      brand: 'Lujo',
+      price: 2799,
+      tag: 'BEST SELLER',
+      isWishlisted: true,
+    },
+    {
+      image: 'assets/landing-page-images/office-sofa-set.png',
+      title: 'Office Sofa Set',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
+    },
+    {
+      image: 'assets/landing-page-images/parametric-wood-wall.png',
+      title: 'Parametric Wood Wall',
+      brand: 'Lujo',
+      price: 2799,
+      tag: 'BEST SELLER',
+      isWishlisted: true,
+    },
+    {
+      image: 'assets/landing-page-images/photo-border.png',
+      title: 'Photo Border',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
+    },
+    {
+      image: 'assets/landing-page-images/photo-frame.png',
+      title: 'Photo Frame',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
+    },
+    {
+      image: 'assets/landing-page-images/sustainable-carry-bags.png',
+      title: 'Sustainable Carry Bags',
+      brand: 'Lujo',
+      price: 2799,
+      tag: 'BEST SELLER',
+      isWishlisted: true,
+    },
+    {
+      image: 'assets/landing-page-images/T-shirt.png',
+      title: 'Black Printed T-Shirt',
+      brand: 'Saddy',
+      price: 2599,
+      tag: 'NEW ARRIVAL',
+      isWishlisted: false,
+    },
+    ]
+  }
+  // more sections...
+];
 
+  ngOnInit(): void {
 
-  getDiscount(original: number, offer: number): number {
-    return Math.round(((original - offer) / original) * 100);
   }
 
-  toggleWishlist(item: any) {
-    if (this.wishlistedItems.has(item.id)) {
-      this.wishlistedItems.delete(item.id);
+  ngAfterViewInit() {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const video = this.reelVideoRef.nativeElement;
+        if (entry.isIntersecting) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.8 });
+
+    observer.observe(this.reelVideoRef.nativeElement);
+  }
+
+  togglePlay() {
+    const video = this.reelVideoRef.nativeElement;
+    if (video.paused) {
+      video.play();
+      this.isPaused = false;
     } else {
-      this.wishlistedItems.add(item.id);
+      video.pause();
+      this.displayModal = true;
+      this.isPaused = true;
     }
   }
 
-  toggleAddToCart(item: any) {
-    if (this.cartItems.has(item.id)) {
-      this.cartItems.delete(item.id);
-    } else {
-      this.cartItems.add(item.id);
-    }
+  openModal() {
+    this.displayModal = true;
   }
+
+  closeModel() {
+    this.displayDialog = false;
+    this.displayModal = false;
+  }
+
+  get filteredProducts() {
+    return this.listingProducts.filter((p) => p.tag === this.filter);
+  }
+
+  scrollLeft(section: any) {
+    this.scrollContainer.nativeElement.scrollBy({
+      left: -300, // Adjust scroll amount as needed
+      behavior: 'smooth'
+    });
+  }
+
+  scrollRight(section: any) {
+    this.scrollContainer.nativeElement.scrollBy({
+      left: 300, // Adjust scroll amount as needed
+      behavior: 'smooth'
+    });
+  }
+
+  goToProductListing() {
+  return this.router.navigateByUrl('/user/product-listing');
+}
 
   isWishlisted(item: any): boolean {
     return this.wishlistedItems.has(item.id);
@@ -217,7 +499,28 @@ export class GalleryHomeComponent implements OnInit {
     return this.cartItems.has(item.id);
   }
 
+  toggleWishlist(product: any) {
+    product.isWishlisted = !product.isWishlisted;
+    // Add your wishlist logic here
+  }
 
+  addToCart(product: any) {
+    // Add your cart logic here
+    console.log('Added to cart:', product);
+  }
 
-  ngOnInit() { }
+  showProductDetails(product: any) {
+    this.selectedProduct = this.listingProducts[0];
+    console.log('Selected Product:', this.selectedProduct);
+    this.displayDialog = true;
+    this.selectedSize = '40- M';
+  }
+
+  selectSize(size: string) {
+    this.selectedSize = size;
+  }
+
+  selectVariant(variant: any) {
+    this.selectedVariant = variant;
+  }
 }

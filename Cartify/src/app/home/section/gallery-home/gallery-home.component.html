@@ -1,56 +1,225 @@
-<div class="container-fluid px-0">
+<div class="reel-container" (click)="togglePlay()">
+  <video #reelVideo [muted]="true" [playsInline]="true" loop class="reel-video"
+    poster="assets/landing-page-images/banner1.jpg">
+    <source src="assets/videos/sample-video.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
 
-  <!-- ======= Image Circle Carousel ======= -->
-  <div class="px-3 px-md-5">
-    <p-carousel [value]="imageCircle" [numVisible]="5" [numScroll]="1" [circular]="true" [autoplayInterval]="3000"
-      [showNavigators]="false" [showIndicators]="false">
-      <ng-template let-item pTemplate="item">
-        <div class="text-center circle-image">
-          <img [src]="item.image" [alt]="item.name" class="gallery-img" />
-          <p class="mt-2">{{ item.name }}</p>
-        </div>
-      </ng-template>
-    </p-carousel>
+  <div class="overlay-icons">
+    <i class="pi pi-heart"></i>
+    <i class="pi pi-share-alt"></i>
   </div>
+</div>
 
-  <!-- ======= Section Template Start ======= -->
-  <div class="section" *ngFor="let section of sections">
-    <div class="d-flex justify-content-between align-items-center px-3 px-md-5 pt-5">
-      <h2 class="section-title">{{ section.title }}</h2>
-      <a href="#" class="btn view-all-btn">View All</a>
+<p-dialog [(visible)]="displayModal" [modal]="true" [style]="{ width: '80vw', height: '80vh' }" [draggable]="false"
+  [closable]="true" [dismissableMask]="true" [contentStyle]="{ padding: '3' }">
+  <div class="dialog-content">
+    <!-- Close Button -->
+    <button class="close-btn" (click)="closeModel()">
+      <i class="pi pi-times"></i>
+    </button>
+    <div class="left-video">
+      <video src="assets/videos/sample-video.mp4" autoplay muted loop controls></video>
     </div>
 
-    <div class="row gx-4 gy-4 px-3 px-md-5">
-      <div class="col-12 col-md-6 col-lg-3" *ngFor="let item of section.items">
-        <div class="card product-card shadow-sm rounded-0 border-0 h-100 d-flex flex-column">
-          <div class="position-relative">
-            <img [src]="item.image" [alt]="item.name" class="product-image rounded-top-0" />
-          </div>
-          <div class="card-body">
-            <h5 class="card-title fw-semibold mb-1">{{ item.name }}</h5>
-            <p class="card-text text-muted small mb-2">{{ item.description }}</p>
-            <p class="price mb-2">
-              <span class="original-price text-muted text-decoration-line-through me-2">₹{{ item.originalPrice }}</span>
-              <span class="offer-price fw-bold text-dark">₹{{ item.offerPrice }}</span>
-              <span class="discount text-success">({{ getDiscount(item.originalPrice, item.offerPrice) }}% OFF)</span>
-            </p>
-          </div>
-          <div class="product-actions d-flex justify-content-center gap-3 mt-2">
-            <!-- Wishlist Button -->
-            <button class="action-btn wishlist" [class.active]="isWishlisted(item)" (click)="toggleWishlist(item)">
-              <i [ngClass]="isWishlisted(item) ? 'fas fa-heart' : 'far fa-heart'"></i>
-            </button>
-
-            <!-- Cart Button -->
-            <button class="action-btn cart" [class.active]="isInCart(item)" (click)="toggleAddToCart(item)">
-              <i class="fas fa-shopping-cart"></i>
-            </button>
-
-          </div>
+    <div class="right-products">
+      <div class="video-product-card" *ngFor="let product of listingProducts">
+        <img [src]="product.image" />
+        <div>
+          <h4>{{ product.title }}</h4>
+          <p>₹{{ product.price }}</p>
+          <button pButton type="button" label="View Details"></button>
         </div>
       </div>
     </div>
   </div>
-  <!-- ======= Section Template End ======= -->
+</p-dialog>
 
+<div class="product-filter-container">
+  <div class="filter-tabs">
+    <span class="filter-tab" [class.active]="filter === 'BEST SELLER'" (click)="filter = 'BEST SELLER'">
+      BESTSELLERS
+    </span>
+    <span class="filter-tab" [class.active]="filter === 'NEW ARRIVAL'" (click)="filter = 'NEW ARRIVAL'">
+      THIS IS NEW
+    </span>
+  </div>
+
+  <div class="product-grid">
+    <div class="product-card" *ngFor="let product of filteredProducts | slice:0:8">
+      <div class="product-image-container">
+        <img [src]="product.image" [alt]="product.title" class="product-image">
+        <div class="top-row">
+          <span *ngIf="product.tag" class="product-badge">{{product.tag}}</span>
+        </div>
+        <div class="bottem-row">
+          <i class="pi pi-plus add-icon" (click)="showProductDetails(product)"></i>
+        </div>
+      </div>
+      <h3 class="product-title">{{product.title}}</h3>
+      <p class="product-price">¥ {{product.price | number}}</p>
+    </div>
+  </div>
+
+  <p-dialog [(visible)]="displayDialog" [modal]="true" [style]="{ width: '800px' }" [contentStyle]="{ padding: '0' }">
+    <div class="product-dialog" *ngIf="selectedProduct">
+      <!-- Close Button -->
+      <button class="close-btn" (click)="closeModel()">
+        <i class="pi pi-times"></i>
+      </button>
+      <div class="dialog-container">
+        <!-- Left Column - Main Image -->
+        <div class="left-column">
+          <div class="main-image">
+            <img [src]="selectedVariant?.image || selectedProduct.image" [alt]="selectedProduct.title">
+          </div>
+          <div class="variant-thumbnails">
+            <div *ngFor="let variant of variants" class="variant-thumbnail"
+              [class.active]="variant.id === selectedVariant?.id" (click)="selectVariant(variant)">
+              <img [src]="variant.image" [alt]="variant.color">
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column - Product Details -->
+        <div class="right-column">
+          <h2>{{selectedProduct.title}}</h2>
+
+          <div class="rating">
+            <span class="stars">★★★★★</span>
+            <span class="rating-count">30 reviews</span>
+          </div>
+
+          <div class="price">¥1,299</div>
+          <div class="category">Polo & Shins</div>
+
+          <!-- Size Chart -->
+          <div class="size-section">
+            <h3>Size</h3>
+            <div class="size-chart">
+              <div *ngFor="let size of sizes" class="size-option" [class.selected]="selectedSize === size"
+                (click)="selectSize(size)">
+                {{size}}
+              </div>
+            </div>
+            <a href="#" class="size-guide">Size Guide</a>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Action Buttons -->
+          <div class="actions">
+            <button pButton label="Add to Cart" class="add-to-cart"></button>
+            <button pButton label="Buy Now" class="buy-now"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-dialog>
+
+  <div class="view-all">
+    <button class="view-all-btn">VIEW ALL</button>
+  </div>
+
+  <div *ngFor="let section of sections" class="section-container">
+    <!-- Dynamic Section Header -->
+    <div class="section-header">
+      <div class="header-content">
+        <span class="featured-text">{{section.header}}</span>
+        <span class="divider" *ngIf="section.subheader">/</span>
+        <span class="category-text">{{section.subheader}}</span>
+      </div>
+    </div>
+
+    <!-- Product Scroll Container for this section -->
+    <div class="product-scroll-container">
+      <button class="scroll-button left" (click)="scrollLeft(section)">
+        <i class="pi pi-chevron-left"></i>
+      </button>
+
+      <div class="product-scroll-wrapper" #scrollContainer>
+        <div class="product-container-card">
+          <div class="product-container" *ngFor="let product of section.products"
+            [class.enable-hover]="section.products.length >= 5">
+            <div class="product-image-container">
+              <img [src]="product.image" [alt]="product.title" class="product-image">
+              <div class="top-row">
+                <span *ngIf="product.tag" class="product-badge">{{product.tag}}</span>
+              </div>
+              <div class="bottom-row">
+                <i class="pi pi-plus add-icon" (click)="showProductDetails(product)"></i>
+              </div>
+            </div>
+            <h3 class="product-title">{{product.title}}</h3>
+            <p class="product-price">¥ {{product.price | number}}</p>
+          </div>
+        </div>
+      </div>
+
+      <button class="scroll-button right" (click)="scrollRight(section)">
+        <i class="pi pi-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+  <!-- </div> -->
+
+  <p-dialog [(visible)]="displayDialog" [modal]="true" [style]="{ width: '800px' }" [contentStyle]="{ padding: '0' }">
+    <div class="product-dialog" *ngIf="selectedProduct">
+      <!-- Close Button -->
+      <button class="close-btn" (click)="closeModel()">
+        <i class="pi pi-times"></i>
+      </button>
+      <div class="dialog-container">
+        <!-- Left Column - Main Image -->
+        <div class="left-column">
+          <div class="main-image">
+            <img [src]="selectedVariant?.image || selectedProduct.image" [alt]="selectedProduct.title">
+          </div>
+          <div class="variant-thumbnails">
+            <div *ngFor="let variant of variants" class="variant-thumbnail"
+              [class.active]="variant.id === selectedVariant?.id" (click)="selectVariant(variant)">
+              <img [src]="variant.image" [alt]="variant.color">
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column - Product Details -->
+        <div class="right-column">
+          <h2>{{selectedProduct.title}}</h2>
+
+          <div class="rating">
+            <span class="stars">★★★★★</span>
+            <span class="rating-count">30 reviews</span>
+          </div>
+
+          <div class="price">¥1,299</div>
+          <div class="category">Polo & Shins</div>
+
+          <!-- Size Chart -->
+          <div class="size-section">
+            <h3>Size</h3>
+            <div class="size-chart">
+              <div *ngFor="let size of sizes" class="size-option" [class.selected]="selectedSize === size"
+                (click)="selectSize(size)">
+                {{size}}
+              </div>
+            </div>
+            <a href="#" class="size-guide">Size Guide</a>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Action Buttons -->
+          <div class="actions">
+            <button pButton label="Add to Cart" class="add-to-cart"></button>
+            <button pButton label="Buy Now" class="buy-now" (click)="goToProductListing()"></button>>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-dialog>
+
+  <div class="view-all">
+    <button class="view-all-btn">VIEW ALL</button>
+  </div>
 </div>
