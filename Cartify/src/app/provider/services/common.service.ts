@@ -32,7 +32,24 @@ export class CommonService {
     return `#${(r << 16 | g << 8 | b).toString(16).padStart(6, '0')}`;
   }
 
-  getDocument(KeyId: number, KeyType: string): Observable<any> {
-    return this.http.get<any>('admin/GetDocument', { KeyId: KeyId, KeyType: KeyType })
+  getDocument(KeyId: number, KeyType: string): Promise<any[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get<any[]>('admin/GetDocument', { KeyId: KeyId, KeyType: KeyType }).subscribe({
+        next: (response) => {
+          const baseUrl = 'http://localhost:3000/';
+          const updatedDocs = response.map(doc => {
+            if (doc.docPath && !doc.docPath.startsWith('http')) {
+              doc.docPath = baseUrl + doc.docPath;
+            }
+            return doc;
+          });
+          resolve(updatedDocs);
+        },
+        error: (error) => reject(error)
+      });
+    });
   }
+
+
+
 }

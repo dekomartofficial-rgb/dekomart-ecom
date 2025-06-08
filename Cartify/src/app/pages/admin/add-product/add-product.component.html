@@ -4,19 +4,27 @@
             <i class="fa-solid fa-shop fa-xl pt-3"></i>
             <h6>Add New Product</h6>
         </div>
-        <div class="comp-page-header-name d-flex p-2 gap-1">
-            <div class="add-product-details gap-2 align-items-center d-flex">
-                <button type="button" class="btn button-style save-button" (click)="saveProductDetails()"><i
-                        class="fa-solid fa-floppy-disk gap-2 p-1"></i>Save</button>
-            </div>
-            <div class="add-product-details gap-2 align-items-center d-flex">
-                <button type="button" class="btn button-style reset-button" (click)="resetProdct()"><i
-                        class="fa-solid fa-rotate-left"></i>Reset</button>
-            </div>
-        </div>
     </div>
     <div class="main-body">
-        <form #ProductDetailsForm="ngForm">
+        <form (ngSubmit)="saveProductDetails()" #AddProductForm="ngForm">
+            <div class="comp-page-header-name d-flex p-3 gap-2 align-items-center justify-content-end">
+                <div class="add-product-details d-flex gap-2 align-items-center">
+                    <button type="submit" class="btn custom-button save-button" [disabled]="AddProductForm.invalid">
+                        <i class="fa-solid fa-floppy-disk me-2"></i>Save
+                    </button>
+                </div>
+                <div class="add-product-details d-flex gap-2 align-items-center">
+                    <button type="button" class="btn custom-button delete-button" [disabled]="AddProductForm.invalid"
+                        (click)="deleteProduct()">
+                        <i class="fa-solid fa-trash me-2"></i>Delete
+                    </button>
+                </div>
+                <div class="add-product-details d-flex gap-2 align-items-center">
+                    <button type="button" class="btn custom-button reset-button" (click)="resetProdct()">
+                        <i class="fa-solid fa-rotate-left me-2"></i>Reset
+                    </button>
+                </div>
+            </div>
             <div class="col-md-12 d-flex gap-2">
                 <div class="add-product-body d-flex gap-md-2 mt-1 col-md-7 ">
                     <div class="general-info-div col-md-12">
@@ -28,31 +36,31 @@
                             }
                         </div>
                         <div class="col-md-12 name-product">
-                            <h5>Name Product</h5>
+                            <h5>Name Product <span class="required">*</span></h5>
                             <div class="card flex justify-center">
                                 <input type="text" pInputText type="text" [(ngModel)]="ProductDetails.ProductName"
                                     id="ProductName" style="border-style: none;border-radius: 6px;" name="ProductName"
                                     #ProductName="ngModel" required />
-                            </div>
-                            <div *ngIf="ProductName.invalid && ProductName.touched" class="required-field">
-                                <small *ngIf="ProductName.errors?.['required']">Code required.</small>
+                                <div *ngIf="ProductName.invalid && ProductName.touched" class="required-field">
+                                    <small *ngIf="ProductName.errors?.['required']">Product Name required.</small>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-12 description-product">
-                            <h5>Desription Product</h5>
+                            <h5>Description Product <span class="required">*</span></h5>
                             <div class="card flex justify-center">
                                 <textarea rows="13" cols="30" pTextarea [autoResize]="true" name="ProductDesc"
-                                    [(ngModel)]="ProductDetails.ProductDesc" #ProductDesc="ngModel"></textarea>
-                            </div>
-                            <div *ngIf="ProductDesc.invalid && ProductDesc.touched" class="required-field">
-                                <small *ngIf="ProductDesc.errors?.['required']">Code required.</small>
+                                    [(ngModel)]="ProductDetails.ProductDesc" #ProductDesc="ngModel" required></textarea>
+                                <div *ngIf="ProductDesc.invalid && ProductDesc.touched" class="required-field">
+                                    <small *ngIf="ProductDesc.errors?.['required']">Product Description required.</small>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-12 d-flex product-size-gender-div">
                             <div class="col-md-6 product-size">
                                 <h5>Size</h5>
                                 <p class="p-div" style="font-size: 11px; color: #716a6a; margin: -5px 0px 0px 0px;">Pick
-                                    Avaliable Size</p>
+                                    Avaliable Size <span class="required">*</span></p>
                                 <div class="size-picker">
                                     <div class="size-option" *ngFor="let Size of ClothingSize"
                                         (click)="selectProductSize(Size.code)"
@@ -61,13 +69,11 @@
                                         {{Size.code}}
                                     </div>
                                 </div>
-
-
                             </div>
                             <div class="col-md-6 product-gender">
-                                <h5>Gender</h5>
+                                <h5>Gender </h5>
                                 <p class="p-div" style="font-size: 11px; color: #716a6a; margin: -5px 0px 0px 0px;">Pick
-                                    Avaliable Gender</p>
+                                    Avaliable Gender<span class="required">*</span></p>
                                 <div class="card flex justify-center">
                                     <div class="flex flex-wrap gap-4 d-flex"
                                         style="padding: 17px; background-color: #f8f8f8;">
@@ -89,7 +95,7 @@
                                     <h2>Pricing And Stock</h2>
                                     <div class="col-md-12 gap-2 pt-2 d-flex">
                                         <div class="col-md-3 col-sm-12  ">
-                                            <h5>Base Price</h5>
+                                            <h5>Base Price<span class="required">*</span></h5>
                                             <div class="card flex justify-center">
                                                 <input type="text" pInputText #BasePrice="ngModel" id="basePrice"
                                                     [(ngModel)]="ProductDetails.BasePricing" name="BasePricing"
@@ -97,7 +103,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3" col-sm-12>
-                                            <h5>Total Stock</h5>
+                                            <h5>Total Stock <span class="required">*</span></h5>
                                             <div class="card flex justify-center">
                                                 <input type="text" pInputText #Stock="ngModel" id="stock"
                                                     [(ngModel)]="ProductDetails.Stock" name="Stock"
@@ -105,7 +111,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3 col-sm-12">
-                                            <h5>Discount</h5>
+                                            <h5>Discount <span class="required">*</span></h5>
                                             <div class="card flex justify-center">
                                                 <input type="text" pInputText #Discount="ngModel" id="Discount"
                                                     [(ngModel)]="ProductDetails.Discount" name="Discount"
@@ -113,7 +119,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3 col-sm-12">
-                                            <h5>Discount Type</h5>
+                                            <h5>Discount Type <span class="required">*</span></h5>
                                             <div class="card flex justify-center">
                                                 <p-dropdown [options]="DiscountType" optionLabel="descritpion"
                                                     [(ngModel)]="ProductDetails.DiscountType"
@@ -127,7 +133,7 @@
                                 </div>
                                 <div class="col-md-12 pt-2 d-flex gap-2">
                                     <div class="col-md-3">
-                                        <h5>Category</h5>
+                                        <h5>Category<span class="required">*</span></h5>
                                         <div class="card flex justify-center">
                                             <p-dropdown [options]="Catogery" optionLabel="descritpion"
                                                 [(ngModel)]="ProductDetails.Catogery" placeholder="Select Catogery"
@@ -150,7 +156,7 @@
                         @for (item of imagePreviews; track $index) {
                         @if (ClickedImage === $index) {
                         <div class="image-container d-flex justify-content-center">
-                            <img [src]="item.docPath" alt="Gallery Image" alt="Image" />
+                            <img [src]="item" alt="Gallery Image" alt="Image" />
                         </div>
                         }
                         }
@@ -158,8 +164,7 @@
                         <div class="image-header-2 d-flex flex-wrap gap-4 col-md-12">
                             @for (item of imagePreviews; track $index) {
                             <div class="image-container-2">
-                                <img [src]="item.docPath" alt="Gallery Image" (click)="changeImage($index)"
-                                    alt="Image" />
+                                <img [src]="item" alt="Gallery Image" (click)="changeImage($index)" alt="Image" />
                                 <div class="image-overlay" *ngIf="ClickedImage === $index">
                                     <button type="button" class="delete-button">Delete</button>
                                 </div>

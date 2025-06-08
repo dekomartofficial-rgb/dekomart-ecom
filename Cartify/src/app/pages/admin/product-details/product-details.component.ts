@@ -6,8 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
 import { CommonService } from '@/app/provider/services/common.service';
-import { Router } from '@angular/router';
-
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-product-details',
@@ -38,9 +37,10 @@ export class ProductDetailsComponent implements OnInit {
     return this.CommonService.getLightColour(value, 0.6);
   }
 
-  redirectToProductDetails(id: number) {
+  redirectToProductDetails(id?: number) {
     // Navigate to the product details page with the product ID as state 
     this.router.navigate(['/admin/add-products'], { state: { productId: id } });
   }
+
 
 }

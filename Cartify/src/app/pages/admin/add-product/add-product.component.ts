@@ -13,6 +13,9 @@ import { LoaderService } from '@/app/provider/services/loader.service';
 import { HttpClientService } from '@/app/provider/services/http-client.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ConfirmationDialogService } from '@/app/provider/services/confirmation-dialog.service';
+
+
 
 @Component({
   selector: 'app-add-product',
@@ -52,20 +55,20 @@ export class AddProductComponent implements OnInit {
 
 
   constructor(private commonService: CommonService, private _messageservice: ToastService, private loader: LoaderService, private httpService: HttpClientService, private _router: Router,
-    private fb: FormBuilder, private http: HttpClient) {
+    private fb: FormBuilder, private http: HttpClient, private ConfirmationService: ConfirmationDialogService) {
     this.productForm = this.fb.group({
-      ProductName: [''],
-      ProductDesc: [''],
-      BasePricing: [''],
-      Catogery: [''],
-      ProductSize: [''],
-      Gender: [''],
-      Discount: [''],
+      ProductName: ['', Validators.required],
+      ProductDesc: ['', Validators.required],
+      BasePricing: ['', Validators.required],
+      Catogery: ['', Validators.required],
+      ProductSize: ['', Validators.required],
+      Gender: ['', Validators.required],
+      Discount: ['', Validators.required],
       DiscountTypeModel: [''],
-      description: [''],
+      description: ['', Validators.required],
       Stock: [''],
-      Price: [''],
-
+      Price: ['', Validators.required],
+      variants: this.fb.array([]),
     });
 
   }
@@ -92,10 +95,12 @@ export class AddProductComponent implements OnInit {
 
   getProductImage(ProductId: number) {
     this.loader.show()
-    this.commonService.getDocument(ProductId, 'PRODUCT').subscribe((files: any[]) => {
-      this.imagePreviews = files;
-      this.loader.hide()
+    this.commonService.getDocument(ProductId, 'PRODUCT').then((files: any[]) => {
+      this.imagePreviews = files.map(file => file.docPath);
+      console.log(files)
+      this.loader.hide();
     });
+
   }
 
   changeImage(index: number) {
@@ -189,7 +194,7 @@ export class AddProductComponent implements OnInit {
 
           const reader = new FileReader();
           reader.onload = (e: any) => {
-            this.imagePreviews.push({ docPath: e.target.result });
+            this.imagePreviews.push(e.target.result);
           };
           reader.readAsDataURL(file);
         }
@@ -216,10 +221,14 @@ export class AddProductComponent implements OnInit {
   }
 
   saveProduct() {
+    if (this.productForm.invalid) {
+      this._messageservice.show('Warning', 'Please fill all required fields correctly.');
+      this.productForm.markAllAsTouched();
+      return;
+    }
     let fd = new FormData();
     this.loader.show()
-    this.validateProductVariant();
-    this.ProductDetails.OpsMode = this.ProductDetails.ProductID > 0 ? 'UPDATE' : 'INSERT';
+
     for (var i = 0; i < this.selectedFiles.length; i++) {
       fd.append("ProductUpload", this.selectedFiles[i], this.selectedFiles[i].name);
     }
@@ -243,7 +252,30 @@ export class AddProductComponent implements OnInit {
     this.ProductVariants = new Array<ProductVairant>();
     this.ProductImages = []
   }
-
+  deleteProduct() {
+    this.ConfirmationService.confirm({
+      title: 'Delete Confirmation',
+      message: 'Are you sure you want to delete this Product?',
+      confirmText: 'Delete',
+      cancelText: 'Cancel'
+    }).then((confirmed) => {
+      if (confirmed) {
+        let fd = new FormData();
+        this.ProductDetails.OpsMode = 'DELETE'
+        fd.append('ProductDetails', JSON.stringify(this.ProductDetails));
+        this.httpService.post('admin/SaveProductHeader', fd).subscribe((res: any) => {
+          if (res.MessageType === 2) {
+            this._messageservice.show('Success', res.Message);
+            this.loader.hide()
+            this._router.navigate(['/admin/product-details']);
+          } else {
+            this._messageservice.show('Error', res.Message);
+            this.loader.hide()
+          }
+        });
+      }
+    });
+  }
 
 
 }

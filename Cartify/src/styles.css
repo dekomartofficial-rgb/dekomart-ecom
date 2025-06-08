@@ -261,3 +261,7 @@ input[type="number"] {
 button i {
   padding-right: 5px;
 }
+:host ::ng-deep .required {
+  color: red !important;
+  margin-left: 2px !important;
+}

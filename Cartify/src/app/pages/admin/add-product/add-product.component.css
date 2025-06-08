@@ -275,14 +275,46 @@ input {
   justify-content: center;
   align-items: center;
 }
-
-.delete-button {
-  background: red;
+.custom-button {
   color: white;
   border: none;
   padding: 6px 12px;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
+
+/* Save */
+.save-button {
+  background-color: #28a745;
+}
+.save-button:hover {
+  background-color: #218838;
+}
+
+/* Reset */
+.reset-button {
+  background-color: #ffc107;
+  color: black;
+}
+.reset-button:hover {
+  background-color: #e0a800;
+  color: black;
+}
+
+/* Delete */
+.delete-button {
+  background-color: #dc3545;
+}
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+/* Optional: Style override for file upload (if you're using PrimeNG) */
 :host ::ng-deep .p-fileupload-choose-button .p-button {
   background-color: red !important;
+}
+.required-field{
+  background-color: #f8f8f8;
 }

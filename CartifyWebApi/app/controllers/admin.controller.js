@@ -145,7 +145,7 @@ class Admin {
             const VariantTableType = new mssql.Table();
             const ProdctDetails = JSON.parse(req.body.ProductDetails || '{}');
             const ProductVarient = JSON.parse(req.body.ProductVariants || '[]');
-            console.log(req.files)
+            console.log(ProdctDetails)
 
             VariantTableType.type = 'tt_product_varient';
             VariantTableType.columns.add('VARIENT_ID', mssql.BigInt);
@@ -186,7 +186,7 @@ class Admin {
 
             const result = await request.execute("PKG_PROD$p_save_product_header")
             const output = await handleReps(result.output);
-            const fileUploadRtn = await MainController.saveAttachment(req.files, result.output.p_retid, 'PRODUCT', req.LoggedUserId)
+            const fileUploadRtn = await MainController.saveAttachment(req.files, result.output.p_retid, 'product', req.LoggedUserId)
             if (fileUploadRtn === false) return;
             res.status(200).json(output)
         } catch (error) {
