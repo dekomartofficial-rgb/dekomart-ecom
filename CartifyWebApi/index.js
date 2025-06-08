@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 3000;
 const errorHandler = require("./app/helper/error-handler");
 const DataAccess = require("./app/database/dataaccess");
+const path = require('path'); 
 const { convertBigIntMiddleware } = require("./app/middleware/CommonMiddleware");
 var cors = require("cors");
 dotenv.config();
