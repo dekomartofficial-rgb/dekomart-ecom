@@ -11,6 +11,15 @@ body {
   background-color: #ffffff !important;
 }
 
+:root {
+  --brand-color: #8A3B3B;
+  --text-color: #333333;
+  --bg-color: #ffffff;
+  --icon-blue: #8ECDF2;
+  --icon-pink: #F5B5B5;
+  --icon-red: #C25555;
+}
+
 :host ::ng-deep body {
   font-family: "Open Sans", sans-serif !important; /* Or 'Roboto', 'Lato', or another similar sans-serif font */
 }

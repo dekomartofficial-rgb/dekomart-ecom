@@ -1,22 +1,47 @@
-import { Component, Input } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { HttpClientService } from '@/app/provider/services/http-client.service';
-import { Router } from '@angular/router';
-import { AddToCartComponent } from "../add-to-cart/add-to-cart.component";
+import { Component } from '@angular/core';
+import { MenubarModule } from 'primeng/menubar';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { AvatarModule } from 'primeng/avatar';
+import { BadgeModule } from 'primeng/badge';
+import { RippleModule } from 'primeng/ripple';
+import { TooltipModule } from 'primeng/tooltip';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
+import { HttpClientService } from '@/app/provider/services/http-client.service';
 
 @Component({
-    selector: 'app-nav-home',
-    imports: [RouterModule, AddToCartComponent, CommonModule],
-    templateUrl: './nav-home.component.html',
-    styleUrl: './nav-home.component.css'
+  selector: 'app-nav-home',
+  imports: [MenubarModule, ButtonModule, InputTextModule, AvatarModule, BadgeModule, RippleModule, TooltipModule, CommonModule, RouterModule],
+  templateUrl: './nav-home.component.html',
+  styleUrl: './nav-home.component.css'
 })
 export class NavHomeComponent {
-  @Input() wishlistCount: number = 0;
-  @Input () cartItem: any= [];
-  
 
-  showCart: boolean = false; 
+  cartCount = 3; // Example cart count
+
+  mainNavLinks = [
+    { path: '/new-in', label: 'NEW IN' },
+    { path: '/dining', label: 'DINING' },
+    { path: '/bedroom', label: 'BEDROOM' },
+    { path: '/bathroom', label: 'BATHROOM' },
+    { path: '/furniture', label: 'FURNITURE' },
+    { path: '/decor', label: 'DECOR' },
+    { path: '/clock', label: 'CLOCK' },
+    { path: '/gift', label: 'GIFT' }
+  ];
+
+  categories = [
+    { path: '/tables', label: 'Table ware', image: 'tableware.png' },
+    { path: '/platter', label: 'Platter', image: 'platter.png' },
+    { path: '/soft-furnishings', label: 'Soft Furnishing', image: 'soft-furnishing.png' },
+    { path: '/decor', label: 'Decor', image: 'decor.png' },
+    { path: '/furniture', label: 'Furniture', image: 'furniture.png' },
+    { path: '/vases', label: 'Vase', image: 'vase.png' },
+    { path: '/wall-decor', label: 'Wall Decor', image: 'wall-decor.png' },
+    { path: '/mirrors', label: 'Mirror', image: 'mirror.png' }
+  ];
 
   constructor(private http: HttpClientService, private router: Router) { }
 
@@ -32,15 +57,4 @@ export class NavHomeComponent {
       return this.router.navigateByUrl('/login')
     }
   }
-
- 
-  toggleCart() {
-    this.showCart = !this.showCart;  
-  }
-
-  CloseCart() {
-    console.log("Cart closed!");
-    this.showCart = false;  // Hide the cart
-  }
-
 }
