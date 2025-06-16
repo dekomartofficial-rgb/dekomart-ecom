@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClientService } from './http-client.service';
 import { Observable } from 'rxjs';
+import { baseUrl } from '../../../assets/config.json'
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ import { Observable } from 'rxjs';
 export class CommonService {
 
   constructor(private http: HttpClientService) { }
+  private baseUrl = baseUrl
 
   getRole(): Observable<any> {
     return this.http.get<any>('admin/GetRole');
@@ -36,10 +38,9 @@ export class CommonService {
     return new Promise((resolve, reject) => {
       this.http.get<any[]>('admin/GetDocument', { KeyId: KeyId, KeyType: KeyType }).subscribe({
         next: (response) => {
-          const baseUrl = 'http://localhost:3000/';
           const updatedDocs = response.map(doc => {
             if (doc.docPath && !doc.docPath.startsWith('http')) {
-              doc.docPath = baseUrl + doc.docPath;
+              doc.docPath = baseUrl + '/' + doc.docPath;
             }
             return doc;
           });
