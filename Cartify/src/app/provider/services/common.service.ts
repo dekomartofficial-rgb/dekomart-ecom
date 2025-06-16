@@ -8,8 +8,7 @@ import { baseUrl } from '../../../assets/config.json'
 })
 export class CommonService {
 
-  constructor(private http: HttpClientService) { }
-  private baseUrl = baseUrl
+  constructor(private http: HttpClientService) { } 
 
   getRole(): Observable<any> {
     return this.http.get<any>('admin/GetRole');
