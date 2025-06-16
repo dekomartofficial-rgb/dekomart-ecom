@@ -22,14 +22,14 @@ export class NavHomeComponent {
   cartCount = 3; // Example cart count
 
   mainNavLinks = [
-    { path: '/new-in', label: 'NEW IN' },
-    { path: '/dining', label: 'DINING' },
-    { path: '/bedroom', label: 'BEDROOM' },
-    { path: '/bathroom', label: 'BATHROOM' },
-    { path: '/furniture', label: 'FURNITURE' },
-    { path: '/decor', label: 'DECOR' },
-    { path: '/clock', label: 'CLOCK' },
-    { path: '/gift', label: 'GIFT' }
+    { path: '/', label: 'NEW IN' },
+    { path: '/', label: 'DINING' },
+    { path: '/', label: 'BEDROOM' },
+    { path: '/', label: 'BATHROOM' },
+    { path: '/', label: 'FURNITURE' },
+    { path: '/', label: 'DECOR' },
+    { path: '/', label: 'CLOCK' },
+    { path: '/', label: 'GIFT' }
   ];
 
   categories = [

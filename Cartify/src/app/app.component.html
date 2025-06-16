@@ -5,8 +5,7 @@
   @if(!isLoggedUser()){
     <router-outlet class="col-md-12"></router-outlet>
   }
-  @else if (isLoggedUser() && !isAdmin()) {
-    <app-user-nav-bar></app-user-nav-bar>
+  @else if (isLoggedUser() && !isAdmin()) { 
     <router-outlet class="col-md-12"></router-outlet>
   } 
   @else if (isLoggedUser() && isAdmin()) {

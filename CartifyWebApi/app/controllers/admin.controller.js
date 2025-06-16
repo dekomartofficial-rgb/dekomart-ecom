@@ -142,19 +142,17 @@ class Admin {
     static SaveProductHeader = async (req, res) => {
         try {
             const request = await dataAcces.getRequest();
-            const VariantTableType = new mssql.Table();
+            const VariantTableType = new mssql.Table('TT_PRODUCT_VARIENT'); // match SQL Server type
             const ProdctDetails = JSON.parse(req.body.ProductDetails || '{}');
             const ProductVarient = JSON.parse(req.body.ProductVariants || '[]');
-            console.log(ProdctDetails)
 
-            VariantTableType.type = 'tt_product_varient';
             VariantTableType.columns.add('VARIENT_ID', mssql.BigInt);
             VariantTableType.columns.add('COLOR', mssql.VarChar(10));
             VariantTableType.columns.add('SIZE', mssql.VarChar(20));
             VariantTableType.columns.add('PRICE', mssql.BigInt);
             VariantTableType.columns.add('STOCK_COUNT', mssql.BigInt);
 
-            if (ProductVarient != undefined && ProductVarient.length > 0) {
+            if (ProductVarient.length > 0) {
                 ProductVarient.forEach(variant => {
                     VariantTableType.rows.add(
                         variant.VariantId,
@@ -165,6 +163,9 @@ class Admin {
                     );
                 });
             }
+            console.log("VariantTableType.columns", VariantTableType.columns);
+            console.log("VariantTableType.rows", VariantTableType.rows);
+
             //add parameter and table type to procedure
             request.input('ai_product_id', mssql.BigInt, ProdctDetails.ProductID);
             request.input('ai_company_id', mssql.BigInt, 1);
@@ -177,7 +178,7 @@ class Admin {
             request.input('an_discount', mssql.BigInt, ProdctDetails.Discount);
             request.input('as_discount_type', mssql.VarChar(200), ProdctDetails.DiscountType);
             request.input('as_category', mssql.VarChar(200), ProdctDetails.Catogery);
-            request.input('tt_product_varient', mssql.TVP, VariantTableType);
+            request.input('tt_product_varient', VariantTableType);
             request.input('as_ops_mode', mssql.VarChar(15), ProdctDetails.OpsMode);
             request.input('ai_user_id', mssql.BigInt, req.LoggedUserId);
             request.output("p_retmsg", mssql.VarChar(500));

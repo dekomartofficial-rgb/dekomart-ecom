@@ -1,47 +1,45 @@
+<div class="col-md-12 col-sm-12 col-xs-12" style="background-color: #8c4844; height: 30px;">
+</div>
 <!-- navbar.component.html -->
-<nav class="navbar">
-  <div class="navbar-container">
-    <!-- Logo Section -->
-    <div class="logo" routerLink="/">
-      <img src="assets/nave-bar-images/logo.png" alt="Deko Mart" class="logo-image">
-    </div>
-
-    <!-- Main Navigation Links -->
-    <div class="main-links">
-      <a *ngFor="let link of mainNavLinks" 
-         [routerLink]="link.path"
-         routerLinkActive="active">
+<div class="container-fluid d-flex justify-content-between align-items-center  m-0 p-3">
+  <div class="col-2 d-flex align-items-center justify-content-center">
+    <a routerLink="/" class="d-inline-block">
+      <img src="assets/nave-bar-images/logo.png" alt="Deko Mart" class="img-fluid" style="max-height: 50px;">
+    </a>
+  </div>
+  <div class="col-8 d-flex justify-content-center">
+    <div class="main-links d-flex gap-10">
+      <a *ngFor="let link of mainNavLinks" [routerLink]="link.path" routerLinkActive="active"
+        class="text-dark text-decoration-none fw-semibold">
         {{ link.label }}
       </a>
     </div>
-
-    <!-- Action Icons -->
-    <div class="action-icons">
-      <button class="icon-button" aria-label="Search">
-        <i class="pi pi-search"></i>
-      </button>
-      <button class="icon-button" aria-label="Wishlist">
-        <i class="pi pi-heart"></i>
-      </button>
-      <button class="icon-button" aria-label="Account" (click)="onLogin()">
-        <i class="pi pi-user"></i>
-      </button>
-      <button class="icon-button" aria-label="Cart">
-        <i class="pi pi-shopping-cart"></i>
-        <span class="cart-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
-      </button>
-    </div>
   </div>
-
-  <!-- Category Navigation with Images -->
-  <div class="category-nav">
-    <div *ngFor="let category of categories" class="category-item">
-      <a [routerLink]="category.path" class="category-link">
-        <img [src]="'assets/nave-bar-images/' + category.image" 
-             [alt]="category.label" 
-             class="category-image">
-        <span class="category-label">{{ category.label }}</span>
-      </a>
-    </div>
+  <div class="col-2 d-flex justify-content-start align-items-center gap-1">
+    <button class="btn btn-link text-dark" aria-label="Search">
+      <i class="pi pi-search custom-icon"></i>
+    </button>
+    <button class="btn btn-link text-dark" aria-label="Wishlist">
+      <i class="pi pi-heart custom-icon"></i>
+    </button>
+    <button class="btn btn-link text-dark" aria-label="Account" (click)="onLogin()">
+      <i class="pi pi-user custom-icon"></i>
+    </button>
+    <button class="btn btn-link text-dark position-relative " aria-label="Cart">
+      <i class="pi pi-shopping-cart custom-icon"></i>
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+        *ngIf="cartCount > 0">
+        {{ cartCount }}
+      </span>
+    </button>
   </div>
-</nav>
+</div>
+<!-- Category Navigation with Images -->
+<div class="category-nav col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex">
+  <div *ngFor="let category of categories" class="category-item">
+    <a [routerLink]="category.path" class="category-link">
+      <img [src]="'assets/nave-bar-images/' + category.image" [alt]="category.label" class="category-image">
+      <span class="category-label">{{ category.label }}</span>
+    </a>
+  </div>
+</div>

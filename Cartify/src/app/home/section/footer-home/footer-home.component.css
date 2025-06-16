@@ -1,0 +1,72 @@
+.footer-main {
+  background-color: #8c4844;
+  height: 33vh;
+}
+.footer-main li a {
+  text-decoration: none;
+  color: white;
+  line-height: 7px;
+}
+.footer-list {
+  line-height: 7px !important;
+  padding: 32px;
+}
+.footer-header {
+  font-size: 29px;
+  font-weight: 600;
+}
+.stay-in-touch {
+  background-color: #8c4844;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+.stay-in-touch .logo {
+  width: 156px;
+  margin-bottom: 20px;
+}
+
+.stay-in-touch h4 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.stay-in-touch p {
+  font-size: 18px;
+  line-height: 1.4;
+  margin-bottom: 25px;
+}
+
+.email-subscribe {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.email-subscribe input {
+  padding: 8px 12px;
+  flex: 1;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.arrow-button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.contact-link {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.contact-link:hover {
+  text-decoration: underline;
+}

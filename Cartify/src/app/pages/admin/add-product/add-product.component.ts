@@ -73,7 +73,7 @@ export class AddProductComponent implements OnInit {
 
   }
   ngOnInit() {
-    this.addProductVariantRow();
+    // this.addProductVariantRow();
     const ProductId = history.state['productId'];
     if (ProductId ?? ProductId > 0) {
       this.getProductVariantDetails(ProductId);
@@ -221,14 +221,8 @@ export class AddProductComponent implements OnInit {
   }
 
   saveProduct() {
-    if (this.productForm.invalid) {
-      this._messageservice.show('Warning', 'Please fill all required fields correctly.');
-      this.productForm.markAllAsTouched();
-      return;
-    }
     let fd = new FormData();
     this.loader.show()
-
     for (var i = 0; i < this.selectedFiles.length; i++) {
       fd.append("ProductUpload", this.selectedFiles[i], this.selectedFiles[i].name);
     }

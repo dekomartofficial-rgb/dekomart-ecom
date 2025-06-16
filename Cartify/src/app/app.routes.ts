@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './pages/login/login.component'; 
 import { NotFoundComponent } from './pages/not-found/not-found.component'; 
-import { ProductListingComponent } from './pages/user/product-listing/product-listing.component';
 
 
 export const routes: Routes = [
@@ -10,8 +9,7 @@ export const routes: Routes = [
     { path: 'user', loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule) },
     { path: "", component: HomeComponent },
     { path: "login", component: LoginComponent },
-    { path: '**', component: NotFoundComponent },
-    { path: 'product-listing', component: ProductListingComponent },
+    { path: '**', component: NotFoundComponent }
 ];
 
 

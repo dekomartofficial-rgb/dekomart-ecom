@@ -1,49 +1,35 @@
- <!-- Footer -->
- <footer class="bg-dark text-white pt-5 pb-3">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3 mb-4">
-          <h5 class="mb-3">Shop</h5>
-          <ul class="list-unstyled">
-            <li class="mb-2"><a href="#" class="text-decoration-none text-white-50">All Products</a></li>
-            <li class="mb-2"><a href="#" class="text-decoration-none text-white-50">New Arrivals</a></li>
-            <li class="mb-2"><a href="#" class="text-decoration-none text-white-50">Best Sellers</a></li>
-            <li class="mb-2"><a href="#" class="text-decoration-none text-white-50">Deals & Offers</a></li>
-          </ul>
-        </div>
-        <div class="col-md-3 mb-4">
-          <h5 class="mb-3">Customer Service</h5>
-          <ul class="list-unstyled">
-            <li class="mb-2"><a href="#" class="text-decoration-none text-white-50">Contact Us</a></li>
-            <li class="mb-2"><a href="#" class="text-decoration-none text-white-50">FAQs</a></li>
-            <li class="mb-2"><a href="#" class="text-decoration-none text-white-50">Shipping Policy</a></li>
-            <li class="mb-2"><a href="#" class="text-decoration-none text-white-50">Returns & Refunds</a></li>
-          </ul>
-        </div>
-        <div class="col-md-3 mb-4">
-          <h5 class="mb-3">About Us</h5>
-          <ul class="list-unstyled">
-            <li class="mb-2"><a href="#" class="text-decoration-none text-white-50">Our Story</a></li>
-            <li class="mb-2"><a href="#" class="text-decoration-none text-white-50">Blog</a></li>
-            <li class="mb-2"><a href="#" class="text-decoration-none text-white-50">Careers</a></li>
-            <li class="mb-2"><a href="#" class="text-decoration-none text-white-50">Press</a></li>
-          </ul>
-        </div>
-        <div class="col-md-3 mb-4">
-          <h5 class="mb-3">Connect With Us</h5>
-          <div class="social-links">
-            <a href="#" class="text-white me-2"><i class="fa fa-facebook"></i></a>
-            <a href="#" class="text-white me-2"><i class="fa fa-instagram"></i></a>
-            <a href="#" class="text-white me-2"><i class="fa fa-twitter"></i></a>
-            <a href="#" class="text-white me-2"><i class="fa fa-pinterest"></i></a>
+<!-- Footer -->
+<footer class="footer-main text-white pt-5 pb-3">
+  <div class="container-fluid">
+    <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 d-flex m-0 p-0 justify-content-center">
+      <div class="col-md-2 footer-list align-top">
+        <div class="stay-in-touch">
+          <img src="assets/nave-bar-images/logo.png" alt="Logo" class="logo">
+          <h4>Stay In Touch</h4>
+          <p>Sign up for exclusive offers<br>events and more.</p>
+
+          <div class="email-subscribe">
+            <input type="email" placeholder="Enter Email">
+            <button class="arrow-button">➤</button>
           </div>
+
+          <a href="/contact" class="contact-link">Contact us</a>
         </div>
       </div>
-      <hr class="mt-4 mb-3">
-      <div class="row">
-        <div class="col-md-12 text-center">
-          <p class="mb-0">&copy; 2025 ShopEase. All rights reserved.</p>
+      @for (item of footerData; track $index) {
+      <div class="col-md-2 footer-list">
+        <div class="gap-3" style="height: 37px;">
+          <p class="footer-header">{{item.title}}</p>
+        </div>
+        <div class="footer-list-child">
+          @for (child of item.links; track $index) {
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" cslass="text-decoration-none text-white-50">{{child.label}}</a></li>
+          </ul>
+          }
         </div>
       </div>
+      }
     </div>
-  </footer>
+  </div>
+</footer>
