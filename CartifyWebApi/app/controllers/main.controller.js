@@ -28,11 +28,12 @@ class MainController {
     }
     static saveAttachment = async (UploadFile, FileId, FileType, LoggedUser) => {
         try {
-            console.log(UploadFile)
             const singleFile = Array.isArray(UploadFile) ? UploadFile : [UploadFile];
             const fileStorage = await this.getSystemParmValue('FILE_STORAGE')
             const uploadDir = await this.getFilePath(fileStorage, FileId, FileType)
-
+            // Ensure the directory exists
+            fs.mkdirSync(uploadDir, { recursive: true });
+            
             if (FileId > 0 && UploadFile && UploadFile.length > 0) {
                 singleFile.forEach(file => {
                     const fileName = Date.now() + '-' + file.originalname.trim();
@@ -44,7 +45,7 @@ class MainController {
                             return false;
                         } else {
                             const result = await this.uploadDocument(0, FileId, FileType, filePath, file.originalname, file.mimetype, null, 1, 'INSERT', LoggedUser)
-                            console.log('File saved:', result.Message, 'File Path:', filePath   );
+                            console.log('File saved:', result.Message, 'File Path:', filePath);
                             return true
                         }
                     });

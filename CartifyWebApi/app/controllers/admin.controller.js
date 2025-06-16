@@ -162,10 +162,7 @@ class Admin {
                         variant.Stock
                     );
                 });
-            }
-            console.log("VariantTableType.columns", VariantTableType.columns);
-            console.log("VariantTableType.rows", VariantTableType.rows);
-
+            } 
             //add parameter and table type to procedure
             request.input('ai_product_id', mssql.BigInt, ProdctDetails.ProductID);
             request.input('ai_company_id', mssql.BigInt, 1);
