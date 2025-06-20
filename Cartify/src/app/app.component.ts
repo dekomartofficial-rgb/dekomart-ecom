@@ -37,7 +37,7 @@ export class AppComponent {
 
   isAdmin() {
     let userData = this.httpClient.getUserData()
-    return userData && userData.UserRole !== 'CU'
+    return userData && userData.UserRole !== 'US'
   }
   
   validateInspect() {
