@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -18,7 +18,7 @@ import { HttpClientService } from '@/app/provider/services/http-client.service';
   styleUrl: './nav-home.component.css'
 })
 export class NavHomeComponent {
-
+  @Input({ required: true }) isShowChild: string = 'N' 
   cartCount = 3; // Example cart count
 
   mainNavLinks = [
@@ -47,7 +47,7 @@ export class NavHomeComponent {
 
   onLogin() {
     if (this.http.getUserData()) {
-      if (this.http.getUserData().UserRole === 'CU') {
+      if (this.http.getUserData().UserRole === 'US') {
         return this.router.navigateByUrl('/user')
       }
       else {
@@ -56,5 +56,13 @@ export class NavHomeComponent {
     } else {
       return this.router.navigateByUrl('/login')
     }
+  }
+
+  Logout() {
+    this.http.LogOut();
+  }
+
+  isUserLogged() {
+    return this.http.isLoggedIn()
   }
 }

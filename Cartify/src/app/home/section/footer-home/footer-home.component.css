@@ -1,5 +1,5 @@
 .footer-main {
-  background-color: #8c4844;
+  background-color: #994037;
   height: 39vh;
 }
 .footer-main li a {
@@ -9,16 +9,16 @@
 }
 .footer-list {
   line-height: 7px !important;
-  padding: 32px;
+  padding: 21px;
 }
 .footer-header {
   font-size: 29px;
   font-weight: 600;
 }
 .stay-in-touch {
-  background-color: #8c4844;
+  background-color: #994037;
   color: white;
-  font-family: "Poppins", sans-serif;
+  /* font-family: "Poppins", sans-serif; */
 }
 
 .stay-in-touch .logo {

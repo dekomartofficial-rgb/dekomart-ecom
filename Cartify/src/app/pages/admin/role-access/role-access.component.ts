@@ -51,6 +51,7 @@ export class RoleAccessComponent implements OnInit {
   }
 
   getRoleScreen(rolecode: string) {
+    this.LoaderService.show()
     this.clickedRole = rolecode;
     this.groupName = [];
     this.GroupChildList = [];
@@ -62,6 +63,7 @@ export class RoleAccessComponent implements OnInit {
             this.RoleScreen.map((item) => JSON.stringify({ ScreenGroupName: item.ScreenGroupName, GroupIcon: item.GroupIcon }))
           )].map(item => JSON.parse(item));
           this.GroupChildList = [...this.RoleScreen];
+          this.LoaderService.hide()
         }
       });
     }

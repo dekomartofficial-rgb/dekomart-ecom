@@ -1,67 +1,214 @@
-<!-- login.component.html -->
-
-
-<div class="container-fluid login-container">
-  <div class="row shadow">
-    <!-- Left side with image -->
-    <div class="col-md-8 login-image">
-      <img src="assets/login-signup/marketing-creative-collage-with-phone.jpg"
-        alt="Shopping cart with smartphone and shopping bags" class="img-fluid"
-        style="width: 100%; height: 100%; object-fit: cover;">
+<app-nav-home [isShowChild]="'N'"></app-nav-home>
+<div class="container">
+  <div class="col-md-12 col-lg-12 col-sm-12 col-xl-12 d-flex login-page-header">
+    @if(isRegNewUser){
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xl-6 login-page-image">
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xl-12 login-page-main-header"
+        style="height: 100%;background-color: #994037;">
+        <h1 class="login-box-text">Login</h1>
+        <h1 class="login-box-text" style="color: #ffffffb5;font-size: 20px;">Get access to your Orders, Wishlist and
+          Recommendations</h1>
+      </div>
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xl-12">
+        <img src="/assets/admin-images/LOGO-03.png" style="width: 100%;" alt="" srcset="">
+      </div>
     </div>
-    <!-- Right side with login form -->
-    <div class="col-md-4 login-form">
-      <form [formGroup]="loginForm">
-        <h2 class="login-title" style="text-align: center;">Log in to Exclusive</h2>
-        <p class="text-muted mb-4" style="text-align: center;">Enter your details below</p>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" formControlName="email" placeholder="Enter your email"
-            [class.invalid-input]="isSubmitted && formControls['email'].errors" [(ngModel)]="Login.EmailId" />
-          @if (isSubmitted && formControls['email'].errors) {
-          <div class="error-message">
-            @if (formControls['email'].errors['required']) {
-            <div>Email is required</div>
-            } @if (formControls['email'].errors['email']) {
-            <div>Please enter a valid email</div>
+    } @else {
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xl-6 login-page-image">
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xl-12 login-page-main-header"
+        style="height: 100%;background-color: #994037;">
+        <h1 class="login-box-text">Looks like you're new here!</h1>
+        <h1 class="login-box-text" style="color: #ffffffb5;font-size: 20px;">Sign up with your basic details to get
+          started</h1>
+      </div>
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xl-12">
+        <img src="/assets/admin-images/LOGO-03.png" style="width: 100%;" alt="" srcset="">
+      </div>
+    </div>
+    }
+
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xl-6">
+      <div class="shadow">
+        <div class="col-md-4 login-form">
+          @if(isRegNewUser){
+          <div class="login-form-main d-flex justify-content-center">
+            <form [formGroup]="loginForm">
+              <h2 class="login-title" style="text-align: center;">Log in to Exclusive</h2>
+              <p class="text-muted mb-4" style="text-align: center;">Enter your details below</p>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" formControlName="email" placeholder="Enter your email"
+                  [class.invalid-input]="isSubmitted && formControls['email'].errors" [(ngModel)]="Login.EmailId" />
+                @if (isSubmitted && formControls['email'].errors)
+                { <div class="error-message">
+                  @if (formControls['email'].errors['required']) {
+                  <div>Email is required</div>
+                  } @if (formControls['email'].errors['email']) {
+                  <div>Please enter a valid email</div>
+                  }
+                </div>
+                }
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" formControlName="password" placeholder="Enter your password"
+                  [class.invalid-input]="isSubmitted && formControls['password'].errors" [(ngModel)]="Login.Password" />
+                @if (isSubmitted && formControls['password'].errors) {
+                <div class="error-message">
+                  @if (formControls['password'].errors['required']) {
+                  <div>Password is required</div>
+                  }
+                </div>
+                }
+              </div>
+              <div class="form-options">
+                <div class="remember-me">
+                  <label class="custom-checkbox">
+                    <input type="checkbox" id="remember" />
+                    <span class="checkmark"></span> Remember me
+                  </label>
+                </div>
+                <a href="#" class="forgot-password">Forgot Password?</a>
+              </div>
+              <button type="submit" class="login-button" (click)="onSubmit(Login)">Login </button>
+            </form>
+          </div>
+          } @else {
+          <form #NewUser="ngForm" >
+            <h2 style="text-align: center;">Create New Account</h2>
+            <p class="text-muted mb-4" style="text-align: center;">Enter your details below</p>
+            <div class="container-fluid">
+              <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 ">
+                <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex gap-2">
+                  <div class="form-group col-md-6">
+                    <label for="firstName">First Name</label>
+                    <input id="firstName" type="text" placeholder="Enter your first name"
+                      [(ngModel)]="CustomerReg.FirstName" #firstName="ngModel" name="firstName" required
+                      [class.invalid-input]="isSubmitted && firstName.invalid" />
+                    <div class="required-field" *ngIf="isSubmitted && firstName.errors?.['required']">
+                      <small>First Name required.</small>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="lastName">Last Name</label>
+                    <input id="lastName" type="text" placeholder="Enter your last name"
+                      [(ngModel)]="CustomerReg.SecondName" #lastName="ngModel" name="lastName" required
+                      [class.invalid-input]="isSubmitted && lastName.invalid" />
+                    <div class="required-field" *ngIf="isSubmitted && lastName.errors?.['required']">
+                      <small>Last Name required.</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex gap-2">
+                  <div class="form-group col-md-6">
+                    <label for="dateofbirth">Date Of Birth</label>
+                    <input id="dateofbirth" type="date" placeholder="Enter your email" [(ngModel)]="CustomerReg.Dob"
+                      #dateofbirth="ngModel" name="dateofbirth" required (ngModelChange)="validateAge($event)"
+                      [class.invalid-input]="isSubmitted && dateofbirth.invalid" />
+                    <div class="required-field" *ngIf="isSubmitted && dateofbirth.errors?.['required']">
+                      <small>Date Of Birth required.</small>
+                    </div>
+                    <div class="required-field" *ngIf="isSubmitted && !isAgeValid">
+                      <small>You must be at least 18 years old.</small>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" placeholder="Enter your email" [(ngModel)]="CustomerReg.Email"
+                      #email="ngModel" name="email" email required
+                      [class.invalid-input]="isSubmitted && email.invalid" />
+                    <div class="required-field" *ngIf="isSubmitted && email.errors?.['required']">
+                      <small>Email required.</small>
+                    </div>
+                    <div class="required-field" *ngIf="isSubmitted && email.errors?.['email']">
+                      <small>Please enter a valid email address.</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex gap-2">
+                  <div class="form-group col-md-6">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" placeholder="Enter your password"
+                      [(ngModel)]="CustomerReg.Password" #password="ngModel" name="password" required
+                      [class.invalid-input]="isSubmitted && password.invalid"
+                      pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[A-Za-z\d\S]{3,}$" />
+                    <div class="required-field" *ngIf="isSubmitted && password.errors?.['required']">
+                      <small>Password required.</small>
+                    </div>
+                    <div class="required-field" *ngIf="isSubmitted && password.errors?.['minLength']">
+                      <small>Min 8 Character required.</small>
+                    </div>
+                    <div class="required-field" *ngIf="isSubmitted && password.errors?.['pattern']">
+                      <small>Username must contain at least one letter and one number</small>
+                    </div>
+                    <div class="required-field" *ngIf="isSubmitted && CustomerReg.CPassword !== CustomerReg.Password">
+                      <small>Password doesn't match</small>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="cpassword">Confirm password</label>
+                    <input id="cpassword" type="password" placeholder="Enter your Confirm password"
+                      [(ngModel)]="CustomerReg.CPassword" #cpassword="ngModel" name="cpassword"
+                      [class.invalid-input]="isSubmitted && cpassword.invalid" required
+                      pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[A-Za-z\d\S]{3,}$" />
+                    <div class="required-field" *ngIf="isSubmitted && cpassword.errors?.['required']">
+                      <small>Confirm password required.</small>
+                    </div>
+                    <div class="required-field" *ngIf="isSubmitted && cpassword.errors?.['minLength']">
+                      <small>Min 8 Character required.</small>
+                    </div>
+                    <div class="required-field" *ngIf="isSubmitted && cpassword.errors?.['pattern']">
+                      <small>Username must contain at least one letter and one number</small>
+                    </div>
+                    <div class="required-field" *ngIf="isSubmitted && CustomerReg.CPassword !== CustomerReg.Password">
+                      <small>Password doesn't match</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex gap-2">
+                  <div class="form-group col-md-6">
+                    <label for="phone">Phone Number</label>
+                    <input id="phone" type="tel" placeholder="Enter your phone number"
+                      [(ngModel)]="CustomerReg.PhoneNumber" #phonenumber="ngModel" name="phonenumber"
+                      [class.invalid-input]="isSubmitted && phonenumber.invalid" required [minlength]="10"
+                      pattern="^[0-9]{10}$" />
+                    <div class="required-field" *ngIf="isSubmitted && phonenumber.errors?.['required']">
+                      <small>Phone Number required.</small>
+                    </div>
+                    <div class="required-field" *ngIf="isSubmitted && phonenumber.errors?.['pattern']">
+                      <small>Phone Number must be 10 length.</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 justify-content-center d-flex p-2">
+              <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6 justify-content-center d-flex">
+                <button type="submit" class="register-button" [disabled]="NewUser.invalid" (click)="saveNewCustom(CustomerReg)"><i class="fa-solid fa-plus"></i>Register</button>
+              </div>
+              <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6 justify-content-center d-flex">
+                <button type="button" class="register-button"><i class="fa-brands fa-google"></i>Sign up with
+                  Google</button>
+              </div>
+            </div>
+          </form>
+          }
+          <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex justify-content-center" style="padding: 16px;">
+            @if(isRegNewUser){
+            <p style="color: #000000a3;" (click)="changeToUserReg()">New to Dekomart? Create an account</p>
+            } @else {
+            <p style="color: #000000a3;" (click)="changeToUserReg()">Existing User? Log in</p>
             }
+          </div>
+          @if (errorMessage) {
+          <div class="error-alert">
+            {{ errorMessage }}
           </div>
           }
         </div>
+      </div>
 
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" formControlName="password" placeholder="Enter your password"
-            [class.invalid-input]="isSubmitted && formControls['password'].errors" [(ngModel)]="Login.Password" />
-          @if (isSubmitted && formControls['password'].errors) {
-          <div class="error-message">
-            @if (formControls['password'].errors['required']) {
-            <div>Password is required</div>
-            }
-          </div>
-          }
-        </div>
-
-        <div class="form-options">
-          <div class="remember-me">
-            <label class="custom-checkbox">
-              <input type="checkbox" id="remember" />
-              <span class="checkmark"></span>
-              Remember me
-            </label>
-          </div>
-          <a href="#" class="forgot-password">Forgot Password?</a>
-        </div>
-
-        <button type="submit" class="login-button" (click)="onSubmit(Login)">
-          Login
-        </button>
-        @if (errorMessage) {
-        <div class="error-alert">
-          {{ errorMessage }}
-        </div>
-        }
-      </form> 
     </div>
   </div>
 </div>
+<app-footer-home></app-footer-home>

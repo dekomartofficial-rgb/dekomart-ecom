@@ -1,0 +1,83 @@
+<div class="col-md-12 col-sm-12 col-xs-12" style="background-color: #994037; height: 30px;">
+</div>
+<!-- navbar.component.html -->
+<div class="container-fluid d-flex justify-content-between align-items-center  m-0 p-3">
+    <div class="col-2 d-flex align-items-center justify-content-center">
+        <a routerLink="/" class="d-inline-block">
+            <img src="assets/nave-bar-images/logo.png" alt="Deko Mart" class="img-fluid" style="max-height: 50px;">
+        </a>
+    </div>
+    <div class="col-8 d-flex justify-content-center">
+        <div class="main-links d-flex gap-10">
+            <!-- @for (link of mainNavLinks; track $index) {
+                <a [routerLink]="link.path" routerLinkActive="active"
+                    class="text-dark text-decoration-none fw-semibold">
+                    {{ link.label }}
+                </a>
+            } -->
+
+        </div>
+    </div>
+    <div class="col-2 d-flex justify-content-start align-items-center gap-1">
+        <button class="btn btn-link text-dark" aria-label="Search">
+            <i class="pi pi-search custom-icon"></i>
+        </button>
+        <button class="btn btn-link text-dark" aria-label="Wishlist">
+            <i class="pi pi-heart custom-icon"></i>
+        </button>
+        <button class="btn btn-link text-dark" aria-label="Account">
+            <i class="pi pi-user custom-icon"></i>
+        </button>
+        <button class="btn btn-link text-dark position-relative " aria-label="Cart">
+            <i class="pi pi-shopping-cart custom-icon"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                *ngIf="cartCount > 0">
+                {{ cartCount }}
+            </span>
+        </button>
+        @if (isUserLogged()) {
+        <button class="btn btn-link text-dark" aria-label="Account" (click)="Logout()">
+            <i class="fa-solid fa-arrow-right-from-bracket fa-xl"></i> </button>
+        }
+    </div>
+</div>
+
+<div class="container">
+    <div class="sidebar">
+        @for(item of UserProfile; track $index){
+        <div class="sidebar-header col-md-12 col-sm-12 col-lg-12 col-xl-12">
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
+                <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12  d-flex justify-content-center">
+                    <img src="assets/user-accountt-images/profile.png" style="width: 90%;" alt="" srcset="">
+                </div>
+                <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12  d-flex justify-content-center">
+                    <p>User Details</p>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
+                <p><span>Full Name:</span> {{item.UserName}}</p>
+                <p><span>Email: </span>{{item.email}}</p>
+            </div>
+        </div>
+        }
+        <ul class="sidebar-menu">
+            @for (item of ScreenList; track $index) {
+            <li><a [class]="selectedScreenCode === item.ScreenCode ? 'active' : '' "
+                    (click)="changeScreen(item.ScreenCode)">
+                    <i [class]="item.WindowIcon"></i>{{item.WindowName}}</a></li>
+            }
+        </ul>
+    </div>
+
+    <div class="main-content-1">
+        <ng-container *ngIf="selectedScreenCode">
+            <ng-container [ngSwitch]="selectedScreenCode">
+                <app-user-account *ngSwitchCase="'UR00'"></app-user-account>
+                <app-user-orders *ngSwitchCase="'UR01'"></app-user-orders>
+                <app-cart *ngSwitchCase="'UR02'"></app-cart>
+                <app-user-wishlist *ngSwitchCase="'UR03'"></app-user-wishlist>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
+<app-footer-home></app-footer-home>

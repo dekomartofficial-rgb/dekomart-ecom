@@ -17,6 +17,6 @@ router.get('/GetDocument', VerifyToken, AdminController.GetDocument)
 router.post("/SaveRefData", VerifyToken, AdminController.SaveRefData)
 router.post("/SaveProductHeader", VerifyToken, upload.array('ProductUpload'), AdminController.SaveProductHeader)
 router.post("/SaveRoleRight", VerifyToken, AdminController.SaveRoleRight)
-
+ 
 module.exports = router
 

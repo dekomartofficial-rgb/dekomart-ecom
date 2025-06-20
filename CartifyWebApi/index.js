@@ -34,6 +34,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const userRoutes = require("./app/routers/user.router");
 const adminRoutes = require("./app/routers/admin.router");
+
 app.use("/user", userRoutes);
 app.use("/admin", adminRoutes);
 
@@ -45,5 +46,5 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`http://localhost:${process.env.PORT}`);
   DataAccess.getPool().then(() => console.log(`Database Connected Successfully -  ${process.env.NODE_ENV}`))
-  .catch((e) => console.log("Error : Database Connection Failed", e));
+    .catch((e) => console.log("Error : Database Connection Failed", e));
 });

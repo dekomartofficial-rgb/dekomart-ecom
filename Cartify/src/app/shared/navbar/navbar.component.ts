@@ -14,10 +14,10 @@ import { LoaderService } from '@/app/provider/services/loader.service';
 
 
 @Component({
-    selector: 'app-navbar',
-    imports: [CommonModule, RouterModule, TooltipModule, AvatarModule, FormsModule, InputSwitchModule, DropdownModule, SidebarModule],
-    templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.css']
+  selector: 'app-navbar',
+  imports: [CommonModule, RouterModule, TooltipModule, AvatarModule, FormsModule, InputSwitchModule, DropdownModule, SidebarModule],
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
   @Output() sendDataToParent: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -32,6 +32,7 @@ export class NavbarComponent implements OnInit {
   selectedType: any = '';
   isMobile: boolean = false;
   userRole: string = ''
+  IsUserLogged: boolean = false
 
 
   constructor(private router: Router, private httpClient: HttpClientService, private LoaderService: LoaderService) { }
@@ -92,6 +93,7 @@ export class NavbarComponent implements OnInit {
   Logout() {
     this.httpClient.LogOut();
   }
+
 
 
 
