@@ -20,9 +20,7 @@ class MainController {
 
     }
     static getFilePath = async (fileStorage, id, attachType) => {
-        // Safe path construction
         const finalPath = path.join(fileStorage, attachType.toLowerCase(), String(id));
-
         // Ensure directory exists
         if (!fs.existsSync(finalPath)) {
             fs.mkdirSync(finalPath, { recursive: true });
@@ -34,8 +32,8 @@ class MainController {
     static saveAttachment = async (UploadFile, FileId, FileType, LoggedUser) => {
         try {
             const singleFile = Array.isArray(UploadFile) ? UploadFile : [UploadFile];
-            const fileStorage = await this.getSystemParmValue('FILE_STORAGE');
-
+            const fileStorageArr = await this.getSystemParmValue('FILE_STORAGE');
+            const fileStorage = Array.isArray(fileStorageArr) ? fileStorageArr[0] : fileStorageArr;
             // Already safe from getFilePath()
             const uploadDir = await this.getFilePath(fileStorage, FileId, FileType);
 
