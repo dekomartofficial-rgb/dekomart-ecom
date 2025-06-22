@@ -20,53 +20,54 @@ class MainController {
 
     }
     static getFilePath = async (fileStorage, id, attachType) => {
-        const path = fileStorage + '\\' + attachType + '\\' + id
-        if (!fs.existsSync(path)) {
-            fs.mkdirSync(path, { recursive: true });
+        // Safe path construction
+        const finalPath = path.join(fileStorage, attachType.toLowerCase(), String(id));
+
+        // Ensure directory exists
+        if (!fs.existsSync(finalPath)) {
+            fs.mkdirSync(finalPath, { recursive: true });
         }
-        return path;
-    }
+
+        return finalPath;
+    };
+
     static saveAttachment = async (UploadFile, FileId, FileType, LoggedUser) => {
         try {
             const singleFile = Array.isArray(UploadFile) ? UploadFile : [UploadFile];
             const fileStorage = await this.getSystemParmValue('FILE_STORAGE');
 
-            // Fix: safe directory creation
-            const uploadDir = path.normalize(
-                await this.getFilePath(fileStorage, FileId, FileType)
-            );
+            // Already safe from getFilePath()
+            const uploadDir = await this.getFilePath(fileStorage, FileId, FileType);
 
-            console.log('Resolved Upload Dir:', uploadDir);
-
-            fs.mkdirSync(uploadDir, { recursive: true });
+            console.log('📁 Upload directory:', uploadDir);
 
             if (FileId > 0 && UploadFile && singleFile.length > 0) {
                 for (const file of singleFile) {
                     const fileName = Date.now() + '-' + file.originalname.trim();
                     const filePath = path.join(uploadDir, fileName);
 
-                    fs.writeFile(filePath, file.buffer, async (err) => {
-                        if (err) {
-                            console.error('File Upload Error:', err);
-                            return false;
-                        }
-
-                        const result = await this.uploadDocument(
-                            0, FileId, FileType, filePath,
-                            file.originalname, file.mimetype, null, 1, 'INSERT', LoggedUser
-                        );
-                        console.log('✅ File saved:', result.Message, '| Path:', filePath);
-                        return true;
+                    // Using Promise to wait for async inside loop
+                    await new Promise((resolve, reject) => {
+                        fs.writeFile(filePath, file.buffer, async (err) => {
+                            if (err) {
+                                return reject(err);
+                            }
+                            try {
+                                const result = await this.uploadDocument(0, FileId, FileType, filePath,  file.originalname, file.mimetype, null, 1, 'INSERT', LoggedUser );
+                                console.log('✅ File saved:', result.Message, '| Path:', filePath);
+                                resolve();
+                            } catch (dbErr) { 
+                                reject(dbErr);
+                            }
+                        });
                     });
                 }
             }
-
         } catch (e) {
-            console.error('Attachment Save Error:', e);
+            console.error('❌ Attachment Save Error:', e);
             throw e;
         }
-    }
-
+    };
     static uploadDocument = async (DocumentId, KeyId, KeyType, DocPath, DocName, DocType, DocDesc, IsActive, OpsMode, LoggedUser) => {
         try {
             const request = await dataAcces.getRequest()
