@@ -11,11 +11,13 @@ class DataAccess {
       this.password = process.env.SQL_PASSWORD;
       this.server = process.env.SQL_SERVER;
       this.database = process.env.DATABASE_NAME;
+      this.port = parseInt(process.env.SQL_PORT || "1433");
     } else {
       this.user = process.env.SQL_USER_NAME_CLD;
       this.password = process.env.SQL_PASSWORD_CLD;
       this.server = process.env.SQL_SERVER_CLD;
       this.database = process.env.DATABASE_NAME_CLD;
+      this.port = parseInt(process.env.SQL_PORT_CLD || "1433");
     }
   }
 
@@ -24,16 +26,19 @@ class DataAccess {
       user: this.user,
       password: this.password,
       server: this.server,
+      port: this.port,
       database: this.database,
+      requestTimeout: 30000,
+      cancelTimeout: 10000,
       options: {
         encrypt: this.env === "DEV" ? false : true,
         enableArithAbort: true,
         useUTC: true,
         parseBigIntAsNumber: true,
-        trustServerCertificate: true // ← this disables strict TLS checks
+        trustServerCertificate: true,
       },
       pool: {
-        max: 10, // Set max number of connections
+        max: 10,
         min: 0,
         idleTimeoutMillis: 30000,
       },
@@ -48,24 +53,22 @@ class DataAccess {
         const pool = await this.poolPromise;
 
         pool.on("error", (err) => {
-          console.error("Database pool error:", err);
-          this.poolPromise = null; // Reset pool on error
+          console.error("❗ Database pool error:", err);
+          this.poolPromise = null;
         });
       }
       return this.poolPromise;
     } catch (error) {
-      console.error("Database Connection Error:", error.message);
-      this.poolPromise = null; // Reset pool on error
+      console.error("❌ Database Connection Error:", error.message);
+      this.poolPromise = null;
       throw error;
     }
   }
 
-  // Get singleton pool instance
   async getPool() {
     return this.connect();
   }
 
-  // Get a new request object from the pool
   async getRequest() {
     const pool = await this.getPool();
     return pool.request();
@@ -82,21 +85,6 @@ class DataAccess {
       throw error;
     }
   }
-
-   bigIntReplacer(key, value) {
-    if (typeof value === "string" && !isNaN(value) && value.match(/^\d+$/)) {
-      // If it's a numeric string, convert to Number if within safe range
-      const numValue = Number(value);
-      if (numValue <= Number.MAX_SAFE_INTEGER) {
-        return numValue;
-      } else {
-        // If exceeds safe range, convert to BigInt
-        return BigInt(value);
-      }
-    }
-    return value;
-  }
-  
 }
 
 module.exports = new DataAccess();

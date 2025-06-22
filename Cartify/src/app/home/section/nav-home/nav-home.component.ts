@@ -19,7 +19,7 @@ import { HttpClientService } from '@/app/provider/services/http-client.service';
 })
 export class NavHomeComponent {
   @Input({ required: true }) isShowChild: string = 'N' 
-  cartCount = 3; // Example cart count
+  cartCount = 3; // Example cart count 
 
   mainNavLinks = [
     { path: '/', label: 'NEW IN' },

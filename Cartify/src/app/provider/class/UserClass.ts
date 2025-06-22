@@ -16,3 +16,9 @@ export class ResetPassword {
     NewPassword: string = ''
     CNewPassword: string = ''
 }
+export class CartItem {
+    ProductId: number = 0
+    Size: string = ''
+    Quantity: number = 0
+    OpsMode: string = ''
+}

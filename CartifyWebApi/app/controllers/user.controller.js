@@ -85,6 +85,19 @@ class User {
       res.status(500).json({ err: "Error Occur :" + e });
     }
   };
+  static GetUserHome = async (req, res) => {
+    try {
+
+      const request = await dataAcces.getRequest();
+      request.input("ai_user_id", mssql.BigInt, req.query.UserId ?? 0);
+      const result = await request.execute("PKG_HOME$p_get_user_home");
+
+      res.status(200).json(result.recordsets);
+    } catch (e) {
+      res.status(500).json({ err: "Error Occur :" + e });
+
+    }
+  }
   static GetUserProfile = async (req, res) => {
     try {
       const request = await dataAcces.getRequest();
@@ -166,7 +179,6 @@ class User {
   static ResetPassword = async (req, res) => {
     try {
       const request = await dataAcces.getRequest();
-      console.log(req.body)
       request.input("as_ops_mode", mssql.VarChar(20), req.body.OpsMode);
       request.input("ai_user", mssql.BigInt, req.LoggedUserId);
       request.input("as_current_password", mssql.NVarChar(100), req.body.CurrentPassword);
@@ -181,7 +193,52 @@ class User {
       res.status(500).json({ err: "Error Occur" + e });
     }
   }
+  static GetProductDetails = async (req, res) => {
+    try {
+      const request = await dataAcces.getRequest();
+      request.input("ai_user_id", mssql.BigInt, req.LoggedUserId);
+      request.input("ai_product_id", mssql.BigInt, req.query.ProductId);
+      const result = await request.execute("PKG_CUSTOMER$p_get_product_details");
 
+      res.status(200).json(result.recordsets);
+    } catch (e) {
+      res.status(500).json({ err: "Error Occur" + e });
+    }
+  }
+  static SaveAddToCart = async (req, res) => {
+    try {
+      const request = await dataAcces.getRequest();
+      request.input("ai_cart_id", mssql.BigInt, req.body.CartId);
+      request.input("ai_product_id", mssql.BigInt, req.body.ProductId);
+      request.input("ai_user_id", mssql.BigInt, req.LoggedUserId);
+      request.input("as_size", mssql.VarChar(200), req.body.Size);
+      request.input("ai_quantity", mssql.TinyInt, req.body.Quantity);
+      request.input("as_status", mssql.VarChar(200), req.body.Status);
+      request.input("ai_logged_user_id", mssql.BigInt, req.LoggedUserId);
+      request.input("as_ops_mode", mssql.VarChar(30), req.body.OpsMode); // 'ADD' | 'UPDATE' | 'DELETE' 
+      request.output("p_rettype", mssql.TinyInt);
+      request.output("p_retmsg", mssql.VarChar(mssql.MAX)); // Or specify max length like mssql.VarChar(1000)
+
+      const result = await request.execute("PKG_PROD$p_save_cart_item");
+      const output = await handleReps(result.output);
+      res.status(200).json(output);
+    } catch (e) {
+      res.status(500).json({ err: "Error Occur" + e });
+    }
+  }
+  static GetUserCart = async (req, res) => {
+    try {
+      const request = await dataAcces.getRequest();
+      request.input("ai_user_id", mssql.BigInt, req.LoggedUserId);
+
+      const result = await request.execute("PKG_CUSTOMER$p_get_user_cart");
+      
+      res.status(200).json(result.recordsets);
+
+    } catch (e) {
+      res.status(500).json({ err: "Error Occur" + e });
+    }
+  }
 }
 
 module.exports = User;

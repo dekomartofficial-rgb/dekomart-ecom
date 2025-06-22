@@ -28,7 +28,7 @@
         <button class="btn btn-link text-dark" aria-label="Account">
             <i class="pi pi-user custom-icon"></i>
         </button>
-        <button class="btn btn-link text-dark position-relative " aria-label="Cart">
+        <button class="btn btn-link text-dark position-relative" [routerLink]="'user-cart'" aria-label="Cart">
             <i class="pi pi-shopping-cart custom-icon"></i>
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                 *ngIf="cartCount > 0">
@@ -74,7 +74,7 @@
             <ng-container [ngSwitch]="selectedScreenCode">
                 <app-user-account *ngSwitchCase="'UR00'"></app-user-account>
                 <app-user-orders *ngSwitchCase="'UR01'"></app-user-orders>
-                <app-cart *ngSwitchCase="'UR02'"></app-cart>
+                <app-cart [isShowHeaderAndFooter]="'N'" *ngSwitchCase="'UR02'"></app-cart>
                 <app-user-wishlist *ngSwitchCase="'UR03'"></app-user-wishlist>
             </ng-container>
         </ng-container>

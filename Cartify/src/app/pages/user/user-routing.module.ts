@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'user-account', component: UserAccountComponent},
   { path: 'user-orders', component: UserOrdersComponent},
   { path: 'user-cart', component: CartComponent},
-  { path: 'user-wishlist', component: UserWishlistComponent}
+  { path: 'user-wishlist', component: UserWishlistComponent}  
 ];
 
 

@@ -25,16 +25,17 @@
     <button class="btn btn-link text-dark" aria-label="Account" (click)="onLogin()">
       <i class="pi pi-user custom-icon"></i>
     </button>
-    <button class="btn btn-link text-dark position-relative " aria-label="Cart">
+    @if(isUserLogged()){
+    <button class="btn btn-link text-dark position-relative " aria-label="Cart" [routerLink]="'user/user-cart'">
       <i class="pi pi-shopping-cart custom-icon"></i>
       <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
         *ngIf="cartCount > 0">
         {{ cartCount }}
       </span>
     </button>
-    @if (isUserLogged()) {
     <button class="btn btn-link text-dark" aria-label="Account" (click)="Logout()">
-      <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i> </button>
+      <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i> 
+    </button>
     }
 
   </div>

@@ -190,3 +190,7 @@ input:focus {
 .reset-password-button {
   background-color: #a94442;
 }
+label {
+  padding: 3px;
+  color: #000000b5;
+}
