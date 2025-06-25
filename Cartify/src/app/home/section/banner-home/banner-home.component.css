@@ -38,3 +38,75 @@
   background-color: #f9f3f0;
   transform: translateY(-2px);
 }
+
+
+/******************************************
+   Responsive styles for smaller screens 
+*******************************************/
+@media (max-width: 1200px) {
+  .home-page {
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .home-page-text {
+    margin: 0;
+    p {
+      font-size: 6vw;
+    }
+    h1 {
+      font-size: 4.5vw;
+    }
+  }
+
+  .order-now-btn {
+    font-size: 1rem;
+    padding: 0.6rem 1.5rem;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  .home-page {
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    
+  }
+
+  .home-page-text {
+    margin: 0;
+    p {
+      font-size: 6vw;
+    }
+    h1 {
+      font-size: 4.5vw;
+    }
+  }
+
+  .order-now-btn {
+    font-size: 1rem;
+    padding: 0.6rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page {
+    background-position: left;
+  }
+  .home-page-text {
+    p {
+      font-size: 7vw;
+    }
+    h1 {
+      font-size: 5vw;
+    }
+  }
+
+  .order-now-btn {
+    font-size: 0.9rem;
+    width: 100%;
+  }
+}

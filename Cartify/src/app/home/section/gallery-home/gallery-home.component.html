@@ -4,7 +4,8 @@
     <div class="row align-items-center">
       <div class="col-md-4 mb-4 mb-md-0">
         <div class="left-title">
-          Why Choose <br>Dekomart?
+          <span class="line-large">Why Choose <br> Dekomart?</span>
+          <span class="line-small">Why Choose Dekomart?</span>
         </div>
       </div>
       <div class="col-md-8">
@@ -20,10 +21,10 @@
 </section>
 
 
-<div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 p-2">
+<div class="row g-3">
   @for (item of HomeHeaderData; track $index) {
-  <div class="this_is_new col-md-12 col-sm-12 col-lg-12 col-xl-12 pt-1">
-    <div class="col-md-12 col-xl-12 col-lg-12 col-sm-12 justify-content-between">
+  <div class="this_is_new ">
+    <div class=" justify-content-between">
       <div class="filter-tabs-2">
         <span class="filter-tab-2" style="font-size: 35px;padding: 17px;">{{item.MainHeader}}</span>
       </div>
@@ -31,9 +32,11 @@
     <div class="filter-tabs">
       <span class="filter-tab">{{item.HeaderTitle}}</span>
     </div>
-    <div class="product-grid">
+   
+    <div class="product-grid row g-3">
       @for (item of filterByHeaderTitle(item.HeaderTitle); track $index) {
-      <div class="product-card">
+        
+      <div class="product-card ">
         <div class="product-image-container">
           <img [src]="baseUrl+'/'+item.ImgPath" [alt]="item.HeaderTitle" class="product-image">
           <div class="top-row">
