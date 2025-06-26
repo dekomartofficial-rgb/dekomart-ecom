@@ -1,72 +1,100 @@
 .footer-main {
   background-color: #994037;
-  height: 39vh;
-}
-.footer-main li a {
-  text-decoration: none;
   color: white;
-  line-height: 7px;
-}
-.footer-list {
-  line-height: 7px !important;
-  padding: 21px;
-}
-.footer-header {
-  font-size: 29px;
-  font-weight: 600;
-}
-.stay-in-touch {
-  background-color: #994037;
-  color: white;
-  /* font-family: "Poppins", sans-serif; */
+  
+
+  .footer-header {
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 600;
+    margin-bottom: 12px;
+    word-break: break-word;
+  }
+
+  .footer-text {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+  }
+
+
+
+  .footer-list.col-lg-2 {
+  margin-left: -30px;
+  padding-left: 55px;
 }
 
-.stay-in-touch .logo {
-  width: 156px;
-  margin-bottom: 20px;
-}
+  .footer-link {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
 
-.stay-in-touch h4 {
-  font-size: 20px;
-  margin-bottom: 15px;
-  font-weight: 600;
-}
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 
-.stay-in-touch p {
-  font-size: 18px;
-  line-height: 1.4;
-  margin-bottom: 25px;
-}
+  .stay-in-touch {
+    .logo {
+      width: 140px;
+    }
 
-.email-subscribe {
+    .email-subscribe {
   display: flex;
-  align-items: center;
   gap: 10px;
+  align-items: center;
   margin-bottom: 20px;
+  width: 100%;
+
+  input {
+    flex: 1;
+    font-size: clamp(12px, 2.5vw, 16px);
+    padding: clamp(10px, 2vw, 14px);
+    border: none;
+    border-radius: 4px;
+    width: 100%;
+    min-width: 0;
+    background-color: color(srgb-linear 0.16 0.02 0.02);
+  }
+
+  .arrow-button {
+    padding: clamp(10px, 2vw, 14px) clamp(12px, 3vw, 18px);
+    font-size: clamp(10px, 3vw, 13px);
+    background-color: white;
+    color: #994037;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
 }
 
-.email-subscribe input {
-  padding: 8px 12px;
-  flex: 1;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
+
+
+    .contact-link {
+      font-size: 14px;
+      color: white;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
-.arrow-button {
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-}
 
-.contact-link {
-  color: white;
-  text-decoration: none;
-  font-size: 16px;
-}
+/* Mobile tweaks: stack input + button */
+@media (max-width: 576px) {
+  .email-subscribe {
+    flex-direction: column;
 
-.contact-link:hover {
-  text-decoration: underline;
+    input,
+    .arrow-button {
+      width: 100%;
+    }
+
+    .arrow-button {
+      margin-top: 8px;
+    }
+  }
 }

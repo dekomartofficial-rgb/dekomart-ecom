@@ -1,23 +1,41 @@
-<div class="col-md-12 col-sm-12 col-xs-12" style="background-color: #994037; height: 30px;">
-</div>
-<!-- navbar.component.html -->
+<!-- Top Maroon Bar -->
+<div class="w-100" style="background-color: #994037; height: 30px;"></div>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
   <div class="container-fluid">
-    <!-- Logo -->
-    <a class="navbar-brand" routerLink="/">
+
+    <!--  LOGO Always on the Left -->
+    <a class="navbar-brand me-auto" routerLink="/">
       <img src="assets/nave-bar-images/logo.png" alt="Deko Mart" class="img-fluid" style="max-height: 50px;">
     </a>
 
-    <!-- Hamburger Button -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+    <!--  ACTION BUTTONS (Mobile Only Left of Hamburger) -->
+    <div class="d-flex d-lg-none gap-2 align-items-center">
+      <button class="btn btn-link text-dark p-1"><i class="pi pi-search"></i></button>
+      <button class="btn btn-link text-dark p-1"><i class="pi pi-heart"></i></button>
+      <button class="btn btn-link text-dark p-1" (click)="onLogin()"><i class="pi pi-user"></i></button>
+      @if (isUserLogged()) {
+        <button class="btn btn-link text-dark position-relative p-1" [routerLink]="'user/user-cart'">
+          <i class="pi pi-shopping-cart"></i>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" *ngIf="cartCount > 0">
+            {{ cartCount }}
+          </span>
+        </button>
+        <button class="btn btn-link text-dark p-1" (click)="Logout()">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </button>
+      }
+    </div>
+
+    <!-- Hamburger Toggle -->
+    <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
       aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Collapsible Navbar -->
+    <!--  Collapsible Nav + Action Buttons (Desktop) -->
     <div class="collapse navbar-collapse" id="mainNavbar">
-      <!-- Navigation Links -->
-      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav mx-auto text-center">
         <li class="nav-item" *ngFor="let link of mainNavLinks">
           <a class="nav-link fw-semibold text-dark" [routerLink]="link.path" routerLinkActive="active">
             {{ link.label }}
@@ -25,27 +43,29 @@
         </li>
       </ul>
 
-      <!-- Action Buttons -->
-      <div class="d-flex align-items-center gap-2">
-        <button class="btn btn-link text-dark"><i class="pi pi-search custom-icon"></i></button>
-        <button class="btn btn-link text-dark"><i class="pi pi-heart custom-icon"></i></button>
-        <button class="btn btn-link text-dark" (click)="onLogin()"><i class="pi pi-user custom-icon"></i></button>
-
+      <!--  Action Buttons (Desktop Only) -->
+      <div class="d-none d-lg-flex align-items-center gap-2">
+        <button class="btn btn-link text-dark p-1"><i class="pi pi-search"></i></button>
+        <button class="btn btn-link text-dark p-1"><i class="pi pi-heart"></i></button>
+        <button class="btn btn-link text-dark p-1" (click)="onLogin()"><i class="pi pi-user"></i></button>
         @if (isUserLogged()) {
-          <button class="btn btn-link text-dark position-relative" [routerLink]="'user/user-cart'">
-            <i class="pi pi-shopping-cart custom-icon"></i>
+          <button class="btn btn-link text-dark position-relative p-1" [routerLink]="'user/user-cart'">
+            <i class="pi pi-shopping-cart"></i>
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" *ngIf="cartCount > 0">
               {{ cartCount }}
             </span>
           </button>
-          <button class="btn btn-link text-dark" (click)="Logout()">
-            <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>
+          <button class="btn btn-link text-dark p-1" (click)="Logout()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
           </button>
         }
       </div>
     </div>
+
   </div>
 </nav>
+
+
 <!-- Category Navigation with Images -->
 @if(isShowChild === 'Y'){
 <div class="category-nav col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex">
