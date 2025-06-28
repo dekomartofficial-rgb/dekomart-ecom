@@ -45,7 +45,9 @@ export class NavHomeComponent implements OnInit {
 
   constructor(private http: HttpClientService, private router: Router) { }
   ngOnInit(): void {
-    this.getUserProfile(this.http.getUserId())
+    if (this.http.getUserId() > 0) {
+      this.getUserProfile(this.http.getUserId())
+    } 
   }
 
   onLogin() {
