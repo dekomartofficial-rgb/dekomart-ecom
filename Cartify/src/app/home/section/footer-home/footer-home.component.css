@@ -1,100 +1,155 @@
 .footer-main {
   background-color: #994037;
   color: white;
-  
-
-  .footer-header {
-    font-size: clamp(18px, 2.5vw, 24px);
-    font-weight: 600;
-    margin-bottom: 12px;
-    word-break: break-word;
-  }
-
-  .footer-text {
-    font-size: 14px;
-    line-height: 1.5;
-    margin-bottom: 15px;
-  }
-
-
-
-  .footer-list.col-lg-2 {
-  margin-left: -30px;
-  padding-left: 55px;
+  padding: 40px 0 20px 0;
 }
 
-  .footer-link {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
+.footer-header {
+  font-size: clamp(16px, 4vw, 24px);
+  font-weight: 600;
+  margin-bottom: 15px;
+  word-break: break-word;
+  line-height: 1.3;
+}
 
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+.footer-text {
+  font-size: clamp(13px, 2.5vw, 16px);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
 
-  .stay-in-touch {
-    .logo {
-      width: 140px;
-    }
+.footer-link {
+  color: white;
+  text-decoration: none;
+  font-size: clamp(13px, 2.5vw, 15px);
+  line-height: 1.8;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  display: block;
+  padding: 2px 0;
+}
 
-    .email-subscribe {
+.footer-link:hover {
+  color: white;
+  text-decoration: underline;
+  opacity: 1;
+  transform: translateX(5px);
+}
+
+.stay-in-touch .logo {
+  width: clamp(120px, 20vw, 160px);
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.email-subscribe {
   display: flex;
-  gap: 10px;
-  align-items: center;
+  gap: 8px;
+  align-items: stretch;
   margin-bottom: 20px;
   width: 100%;
-
-  input {
-    flex: 1;
-    font-size: clamp(12px, 2.5vw, 16px);
-    padding: clamp(10px, 2vw, 14px);
-    border: none;
-    border-radius: 4px;
-    width: 100%;
-    min-width: 0;
-    background-color: color(srgb-linear 0.16 0.02 0.02);
-  }
-
-  .arrow-button {
-    padding: clamp(10px, 2vw, 14px) clamp(12px, 3vw, 18px);
-    font-size: clamp(10px, 3vw, 13px);
-    background-color: white;
-    color: #994037;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
 }
 
-
-
-    .contact-link {
-      font-size: 14px;
-      color: white;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
+.email-subscribe input {
+  flex: 1;
+  font-size: clamp(12px, 2.5vw, 14px);
+  padding: clamp(10px, 2vw, 12px);
+  border: none;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  min-width: 0;
+  backdrop-filter: blur(10px);
 }
 
+.email-subscribe input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
 
-/* Mobile tweaks: stack input + button */
+.email-subscribe input:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.arrow-button {
+  padding: clamp(10px, 2vw, 12px) clamp(12px, 3vw, 16px);
+  font-size: clamp(12px, 3vw, 14px);
+  background-color: white;
+  color: #994037;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.arrow-button:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.contact-link {
+  font-size: clamp(13px, 2.5vw, 15px);
+  color: white;
+  text-decoration: none;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+}
+
+.contact-link:hover {
+  color: white;
+  text-decoration: underline;
+  opacity: 1;
+}
+
+.footer-list {
+  margin-bottom: 30px;
+}
+
+.footer-list ul {
+  padding-left: 0;
+}
+
+.footer-list li {
+  margin-bottom: 8px;
+}
+.stay-in-touch {
+  max-width: 100%;
+}
+
+.email-subscribe input[type="email"] {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.arrow-button {
+  padding: 8px 12px;
+  border: none;
+  background-color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
 @media (max-width: 576px) {
   .email-subscribe {
     flex-direction: column;
+  }
 
-    input,
-    .arrow-button {
-      width: 100%;
-    }
+  .email-subscribe input[type="email"],
+  .arrow-button {
+    width: 100%;
+  }
 
-    .arrow-button {
-      margin-top: 8px;
-    }
+  .arrow-button {
+    margin-top: 8px;
   }
 }

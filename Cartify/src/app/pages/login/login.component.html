@@ -1,37 +1,28 @@
 <app-nav-home [isShowChild]="'N'"></app-nav-home>
 <div class="container">
-  <div class="col-md-12 col-lg-12 col-sm-12 col-xl-12 d-flex login-page-header">
-    @if(isRegNewUser){
-    <div class="col-md-6 col-lg-6 col-sm-6 col-xl-6 login-page-image">
-      <div class="col-md-12 col-lg-12 col-sm-12 col-xl-12 login-page-main-header"
-        style="height: 100%;background-color: #994037;">
-        <h1 class="login-box-text">Login</h1>
-        <h1 class="login-box-text" style="color: #ffffffb5;font-size: 20px;">Get access to your Orders, Wishlist and
-          Recommendations</h1>
+  <div class="col-md-12 col-lg-12 col-sm-0 col-0 col-xl-12 d-flex login-page-header">
+    <div class="col-0 col-sm-0 login-page-image">
+      <div class="login-page-main-header d-flex flex-column justify-content-center align-items-center text-center p-3"
+        style="height: 100%; background-color: #994037;">
+        @if(isRegNewUser){
+        <h1 class="login-box-text text-white fs-3 fs-md-2">Login</h1>
+        <h2 class="login-box-text text-white-50 fs-6 fs-md-5">Get access to your Orders, Wishlist and Recommendations
+        </h2>
+        } @else {
+        <h1 class="login-box-text text-white fs-3 fs-md-2">Looks like you're new here!</h1>
+        <h2 class="login-box-text text-white-50 fs-6 fs-md-5">Sign up with your basic details to get started</h2>
+        }
       </div>
-      <div class="col-md-12 col-lg-12 col-sm-12 col-xl-12">
-        <img src="/assets/admin-images/LOGO-03.png" style="width: 100%;" alt="" srcset="">
-      </div>
-    </div>
-    } @else {
-    <div class="col-md-6 col-lg-6 col-sm-6 col-xl-6 login-page-image">
-      <div class="col-md-12 col-lg-12 col-sm-12 col-xl-12 login-page-main-header"
-        style="height: 100%;background-color: #994037;">
-        <h1 class="login-box-text">Looks like you're new here!</h1>
-        <h1 class="login-box-text" style="color: #ffffffb5;font-size: 20px;">Sign up with your basic details to get
-          started</h1>
-      </div>
-      <div class="col-md-12 col-lg-12 col-sm-12 col-xl-12">
-        <img src="/assets/admin-images/LOGO-03.png" style="width: 100%;" alt="" srcset="">
+      <div class="text-center">
+        <img src="/assets/admin-images/LOGO-03.png" class="img-fluid" alt="Logo">
       </div>
     </div>
-    }
 
-    <div class="col-md-6 col-lg-6 col-sm-6 col-xl-6">
+    <div class="col-md-12 col-lg-6 col-sm-12 col-12 col-xl-6 p-0">
       <div class="shadow">
-        <div class="col-md-4 login-form">
+        <div class="col-md-12 col-sm-12 col-12">
           @if(isRegNewUser){
-          <div class="login-form-main d-flex justify-content-center">
+          <div class="login-form-main d-flex justify-content-center p-4">
             <form [formGroup]="loginForm">
               <h2 class="login-title" style="text-align: center;">Log in to Exclusive</h2>
               <p class="text-muted mb-4" style="text-align: center;">Enter your details below</p>
@@ -74,13 +65,13 @@
             </form>
           </div>
           } @else {
-          <form #NewUser="ngForm" >
+          <form #NewUser="ngForm">
             <h2 style="text-align: center;">Create New Account</h2>
             <p class="text-muted mb-4" style="text-align: center;">Enter your details below</p>
             <div class="container-fluid">
               <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 ">
                 <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex gap-2">
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-6 col-sm-12 col-lg-6 col-xl-6">
                     <label for="firstName">First Name</label>
                     <input id="firstName" type="text" placeholder="Enter your first name"
                       [(ngModel)]="CustomerReg.FirstName" #firstName="ngModel" name="firstName" required
@@ -89,7 +80,7 @@
                       <small>First Name required.</small>
                     </div>
                   </div>
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-6 col-sm-12 col-lg-6 col-xl-6">
                     <label for="lastName">Last Name</label>
                     <input id="lastName" type="text" placeholder="Enter your last name"
                       [(ngModel)]="CustomerReg.SecondName" #lastName="ngModel" name="lastName" required
@@ -100,7 +91,7 @@
                   </div>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex gap-2">
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-6 col-sm-12 col-lg-6 col-xl-6">
                     <label for="dateofbirth">Date Of Birth</label>
                     <input id="dateofbirth" type="date" placeholder="Enter your email" [(ngModel)]="CustomerReg.Dob"
                       #dateofbirth="ngModel" name="dateofbirth" required (ngModelChange)="validateAge($event)"
@@ -112,7 +103,7 @@
                       <small>You must be at least 18 years old.</small>
                     </div>
                   </div>
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-6 col-sm-12 col-lg-6 col-xl-6 col-sm-12 col-lg-6 col-xl-6">
                     <label for="email">Email</label>
                     <input id="email" type="email" placeholder="Enter your email" [(ngModel)]="CustomerReg.Email"
                       #email="ngModel" name="email" email required
@@ -126,7 +117,7 @@
                   </div>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex gap-2">
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-6 col-sm-12 col-lg-6 col-xl-6 col-sm-12 col-lg-6 col-xl-6">
                     <label for="password">Password</label>
                     <input id="password" type="password" placeholder="Enter your password"
                       [(ngModel)]="CustomerReg.Password" #password="ngModel" name="password" required
@@ -145,7 +136,7 @@
                       <small>Password doesn't match</small>
                     </div>
                   </div>
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-6 col-sm-12 col-lg-6 col-xl-6">
                     <label for="cpassword">Confirm password</label>
                     <input id="cpassword" type="password" placeholder="Enter your Confirm password"
                       [(ngModel)]="CustomerReg.CPassword" #cpassword="ngModel" name="cpassword"
@@ -166,7 +157,7 @@
                   </div>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex gap-2">
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-6 col-sm-12 col-lg-6 col-xl-6 col-sm-12 col-lg-6 col-xl-6">
                     <label for="phone">Phone Number</label>
                     <input id="phone" type="tel" placeholder="Enter your phone number"
                       [(ngModel)]="CustomerReg.PhoneNumber" #phonenumber="ngModel" name="phonenumber"
@@ -183,22 +174,27 @@
               </div>
             </div>
             <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 justify-content-center d-flex p-2">
-              <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6 justify-content-center d-flex">
-                <button type="submit" class="register-button" [disabled]="NewUser.invalid" (click)="saveNewCustom(CustomerReg)"><i class="fa-solid fa-plus"></i>Register</button>
+              <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 col-12 justify-content-center d-flex">
+                <button type="submit" class="register-button" [disabled]="NewUser.invalid"
+                  (click)="saveNewCustom(CustomerReg)"><i class="fa-solid fa-plus"></i>Register</button>
               </div>
-              <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6 justify-content-center d-flex">
+              <!-- <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6 justify-content-center d-flex">
                 <button type="button" class="register-button"><i class="fa-brands fa-google"></i>Sign up with
                   Google</button>
-              </div>
+              </div> -->
             </div>
           </form>
           }
-          <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex justify-content-center" style="padding: 16px;">
-            @if(isRegNewUser){
-            <p style="color: #000000a3;" (click)="changeToUserReg()">New to Dekomart? Create an account</p>
-            } @else {
-            <p style="color: #000000a3;" (click)="changeToUserReg()">Existing User? Log in</p>
-            }
+          <div class="col-12 d-flex justify-content-center align-items-center"
+            style="padding: 16px; text-align: center;">
+            <div>
+              @if(isRegNewUser){
+              <p style="color: #000000a3; cursor: pointer;" (click)="changeToUserReg()">New to Dekomart? Create an
+                account</p>
+              } @else {
+              <p style="color: #000000a3; cursor: pointer;" (click)="changeToUserReg()">Existing User? Log in</p>
+              }
+            </div>
           </div>
           @if (errorMessage) {
           <div class="error-alert">

@@ -194,3 +194,12 @@ label {
   padding: 3px;
   color: #000000b5;
 }
+
+@media (max-width: 1024px) {
+  form{
+    padding: 10px;
+  }
+  .container{
+    gap: 11px;
+  }
+}

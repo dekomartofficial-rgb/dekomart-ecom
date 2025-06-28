@@ -115,7 +115,7 @@
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  gap: 24px;
+  gap: 11px;
   padding: 24px 20px;
 }
 
@@ -167,12 +167,12 @@
   transition: all 0.2s;
 }
 
-.sidebar-menu a:hover {
+.sidebar-menu li:hover {
   background: #f3f4f6;
   color: #4f46e5;
 }
 
-.sidebar-menu a.active {
+.sidebar-menu li.active {
   background: #eff6ff;
   color: #4f46e5;
   border-right: 3px solid #4f46e5;
@@ -566,6 +566,16 @@
     padding-right: 1rem;
     gap: 1.5rem;
   }
+  .windows-name {
+    display: none;
+  }
+  .sidebar {
+    width: 61px !important;
+  }
+
+  .sidebar-menu li {
+    justify-content: center !important;
+  }
 }
 .icon-button i {
   font-size: 24px;
@@ -575,4 +585,7 @@
 }
 span {
   font-weight: 800;
+}
+.container {
+  justify-content: center;
 }

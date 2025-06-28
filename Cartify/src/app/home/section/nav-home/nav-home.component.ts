@@ -20,6 +20,7 @@ import { HttpClientService } from '@/app/provider/services/http-client.service';
 export class NavHomeComponent implements OnInit {
   @Input({ required: true }) isShowChild: string = 'N'
   cartCount: number = 0;
+  isDropdownOpen = false;
 
   mainNavLinks = [
     { path: '/', label: 'NEW IN' },
@@ -47,7 +48,7 @@ export class NavHomeComponent implements OnInit {
   ngOnInit(): void {
     if (this.http.getUserId() > 0) {
       this.getUserProfile(this.http.getUserId())
-    } 
+    }
   }
 
   onLogin() {
@@ -71,6 +72,9 @@ export class NavHomeComponent implements OnInit {
     return this.http.isLoggedIn()
   }
 
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
 
   getUserProfile(id: number) {
     this.http.get<any[]>('user/GetUserProfiler', { UserId: id }).subscribe((res) => {

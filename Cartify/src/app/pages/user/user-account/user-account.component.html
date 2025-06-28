@@ -1,25 +1,9 @@
 <form #NewUser="ngForm">
-    <h2 style="text-align: center;">Update Profile</h2> 
-    <div class="container-fluid">
-        <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 ">
-            <div class="container d-flex justify-content-center align-items-center m-2">
-                <div class="upload-container text-center">
-                    <div class="upload-circle mx-auto mb-3">
-                        <img src="https://img.icons8.com/ios-filled/50/000000/camera.png" alt="Camera Icon" />
-                    </div>
-
-                    <label class="upload-button mb-2">
-                        <img src="https://img.icons8.com/ios/20/upload.png" style="margin-right: 6px;" />
-                        Choose Image
-                        <input type="file" />
-                    </label>
-
-                    <div class="upload-text">Or drag and drop an image here</div>
-                </div>
-            </div>
-
-            <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex gap-2">
-                <div class="form-group col-md-6">
+    <h2 class="text-center">Update Profile</h2>
+    <div class="container">
+        <div class="row g-2">
+            <div class="col-12 col-md-6">
+                <div class="form-group">
                     <label for="firstName">First Name</label>
                     <input id="firstName" type="text" placeholder="Enter your first name"
                         [(ngModel)]="CustomerReg.FirstName" #firstName="ngModel" name="firstName" required
@@ -28,7 +12,9 @@
                         <small>First Name required.</small>
                     </div>
                 </div>
-                <div class="form-group col-md-6">
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
                     <label for="lastName">Last Name</label>
                     <input id="lastName" type="text" placeholder="Enter your last name"
                         [(ngModel)]="CustomerReg.SecondName" #lastName="ngModel" name="lastName" required
@@ -38,8 +24,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex gap-2">
-                <div class="form-group col-md-6">
+        </div>
+        <div class="row g-2">
+            <div class="col-12 col-md-6">
+                <div class="form-group">
                     <label for="dateofbirth">Date Of Birth</label>
                     <input id="dateofbirth" type="date" placeholder="Enter your email" [(ngModel)]="CustomerReg.Dob"
                         #dateofbirth="ngModel" name="dateofbirth" required (ngModelChange)="validateAge($event)"
@@ -51,7 +39,9 @@
                         <small>You must be at least 18 years old.</small>
                     </div>
                 </div>
-                <div class="form-group col-md-6">
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
                     <label for="email">Email</label>
                     <input id="email" type="email" placeholder="Enter your email" [(ngModel)]="CustomerReg.Email"
                         #email="ngModel" name="email" email required
@@ -64,8 +54,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex gap-2">
-                <div class="form-group col-md-6">
+        </div>
+        <div class="row g-2">
+            <div class="col-12 col-md-6">
+                <div class="form-group">
                     <label for="phone">Phone Number</label>
                     <input id="phone" type="tel" placeholder="Enter your phone number"
                         [(ngModel)]="CustomerReg.PhoneNumber" #phonenumber="ngModel" name="phonenumber"
@@ -80,82 +72,83 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 justify-content-center d-flex p-2">
-        <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6 justify-content-center d-flex">
-            <button type="submit" class="register-button" [disabled]="NewUser.invalid"
-                (click)="saveNewCustom(CustomerReg)"><i class="fa-solid fa-plus"></i>Update User Profile</button>
-        </div>
-        <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6 justify-content-center d-flex">
-            <button type="submit" class="register-button" [disabled]="NewUser.invalid" (click)="showModal = true"><i
-                    class="fa-solid fa-plus"></i>Change Password</button>
+        <div class="row g-2 justify-content-center mt-3">
+            <div class="col-12 col-md-6 d-flex justify-content-center">
+                <button type="submit" class="register-button w-100" [disabled]="NewUser.invalid"
+                    (click)="saveNewCustom(CustomerReg)">
+                    <i class="fa-solid fa-plus"></i>Update User Profile
+                </button>
+            </div>
+            <div class="col-12 col-md-6 d-flex justify-content-center">
+                <button type="submit" class="register-button w-100" [disabled]="NewUser.invalid" (click)="showModal = true">
+                    <i class="fa-solid fa-plus"></i>Change Password
+                </button>
+            </div>
         </div>
     </div>
 </form>
-
 
 <!-- change-password -->
 @if(showModal){
 <div class="password-popup-backdrop">
     <div class="password-popup">
         <h2>Change Password</h2>
-        <form #PasswordResetForm="ngForm">
-            <!-- current-password -->
-            <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
-                <label for="current-password">Current Password</label>
-                <input id="current-password" type="password" placeholder="Enter your Current Password"
-                    [(ngModel)]="ResetPasswordForm.CurrentPassword" #currentpassword="ngModel" name="current-password"
-                    required [class.invalid-input]="isSubmitted && currentpassword.invalid"
-                    pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[A-Za-z\d\S]{3,}$" />
-                <div class="required-field" *ngIf="isSubmitted && currentpassword.errors?.['required']">
-                    <small>Password required.</small>
+        <form #PasswordResetForm="ngForm" style="box-shadow: none">
+            <div class="row g-2">
+                <div class="col-12">
+                    <label for="current-password">Current Password</label>
+                    <input id="current-password" type="password" placeholder="Enter your Current Password"
+                        [(ngModel)]="ResetPasswordForm.CurrentPassword" #currentpassword="ngModel" name="current-password"
+                        required [class.invalid-input]="isSubmitted && currentpassword.invalid"
+                        pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[A-Za-z\d\S]{3,}$" />
+                    <div class="required-field" *ngIf="isSubmitted && currentpassword.errors?.['required']">
+                        <small>Password required.</small>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <label for="new-password">New Password</label>
+                    <input id="new-password" type="password" placeholder="Enter your New Password"
+                        [(ngModel)]="ResetPasswordForm.NewPassword" #newpassword="ngModel" name="newpassword" required
+                        [class.invalid-input]="isSubmitted && newpassword.invalid"
+                        pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[A-Za-z\d\S]{3,}$" />
+                    <div class="required-field" *ngIf="isSubmitted && newpassword.errors?.['required']">
+                        <small>Enter your New Password.</small>
+                    </div>
+                    <div class="required-field" *ngIf="isSubmitted && newpassword.errors?.['minLength']">
+                        <small>Min 8 Character required.</small>
+                    </div>
+                    <div class="required-field" *ngIf="isSubmitted && newpassword.errors?.['pattern']">
+                        <small>Username must contain at least one letter and one number</small>
+                    </div>
+                    <div class="required-field"
+                        *ngIf="isSubmitted && ResetPasswordForm.NewPassword !== ResetPasswordForm.CNewPassword">
+                        <small>Password doesn't match</small>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <label for="c-new-password">Confirm Password</label>
+                    <input id="c-new-password" type="password" placeholder="Enter your New Confirm Password"
+                        [(ngModel)]="ResetPasswordForm.CNewPassword" #cnewpassword="ngModel" name="newpassword" required
+                        [class.invalid-input]="isSubmitted && cnewpassword.invalid"
+                        pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[A-Za-z\d\S]{3,}$" />
+                    <div class="required-field" *ngIf="isSubmitted && cnewpassword.errors?.['required']">
+                        <small>Enter your New Confirm Password.</small>
+                    </div>
+                    <div class="required-field" *ngIf="isSubmitted && cnewpassword.errors?.['minLength']">
+                        <small>Min 8 Character required.</small>
+                    </div>
+                    <div class="required-field" *ngIf="isSubmitted && cnewpassword.errors?.['pattern']">
+                        <small>Username must contain at least one letter and one number</small>
+                    </div>
+                    <div class="required-field"
+                        *ngIf="isSubmitted && ResetPasswordForm.NewPassword !== ResetPasswordForm.CNewPassword">
+                        <small>Password doesn't match</small>
+                    </div>
                 </div>
             </div>
-            <!-- new-password -->
-            <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
-                <label for="new-password">New Password</label>
-                <input id="new-password" type="password" placeholder="Enter your New Password"
-                    [(ngModel)]="ResetPasswordForm.NewPassword" #newpassword="ngModel" name="newpassword" required
-                    [class.invalid-input]="isSubmitted && newpassword.invalid"
-                    pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[A-Za-z\d\S]{3,}$" />
-                <div class="required-field" *ngIf="isSubmitted && newpassword.errors?.['required']">
-                    <small>Enter your New Password.</small>
-                </div>
-                <div class="required-field" *ngIf="isSubmitted && newpassword.errors?.['minLength']">
-                    <small>Min 8 Character required.</small>
-                </div>
-                <div class="required-field" *ngIf="isSubmitted && newpassword.errors?.['pattern']">
-                    <small>Username must contain at least one letter and one number</small>
-                </div>
-                <div class="required-field"
-                    *ngIf="isSubmitted && ResetPasswordForm.NewPassword !== ResetPasswordForm.CNewPassword">
-                    <small>Password doesn't match</small>
-                </div>
-            </div>
-            <!-- conform-new-password -->
-            <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
-                <label for="c-new-password">Confirm Password</label>
-                <input id="c-new-password" type="password" placeholder="Enter your New Confirm Password"
-                    [(ngModel)]="ResetPasswordForm.CNewPassword" #cnewpassword="ngModel" name="newpassword" required
-                    [class.invalid-input]="isSubmitted && cnewpassword.invalid"
-                    pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[A-Za-z\d\S]{3,}$" />
-                <div class="required-field" *ngIf="isSubmitted && cnewpassword.errors?.['required']">
-                    <small>Enter your New Confirm Password.</small>
-                </div>
-                <div class="required-field" *ngIf="isSubmitted && cnewpassword.errors?.['minLength']">
-                    <small>Min 8 Character required.</small>
-                </div>
-                <div class="required-field" *ngIf="isSubmitted && cnewpassword.errors?.['pattern']">
-                    <small>Username must contain at least one letter and one number</small>
-                </div>
-                <div class="required-field"
-                    *ngIf="isSubmitted && ResetPasswordForm.NewPassword !== ResetPasswordForm.CNewPassword">
-                    <small>Password doesn't match</small>
-                </div>
-            </div>
-            <div class="popup-buttons">
-                <button class="btn-cancel" (click)="showModal = false" >Cancel</button>
-                <button class="btn-update reset-password-button" (click)="ResetPassword()" [disabled]="PasswordResetForm.invalid">Update Password</button>
+            <div class="popup-buttons d-flex justify-content-between mt-3">
+                <button class="btn-cancel" type="button" (click)="showModal = false">Cancel</button>
+                <button class="btn-update reset-password-button" type="button" (click)="ResetPassword()" [disabled]="PasswordResetForm.invalid">Update Password</button>
             </div>
         </form>
     </div>

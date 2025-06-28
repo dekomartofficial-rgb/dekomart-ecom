@@ -2,10 +2,8 @@
   max-width: 655px;
   margin: 0 auto;
   background: white;
-  border-radius: 0px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  /* border: 1px solid black; */
+  border-radius: 0px; 
+  overflow: hidden; 
   height: 100%;
 }
 
@@ -337,4 +335,15 @@ input:disabled {
 .default-btn {
   background-color: #d1fae5;
   color: #065f46;
+}
+@media (max-width: 1024px){
+  .address-list{
+    padding: 0px !important;
+  }
+  .password-popup{
+    max-height: 80vh;
+    overflow-y: auto;
+    width: 76%;
+    padding: 6px !important;
+  }
 }
