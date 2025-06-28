@@ -1,214 +1,64 @@
-  <div class="main-content">
-        <div class="content-header">
-            <div class="order-tabs">
-                <button class="tab-button active">Current</button>
-                <button class="tab-button">Unpaid</button>
-                <button class="tab-button">All orders</button>
-            </div>
+<div class="main-content">
+    <!-- <div class="content-header">
+        <div class="order-tabs">
+            <button class="tab-button active">Current</button>
+            <button class="tab-button">Unpaid</button>
+            <button class="tab-button">All orders</button>
         </div>
+    </div> -->
 
-        <div class="order-list">
-            <!-- Order 1 -->
-            <div class="order-item">
-                <div class="order-header">
-                    <div class="order-info">
-                        <h3>Order #: 73262</h3>
-                        <div class="order-meta">4 Products | By Alex John | 13:45, Nov 10, 2025</div>
-                    </div>
-                    <div class="order-actions">
-                        <a href="#" class="btn btn-outline">📥 Download invoice</a>
-                        <button class="btn-more">⋯</button>
+    <div class="order-list">
+        @for (item of OrderDetails; track $index) {
+        <div class="order-item">
+            <div class="order-header">
+                <div class="order-info">
+                    <h3>Order No: {{item.OrderNo}}</h3>
+                    <div class="order-meta">{{item.OrderCount}} Products | By {{item.OrderBy}} | {{item.OrderDate}}
                     </div>
                 </div>
-
-                <div class="order-details">
-                    <div class="detail-item">
-                        <div class="detail-label">Status:</div>
-                        <span class="order-status status-on-way">On the way</span>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Date of delivery:</div>
-                        Fri, 13 Nov, 2025
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Delivered to:</div>
-                        Great street, New York Brooklyn SA, PO: 212891
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 12px;">
-                    <strong class="total-amount">Total: USD 340.00</strong>
-                </div>
-
-                <div class="product-grid">
-                    <div class="product-card">
-                        <div class="product-image cup">☕</div>
-                        <div class="product-info">
-                            <div class="product-name">Great product name goes here</div>
-                            <div class="product-details">Quantity: 1x • USD 340</div>
-                            <div class="product-details">Color: Silver</div>
-                            <div class="product-details">Size: Large</div>
-                        </div>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-image lamp">💡</div>
-                        <div class="product-info">
-                            <div class="product-name">Table lamp for office or bedroom</div>
-                            <div class="product-details">Quantity: 1x • USD 76</div>
-                            <div class="product-details">Color: Silver</div>
-                            <div class="product-details">Size: Large</div>
-                        </div>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-image pot">🏺</div>
-                        <div class="product-info">
-                            <div class="product-name">Great product name goes here</div>
-                            <div class="product-details">Quantity: 2x • USD 87</div>
-                            <div class="product-details">Color: Silver</div>
-                            <div class="product-details">Size: Large</div>
-                        </div>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-image cup">☕</div>
-                        <div class="product-info">
-                            <div class="product-name">Great cup white minimalist style</div>
-                            <div class="product-details">Quantity: 1x • USD 340</div>
-                            <div class="product-details">Color: Silver</div>
-                            <div class="product-details">Size: Large</div>
-                        </div>
-                    </div>
+                <div class="order-actions">
+                    <a href="#" class="btn btn-outline"><i class="fa-solid fa-file-lines"></i> Download invoice</a> 
                 </div>
             </div>
 
-            <!-- Order 2 -->
-            <div class="order-item">
-                <div class="order-header">
-                    <div class="order-info">
-                        <h3>Order #: 09177</h3>
-                        <div class="order-meta">4 Products | By Alex John | 13:45, Nov 10, 2025</div>
-                    </div>
-                    <div class="order-actions">
-                        <a href="#" class="btn btn-outline">📥 Download invoice</a>
-                    </div>
+            <div class="order-details">
+                <div class="detail-item">
+                    <div class="detail-label">Status:</div>
+                    <span class="order-status status-on-way"
+                        [ngStyle]="{ 'background-color': item.OrderStatusColour}">{{item.OrderStatus}}</span>
                 </div>
-
-                <div class="order-details">
-                    <div class="detail-item">
-                        <div class="detail-label">Status:</div>
-                        <span class="order-status status-shipped">Shipped to customer</span>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Date of delivery:</div>
-                        Fri, 13 Nov, 2025
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Delivered to:</div>
-                        Great street, New York Brooklyn SA, PO: 212891
-                    </div>
+                <div class="detail-item">
+                    <div class="detail-label">Date of delivery:</div>
+                    {{item.DateOfDelivery}}
                 </div>
-
-                <div style="margin-bottom: 12px;">
-                    <strong class="total-amount">Total: USD 461.99</strong>
-                </div>
-
-                <div class="product-grid">
-                    <div class="product-card">
-                        <div class="product-image cup">☕</div>
-                        <div class="product-info">
-                            <div class="product-name">Great product name goes here</div>
-                            <div class="product-details">Quantity: 1x • USD 340</div>
-                            <div class="product-details">Color: Silver</div>
-                            <div class="product-details">Size: Large</div>
-                        </div>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-image shapes">🔷</div>
-                        <div class="product-info">
-                            <div class="product-name">Geometric shapes for kids wooden style</div>
-                            <div class="product-details">Quantity: 1x • USD 340</div>
-                            <div class="product-details">Color: Silver</div>
-                            <div class="product-details">Size: Large</div>
-                        </div>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-image jacket">🧥</div>
-                        <div class="product-info">
-                            <div class="product-name">Amazing product name goes here</div>
-                            <div class="product-details">Quantity: 1x • USD 340</div>
-                            <div class="product-details">Color: Silver</div>
-                            <div class="product-details">Size: Large</div>
-                        </div>
-                    </div>
+                <div class="detail-item">
+                    <div class="detail-label">Delivered to:</div>
+                    {{item.DeliveryAddress}}
                 </div>
             </div>
 
-            <!-- Order 3 -->
-            <div class="order-item">
-                <div class="order-header">
-                    <div class="order-info">
-                        <h3>Order #: 77110</h3>
-                        <div class="order-meta">4 Products | By Alex John | 13:45, Nov 10, 2025</div>
-                    </div>
-                    <div class="order-actions">
-                        <a href="#" class="btn btn-outline">📥 Download invoice</a>
-                    </div>
-                </div>
-
-                <div class="order-details">
-                    <div class="detail-item">
-                        <div class="detail-label">Status:</div>
-                        <span class="order-status status-shipped">Shipped to customer</span>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Date of delivery:</div>
-                        Sat, 30 Nov, 2025
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Delivered to:</div>
-                        Great street, New York Brooklyn SA, PO: 212891
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 12px;">
-                    <strong class="total-amount">Total: USD 2,340.00</strong>
-                </div>
-
-                <div class="product-grid">
-                    <div class="product-card">
-                        <div class="product-image diamond">💎</div>
-                        <div class="product-info">
-                            <div class="product-name">Great product name goes here</div>
-                            <div class="product-details">Quantity: 1x • USD 340</div>
-                            <div class="product-details">Color: Silver</div>
-                            <div class="product-details">Size: Large</div>
-                        </div>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-image shapes">🔷</div>
-                        <div class="product-info">
-                            <div class="product-name">Geometric shapes for kids wooden style</div>
-                            <div class="product-details">Quantity: 1x • USD 340</div>
-                            <div class="product-details">Color: Silver</div>
-                            <div class="product-details">Size: Large</div>
-                        </div>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-image watch">⌚</div>
-                        <div class="product-info">
-                            <div class="product-name">Amazing product name goes here</div>
-                            <div class="product-details">Quantity: 1x • USD 340</div>
-                            <div class="product-details">Color: Silver</div>
-                            <div class="product-details">Size: Large</div>
-                        </div>
-                    </div>
-                </div>
+            <div style="margin-bottom: 12px;">
+                <strong class="total-amount">Total: {{item.TotalAmount | inr}} <span class="order-status status-on-way" [ngStyle]="{ 'background-color': item.PaymentModeColour}">{{item.PaymentMode}}</span></strong>
             </div>
+
+            <div class="product-grid">
+            @for (OrderItem of OrderItemDetails; track $index) {
+                @if (OrderItem.OrderId === item.OrderId) {
+                <div class="product-card">
+                    <div class="product-image">
+                        <img [src]="baseUrl + '/'+ OrderItem.ProductImage" alt="" style="width: 100%;">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">{{OrderItem.ProductName}}</div>
+                        <div class="product-details">Quantity: {{OrderItem.Quantity}}x • {{OrderItem.TotalPrice | inr}}
+                        </div>
+                        <div class="product-details">Size: {{OrderItem.SizeDesc}}</div>
+                    </div>
+                </div>
+                }
+            } 
+            </div> 
         </div>
+        }
     </div>
+</div>

@@ -1,0 +1,176 @@
+<div class="address-container col-md-12 col-sm-12 col-lg-12 col-xl-12">
+    <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 m-2">
+        <div class="container">
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex justify-content-end p-2">
+                <button type="button" class="btn" style="background-color: #994037; color: white;"
+                    (click)="OpenPopup()"><i class="fa-solid fa-plus fa-xs"></i>Add Address</button>
+
+            </div>
+            <div class="address-list">
+                @for (item of UserAddressDetails; track $index) {
+                <div class="address-card" [ngClass]="{ 'default-address': item.IsDefault }">
+                    <div class="address-header">
+                        <div class="icon-label">
+                            <div class="name-type">
+                                <span class="full-name">{{ item.FullName }} </span> 
+                            </div>
+                        </div>
+                        <div class="default-badge" *ngIf="item.IsPermanet">Default</div>
+                    </div>
+
+                    <div class="phone-number">{{ item.MobileNumber }}</div>
+
+                    <div class="address-lines">
+                        <div>{{ item.FlatHouseBuildCompany }}</div>
+                        <div>{{ item.AreaStreetVillage }}</div>
+                        <div>{{ item.CityTown }}, {{ item.State }} {{ item.Pincode }}</div>
+                        <div>{{ item.Country }}</div>
+                    </div>
+
+                    <div class="address-actions">
+                        <button class="btn edit-btn" (click)="UpdateAddress(item.AddressId)"><i
+                                class="fa-solid fa-pen"></i>Edit</button>
+                        <button class="btn delete-btn" (click)="DeleteUserAddress(item.AddressId)"> <i class="fa-solid fa-trash"></i>Delete</button>
+                    </div>
+                </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@if(popupOverlay){
+<div class="password-popup-backdrop">
+    <div class="password-popup">
+        <form #AddAddress="ngForm">
+            <h2 style="text-align: center;">Add Address</h2>
+            <div class="container-fluid">
+                <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 ">
+                    <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex gap-2">
+                        <div class="form-group col-md-6">
+                            <label for="fullname">Full Name</label>
+                            <input id="fullname" type="text" placeholder="Enter your Full Name"
+                                [(ngModel)]="UserAddress.FullName" #fullname="ngModel" name="fullname" required
+                                [class.invalid-input]="isSubmitted && fullname.invalid" />
+                            <div class="required-field" *ngIf="isSubmitted && fullname.errors?.['required']">
+                                <small>Full Name required.</small>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex justify-content-between">
+                                <label for="mobilenumber">Mobile Number</label>
+                                <label for="mobilenumber">
+                                    <h1 class="assistant-class">May be used to assist delivery</h1>
+                                </label>
+                            </div>
+                            <input id="mobilenumber" type="tel" placeholder="Enter your Mobile number"
+                                [(ngModel)]="UserAddress.MobileNumber" #mobilenumber="ngModel" name="mobilenumber"
+                                [class.invalid-input]="isSubmitted && mobilenumber.invalid" required [minlength]="10"
+                                pattern="^[0-9]{10}$" />
+                            <div class="required-field" *ngIf="isSubmitted && mobilenumber.errors?.['required']">
+                                <small>Mobile number required.</small>
+                            </div>
+                            <div class="required-field" *ngIf="isSubmitted && mobilenumber.errors?.['pattern']">
+                                <small>Phone Number must be 10 length.</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex gap-2">
+                        <div class="form-group col-md-6">
+                            <label for="pincode">Pin Code</label>
+                            <input id="pincode" type="number" placeholder="6 digits [0-9] PIN Code"
+                                [(ngModel)]="UserAddress.Pincode" #pincode="ngModel" name="pincode"
+                                [class.invalid-input]="isSubmitted && pincode.invalid" required [minlength]="6"
+                                pattern="^[0-9]{6}$" />
+                            <div class="required-field" *ngIf="isSubmitted && pincode.errors?.['required']">
+                                <small>Pin Code required.</small>
+                            </div>
+                            <div class="required-field" *ngIf="isSubmitted && pincode.errors?.['pattern']">
+                                <small>Pin Code must be 6 length.</small>
+                            </div>
+
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="flat_house">Flat, House no., Building, Company, Apartment</label>
+                            <input id="flat_house" type="text"
+                                placeholder="Enter your Flat, House no., Building, Company, Apartment"
+                                [(ngModel)]="UserAddress.FlatHouseBuildCompany" #flat_house="ngModel" name="flat_house"
+                                [class.invalid-input]="isSubmitted && flat_house.invalid" required />
+                            <div class="required-field" *ngIf="isSubmitted && flat_house.errors?.['required']">
+                                <small>Flat, House no., Building, Company, Apartment required.</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex gap-2">
+                        <div class="form-group col-md-6">
+                            <label for="area_street">Area, Street, Sector, Village</label>
+                            <input id="area_street" type="text" placeholder="Enter your Area, Street, Sector, Village"
+                                [(ngModel)]="UserAddress.AreaStrtVillage" #area_street="ngModel" name="area_street" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex justify-content-between">
+                                <label for="landmark">Land Mark</label>
+                                <label for="landmark">
+                                    <h1 class="assistant-class">E.g. near VMC hospial</h1>
+                                </label>
+                            </div>
+                            <input id="landmark" type="text" placeholder="Enter your Land Mark"
+                                [(ngModel)]="UserAddress.LandMark" #landmark="ngModel" name="landmark" />
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex gap-2">
+                        <div class="form-group col-md-6">
+                            <label for="citydown">Town/City</label>
+                            <input id="citydown" type="text" placeholder="Enter your City Town"
+                                [(ngModel)]="UserAddress.CityTown" #citydown="ngModel" name="citydown"
+                                [class.invalid-input]="isSubmitted && citydown.invalid" required />
+                            <div class="required-field" *ngIf="isSubmitted && citydown.errors?.['required']">
+                                <small>Town/City.</small>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="state">State</label>
+                            <p-dropdown [options]="State" [(ngModel)]="UserAddress.State" optionLabel="descritpion"
+                                optionLabel="descritpion" placeholder="Select State Type" [style]="{'width':'100%'}"
+                                optionValue="code" name="state" class="discount-type-dropdown"
+                                placeholder="Select a State" id="state" #state="ngModel" required />
+                            <div class="required-field" *ngIf="isSubmitted && state.errors?.['required']">
+                                <small>State required.</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex gap-2">
+                        <div class="form-group col-md-6">
+                            <label for="country">Country</label>
+                            <input id="country" type="text" placeholder="Enter your Country" [disabled]="true"
+                                [defaultValue]="'India'" [(ngModel)]="UserAddress.Country" name="country" />
+                        </div>
+                        <div class="form-group col-md-6 gap-2 d-flex align-items-center">
+                            <div class="col-7 align-items-center">
+                                <label for="default_address">Make this my default address</label>
+                            </div>
+                            <div class="col-4 align-items-center">
+                                <p-checkbox inputId="isdefualt" [(ngModel)]="UserAddress.IsDefualt" name="isdefualt"
+                                    [value]="UserAddress.IsDefualt" [binary]="true" [trueValue]="1" [falseValue]="0"
+                                    #isdefualt="ngModel"></p-checkbox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 justify-content-center d-flex p-4">
+                <div class="col-4 justify-content-center d-flex">
+                    <button type="submit" class="add-address-button" [disabled]="AddAddress.invalid"
+                        (click)="SaveUserAddress()"><i class="fa-solid fa-plus"></i>Add Address</button>
+                </div>
+                <div class="col-4 justify-content-center d-flex">
+                    <button type="submit" class="add-address-button" (click)="ClosePopup()"><i
+                            class="fa-solid fa-plus"></i>Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+}

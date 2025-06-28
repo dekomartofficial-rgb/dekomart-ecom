@@ -89,8 +89,7 @@ export class AddProductComponent implements OnInit {
         this.Gender = res.filter(item => item.groupName === 'GENDER');
         this.Catogery = res.filter(item => item.groupName === 'CATEGORY');
       }
-    });
-
+    }); 
   }
 
   getProductImage(ProductId: number) {

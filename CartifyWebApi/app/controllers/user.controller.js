@@ -232,13 +232,127 @@ class User {
       request.input("ai_user_id", mssql.BigInt, req.LoggedUserId);
 
       const result = await request.execute("PKG_CUSTOMER$p_get_user_cart");
-      
+
       res.status(200).json(result.recordsets);
 
     } catch (e) {
       res.status(500).json({ err: "Error Occur" + e });
     }
   }
+  static SaveUserAddress = async (req, res) => {
+    try {
+      const request = await dataAcces.getRequest();
+      request.input("ai_address_id", mssql.BigInt, req.body.AddressId || 0);
+      request.input("ai_user_id", mssql.BigInt, req.LoggedUserId);
+      request.input("as_full_name", mssql.NVarChar(200), req.body.FullName);
+      request.input("as_city", mssql.NVarChar(300), req.body.CityTown);
+      request.input("as_state", mssql.NVarChar(300), req.body.State);
+      request.input("ai_pincode", mssql.BigInt, req.body.Pincode);
+      request.input("ai_mobile_number", mssql.BigInt, req.body.MobileNumber);
+      request.input("as_flat_house_build_company", mssql.VarChar(250), req.body.FlatHouseBuildCompany);
+      request.input("as_country", mssql.VarChar(150), req.body.Country);
+      request.input("as_area_strt_village", mssql.VarChar(250), req.body.AreaStrtVillage);
+      request.input("as_land_mark", mssql.VarChar(250), req.body.LandMark);
+      request.input("ai_is_permanent", mssql.TinyInt, req.body.IsDefualt);
+      request.input("as_ops_mode", mssql.VarChar(20), req.body.OpsMode);
+      request.input("ai_logged_user_id", mssql.BigInt, req.LoggedUserId);
+
+      request.output("p_rettype", mssql.Int);
+      request.output("p_retmsg", mssql.VarChar(mssql.MAX));
+
+      const result = await request.execute("PKG_CUSTOMER$p_save_user_address");
+      const output = await handleReps(result.output);
+      res.status(200).json(output);
+    } catch (e) {
+      res.status(500).json({ err: "Error Occur" + e });
+    }
+  }
+  static GetUserAddress = async (req, res) => {
+    try {
+      const request = await dataAcces.getRequest();
+      request.input("ai_user_id", mssql.BigInt, req.LoggedUserId);
+      request.input("ai_address_id", mssql.BigInt, req.query.AddressId);
+
+      const result = await request.execute("PKG_CUSTOMER$p_get_user_address");
+
+      res.status(200).json(result.recordsets);
+
+    } catch (e) {
+      res.status(500).json({ err: "Error Occur" + e });
+    }
+  }
+  static GetCheckDetails = async (req, res) => {
+    try {
+      const request = await dataAcces.getRequest();
+      request.input("ai_user_id", mssql.BigInt, req.LoggedUserId);
+
+      const result = await request.execute("PKG_CUSTOMER$p_get_checkout_details");
+
+      res.status(200).json(result.recordsets);
+    } catch (e) {
+      res.status(500).json({ err: "Error Occur" + e });
+    }
+  }
+  static SaveUserOrder = async (req, res) => {
+    try {
+      const request = await dataAcces.getRequest();
+
+      request.input("ai_order_id", mssql.BigInt, req.body.OrderId);
+      request.input("ai_user_id", mssql.BigInt, req.body.UserId);
+      request.input("ai_cart_id", mssql.BigInt, req.body.CartId);
+      request.input("ai_logged_user_id", mssql.BigInt, req.LoggedUserId);
+      request.input("as_ops_mode", mssql.VarChar(40), req.body.OpsMode)
+
+      request.output("p_rettype", mssql.TinyInt);
+      request.output("p_retmsg", mssql.VarChar(mssql.MAX));
+
+      const result = await request.execute("PKG_ORDER$p_save_order");
+      const output = await handleReps(result.output);
+
+      res.status(200).json(output);
+    } catch (e) {
+      res.status(500).json({ err: "Error Occur" + e });
+    }
+  }
+  static SavePlaceOrder = async (req, res) => {
+    try {
+      const request = await dataAcces.getRequest();
+
+      request.input("ai_order_id", mssql.BigInt, req.body.OrderId);
+      request.input("ai_user_id", mssql.BigInt, req.body.UserId ?? req.LoggedUserId);
+      request.input("as_payment_mode", mssql.VarChar(100), req.body.PaymentMode);
+      request.input("as_ops_mode", mssql.VarChar(40), req.body.OpsMode);
+      request.input("as_razorpay_order_id", mssql.NVarChar(400), req.body.RazorpayOrderId);
+      request.input("as_razorpay_payment_id", mssql.NVarChar(400), req.body.RazorpayPaymentId);
+      request.input("as_razorpay_signature", mssql.NVarChar(400), req.body.RazorpaySignature);
+      request.input("as_payment_status", mssql.VarChar(100), req.body.PaymentStatus);
+
+      // Output parameters
+      request.output("p_rettype", mssql.TinyInt);
+      request.output("p_retmsg", mssql.VarChar(mssql.MAX));
+
+      const result = await request.execute("PKG_ORDER$p_save_place_order");
+      const output = await handleReps(result.output);
+
+      res.status(200).json(output);
+    } catch (e) {
+      res.status(500).json({ err: "Error Occur" + e });
+    }
+  }
+  static GetOrderDetails = async (req, res) => {
+    try {
+      const request = await dataAcces.getRequest();
+      request.input("ai_user_id", mssql.BigInt, req.LoggedUserId);
+      request.input("ai_order_id", mssql.BigInt, req.query.OrderId);
+      request.input("as_status", mssql.BigInt, req.query.Status);
+
+      const result = await request.execute("PKG_ORDER$p_get_user_order");
+
+      res.status(200).json(result.recordsets);
+    } catch (e) {
+      res.status(500).json({ err: "Error Occur" + e });
+    }
+  } 
 }
 
 module.exports = User;

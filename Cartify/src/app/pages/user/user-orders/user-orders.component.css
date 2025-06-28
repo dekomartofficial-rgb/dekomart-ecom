@@ -254,9 +254,9 @@
   font-weight: 500;
 }
 
-.status-on-way {
-  background: #fef3c7;
-  color: #92400e;
+.status-on-way { 
+  color: #ffffffe8;
+  font-size: 12px;
 }
 
 .status-shipped {

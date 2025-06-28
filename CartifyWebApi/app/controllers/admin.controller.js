@@ -162,7 +162,7 @@ class Admin {
                         variant.Stock
                     );
                 });
-            } 
+            }
             //add parameter and table type to procedure
             request.input('ai_product_id', mssql.BigInt, ProdctDetails.ProductID);
             request.input('ai_company_id', mssql.BigInt, 1);
@@ -214,6 +214,56 @@ class Admin {
             res.status(200).json(result.recordsets)
         } catch (e) {
             res.status(500).json({ err: "Error Occur" + e })
+        }
+    }
+    static GetAllUserOrder = async (req, res) => {
+        try {
+            const request = await dataAcces.getRequest();
+            request.input("as_search", mssql.VarChar(mssql.MAX), req.query.SearchKeyword);
+            request.input("ad_order_date", mssql.Date, req.query.OrderDate);
+            request.input("as_payment_method", mssql.VarChar(200), req.query.PaymentMode);
+            request.input("as_order_status", mssql.VarChar(200), req.query.OrderStatus);
+            request.input("ai_user_id", mssql.BigInt, req.LoggedUserId);
+
+            const result = await request.execute("PKG_ORDER$p_get_order");
+
+            res.status(200).json(result.recordsets);
+        } catch (e) {
+            res.status(500).json({ err: "Error Occur" + e });
+        }
+    }
+    static GetOrderDetails = async (req, res) => {
+        try {
+            const request = await dataAcces.getRequest();
+            request.input("ai_user_id", mssql.BigInt, req.LoggedUserId);
+            request.input("ai_order_id", mssql.BigInt, req.query.OrderId);
+
+
+            const result = await request.execute("PKG_ORDER$p_get_order_details");
+
+            res.status(200).json(result.recordsets);
+        } catch (e) {
+            res.status(500).json({ err: "Error Occur" + e });
+        }
+    }
+    static MoveToNextStep = async (req, res) => {
+        try {
+            const request = await dataAcces.getRequest();
+            console.log(req.body)
+            request.input("ai_order_id", mssql.BigInt, req.body.OrderId);
+            request.input("as_ops_mode", mssql.VarChar(40), req.body.OpsMode);
+            request.input("ad_exp_delivery_date", mssql.Date, req.body.ExpDeliveryDate);
+            request.input("ai_delivery_agent_number", mssql.BigInt, req.body.DeliveryAgnetNumber);
+            request.input("ai_logged_user", mssql.BigInt, req.LoggedUserId);
+            request.output("p_retmsg", mssql.VarChar(mssql.MAX));
+            request.output("p_rettype", mssql.TinyInt);
+
+            const result = await request.execute("PKG_ORDER$p_move_next_step");
+            const output = await handleReps(result.output);
+
+            res.status(200).json(output);
+        } catch (e) {
+            res.status(500).json({ err: "Error Occur" + e });
         }
     }
 }

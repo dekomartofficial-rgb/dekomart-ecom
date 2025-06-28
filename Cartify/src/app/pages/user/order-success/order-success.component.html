@@ -1,0 +1,64 @@
+<div class="modal-overlay">
+    <div class="modal-1">
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+
+        <div class="success-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor" />
+            </svg>
+        </div>
+
+        <h1 class="title">Payment Successful 🎉</h1>
+
+        <p class="description">
+            Your payment has been successfully processed. Now you can go to the homepage & discover new products.
+        </p>
+
+        <button class="continue-btn" [routerLink]="['/']" >
+            Continue shopping
+        </button>
+    </div>
+</div>
+<script>
+    function closeModal() {
+        const modal = document.querySelector('.modal-overlay');
+        modal.style.animation = 'fadeOut 0.3s ease-out forwards';
+
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+    }
+
+    function continueShopping() {
+        // Add your navigation logic here
+        console.log('Continuing to shop...');
+        // Example: window.location.href = '/shop';
+
+        // For demo purposes, let's just close the modal
+        closeModal();
+    }
+
+    // Add fadeOut animation
+    const style = document.createElement('style');
+    style.textContent = `
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+        `;
+    document.head.appendChild(style);
+
+    // Add some interactivity
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+
+    // Click outside to close
+    document.querySelector('.modal-overlay').addEventListener('click', function (e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+</script>

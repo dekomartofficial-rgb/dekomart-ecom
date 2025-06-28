@@ -1,0 +1,91 @@
+<div class="container-fluid">
+    <!-- Filters Section -->
+    <div class="filters-section col-12">
+        <div class="filters-bottom col-md-12 col-sm-12 col-lg-12 col-xl-12">
+            <div class="search-box col-6">
+                <span class="search-label">Search</span>
+                <input type="text" placeholder="Search For Order No, Product Name, Customer Name, Customer Phone Number"
+                    id="searchInput">
+            </div>
+            <div class="search-date col-1" style="display: grid;">
+                <span class="search-label">Order Date</span>
+                <p-datepicker placeholder="Order Date" />
+            </div>
+            <div class="col-2" style="display: grid;">
+                <span class="search-label">Payment Method</span>
+                <p-autocomplete [dropdown]="true" placeholder="Payment Method"  />
+            </div>
+            <div class="col-2" style="display: grid;">
+                <span class="search-label">Order Status</span>
+                <p-autocomplete [dropdown]="true" placeholder="Order Status" />
+            </div>
+            <div class="col-2 gap-2" style="display: flex;">
+                <button type="button" class="btn btn-success"
+                    style="width: 89px; font-size: 13px; height: 36px; margin-top: 18px;"> <i
+                        class="fa-solid fa-magnifying-glass"></i>Search</button>
+                <button type="button" class="btn btn-success"
+                    style="width: 89px; font-size: 13px; height: 36px; margin-top: 18px; background-color: #ff0000b3; border-color: #ff00000a;">
+                    <i class="fa-regular fa-rotate-reverse fa-lg"></i>Reset</button>
+                <button type="button" class="btn btn-success"
+                    style="width: 40px; font-size: 13px; height: 36px; margin-top: 18px;"><i
+                        class="fa-solid fa-file-excel fa-lg"></i></button>
+                <button type="button" class="btn btn-success"
+                    style="width: 40px; font-size: 13px; height: 36px; margin-top: 18px;"><i
+                        class="fa-solid fa-file-pdf fa-lg"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+        <table class="table" id="ordersTable">
+            <thead>
+                <tr>
+                    <th>Order No</th>
+                    <th>Order Date</th>
+                    <th>Customer Name</th>
+                    <th>Total Product</th>
+                    <th>Total Amount</th>
+                    <th>Order Status</th>
+                    <th>Payment Status</th>
+                    <th>View</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (OrderList && OrderList.length > 0) {
+                @for (item of OrderList; track $index) {
+                <tr>
+                    <td><span class="order-id" style="background-color: #0000001c; padding: 5px; border-radius: 4px;"><i
+                                class="fa-solid fa-box-open"></i>&nbsp;{{item.OrderNo}}</span></td>
+                    <td class="date-cell" style="width: 140px">{{item.OrderDate}}</td>
+                    <td class="date-cell" style="width: 160px;">{{item.CustomerName}}</td>
+                    <td style="text-align: center; width: 117px;">{{item.OrderCount}}</td>
+                    <td style="text-align: left;"><span class="total-amount">{{item.TotalAmount | inr}}</span></td>
+                    <td style="text-align: center;">
+                        <span class="status-badge"  [ngStyle]="{ 'color': item.OrderStatusColour }">
+                            <span class="status-dot"></span>
+                            {{item.OrderStatus}}
+                        </span>
+                    </td>
+                    <td> <span class="status-badge" [ngStyle]="{'color': item.PaymentModeColour }">
+                            <span class="status-dot"></span>
+                            {{item.PaymentMode}}
+                        </span></td>
+                    <td style="text-align: center;">
+                        <div class="d-flex">
+                            <div class="view-icon me-1 gap-2">
+                                <button style="border: none; background: none;" (click)="reDirectToDetails(item.OrderId)">
+                                    <i class="fas fa-eye" pTooltip="View Order" tooltipPosition="right"
+                                        style="color: black;" tooltipStyleClass="my-tooltip-style"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

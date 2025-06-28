@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -17,9 +17,9 @@ import { HttpClientService } from '@/app/provider/services/http-client.service';
   templateUrl: './nav-home.component.html',
   styleUrl: './nav-home.component.css'
 })
-export class NavHomeComponent {
-  @Input({ required: true }) isShowChild: string = 'N' 
-  cartCount = 3; // Example cart count 
+export class NavHomeComponent implements OnInit {
+  @Input({ required: true }) isShowChild: string = 'N'
+  cartCount: number = 0;
 
   mainNavLinks = [
     { path: '/', label: 'NEW IN' },
@@ -44,6 +44,9 @@ export class NavHomeComponent {
   ];
 
   constructor(private http: HttpClientService, private router: Router) { }
+  ngOnInit(): void {
+    this.getUserProfile(this.http.getUserId())
+  }
 
   onLogin() {
     if (this.http.getUserData()) {
@@ -65,4 +68,14 @@ export class NavHomeComponent {
   isUserLogged() {
     return this.http.isLoggedIn()
   }
+
+
+  getUserProfile(id: number) {
+    this.http.get<any[]>('user/GetUserProfiler', { UserId: id }).subscribe((res) => {
+      if (res) {
+        this.cartCount = res[0]?.CartCount
+      }
+    })
+  }
+
 }

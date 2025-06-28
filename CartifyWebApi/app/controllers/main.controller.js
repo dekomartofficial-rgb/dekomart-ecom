@@ -21,7 +21,6 @@ class MainController {
     }
     static getFilePath = async (fileStorage, id, attachType) => {
         const finalPath = path.join(fileStorage, attachType.toLowerCase(), String(id));
-        // Ensure directory exists
         if (!fs.existsSync(finalPath)) {
             fs.mkdirSync(finalPath, { recursive: true });
         }
@@ -34,7 +33,6 @@ class MainController {
             const singleFile = Array.isArray(UploadFile) ? UploadFile : [UploadFile];
             const fileStorageArr = await this.getSystemParmValue('FILE_STORAGE');
             const fileStorage = Array.isArray(fileStorageArr) ? fileStorageArr[0] : fileStorageArr;
-            // Already safe from getFilePath()
             const uploadDir = await this.getFilePath(fileStorage, FileId, FileType);
 
             console.log('📁 Upload directory:', uploadDir);
@@ -44,7 +42,6 @@ class MainController {
                     const fileName = Date.now() + '-' + file.originalname.trim();
                     const filePath = path.join(uploadDir, fileName);
 
-                    // Using Promise to wait for async inside loop
                     await new Promise((resolve, reject) => {
                         fs.writeFile(filePath, file.buffer, async (err) => {
                             if (err) {
@@ -52,7 +49,6 @@ class MainController {
                             }
                             try {
                                 const result = await this.uploadDocument(0, FileId, FileType, filePath,  file.originalname, file.mimetype, null, 1, 'INSERT', LoggedUser );
-                                console.log('✅ File saved:', result.Message, '| Path:', filePath);
                                 resolve();
                             } catch (dbErr) { 
                                 reject(dbErr);
@@ -62,7 +58,6 @@ class MainController {
                 }
             }
         } catch (e) {
-            console.error('❌ Attachment Save Error:', e);
             throw e;
         }
     };

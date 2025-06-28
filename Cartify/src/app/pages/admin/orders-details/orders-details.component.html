@@ -1,0 +1,168 @@
+<div class="container-fluid p-0 m-0">
+    <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex">
+        <div class="col-md-8 col-sm-8 col-lg-8 col-xl-8">
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex justify-content-center">
+                <div class="col-md-6 col-sm-6 col-lg-6 stepper-header d-flex justify-content-center">
+                    @for (item of StepperData; track $index) {
+                    <div class="step" [ngClass]="item.StepStaus">
+                        <div class="step-circle"><i [className]="item.StepIcon"></i></div>
+                        <div class="step-label">{{item.StepName}}</div>
+                        <div class="step-date">{{item.StepDate}}</div>
+                        <div class="step-connector"></div>
+                    </div>
+                    }
+
+                    <!-- <div class="step active">
+                        <div class="step-circle">3</div>
+                        <div class="step-label">Preparing Order</div>
+                        <div class="step-date">In Progress</div>
+                        <div class="step-connector"></div>
+                    </div>
+                    <div class="step pending">
+                        <div class="step-circle">4</div>
+                        <div class="step-label">Shipped</div>
+                        <div class="step-date">Pending</div>
+                        <div class="step-connector"></div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12">
+                <div class="main-content">
+                    <div class="left-panel">
+                        <div class="tab-content">
+                            <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex justify-content-center">
+                                <label
+                                    style="margin-bottom: 2px; font-weight: 500; font-size: 19px; color: black; padding: 12px;"
+                                    for="Prodcut Details">Purchased Products</label>
+                            </div>
+                            <div class="products-section">
+                                @for (item of ProductDetails; track $index) {
+                                <div class="product-item">
+                                    <div class="product-image">
+                                        <img [src]="baseUrl+ '/'+item.ProductImage" alt="Gallery Image"
+                                            style="border-radius: 7px; padding-top: -4px; margin-top: 38px; height: 118px; width: 107px;"
+                                            alt="Image" />
+                                    </div>
+                                    <div class="product-details">
+                                        <div class="product-sku"><strong class="product-details-strong ">Product
+                                                No</strong> : &nbsp;{{item.ProdcutNo}}</div>
+                                        <div class="product-sku"><strong class="product-details-strong ">Product
+                                                Name</strong> : &nbsp;{{item.ProductName}} </div>
+                                        <div class="product-sku"><strong class="product-details-strong ">Product
+                                                Desc</strong> : &nbsp;{{item.ProductDesc}} </div>
+                                        <div class="product-sku"><strong class="product-details-strong ">Product
+                                                Desc</strong> : &nbsp;{{item.SizeDesc}}</div>
+                                        <div class="product-sku"><strong class="product-details-strong ">Product
+                                                Qunatity</strong> : &nbsp;{{item.Quantity}}
+                                        </div>
+                                    </div>
+                                    <div class="product-price">{{item.TotalPrice | inr}}</div>
+                                </div>
+                                }
+                            </div>
+
+                            <div class="payment-details col-md-12 col-sm-12 col-xl-12 col-lg-12">
+                                <div class=" col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex justify-content-center">
+                                    <label
+                                        style="margin-bottom: 2px; font-weight: 500; font-size: 19px; color: black; padding: 12px;"
+                                        for="Order and Payment">Order and Payment Details</label>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12 d-flex gap-2">
+                                    <div class="col-md-6 col-sm-6 col-xl-6 col-lg-6" style="padding: 5px;">
+                                        @for (item of OrderDetails; track $index) {
+                                        <div class="payment-row">
+                                            <span style="font-size: 15px; font-weight: 700;">{{item.Header}}</span>
+                                            @if (item.valueType === 'MONEY') {
+                                            <span>{{item.Value | inr}}</span>
+                                            } @else {
+                                            <span>{{item.Value}}</span>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xl-6 col-lg-6" style="padding: 5px;">
+                                        @for (item of OrderDetails2; track $index) {
+                                        <div class="payment-row">
+                                            <span style="font-size: 15px; font-weight: 700;">{{item.Header}}</span>
+                                            @if (item.valueType === 'MONEY') {
+                                            <span>{{item.Value | inr}}</span>
+                                            } @else {
+                                            <span>{{item.Value}}</span>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4 p-3">
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
+                @for (item of ShippingAddress; track $index) {
+                <div class="card-2">
+                    <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
+                        <div class="col-md-12 col-sm-12 col-lg-12 col-sn-12 d-flex gap-4 p-2">
+                            <div class="form-group">
+                                <label for="expectedDelivery">Expected Delivery</label>
+                                @if(MoveToStep.ExpDeliveryDate){
+                                <input type="text" [defaultValue]="MoveToStep.ExpDeliveryDate"  [disabled]="true">
+                                } @else {
+                                <input type="date" id="expectedDelivery" name="expectedDelivery"
+                                    [(ngModel)]="MoveToStep.ExpDeliveryDate"
+                                    [disabled]="FlagDetails[0]?.IsShowExpectedDate === 0 ? true : false" />
+                                }
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="deliveryAgentNumber">Delivery Agent Number</label>
+                                <input type="text" id="deliveryAgentNumber" name="deliveryAgentNumber"
+                                    placeholder="Enter agent number" [(ngModel)]="MoveToStep.DeliveryAgnetNumber"
+                                    [disabled]="FlagDetails[0]?.IsShowDeliveryAgent === 0 ? true : false" />
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex gap-2 justify-content-end">
+                            @for (item of ButtonData; track $index) {
+                            <button type="button" class="button-5" [ngStyle]="{'background-color': item.BtnColour }"
+                                (click)="moveToStep(item.BtnCode)"><i [className]="item.BtnIcon"
+                                    class="p-2"></i>{{item.BtnName}}</button>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 mb-2">
+                        <label for="customer details" style="font-size: 16px;">Customer Information</label>
+                    </div>
+                    <div class="map-placeholder">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15656.505192546996!2d76.31062900951133!3d11.178283474644768!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba62faa718fc7af%3A0xfa7218f88fa2fed!2sKalikavu%2C%20Kerala%20676525!5e0!3m2!1sen!2sin!4v1751043958950!5m2!1sen!2sin"
+                            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <label for="customer details" style="font-size: 16px;">Delivery Details</label>
+                        <a href="#" class="view-map-btn" style="float: right;">View on Map</a>
+                    </div>
+                    <div class="address-card">
+                        <div>{{item.AreaStreetVillage}}</div>
+                        <div>{{item.LandMark}}</div>
+                        <div>{{item.CityTown}}</div>
+                        <div>{{item.State}}</div>
+                        <div>{{item.MobileNumber}}</div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
+                        <label for="customer details" style="font-size: 16px;">Contact Information</label>
+                        <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
+                            <a href="#" class="contact-item">{{item.CustomerName}}</a>
+                            <a href="#" class="contact-item">{{item.ContactEmail}}</a>
+                            <a href="#" class="contact-item">+91 {{item.ContactPhoneNumber}}</a>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

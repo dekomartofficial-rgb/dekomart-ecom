@@ -40,7 +40,7 @@ const userRoutes = require("./app/routers/user.router");
 const adminRoutes = require("./app/routers/admin.router");
 
 app.use("/user", userRoutes);
-app.use("/admin", adminRoutes);
+app.use("/admin", adminRoutes);//a
 
 // Root route
 app.get('/', (req, res) => {

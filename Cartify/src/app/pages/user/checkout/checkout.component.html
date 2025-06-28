@@ -1,0 +1,92 @@
+<div class="container">
+
+    <div class="section">
+        @for (item of AddressDetails; track $index) {
+        <div class="address-card">
+            <h2 class="section-title">Delivery Address</h2>
+            <div class="address-name">📍 {{item.FullName}}</div>
+            <div class="address-details">
+                {{item.UserAddress1}}<br>
+                {{item.UserAddress2}}<br>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xl-12 p-2">
+                    <h6>Pincode : {{item.PinCode}}</h6>
+                    <h6>Phone Number : {{item.MobileNumber}}</h6>
+                </div>
+            </div>
+        </div>
+        }
+        <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 pt-2">
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex justify-content-center">
+                <h2 class="section-title">Order Items</h2>
+            </div>
+            @for (item of ProductDetails; track $index) {
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 each-product ">
+                <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex gap-2 pb-2">
+                    <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4">
+                        <img [src]="baseUrl + '/'+item.ImgPath" alt=""
+                            style="width: 100%;height: 100%; border-radius: 12px;">
+                    </div>
+                    <div class="col-md-7 col-sm-7 col-lg-7 col-xl-7">
+                        <div class="order-item">
+                            <div class="item-details">
+                                <div class="item-name">{{item.ProductName}}</div>
+                                <div class="item-description">{{item.ProductDesc}}</div>
+                                <div class="product-options col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex">
+                                    <div class="option-group">
+                                        <label class="option-label">Size : {{item.ProductSizeDesc}}</label>
+                                    </div>
+                                    <div class="option-group">
+                                        <label class="option-label">Qty : {{item.Quantity}}</label>
+                                    </div>
+                                    <div class="option-group">
+                                        <label class="option-label">Each : {{item.BasePrice| inr }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 item-price-section justify-content-end d-flex">
+                            <div class="total-price">{{item.TotalPrice| inr}}</div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+
+    <div>
+        @for (item of SumamryDetails; track $index) { <div class="section">
+            <h2 class="section-title">Order Summary</h2>
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="subtotal">{{item.SubTotalPrice | inr}}</span>
+            </div>
+            <div class="summary-row">
+                <span>Delivery Charge</span>
+                <span>{{item.DeliveryCharge | inr}}</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total</span>
+                <span id="total">{{item.Total| inr}}</span>
+            </div>
+            <div style="padding: 11px 0px;">
+                @for (item of RefCode; track $index) {
+                <div class="form-check" style="margin-bottom: 12px !important;">
+                    <input class="form-check-input" type="radio" name="paymentmode" [(ngModel)]="PlaceOrder.PaymentMode"
+                        [value]="item.code" /> 
+                    <label class="form-check-label"> {{item.descritpion}} </label>
+                </div>
+                }
+            </div>
+            <button class="place-order-btn" (click)="savePlaceOrder()">Place Order</button>
+            <button class="place-order-btn" type="button"
+                style="background-color: white;color: black;border: 1px solid;" (click)="RedirectToCart()">Return To
+                Cart</button>
+            <div class="delivery-info">
+                <div class="delivery-title">Estimated Delivery</div>
+                <div class="delivery-date">Your order will arrive between 6/27/2025 - 6/29/2025</div>
+            </div>
+        </div>}
+
+    </div>
+</div>

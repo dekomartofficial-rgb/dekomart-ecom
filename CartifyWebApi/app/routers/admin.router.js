@@ -14,9 +14,12 @@ router.get("/GetProductAndVariant", VerifyToken, AdminController.GetProductAndVa
 router.get("/GetProductsDashboard", VerifyToken, AdminController.GetAllProductsdashboard)
 router.get("/GetSystemParm", VerifyToken, AdminController.GetSystemParm)
 router.get('/GetDocument', VerifyToken, AdminController.GetDocument)
+router.get('/GetAllUserOrder', VerifyToken, AdminController.GetAllUserOrder)
+router.get('/GetOrderDetails', VerifyToken, AdminController.GetOrderDetails)
 router.post("/SaveRefData", VerifyToken, AdminController.SaveRefData)
 router.post("/SaveProductHeader", VerifyToken, upload.array('ProductUpload'), AdminController.SaveProductHeader)
 router.post("/SaveRoleRight", VerifyToken, AdminController.SaveRoleRight)
+router.post("/MoveToNextStep", VerifyToken, AdminController.MoveToNextStep)
  
 module.exports = router
 

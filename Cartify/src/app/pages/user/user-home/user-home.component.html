@@ -53,11 +53,7 @@
                 <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12  d-flex justify-content-center">
                     <p>User Details</p>
                 </div>
-            </div>
-            <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
-                <p><span>Full Name:</span> {{item.UserName}}</p>
-                <p><span>Email: </span>{{item.email}}</p>
-            </div>
+            </div> 
         </div>
         }
         <ul class="sidebar-menu">
@@ -76,6 +72,7 @@
                 <app-user-orders *ngSwitchCase="'UR01'"></app-user-orders>
                 <app-cart [isShowHeaderAndFooter]="'N'" *ngSwitchCase="'UR02'"></app-cart>
                 <app-user-wishlist *ngSwitchCase="'UR03'"></app-user-wishlist>
+                <app-user-address *ngSwitchCase="'UR04'"></app-user-address>
             </ng-container>
         </ng-container>
     </div>

@@ -8,11 +8,12 @@ import { UserOrdersComponent } from '../user-orders/user-orders.component';
 import { CartComponent } from '../cart/cart.component';
 import { UserWishlistComponent } from '../user-wishlist/user-wishlist.component';
 import { CommonModule } from '@angular/common';
+import { UserAddressComponent } from '../user-address/user-address.component';
 
 
 @Component({
   selector: 'app-user-home',
-  imports: [CommonModule, RouterModule, FooterHomeComponent, UserAccountComponent, UserOrdersComponent, CartComponent, UserWishlistComponent],
+  imports: [CommonModule, RouterModule, FooterHomeComponent, UserAccountComponent, UserOrdersComponent, CartComponent, UserWishlistComponent, UserAddressComponent],
   templateUrl: './user-home.component.html',
   styleUrl: './user-home.component.css'
 })

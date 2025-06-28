@@ -11,6 +11,7 @@ import { FooterHomeComponent } from '@/app/home/section/footer-home/footer-home.
 import { LoaderService } from '@/app/provider/services/loader.service';
 import { CustomerReg } from '@/app/provider/class/UserClass';
 
+
 @Component({
   selector: 'app-login',
   imports: [FormsModule, CommonModule, ReactiveFormsModule, NavHomeComponent, FooterHomeComponent],
