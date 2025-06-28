@@ -9,6 +9,7 @@
 }
 body {
   background-color: #ffffff !important;
+  overflow-x: hidden;
 }
 
 :root {

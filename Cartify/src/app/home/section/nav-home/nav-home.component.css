@@ -122,6 +122,8 @@
   flex-direction: column;
   align-items: center;
   min-width: 70px;
+  margin: 0px 10px;
+  
 }
 
 .category-link {
@@ -138,9 +140,12 @@
   }
 }
 
+.nav-link {
+padding: 0px 30px 0px 30px !important;
+}
 .category-image {
-  width: 65px;
-  height: 65px;
+  width: clamp(30px, 6vw, 55px);
+  height: clamp(30px, 6vw, 55px);
   object-fit: contain;
   margin-bottom: 0.5rem;
   transition: transform 0.2s;
@@ -173,4 +178,61 @@
 }
 .custom-icon {
   font-size: 22px;
+}
+
+/******************************************
+   Responsive styles for smaller screens 
+*******************************************/
+@media (max-width:990px) {
+  .nav-link {
+    font-size: 14px;
+    text-align: center;
+    padding: 10px 0px !important;
+  }
+  
+.img-fluid {
+    max-width: 60%;
+    height: auto;
+}
+
+}
+
+@media (max-width: 768px) {
+  .nav-link {
+    font-size: 14px;
+    text-align: center;
+    padding: 10px 0px !important;
+  }
+  
+.img-fluid {
+    max-width: 55%;
+    height: auto;
+}
+
+}
+
+
+@media (max-width: 576px) {
+  .nav-link {
+    font-size: 12.5px;
+    text-align: center;
+    padding: 10px 0px !important;
+  }
+  .img-fluid {
+    max-width: 55%;
+    height: auto;
+}
+}
+
+
+@media (max-width: 400px) {
+  .nav-link {
+    font-size: 11.5px;
+    text-align: center;
+    padding: 10px 0px !important;
+  }
+    .img-fluid {
+    max-width: 55%;
+    height: auto;
+}
 }
