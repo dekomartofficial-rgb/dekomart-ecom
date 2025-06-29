@@ -3,6 +3,7 @@
 }
 <div class="container" style="padding: 20px;">
     <div class="cart-section">
+        @if (CartData && CartData.length > 0) {
         @for (item of CartData; track $index) {
         <div class="cart-item">
             <div class="item-image">
@@ -19,18 +20,36 @@
                 <div class="quantity-control">
                     <button class="qty-btn">−</button>
                     <input type="text" class="qty-input" [value]="item.Quantity" readonly />
-                    <button class="qty-btn">+</button> 
+                    <button class="qty-btn">+</button>
                 </div>
                 <div class="item-actions">
-                    <button class="action-btn"><i class="fa-regular fa-heart fa-lg" style="color: #994037;"></i></button>
+                    <button class="action-btn"><i class="fa-regular fa-heart fa-lg"
+                            style="color: #994037;"></i></button>
                     <button class="action-btn"><i class="fa-solid fa-trash fa-lg" style="color: #994037;"></i></button>
                 </div>
             </div>
             <div class="item-price">{{item.TotalPrice| inr}}</div>
         </div>
         }
-
+        } @else {
+        <div class="address-actions col-md-12 col-12 d-flex justify-content-center flex-wrap gap-2 p-2">
+            <div class="empty-cart-container d-flex align-items-center justify-content-center">
+                <div class="card empty-cart-card ">
+                    <div class="card-body text-center">
+                        <div class="col-md-12 col-sm-12 col-lg-12 col-12">
+                            <h4 class="cart-title mb-2 p-2">Your Cart is Empty</h4>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-lg-12 col-12">
+                            <a href="/" style="background-color: #994037; border: 0px" class="btn btn-success px-4">Go
+                                home</a>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
     </div>
+    @if (CartData && CartData.length > 0) {
     @for (item of CartSummary; track $index) {
     <div class="order-summary">
         <h2>Order Summary</h2>
@@ -51,8 +70,9 @@
             <span id="total">{{item.Total | inr}}</span>
         </div>
 
-        <button class="checkout-btn" (click)="checkOut()">Checkout</button> 
+        <button class="checkout-btn" (click)="checkOut()">Checkout</button>
     </div>
+    }
     }
 </div>
 @if (isShowHeaderAndFooter === 'Y') {

@@ -95,12 +95,7 @@ input[type="password"]:focus-visible {
   outline-style: dashed;
   outline-color: #994037;
   border: none;
-}
-
-input.invalid-input {
-  border-color: #e74c3c;
-  /* background-color: #ffe6e6; */
-}
+} 
 
 .error-message {
   color: #e74c3c;

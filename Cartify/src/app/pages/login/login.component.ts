@@ -34,6 +34,7 @@ export class LoginComponent {
     AuthType: ''
   }
   isAgeValid: boolean = true;
+  showPassword: boolean = false
 
 
   constructor(private formBuilder: FormBuilder, private httpClient: HttpClientService, private router: Router, private toastService: ToastService, private loader: LoaderService) {

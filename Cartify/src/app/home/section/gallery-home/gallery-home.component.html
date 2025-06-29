@@ -37,7 +37,7 @@
     <div class="row g-4">
       @for (item of filterByHeaderTitle(item.HeaderTitle); track $index) {
       <div class="col-12 col-sm-12 col-md-6 col-lg-3">
-        <div class="product-card" >
+        <div class="product-card">
           <div class="product-image-container" [ngClass]="item.IsWantCurve === 1 ? 'curved-right' : '' ">
             <img [src]="baseUrl + '/' + item.ImgPath" [alt]="item.HeaderTitle" class="product-image">
             <div class="top-row">
@@ -87,27 +87,70 @@
       }
     </div>
   </div>
+  <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 m-2 about-use-desgin">
+    <div class="about-section">
+      <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
+        <h3>About Dekomart</h3>
+        <p>
+          Lorem ipsum dolor sit amet, consectetuer adipi<br />
+          Lorem ipsum dolor sit amet, consectetuer adipiLorem ipsum dolor sit amet,
+          consectetuer adipiLorem ipsum dolor sit amet, consectetuer adipi
+        </p>
+      </div>
+      <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
+        <h5>POPULAR CATEGORY</h5>
+        <p>Dinner set, Cup-Mug, Cake Stand, Tea Sets, Plates, Pasta Plates, Coasters, Tea Pots, Ramen Bowls, Snack
+          Plates, Trays,
+          Tea Set with Kettle, Rugs, Dinner Plate, Cottage Core.</p>
+      </div>
+      <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
+        <h5>GIFTS FOR FESTIVALS/OCCASIONS</h5>
+        <p>Christmas Gifts, Christmas Decor, Secret Santa Gifts, Children's Day Gifts, Gifts For New Year, New Year
+          Gifts For Corporates.</p>
+      </div>
+      <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
+        <h5>GIFTS FOR SPECIAL OCCASIONS</h5>
+        <p>Anniversary Gifts, Wedding Gifts, House Warming Gifts, Baby Shower Gifts, Birthday Gifts, Farewell Gifts.</p>
+      </div>
+      <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
+        <h5>GIFTS BY RELATIONSHIPS</h5>
+        <p>Valentine's Day Gifts, Gifts For Wife, Gifts For Husband, Gifts For Sister, Gifts For Brother, Gifts For
+          Friends, Gifts For Mother,
+          Gifts For Father, Gifts For Girlfriend, Gifts For Colleagues, New Year Gifts For Family, New Year Gifts For
+          Her,
+          New Year Gifts For Him, Valentine's Day Gifts For Boyfriend, Valentine's Day Gift For Friends, Valentine's Day
+          Gift For Girlfriends,
+          Valentine's Day Gift For Husband, Valentine's Day Gift For Wife</p>
+      </div>
+      <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
+        <h5>POPULAR SEARCHES</h5>
+        <p>Tote Bags, Marble Dinner Sets, Chef Decor, Tissue Box, Bowls with Chopsticks, Bread Plate, Leaf Platter,
+          Nitori Side Bowl,
+          Bathroom Set, Lunch Bag, Incense Difuser, Modern Cutlery Set, Vera Black Plates, House Plant Pots, Angel
+          Decor,
+          Scoop Spoon, Christmas Gifts, Water Bottles, Floor Mats, Cushion Covers, Rugs.</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 
-<p-dialog [(visible)]="displayDialog" [modal]="true" [style]="{ width: '1000px' }" [contentStyle]="{ padding: '0' }">
-  <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 cart-home-page d-flex">
-    <div class="left-section col-md-8 col-sm-8 col-lg-8 col-xl-8">
-      <img [src]="baseUrl + '/'+ ClickedImage" alt="Product Image" class="main-img" />
-      <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex gap-2">
+<p-dialog [(visible)]="displayDialog" [modal]="true" [style]="{ width: '100%', maxWidth: '1000px' }"
+  [contentStyle]="{ padding: '0' }">
+  <div class="cart-home-page row m-0">
+    <div class="left-section col-12 col-md-8 mb-3 mb-md-0 d-flex flex-column align-items-center">
+      <img [src]="baseUrl + '/'+ ClickedImage" alt="Product Image" class="main-img img-fluid" />
+      <div class="d-flex gap-2 flex-wrap justify-content-center mt-2">
         @for (item of ClickedProductImage; track $index) {
-        <div class="thumbnails d-flex">
-          <img [src]="baseUrl + '/'+ item.ProductImagePath" (click)="ClickedImage = item.ProductImagePath"
-            alt="thumb1" />
+        <div class="thumbnails">
+          <img [src]="baseUrl + '/'+ item.ProductImagePath" (click)="ClickedImage = item.ProductImagePath" alt="thumb1"
+            class="img-thumbnail" />
         </div>
         }
       </div>
     </div>
     @for (item of ClickedProduct; track $index) {
-    <div class="right-section col-md-4 col-xl-4 col-sm-4 col-lg-4">
-      <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex justify-content-end">
-        <i class="fa-solid fa-xmark fa-xl" (click)="closeModel()" style="color: black;"></i>
-      </div>
+    <div class="right-section col-12 col-md-4 d-flex flex-column">
       <div class="product-title">{{item.ProductName}}</div>
       <div class="product-desc" style="color: black;">{{item.ProductDesc}}</div>
       <div class="rating">★★★★☆ 30 reviews</div>
@@ -121,16 +164,16 @@
       <h3 class="product-title">{{item.ProductName}}</h3>
       <p class="product-price">₹{{item.FinalPrice | number}}</p>
       }
-      <div class="size-options">
+      <div class="size-options my-2">
         @for (item of AvailableSize; track $index) {
         <button [ngClass]="{'selected-size' : CartItem.Size === item}" (click)="CartItem.Size = item">{{item}}</button>
         }
       </div>
-      <div class="quantity-wrapper">
+      <div class="quantity-wrapper my-2">
         <label class="quantity-label">Quantity</label>
-        <div class="quantity-control">
+        <div class="quantity-control d-flex align-items-center">
           <button class="qty-btn" (click)="decrementQuantity()">−</button>
-          <input type="text" class="qty-input" [value]="Quantity" readonly />
+          <input type="text" class="qty-input mx-2" [value]="Quantity" readonly />
           <button class="qty-btn" (click)="incrementQuantity()">+</button>
         </div>
       </div>
@@ -139,13 +182,11 @@
         room
         through the shoulder.
       </p>
-
-      <div class="actions">
-        <button class="add-cart" (click)="AddtoCart()">Add to Cart</button>
-        <button class="buy-now">Buy Now</button>
+      <div class="actions d-flex flex-column flex-md-row gap-2 mt-2">
+        <button class="add-cart flex-fill" (click)="AddtoCart()">Add to Cart</button>
+        <button class="buy-now flex-fill">Buy Now</button>
       </div>
     </div>
-
     }
   </div>
 </p-dialog>
