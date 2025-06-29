@@ -21,6 +21,7 @@ export class CartItem {
     Size: string = ''
     Quantity: number = 0
     OpsMode: string = ''
+    CartId: number = 0
 }
 
 export class UserAddress {

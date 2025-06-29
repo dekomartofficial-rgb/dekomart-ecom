@@ -23,9 +23,9 @@
                     <button class="qty-btn">+</button>
                 </div>
                 <div class="item-actions">
-                    <button class="action-btn"><i class="fa-regular fa-heart fa-lg"
+                    <button class="action-btn" (click)="deleteCart(item.CartId)"><i class="fa-regular fa-heart fa-lg"
                             style="color: #994037;"></i></button>
-                    <button class="action-btn"><i class="fa-solid fa-trash fa-lg" style="color: #994037;"></i></button>
+                    <button class="action-btn" (click)="deleteCart(item.CartId)"><i class="fa-solid fa-trash fa-lg" style="color: #994037;"></i></button>
                 </div>
             </div>
             <div class="item-price">{{item.TotalPrice| inr}}</div>

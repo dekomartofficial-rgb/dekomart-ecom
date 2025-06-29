@@ -1,4 +1,4 @@
-<div class="main-content"> 
+<div class="main-content">
     <div class="order-list">
         @for (item of OrderDetails; track $index) {
         <div class="order-item">
@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <div class="order-actions">
-                    <a href="#" class="btn btn-outline"><i class="fa-solid fa-file-lines"></i> Download invoice</a> 
+                    <a href="#" class="btn btn-outline"><i class="fa-solid fa-file-lines"></i> Download invoice</a>
                 </div>
             </div>
 
@@ -24,17 +24,26 @@
                     {{item.DateOfDelivery}}
                 </div>
                 <div class="detail-item">
+                    <div class="detail-label">Agent Number:</div>
+                    {{item.AgentNumber}}
+                </div>
+                <div class="detail-item">
                     <div class="detail-label">Delivered to:</div>
                     {{item.DeliveryAddress}}
+                </div>
+                <div class="detail-item col-md-12 col-sm-12 col-lg-12 col-xl-12 col-12">
+                    <div class="detail-label-1 p-0" style="padding-left: 0px !important;">Shipping Charge: {{item.ShippingFee | inr}}</div>
+                    <div class="detail-label-1 p-0" style="padding-left: 0px !important;">Delivery Charge: {{item.DeliveryCharge | inr}}</div>
                 </div>
             </div>
 
             <div style="margin-bottom: 12px;">
-                <strong class="total-amount">Total: {{item.TotalAmount | inr}} <span class="order-status status-on-way" [ngStyle]="{ 'background-color': item.PaymentModeColour}">{{item.PaymentMode}}</span></strong>
+                <strong class="total-amount">Total: {{item.TotalAmount | inr}} <span class="order-status status-on-way"
+                        [ngStyle]="{ 'background-color': item.PaymentModeColour}">{{item.PaymentMode}}</span></strong>
             </div>
 
             <div class="product-grid">
-            @for (OrderItem of OrderItemDetails; track $index) {
+                @for (OrderItem of OrderItemDetails; track $index) {
                 @if (OrderItem.OrderId === item.OrderId) {
                 <div class="product-card">
                     <div class="product-image">
@@ -48,10 +57,9 @@
                     </div>
                 </div>
                 }
-            } 
-            </div> 
+                }
+            </div>
         </div>
         }
     </div>
 </div>
- 

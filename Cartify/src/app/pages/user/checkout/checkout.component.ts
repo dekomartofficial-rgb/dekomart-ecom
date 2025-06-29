@@ -120,6 +120,7 @@ export class CheckoutComponent implements OnInit {
         description: `Payment For Order No: ${this.PlaceOrder.OrderNo}`,
         order_id: order.id,
         handler: (response: any) => {
+          this.loader.show()
           this.PlaceOrder.RazorpayOrderId = response.razorpay_order_id
           this.PlaceOrder.RazorpayPaymentId = response.razorpay_payment_id
           this.PlaceOrder.RazorpaySignature = response.razorpay_signature
@@ -129,7 +130,8 @@ export class CheckoutComponent implements OnInit {
                 if (res.MessageType === 2) {
                   this.toastService.show('Success', res.Message);
                   this.IsHaveScreenPermistion = false
-                  this.router.navigate(['user/order-sucessfully'], { state: { IsHaveScreenPermistion: true } })
+                  this.loader.show()
+                  this.router.navigate(['user/order-sucessfully'])
                   this.loader.hide()
                 } else {
                   this.toastService.show('Error', res.Message);

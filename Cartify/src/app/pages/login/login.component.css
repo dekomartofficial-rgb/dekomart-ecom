@@ -188,6 +188,9 @@ label {
 .register-button:disabled {
   background-color: #a944423d;
 }
+.login-button:disabled {
+  background-color: #a944423d;
+}
 
 @media screen and (max-width: 991px) {
   .login-page-image {

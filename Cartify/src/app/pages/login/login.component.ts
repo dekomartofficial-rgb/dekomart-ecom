@@ -100,7 +100,7 @@ export class LoginComponent {
               const UserData = { UserId: res.UserId, Token: res.Token, UserRole: res.UserRole }
               localStorage.setItem('userData', JSON.stringify(UserData));
               if (this.checkAdmin(res.UserRole)) {
-                this.errorMessage = res.Message 
+                this.errorMessage = res.Message
                 setTimeout(() => {
                   this.router.navigate(['/admin/']);
                   this.loader.hide()
@@ -113,7 +113,7 @@ export class LoginComponent {
                 }, 3000);
               }
             } else {
-              this.toastService.show('Error', res.Message)
+              this.errorMessage = res.Message
               this.loader.hide()
             }
           },
@@ -140,7 +140,11 @@ export class LoginComponent {
   }
 
   saveNewCustom(CustomerReg?: CustomerReg) {
-    this.isSubmitted = true; 
+    this.isSubmitted = true;
+    if (this.loginForm.invalid) {
+      this.toastService.show('Error', 'Please Fill the form');
+      return
+    }
     this.loader.show()
     this.CustomerReg.OpsMode = 'INSERT'
     this.CustomerReg.UserId = 0

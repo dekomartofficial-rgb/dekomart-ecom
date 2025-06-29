@@ -65,7 +65,7 @@
                 </div>
                 <a href="#" class="forgot-password">Forgot Password?</a>
               </div>
-              <button type="submit" class="login-button" (click)="onSubmit(Login)">Login </button>
+              <button type="submit" class="login-button" [disabled]="loginForm.invalid" (click)="onSubmit(Login)">Login </button>
             </form>
           </div>
           } @else {
@@ -201,8 +201,10 @@
             </div>
           </div>
           @if (errorMessage) {
-          <div class="error-alert">
-            {{ errorMessage }}
+          <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 d-flex justify-content-center col-12" style="justify-content: center;">
+            <div class="error-alert col-md-4 col-lg-4 col-xl-4 justify-content-center d-flex">
+              <div>{{ errorMessage }}</div>
+            </div> 
           </div>
           }
         </div>
