@@ -10,14 +10,9 @@ import { NavHomeComponent } from '../../home/section/nav-home/nav-home.component
 import { FooterHomeComponent } from '@/app/home/section/footer-home/footer-home.component';
 import { LoaderService } from '@/app/provider/services/loader.service';
 import { CustomerReg } from '@/app/provider/class/UserClass';
-import { SocialAuthService, GoogleLoginProvider, SocialUser } from '@abacritt/angularx-social-login';
-import { SocialLoginModule } from '@abacritt/angularx-social-login';
-declare var google: any;
-
-
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, CommonModule, ReactiveFormsModule, NavHomeComponent, FooterHomeComponent, SocialLoginModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, NavHomeComponent, FooterHomeComponent],
   templateUrl: './login.component.html',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -38,12 +33,10 @@ export class LoginComponent {
     AuthType: ''
   }
   isAgeValid: boolean = true;
-  showPassword: boolean = false;
-  user: SocialUser | null = null;
-  loggedIn: boolean = false;
+  showPassword: boolean = false; 
 
 
-  constructor(private formBuilder: FormBuilder, private httpClient: HttpClientService, private router: Router, private toastService: ToastService, private loader: LoaderService, private authService: SocialAuthService) {
+  constructor(private formBuilder: FormBuilder, private httpClient: HttpClientService, private router: Router, private toastService: ToastService, private loader: LoaderService) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(1)]]
@@ -60,14 +53,6 @@ export class LoginComponent {
   }
   ngOnInit(): void {
     this.navigateLogin()
-    this.authService.authState.subscribe(user => {
-      this.user = user;
-      this.loggedIn = user != null;
-
-      if (user?.email) {
-        this.ValidateUserAuth(user.email);
-      }
-    });
   }
   // Getter for easy access to form fields
   get formControls() {
@@ -182,12 +167,7 @@ export class LoginComponent {
   resetCustomer() {
     this.CustomerReg = new CustomerReg()
   }
-
-
-
-  signOut(): void {
-    this.authService.signOut();
-  }
+ 
 
   ValidateUserAuth(email: string) {
     this.Login.EmailId = email;
@@ -221,21 +201,5 @@ export class LoginComponent {
   }
 
 
-  ngAfterViewInit() {
-    google.accounts.id.initialize({
-      client_id: 'YOUR_GOOGLE_CLIENT_ID',
-      callback: (response: any) => this.handleCredentialResponse(response)
-    });
-
-    google.accounts.id.renderButton(
-      document.getElementById("googleButtonContainer"),
-      { theme: "outline", size: "large" }
-    );
-  }
-
-  handleCredentialResponse(response: any) {
-    const token = response.credential;
-    // send token to backend to validate and extract user info
-  }
 
 } 
