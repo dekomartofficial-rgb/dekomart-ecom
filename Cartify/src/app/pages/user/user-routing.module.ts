@@ -8,16 +8,18 @@ import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { OrderSuccessComponent } from './order-success/order-success.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
+import { AuthGuard } from '../../provider/guard/auth.guard'
+
 
 const routes: Routes = [
-  { path: '', component: UserHomeComponent },
-  { path: 'user-account', component: UserAccountComponent },
-  { path: 'user-orders', component: UserOrdersComponent },
-  { path: 'user-cart', component: CartComponent },
-  { path: 'user-wishlist', component: UserWishlistComponent },
-  { path: 'checkout', component: CheckoutComponent },
-  { path: 'order-sucessfully', component: OrderSuccessComponent },
-  { path: 'not-found', component: NotFoundComponent }
+  { path: '', component: UserHomeComponent, canActivate: [AuthGuard] },
+  { path: 'user-account', component: UserAccountComponent, canActivate: [AuthGuard] },
+  { path: 'user-orders', component: UserOrdersComponent, canActivate: [AuthGuard] },
+  { path: 'user-cart', component: CartComponent, canActivate: [AuthGuard] },
+  { path: 'user-wishlist', component: UserWishlistComponent, canActivate: [AuthGuard] },
+  { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
+  { path: 'order-sucessfully', component: OrderSuccessComponent, canActivate: [AuthGuard] },
+  { path: 'not-found', component: NotFoundComponent, canActivate: [AuthGuard] }
 ];
 
 

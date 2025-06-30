@@ -8,7 +8,7 @@ import { baseUrl } from '../../../assets/config.json'
 })
 export class CommonService {
 
-  constructor(private http: HttpClientService) { } 
+  constructor(private http: HttpClientService) { }
 
   getRole(): Observable<any> {
     return this.http.get<any>('admin/GetRole');
@@ -38,6 +38,7 @@ export class CommonService {
       this.http.get<any[]>('admin/GetDocument', { KeyId: KeyId, KeyType: KeyType }).subscribe({
         next: (response) => {
           const updatedDocs = response.map(doc => {
+            doc.Actualpath = doc.docPath 
             if (doc.docPath && !doc.docPath.startsWith('http')) {
               doc.docPath = baseUrl + '/' + doc.docPath;
             }

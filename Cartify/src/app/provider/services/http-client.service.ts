@@ -54,4 +54,9 @@ export class HttpClientService {
   getUserRole(UserId: number) {
     return this.get<any>('user/GetUserRole', { UserId: UserId })
   }
+
+  isAdmin(): Boolean {
+    let userData = this.getUserData()
+    return userData && userData.UserRole !== 'US'
+  }
 }

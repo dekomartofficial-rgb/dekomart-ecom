@@ -10,6 +10,8 @@ import { SaveOrder } from '@/app/provider/class/UserClass';
 import { ToastService } from '@/app/provider/services/toast.service';
 import { CartItem } from '@/app/provider/class/UserClass';
 import { ConfirmationDialogService } from '@/app/provider/services/confirmation-dialog.service';
+import { BlockUrlService } from '@/app/provider/services/block-url.service';
+
 
 
 @Component({
@@ -29,7 +31,7 @@ export class CartComponent implements OnInit {
 
 
 
-  constructor(private httpClient: HttpClientService, private loader: LoaderService, private router: Router, private _messageservice: ToastService, private ConfirmationService: ConfirmationDialogService) { }
+  constructor(private httpClient: HttpClientService, private loader: LoaderService, private router: Router, private _messageservice: ToastService, private ConfirmationService: ConfirmationDialogService, private blockurl: BlockUrlService) { }
   ngOnInit() {
     this.UserId = this.httpClient.getUserId()
     this.getCartData()
@@ -55,7 +57,8 @@ export class CartComponent implements OnInit {
       this.SaveOrder.OrderId = 0
       this.httpClient.post('user/SaveUserOrder', this.SaveOrder).subscribe((res: any) => {
         if (res.MessageType === 2) {
-          this.router.navigate(['user/checkout'], { state: { IsHaveScreenPermistion: true } });
+          this.blockurl.giveAccess()
+          this.router.navigate(['user/checkout']);
           this._messageservice.show('Success', res.Message);
           this.loader.hide()
         } else {

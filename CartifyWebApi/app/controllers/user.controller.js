@@ -2,6 +2,7 @@ const dataAcces = require("../database/dataaccess");
 const mssql = require("mssql");
 const jwt = require("jsonwebtoken");
 const { handleReps } = require("./common.controller");
+const Mail = require('./mail.controller')
 
 class User {
   static ValidateUser = async (req, res) => {
@@ -9,7 +10,7 @@ class User {
       const request = await dataAcces.getRequest();
       request.input("as_email_id", mssql.NVarChar(100), req.body.EmailId);
       request.input("as_password", mssql.NVarChar(100), req.body.Password);
-      request.input("as_auth_type", mssql.VarChar(1), req.body.AuthType);
+      request.input("as_auth_type", mssql.VarChar(20), req.body.AuthType);
       request.output("p_user_role", mssql.VarChar(10));
       request.output("p_user_id", mssql.BigInt);
       request.output("p_retmsg", mssql.VarChar(500));
@@ -21,9 +22,11 @@ class User {
       if (output.UserId > 0) {
         const secret = process.env.SECRET_TOKERN;
         const token = jwt.sign({ UserId: output.UserId, RoleCode: output.UserRole }, secret, { expiresIn: process.env.TOKEN_EXPIRE, });
+        Mail.SendMail('mohammedsinanc09@gmail.com', 'User Logined', 'You Logined Sucessfully')
         res.json({ ...output, Token: token });
         return;
       }
+
       res.status(200).json(output);
     } catch (e) {
       res.status(500).json({ err: "Error Occur" + e });
@@ -352,7 +355,7 @@ class User {
     } catch (e) {
       res.status(500).json({ err: "Error Occur" + e });
     }
-  } 
+  }
 }
 
 module.exports = User;

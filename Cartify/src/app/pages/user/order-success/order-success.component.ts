@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
+import { BlockUrlService } from '@/app/provider/services/block-url.service';
+import { LoaderService } from '@/app/provider/services/loader.service';
+
+
 
 @Component({
   selector: 'app-order-success',
@@ -10,12 +14,14 @@ import { Router } from '@angular/router';
 })
 export class OrderSuccessComponent implements OnInit {
   IsHaveScreenPermistion: boolean = false
-  constructor(private router: Router) { }
+  constructor(private router: Router, private blockurl: BlockUrlService, private loader: LoaderService) { }
+
   ngOnInit(): void {
-    this.IsHaveScreenPermistion = history.state['IsHaveScreenPermistion'];
-    if (!this.IsHaveScreenPermistion) {
-      this.router.navigate(['user/not-found'])
-      return;
+    if (!this.blockurl.checkHaveAcess()) {
+      this.loader.show()
+      this.router.navigate(['/'])
+      this.loader.hide()
     }
   }
+
 }

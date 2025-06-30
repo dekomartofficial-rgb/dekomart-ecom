@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component,  OnInit } from '@angular/core';
 import { LoaderService } from '@/app/provider/services/loader.service';
 import { HttpClientService } from '@/app/provider/services/http-client.service';
 import { InrPipe } from '@/app/provider/pipe/inr.pipe';
@@ -10,6 +10,7 @@ import { PlaceOrder } from '@/app/provider/class/UserClass';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '@/app/provider/services/toast.service';
+import { BlockUrlService } from '@/app/provider/services/block-url.service';
 
 
 
@@ -31,14 +32,17 @@ export class CheckoutComponent implements OnInit {
   RefCode: any[] = []
   PlaceOrder: PlaceOrder = new PlaceOrder()
   constructor(private loader: LoaderService, private http: HttpClientService, private router: Router, private paymentService: PaymentService, private commonService: CommonService, private toastService: ToastService,
+    private blockurl: BlockUrlService
   ) { }
 
   ngOnInit(): void {
-    this.IsHaveScreenPermistion = history.state['IsHaveScreenPermistion'];
-    if (this.IsHaveScreenPermistion === false) {
-      this.router.navigate(['user/not-found'])
+    if (!this.blockurl.checkHaveAcess()) {
+      this.loader.show()
+      this.router.navigate(['/'])
+      this.loader.hide()
       return;
-    }
+    } 
+     
     this.GetCheckoutDetails()
     this.GetRefData()
     this.getUserProfile(this.http.getUserId())
@@ -96,9 +100,8 @@ export class CheckoutComponent implements OnInit {
           next: (res) => {
             if (res.MessageType === 2) {
               this.toastService.show('Success', res.Message);
-              this.IsHaveScreenPermistion = false
-              console.log(this.IsHaveScreenPermistion)
-              this.router.navigate(['user/order-sucessfully'], { state: { IsHaveScreenPermistion: true } })
+              this.blockurl.revokeAcess()
+              this.router.navigate(['user/order-sucessfully'])
               this.loader.hide()
             } else {
               this.toastService.show('Error', res.Message);
@@ -129,7 +132,7 @@ export class CheckoutComponent implements OnInit {
               next: (res) => {
                 if (res.MessageType === 2) {
                   this.toastService.show('Success', res.Message);
-                  this.IsHaveScreenPermistion = false
+                  this.blockurl.giveAccess()
                   this.loader.show()
                   this.router.navigate(['user/order-sucessfully'])
                   this.loader.hide()

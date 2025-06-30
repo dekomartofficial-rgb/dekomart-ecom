@@ -1,5 +1,5 @@
 // login.component.ts
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Login } from '../../provider/interface/AdminInterface';
@@ -10,13 +10,17 @@ import { NavHomeComponent } from '../../home/section/nav-home/nav-home.component
 import { FooterHomeComponent } from '@/app/home/section/footer-home/footer-home.component';
 import { LoaderService } from '@/app/provider/services/loader.service';
 import { CustomerReg } from '@/app/provider/class/UserClass';
+import { SocialAuthService, GoogleLoginProvider, SocialUser } from '@abacritt/angularx-social-login';
+import { SocialLoginModule } from '@abacritt/angularx-social-login';
+declare var google: any;
 
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, CommonModule, ReactiveFormsModule, NavHomeComponent, FooterHomeComponent],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, NavHomeComponent, FooterHomeComponent, SocialLoginModule],
   templateUrl: './login.component.html',
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
@@ -34,10 +38,12 @@ export class LoginComponent {
     AuthType: ''
   }
   isAgeValid: boolean = true;
-  showPassword: boolean = false
+  showPassword: boolean = false;
+  user: SocialUser | null = null;
+  loggedIn: boolean = false;
 
 
-  constructor(private formBuilder: FormBuilder, private httpClient: HttpClientService, private router: Router, private toastService: ToastService, private loader: LoaderService) {
+  constructor(private formBuilder: FormBuilder, private httpClient: HttpClientService, private router: Router, private toastService: ToastService, private loader: LoaderService, private authService: SocialAuthService) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(1)]]
@@ -54,6 +60,14 @@ export class LoginComponent {
   }
   ngOnInit(): void {
     this.navigateLogin()
+    this.authService.authState.subscribe(user => {
+      this.user = user;
+      this.loggedIn = user != null;
+
+      if (user?.email) {
+        this.ValidateUserAuth(user.email);
+      }
+    });
   }
   // Getter for easy access to form fields
   get formControls() {
@@ -168,4 +182,60 @@ export class LoginComponent {
   resetCustomer() {
     this.CustomerReg = new CustomerReg()
   }
+
+
+
+  signOut(): void {
+    this.authService.signOut();
+  }
+
+  ValidateUserAuth(email: string) {
+    this.Login.EmailId = email;
+    this.Login.AuthType = 'GOOGLE_AUTH'
+    this.httpClient.post<any>('user/Validateuser', this.Login)
+      .subscribe({
+        next: (res) => {
+          if (res.MessageType === 2) {
+            const UserData = { UserId: res.UserId, Token: res.Token, UserRole: res.UserRole }
+            localStorage.setItem('userData', JSON.stringify(UserData));
+            if (this.checkAdmin(res.UserRole)) {
+              this.errorMessage = res.Message
+              setTimeout(() => {
+                this.router.navigate(['/admin/']);
+                this.loader.hide()
+              }, 200);
+            } else {
+              this.errorMessage = res.Message
+              setTimeout(() => {
+                this.router.navigate(['/user'])
+                this.loader.hide()
+              }, 3000);
+            }
+          } else {
+            this.errorMessage = res.Message
+            this.loader.hide()
+          }
+        },
+        error: (err) => { throw err }
+      })
+  }
+
+
+  ngAfterViewInit() {
+    google.accounts.id.initialize({
+      client_id: 'YOUR_GOOGLE_CLIENT_ID',
+      callback: (response: any) => this.handleCredentialResponse(response)
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById("googleButtonContainer"),
+      { theme: "outline", size: "large" }
+    );
+  }
+
+  handleCredentialResponse(response: any) {
+    const token = response.credential;
+    // send token to backend to validate and extract user info
+  }
+
 } 

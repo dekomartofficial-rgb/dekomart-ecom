@@ -1,8 +1,7 @@
-const multer = require('multer');
-const axios = require('axios');
 const dataAcces = require('../database/dataaccess')
 const mssql = require('mssql')
 const fs = require('fs')
+const fsp = fs.promises
 const path = require('path');
 const { handleReps } = require('./common.controller')
 
@@ -35,8 +34,6 @@ class MainController {
             const fileStorage = Array.isArray(fileStorageArr) ? fileStorageArr[0] : fileStorageArr;
             const uploadDir = await this.getFilePath(fileStorage, FileId, FileType);
 
-            console.log('📁 Upload directory:', uploadDir);
-
             if (FileId > 0 && UploadFile && singleFile.length > 0) {
                 for (const file of singleFile) {
                     const fileName = Date.now() + '-' + file.originalname.trim();
@@ -48,9 +45,9 @@ class MainController {
                                 return reject(err);
                             }
                             try {
-                                const result = await this.uploadDocument(0, FileId, FileType, filePath,  file.originalname, file.mimetype, null, 1, 'INSERT', LoggedUser );
+                                const result = await this.uploadDocument(0, FileId, FileType, filePath, file.originalname, file.mimetype, null, 1, 'INSERT', LoggedUser);
                                 resolve();
-                            } catch (dbErr) { 
+                            } catch (dbErr) {
                                 reject(dbErr);
                             }
                         });
@@ -61,6 +58,19 @@ class MainController {
             throw e;
         }
     };
+
+    static DeleteAttchment = async (req, res) => {
+        try {
+            const filepath = req.body.filePath
+            await fsp.unlink(filepath);
+            await this.uploadDocument(req.body.DocumentId, null, null, null, null, null, null, 0, 'DELETE', req.LoggedUser);
+            res.status(200).json({ MessageType: 2, Message: 'Document Deleted Successfully' });
+        } catch (err) {
+            console.error('Error deleting file:', err);
+        }
+
+    }
+
     static uploadDocument = async (DocumentId, KeyId, KeyType, DocPath, DocName, DocType, DocDesc, IsActive, OpsMode, LoggedUser) => {
         try {
             const request = await dataAcces.getRequest()

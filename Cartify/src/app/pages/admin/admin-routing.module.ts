@@ -10,18 +10,20 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { SystemParamComponent } from './system-param/system-param.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrdersDetailsComponent } from './orders-details/orders-details.component';
+import { AuthGuard } from '../../provider/guard/auth.guard'
+
 
 const routes: Routes = [
-  { path: '', component: AdminHomeComponent },
-  { path: 'product-details', component: ProductDetailsComponent }, // Fixed component
-  { path: 'user-registration', component: UserRegistrationComponent }, // Removed extra slashes
-  { path: 'product-dashboard', component: ProductDashboardComponent }, // Fixed component
-  { path: 'reference-data', component: ReferenceDataComponent },
-  { path: 'role-access', component: RoleAccessComponent },
-  { path: 'add-products', component: AddProductComponent },
-  { path: 'system-parm', component: SystemParamComponent },
-  { path: 'orders', component: OrdersComponent },
-  { path: 'orders-detials', component: OrdersDetailsComponent },
+  { path: '', component: AdminHomeComponent, canActivate: [AuthGuard] },
+  { path: 'product-details', component: ProductDetailsComponent, canActivate: [AuthGuard] }, 
+  { path: 'user-registration', component: UserRegistrationComponent, canActivate: [AuthGuard] },
+  { path: 'product-dashboard', component: ProductDashboardComponent, canActivate: [AuthGuard] }, 
+  { path: 'reference-data', component: ReferenceDataComponent, canActivate: [AuthGuard] },
+  { path: 'role-access', component: RoleAccessComponent, canActivate: [AuthGuard] },
+  { path: 'add-products', component: AddProductComponent, canActivate: [AuthGuard] },
+  { path: 'system-parm', component: SystemParamComponent, canActivate: [AuthGuard] },
+  { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
+  { path: 'orders-detials', component: OrdersDetailsComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

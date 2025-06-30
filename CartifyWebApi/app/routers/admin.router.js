@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const AdminController = require('../controllers/admin.controller')
+const MainController = require('../controllers/main.controller')
 const VerifyToken = require("../middleware/AuthMiddleware");
 const multer = require('multer');
 const storage = multer.memoryStorage();  // files stored in memory buffer
@@ -18,6 +19,7 @@ router.get('/GetAllUserOrder', VerifyToken, AdminController.GetAllUserOrder)
 router.get('/GetOrderDetails', VerifyToken, AdminController.GetOrderDetails)
 router.post("/SaveRefData", VerifyToken, AdminController.SaveRefData)
 router.post("/SaveProductHeader", VerifyToken, upload.array('ProductUpload'), AdminController.SaveProductHeader)
+router.post("/DeleteAttachment", VerifyToken, MainController.DeleteAttchment)
 router.post("/SaveRoleRight", VerifyToken, AdminController.SaveRoleRight)
 router.post("/MoveToNextStep", VerifyToken, AdminController.MoveToNextStep)
  

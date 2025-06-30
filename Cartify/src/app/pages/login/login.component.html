@@ -42,18 +42,19 @@
               </div>
               <div class="form-group position-relative">
                 <label for="password">Password</label>
-                <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" placeholder="Enter your password"
+                <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password"
+                  placeholder="Enter your password"
                   [class.invalid-input]="isSubmitted && formControls['password'].errors" [(ngModel)]="Login.Password" />
                 <button type="button" class="show-password-btn" (click)="showPassword = !showPassword"
                   style="position: absolute; right: 10px; top: 35px; background: none; border: none; cursor: pointer;">
                   <i class="fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
                 </button>
                 @if (isSubmitted && formControls['password'].errors) {
-                  <div class="error-message">
-                    @if (formControls['password'].errors['required']) {
-                      <div>Password is required</div>
-                    }
-                  </div>
+                <div class="error-message">
+                  @if (formControls['password'].errors['required']) {
+                  <div>Password is required</div>
+                  }
+                </div>
                 }
               </div>
               <div class="form-options">
@@ -65,7 +66,15 @@
                 </div>
                 <a href="#" class="forgot-password">Forgot Password?</a>
               </div>
-              <button type="submit" class="login-button" [disabled]="loginForm.invalid" (click)="onSubmit(Login)">Login </button>
+              <button type="submit" class="login-button" [disabled]="loginForm.invalid" (click)="onSubmit(Login)">Login
+              </button>
+              <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 pt-2 justify-content-center d-flex">
+                <!-- <button type="button" class="register-button" (click)="signInWithGoogle()"><i
+                    class="fa-brands fa-google"></i>Sign up with
+                  Google</button> -->
+                <div id="googleButtonContainer"></div>
+
+              </div>
             </form>
           </div>
           } @else {
@@ -182,10 +191,6 @@
                 <button type="submit" class="register-button" [disabled]="NewUser.invalid"
                   (click)="saveNewCustom(CustomerReg)"><i class="fa-solid fa-plus"></i>Register</button>
               </div>
-              <!-- <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6 justify-content-center d-flex">
-                <button type="button" class="register-button"><i class="fa-brands fa-google"></i>Sign up with
-                  Google</button>
-              </div> -->
             </div>
           </form>
           }
@@ -201,10 +206,11 @@
             </div>
           </div>
           @if (errorMessage) {
-          <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 d-flex justify-content-center col-12" style="justify-content: center;">
+          <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 d-flex justify-content-center col-12"
+            style="justify-content: center;">
             <div class="error-alert col-md-4 col-lg-4 col-xl-4 justify-content-center d-flex">
               <div>{{ errorMessage }}</div>
-            </div> 
+            </div>
           </div>
           }
         </div>
@@ -214,3 +220,4 @@
   </div>
 </div>
 <app-footer-home></app-footer-home>
+<asl-google-signin-button [theme]="'outline'" [size]="'large'" [text]="'signin_with'"></asl-google-signin-button>

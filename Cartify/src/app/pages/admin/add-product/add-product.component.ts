@@ -52,7 +52,8 @@ export class AddProductComponent implements OnInit {
   selectedGender: any[] = [];
   productForm: FormGroup;
   SizeArray: any[] = []
-
+  DocumentId: number = 0
+  ProductId: number = 0
 
   constructor(private commonService: CommonService, private _messageservice: ToastService, private loader: LoaderService, private httpService: HttpClientService, private _router: Router,
     private fb: FormBuilder, private http: HttpClient, private ConfirmationService: ConfirmationDialogService) {
@@ -74,10 +75,10 @@ export class AddProductComponent implements OnInit {
   }
   ngOnInit() {
     // this.addProductVariantRow();
-    const ProductId = history.state['productId'];
-    if (ProductId ?? ProductId > 0) {
-      this.getProductVariantDetails(ProductId);
-      this.getProductImage(ProductId)
+    this.ProductId = history.state['productId'];
+    if (this.ProductId ?? this.ProductId > 0) {
+      this.getProductVariantDetails(this.ProductId);
+      this.getProductImage(this.ProductId)
     }
     this.GetRefData();
   }
@@ -89,14 +90,14 @@ export class AddProductComponent implements OnInit {
         this.Gender = res.filter(item => item.groupName === 'GENDER');
         this.Catogery = res.filter(item => item.groupName === 'CATEGORY');
       }
-    }); 
+    });
   }
 
   getProductImage(ProductId: number) {
     this.loader.show()
     this.commonService.getDocument(ProductId, 'PRODUCT').then((files: any[]) => {
       this.imagePreviews = files.map(file => file.docPath);
-      console.log(files)
+      this.ProductImages = files
       this.loader.hide();
     });
 
@@ -231,8 +232,9 @@ export class AddProductComponent implements OnInit {
     this.httpService.post('admin/SaveProductHeader', fd).subscribe((res: any) => {
       if (res.MessageType === 2) {
         this._messageservice.show('Success', res.Message);
-        this.loader.hide()
-        this._router.navigate(['/admin/product-details']);
+        this.getProductVariantDetails(this.ProductId)
+        this.getProductImage(this.ProductId)
+        this.loader.hide() 
       } else {
         this._messageservice.show('Error', res.Message);
         this.loader.hide()
@@ -269,7 +271,34 @@ export class AddProductComponent implements OnInit {
       }
     });
   }
+  deleteAttachment() {
+    this.ConfirmationService.confirm({
+      title: 'Delete Confirmation',
+      message: 'Are you sure you want to delete this Product Image?',
+      confirmText: 'Delete',
+      cancelText: 'Cancel'
+    }).then((confirmed) => {
+      if (confirmed) {
+        const index = this.ClickedImage;
+        if (this.ProductImages && this.ProductImages[index]) {
+          this.DocumentId = this.ProductImages[index].docId;
+        }
 
+        this.httpService.post('admin/DeleteAttachment', { DocumentId: this.DocumentId, filePath: this.ProductImages[index].Actualpath }).subscribe((res: any) => {
+          if (res.MessageType === 2) {
+            this._messageservice.show('Success', res.Message);
+            this.getProductVariantDetails(this.ProductId);
+            this.getProductImage(this.ProductId)
+            this.ClickedImage = 0;
+            this.loader.hide()
+          } else {
+            this._messageservice.show('Error', res.Message);
+            this.loader.hide()
+          }
+        });
+      }
 
+    });
+  }
 }
 
