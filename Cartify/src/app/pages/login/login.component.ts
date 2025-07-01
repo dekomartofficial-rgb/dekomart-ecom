@@ -10,9 +10,13 @@ import { NavHomeComponent } from '../../home/section/nav-home/nav-home.component
 import { FooterHomeComponent } from '@/app/home/section/footer-home/footer-home.component';
 import { LoaderService } from '@/app/provider/services/loader.service';
 import { CustomerReg } from '@/app/provider/class/UserClass';
+import { SocialAuthService, GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
+declare var google: any;
+
+
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, CommonModule, ReactiveFormsModule, NavHomeComponent, FooterHomeComponent],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, NavHomeComponent, FooterHomeComponent, GoogleSigninButtonModule],
   templateUrl: './login.component.html',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -33,10 +37,11 @@ export class LoginComponent {
     AuthType: ''
   }
   isAgeValid: boolean = true;
-  showPassword: boolean = false; 
+  showPassword: boolean = false;
+  isClickedSigin: boolean = true
 
 
-  constructor(private formBuilder: FormBuilder, private httpClient: HttpClientService, private router: Router, private toastService: ToastService, private loader: LoaderService) {
+  constructor(private formBuilder: FormBuilder, private httpClient: HttpClientService, private router: Router, private toastService: ToastService, private loader: LoaderService, private authService: SocialAuthService) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(1)]]
@@ -53,10 +58,20 @@ export class LoginComponent {
   }
   ngOnInit(): void {
     this.navigateLogin()
+    if (this.isClickedSigin === true) {
+      this.authService.authState.subscribe((user) => {
+        this.isClickedSigin = false
+        this.ValidateUserAuth(user.email)
+      });
+    }
   }
   // Getter for easy access to form fields
   get formControls() {
     return this.loginForm.controls;
+  }
+
+  signInWithGoogle() {
+    this.isClickedSigin = true
   }
 
   validateAge(dateString: string) {
@@ -90,7 +105,7 @@ export class LoginComponent {
     if (this.loginForm.invalid) {
       return;
     }
-    this.Login.AuthType = 'W'
+    this.Login.AuthType = 'NORMAL_LOGIN'
     if (this.Login.EmailId && this.Login.Password) {
       this.httpClient.post<any>('user/Validateuser', this.Login)
         .subscribe({
@@ -167,9 +182,12 @@ export class LoginComponent {
   resetCustomer() {
     this.CustomerReg = new CustomerReg()
   }
- 
+
 
   ValidateUserAuth(email: string) {
+    this.loader.show()
+    this.isSubmitted = false
+    this.isClickedSigin = false
     this.Login.EmailId = email;
     this.Login.AuthType = 'GOOGLE_AUTH'
     this.httpClient.post<any>('user/Validateuser', this.Login)
@@ -199,7 +217,5 @@ export class LoginComponent {
         error: (err) => { throw err }
       })
   }
-
-
 
 } 

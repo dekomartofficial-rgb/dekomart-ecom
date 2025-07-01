@@ -3,6 +3,7 @@ const mssql = require("mssql");
 const jwt = require("jsonwebtoken");
 const { handleReps } = require("./common.controller");
 const Mail = require('./mail.controller')
+const MainController = require('./main.controller')
 
 class User {
   static ValidateUser = async (req, res) => {
@@ -356,6 +357,38 @@ class User {
       res.status(500).json({ err: "Error Occur" + e });
     }
   }
+
+  static GetOrderInvoice = async (req, res) => {
+    try {
+      const request = await dataAcces.getRequest();
+      request.input("ai_order_id", mssql.BigInt, req.query.OrderId);
+      request.input("ai_user_id", mssql.BigInt, req.LoggedUserId);
+
+      const result = await request.execute("PKG_REPORT$p_get_order_pdf");
+      
+      const orderData = {
+        SolidByAddress: result.recordsets[0],
+        ShippingAddress: result.recordsets[1],
+        BillingAddress: result.recordsets[2],
+        ProductDetails: result.recordsets[3],
+        AmountDetails: result.recordsets[4]
+      };
+
+      const pdfBuffer = await MainController.GeneratePdf(orderData, 'invoice');
+
+      res.set({
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `attachment; filename=invoice-${orderData[0]?.OrderNo}.pdf`,
+        'Content-Length': pdfBuffer.length
+      });
+
+      res.end(pdfBuffer);
+    } catch (e) {
+      console.error('PDF generation failed:', e);
+      res.status(500).json({ err: "Error Occurred: " + e.message });
+    }
+  }
+
 }
 
 module.exports = User;

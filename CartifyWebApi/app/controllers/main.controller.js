@@ -4,6 +4,8 @@ const fs = require('fs')
 const fsp = fs.promises
 const path = require('path');
 const { handleReps } = require('./common.controller')
+const hbs = require('hbs');
+const puppeteer = require('puppeteer');
 
 
 class MainController {
@@ -92,6 +94,37 @@ class MainController {
             const output = await handleReps(result.output);
             return output
         } catch (e) {
+            throw e
+        }
+    }
+    static GeneratePdf = async (data, templateName, res = null) => {
+        try {
+            const filePath = path.join(__dirname, `../templates/${templateName}.hbs`);
+            const htmlTemplate = await fsp.readFile(filePath, 'utf-8');
+            const template = hbs.compile(htmlTemplate);
+            const html = template(data);
+
+            const browser = await puppeteer.launch();
+            const page = await browser.newPage();
+            await page.setContent(html);
+            const pdfBuffer = await page.pdf({ format: 'A4' });
+            await browser.close();
+
+            if (res) {
+                console.error('Error generating PDF:', e); 
+                res.set({
+                    'Content-Type': 'application/pdf',
+                    'Content-Disposition': 'inline; filename="document.pdf"',
+                    'Content-Length': pdfBuffer.length
+                });
+                res.end(pdfBuffer);
+                return;
+            }
+            return pdfBuffer;
+        } catch (e) {
+            if (res) {
+                res.status(500).send('Failed to generate PDF');
+            }
             throw e
         }
     }

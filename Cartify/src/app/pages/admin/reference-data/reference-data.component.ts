@@ -62,7 +62,6 @@ export class ReferenceDataComponent implements OnInit {
   }
 
   onEdit(ChildData: any) { 
-    console.log(ChildData)
     this.isAddPopUp = true
     this.isDisableCode = true
     this.RefDataChild.Code = ChildData.code.toString()

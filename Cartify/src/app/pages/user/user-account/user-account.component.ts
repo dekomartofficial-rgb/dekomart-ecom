@@ -65,8 +65,7 @@ export class UserAccountComponent implements OnInit {
         this.CustomerReg.Dob = res[0]?.Dob ? this.formatDate(res[0].Dob) : null;
         this.CustomerReg.Email = res[0]?.Email
         this.CustomerReg.Password = res[0]?.Password
-        this.CustomerReg.PhoneNumber = res[0]?.PhoneNummber
-        console.log(this.CustomerReg)
+        this.CustomerReg.PhoneNumber = res[0]?.PhoneNummber 
       }
       this.loader.hide()
     })

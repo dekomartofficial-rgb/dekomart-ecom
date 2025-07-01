@@ -15,6 +15,13 @@ export class HttpClientService {
     return this.http.get<T>(`${this.baseUrl}/${endpoint}`, { params });
   }
 
+  getBlob(endpoint: string, params?: { [key: string]: any }): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/${endpoint}`, {
+      params,
+      responseType: 'blob' as 'blob'
+    });
+  }
+
   post<T>(endpoint: string, body: any): Observable<T> {
     return this.http.post<T>(`${this.baseUrl}/${endpoint}`, body);
   }

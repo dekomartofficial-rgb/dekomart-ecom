@@ -108,7 +108,7 @@
                             <div class="form-group">
                                 <label for="expectedDelivery">Expected Delivery</label>
                                 @if(MoveToStep.ExpDeliveryDate){
-                                <input type="text" [defaultValue]="MoveToStep.ExpDeliveryDate"  [disabled]="true">
+                                <input type="text" [defaultValue]="MoveToStep.ExpDeliveryDate" [disabled]="true">
                                 } @else {
                                 <input type="date" id="expectedDelivery" name="expectedDelivery"
                                     [(ngModel)]="MoveToStep.ExpDeliveryDate"
@@ -125,9 +125,10 @@
                             </div>
                         </div>
                         <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex gap-2 justify-content-end">
+                            <button type="button" class="button-5" style="background-color: red;" (click)="downloadInvoice()"><i class="fa-solid fa-download p-2"></i>Download Invoice</button>
                             @for (item of ButtonData; track $index) {
                             <button type="button" class="button-5" [ngStyle]="{'background-color': item.BtnColour }"
-                                (click)="moveToStep(item.BtnCode)"><i [className]="item.BtnIcon"
+                                (click)="moveToStep(item.BtnCode)"><i [className]="item.BtnIcon" style="padding: 0px 2px;"
                                     class="p-2"></i>{{item.BtnName}}</button>
                             }
                         </div>

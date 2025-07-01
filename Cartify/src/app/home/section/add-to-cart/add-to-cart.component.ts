@@ -12,7 +12,6 @@ export class AddToCartComponent {
 @Input () cartItems: any[] = []
 
 close() {
-  console.log("Closing cart...");
   this.closeCart.emit();
 }
 

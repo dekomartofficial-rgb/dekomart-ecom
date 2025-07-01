@@ -20,7 +20,6 @@ class Payment {
 
         try {
             const order = await razorpay.orders.create(options);
-            console.log(order)
             res.json(order);
         } catch (err) {
             res.status(500).json({ error: "Order creation failed" });

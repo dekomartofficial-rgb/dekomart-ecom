@@ -58,7 +58,6 @@ export class SystemParamComponent implements OnInit {
   ];
 
   onEdit(childData: any) {
-    console.log('Editing row:', childData);
     this.sysParmChild = { ...childData };
     this.isEditPopupVisible = true;
   }

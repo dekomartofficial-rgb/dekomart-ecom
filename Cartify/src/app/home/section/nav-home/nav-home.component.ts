@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { HttpClientService } from '@/app/provider/services/http-client.service';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
+
 
 @Component({
   selector: 'app-nav-home',
@@ -44,7 +46,7 @@ export class NavHomeComponent implements OnInit {
     { path: '/mirrors', label: 'Mirror', image: 'mirror.png' }
   ];
 
-  constructor(private http: HttpClientService, private router: Router) { }
+  constructor(private http: HttpClientService, private router: Router, private authService: SocialAuthService) { }
   ngOnInit(): void {
     if (this.http.getUserId() > 0) {
       this.getUserProfile(this.http.getUserId())
@@ -65,6 +67,7 @@ export class NavHomeComponent implements OnInit {
   }
 
   Logout() {
+    this.signOut()
     this.http.LogOut();
   }
 
@@ -83,5 +86,9 @@ export class NavHomeComponent implements OnInit {
       }
     })
   }
-
+  signOut(): void {
+    this.authService.signOut().then(() => {
+      console.log('done')
+    });
+  }
 }

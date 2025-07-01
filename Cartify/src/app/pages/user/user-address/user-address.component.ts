@@ -118,8 +118,6 @@ export class UserAddressComponent implements OnInit {
             }
           });
         }
-      } else {
-        console.log('Rejected');
       }
     });
 

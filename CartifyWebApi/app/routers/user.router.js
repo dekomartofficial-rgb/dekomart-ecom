@@ -14,6 +14,7 @@ router.get('/GetUserCart', VerifyToken, UserController.GetUserCart)
 router.get('/GetUserAddress', VerifyToken, UserController.GetUserAddress)
 router.get('/GetCheckOutDetails', VerifyToken, UserController.GetCheckDetails)
 router.get('/GetOrderDetails', VerifyToken, UserController.GetOrderDetails)
+router.get('/GenerateInvoice', UserController.GetOrderInvoice)
 router.post("/Validateuser", UserController.ValidateUser);
 router.post("/SaveUser", VerifyToken, UserController.SaveUser);
 router.post('/SaveCustomer', UserController.SaveNewCustomer);

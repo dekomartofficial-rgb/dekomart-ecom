@@ -51,7 +51,6 @@ export class OrdersDetailsComponent implements OnInit {
       this.FlagDetails = res[6]
       this.MoveToStep.DeliveryAgnetNumber = this.FlagDetails[0]?.DeliveryAgentNumber
       this.MoveToStep.ExpDeliveryDate = this.FlagDetails[0]?.ExpectedDeliverDate
-      console.log(this.MoveToStep)
       this.loader.hide()
     })
   }
@@ -69,6 +68,20 @@ export class OrdersDetailsComponent implements OnInit {
         this.loader.hide()
       }
     })
+  }
+
+  downloadInvoice() {
+    this.loader.show()
+    this.httpService.getBlob('user/GenerateInvoice', { OrderId: this.MoveToStep.OrderId  }).subscribe(res => {
+      const blob = new Blob([res], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'invoice.pdf';
+      link.click();
+      window.URL.revokeObjectURL(url);
+      this.loader.hide()
+    });
   }
 
 }

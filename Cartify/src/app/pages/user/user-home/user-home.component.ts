@@ -9,6 +9,7 @@ import { CartComponent } from '../cart/cart.component';
 import { UserWishlistComponent } from '../user-wishlist/user-wishlist.component';
 import { CommonModule } from '@angular/common';
 import { UserAddressComponent } from '../user-address/user-address.component';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 
 
 @Component({
@@ -35,7 +36,7 @@ export class UserHomeComponent implements OnInit {
   cartCount = 3
   selectedScreenCode: string = ''
 
-  constructor(private httpClient: HttpClientService, private Loader: LoaderService) { }
+  constructor(private httpClient: HttpClientService, private Loader: LoaderService, private authService: SocialAuthService) { }
   async ngOnInit() {
     this.LoggedUserId = await this.httpClient.getUserId();
     await this.getUserProfile(this.LoggedUserId)
@@ -83,7 +84,17 @@ export class UserHomeComponent implements OnInit {
     return this.httpClient.isLoggedIn()
   }
 
-  Logout(){
+  Logout() {
+    this.Loader.show()
+    this.signOut()
+    this.Loader.hide()
     this.httpClient.LogOut()
+  }
+
+
+  signOut(): void {
+    this.authService.signOut().then(() => {
+      console.log('done')
+    });
   }
 }

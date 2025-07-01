@@ -16,7 +16,7 @@ export class UserOrdersComponent implements OnInit {
   OrderDetails: any[] = []
   OrderItemDetails: any[] = []
   baseUrl: string = baseUrl
- 
+
   constructor(private httpClient: HttpClientService, private loader: LoaderService) { }
   ngOnInit(): void {
     this.getUserOrderDetails()
@@ -32,4 +32,21 @@ export class UserOrdersComponent implements OnInit {
       }
     })
   }
+
+  downloadInvoice(orderId: number) {
+    this.loader.show()
+    this.httpClient.getBlob('user/GenerateInvoice', { OrderId: orderId }).subscribe(res => {
+      const blob = new Blob([res], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'invoice.pdf';
+      link.click();
+      window.URL.revokeObjectURL(url);
+      this.loader.hide()
+    }); 
+  }
+
+
+
 }

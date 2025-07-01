@@ -60,8 +60,7 @@ class Admin {
         }
     }
     static GetRefGroupData = async (req, res) => {
-        try {
-            console.log(req.query.GroupName)
+        try { 
             const request = await dataAcces.getRequest()
             request.input('as_group_name', mssql.VarChar(mssql.MAX), req.query.GroupName)
             const result = await request.execute("PKG_DDL$get_ref_group_data");
@@ -116,10 +115,8 @@ class Admin {
     }
     static SaveRefData = async (req, res) => {
         try {
-            const request = await dataAcces.getRequest();
-
-            console.log(req.body)
-
+            const request = await dataAcces.getRequest(); 
+            
             request.input('as_group_name', mssql.VarChar(50), req.body.GroupName);
             request.input('as_code', mssql.VarChar(20), req.body.Code);
             request.input('as_code_active', mssql.TinyInt, req.body.CodeActive);
@@ -248,8 +245,7 @@ class Admin {
     }
     static MoveToNextStep = async (req, res) => {
         try {
-            const request = await dataAcces.getRequest();
-            console.log(req.body)
+            const request = await dataAcces.getRequest(); 
             request.input("ai_order_id", mssql.BigInt, req.body.OrderId);
             request.input("as_ops_mode", mssql.VarChar(40), req.body.OpsMode);
             request.input("ad_exp_delivery_date", mssql.Date, req.body.ExpDeliveryDate);

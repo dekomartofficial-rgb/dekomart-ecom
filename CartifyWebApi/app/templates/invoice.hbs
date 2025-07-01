@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Order Invoice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            font-size: 14px;
+            color: #000;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .no-border td {
+            border: none;
+            padding: 4px 0;
+        }
+
+        .header-section,
+        .footer-section {
+            margin-top: 20px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .sign-box {
+            margin-top: 40px;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+
+    <table class="no-border">
+        <tr>
+
+            <td style="width: 60%">
+                {{#each SolidByAddress}}
+                    <strong>Sold By :</strong><br>
+                    {{SolidBy}}<br><br>
+                    <strong>PAN No:</strong> {{PanNo}}<br>
+                    <strong>GST Registration No:</strong> {{GstNo}}<br><br>
+                {{/each}}
+                {{#each SolidByAddress}}
+                    <strong>Order Number:</strong> {{OrderNo}}<br>
+                    <strong>Order Date:</strong> {{OrderDate}}<br>
+                    <strong>Order Status:</strong> {{OrderDesc}}<br>
+                {{/each}}
+            </td>
+
+
+
+            <td style="width: 40%">
+                {{#each ShippingAddress}}
+                <strong>Billing Address:</strong><br>
+                {{ShippingAddress}} <br><br>
+                {{/each}}
+                <strong>Shipping Address:</strong><br>
+                {{#each BillingAddress}}
+                {{BillingAddress}}<br>
+                <strong>Place of supply:</strong>{{PlaceOfSupply}}<br>
+                <strong>Place of delivery:</strong>{{PlaceOfDelivery}}
+                {{/each}}
+            </td>
+
+        </tr>
+    </table>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Sl. No</th>
+                <th>Description</th>
+                <th>Quantiy</th>
+                <th>Payment Details</th>
+                <th>Base Price</th>
+                <th>Discount</th>
+                <th>DeliveryCharge</th>
+                <th>Total Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {{#each ProductDetails}}
+                <td>{{SlNo}}</td>
+                <td>{{ProductDesc}}</td>
+                <td>{{Quantiy}}</td>
+                <td>{{PaymentStatus}}</td>
+                <td>{{BasePrice}}</td>
+                <td>{{Discount}}</td>
+                <td>{{DeliveryCharge}}</td>
+                <td>{{TotalAmount}}</td>
+                {{/each}}
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="7" class="right bold">TOTAL:</td>
+                {{#each AmountDetails}}
+                <td class="right bold">₹{{TotalAmount}}</td>
+                {{/each}}
+            </tr>
+        </tfoot>
+    </table>
+</body>
+
+</html>
