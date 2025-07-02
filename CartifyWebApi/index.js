@@ -13,6 +13,24 @@ const errorHandler = require("./app/helper/error-handler");
 const DataAccess = require("./app/database/dataaccess");
 const { convertBigIntMiddleware } = require("./app/middleware/CommonMiddleware");
 
+
+const puppeteer = require('puppeteer'); 
+(async () => {
+  const browser = await puppeteer.launch({
+    headless: true,
+    executablePath: process.env.NODE_ENV === 'DEV2'
+      ? process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome'
+      : undefined,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
+
+  const page = await browser.newPage();
+  await page.goto('https://example.com');
+  await browser.close();
+})();
+
+
+
 // Middleware
 app.use(cors());
 app.use(express.json({
