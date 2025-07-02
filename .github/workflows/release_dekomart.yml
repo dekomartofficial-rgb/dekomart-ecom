@@ -1,5 +1,3 @@
-# Docs: https://github.com/Azure/webapps-deploy
-
 name: Build and deploy Node.js app to Azure Web App - dekomart
 
 on:
@@ -12,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read # Required for actions/checkout
+      contents: read
 
     steps:
       - name: Checkout code
@@ -23,7 +21,7 @@ jobs:
         with:
           node-version: '22.x'
 
-      - name: Install Chrome dependencies and Puppeteer (safe mode)
+      - name: Install system dependencies for Chrome
         run: |
           sudo apt-get update
           sudo apt-get install -y wget gnupg unzip \
@@ -32,15 +30,19 @@ jobs:
             libgdk-pixbuf2.0-0 libnspr4 libnss3 libx11-xcb1 \
             libxcomposite1 libxdamage1 libxrandr2 xdg-utils \
             libasound2t64
+
+      - name: Install dependencies and Chrome for Puppeteer
+        run: |
           cd CartifyWebApi
           npm install
-          npx --yes puppeteer browsers install chrome || echo "Puppeteer install fallback failed"
-
+          export PUPPETEER_CACHE_DIR="./.puppeteer-cache"
+          export PUPPETEER_DOWNLOAD_PATH="$PUPPETEER_CACHE_DIR"
+          npx puppeteer browsers install chrome
 
       - name: Build project
         run: |
           cd CartifyWebApi
-          npm run build || echo "No build step defined, continuing..."
+          npm run build || echo "No build step defined"
 
       - name: Zip contents for deployment
         run: |
