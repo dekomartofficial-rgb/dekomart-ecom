@@ -32,7 +32,7 @@ jobs:
       - name: Install Chrome for Puppeteer
         run: |
           cd CartifyWebApi
-          npx puppeteer browsers install chrome
+          npx --yes puppeteer browsers install chrome
 
       - name: Zip contents for deployment
         run: |
