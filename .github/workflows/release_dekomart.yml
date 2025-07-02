@@ -33,12 +33,12 @@ jobs:
           sudo apt install -y ./google-chrome-stable_current_amd64.deb
           google-chrome --version
 
-      - name: Install Node.js dependencies
+      - name: Install Node.js dependencies (production only)
         run: |
           cd CartifyWebApi
-          npm install
+          npm install --production
 
-      - name: Zip contents for deployment
+      - name: Zip contents for deployment (include node_modules)
         run: |
           cd CartifyWebApi
           zip -r ../release.zip .
