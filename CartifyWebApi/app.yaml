@@ -1,3 +1,8 @@
 runtime: nodejs22
-instance_class: F1
-entrypoint: node app.js  # or whatever your main file is
+env: standard
+
+instance_class: F2
+
+handlers:
+  - url: /.*
+    script: auto
