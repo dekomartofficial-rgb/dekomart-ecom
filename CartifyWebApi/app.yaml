@@ -1,0 +1,3 @@
+runtime: nodejs22
+instance_class: F1
+entrypoint: node app.js  # or whatever your main file is
