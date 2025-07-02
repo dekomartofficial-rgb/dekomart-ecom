@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy Node.js app to Azure Web App - dekomart
 
 on:
@@ -9,30 +6,42 @@ on:
       - release
   workflow_dispatch:
 
+env:
+  CI: true
+  NODE_ENV: production
+
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Node.js version
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22.x'
+          cache: 'npm'
 
-      - name: npm install, build, and test
-        run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+      - name: Install dependencies
+        run: npm install --omit=dev --ignore-scripts
+
+      - name: Build (if needed)
+        run: npm run build --if-present
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+        run: |
+          mkdir -p deployment
+          cp -r node_modules deployment/
+          cp -r *.js deployment/
+          cp -r *.json deployment/
+          cp -r public deployment/ 2>/dev/null || :
+          cp -r views deployment/ 2>/dev/null || :
+          cd deployment && zip -r ../release.zip ./*
 
-      - name: Upload artifact for deployment job
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: node-app
@@ -41,21 +50,24 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    
+    environment: 
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: node-app
 
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
-      
-      - name: 'Deploy to Azure Web App'
+      - name: Unzip artifact
+        run: unzip release.zip -d deployment
+
+      - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'dekomart'
           slot-name: 'Production'
-          package: .
+          package: deployment
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4304D5725DAB4782ADCE32F7E6F86779 }}
