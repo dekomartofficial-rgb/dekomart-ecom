@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: '22.x'
 
-      - name: Install system dependencies for Chrome
+      - name: Install system dependencies for Puppeteer (Chrome)
         run: |
           sudo apt-get update
           sudo apt-get install -y wget gnupg unzip \
@@ -31,18 +31,12 @@ jobs:
             libxcomposite1 libxdamage1 libxrandr2 xdg-utils \
             libasound2t64
 
-      - name: Install dependencies and Chrome for Puppeteer
+      - name: Install Node.js dependencies and auto-download Chrome
         run: |
           cd CartifyWebApi
-          npm install
           export PUPPETEER_CACHE_DIR="./.puppeteer-cache"
           export PUPPETEER_DOWNLOAD_PATH="$PUPPETEER_CACHE_DIR"
-          npx puppeteer browsers install chrome
-
-      - name: Build project
-        run: |
-          cd CartifyWebApi
-          npm run build || echo "No build step defined"
+          npm install
 
       - name: Zip contents for deployment
         run: |
@@ -60,7 +54,7 @@ jobs:
     needs: build
 
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: node-app
