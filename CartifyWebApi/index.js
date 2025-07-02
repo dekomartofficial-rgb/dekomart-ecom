@@ -14,13 +14,16 @@ const DataAccess = require("./app/database/dataaccess");
 const { convertBigIntMiddleware } = require("./app/middleware/CommonMiddleware");
 
 
-const puppeteer = require('puppeteer'); 
+const puppeteer = require('puppeteer');
+
+const isProduction = process.env.NODE_ENV === 'DEV2';
+
 (async () => {
   const browser = await puppeteer.launch({
     headless: true,
-    executablePath: process.env.NODE_ENV === 'DEV2'
-      ? process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome'
-      : undefined,
+    executablePath: isProduction
+      ? '/usr/bin/google-chrome' // GitHub Actions / Linux
+      : undefined,              // Let Puppeteer use its own bundled Chromium on Windows
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
 
@@ -28,7 +31,6 @@ const puppeteer = require('puppeteer');
   await page.goto('https://example.com');
   await browser.close();
 })();
-
 
 
 // Middleware
