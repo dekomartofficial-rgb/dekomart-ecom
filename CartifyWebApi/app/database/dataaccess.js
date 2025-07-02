@@ -28,8 +28,7 @@ class DataAccess {
       server: this.server,
       port: this.port,
       database: this.database,
-      requestTimeout: 30000,
-      cancelTimeout: 10000,
+      requestTimeout: 30000, 
       options: {
         encrypt: this.env === "DEV" ? false : true,
         enableArithAbort: true,
