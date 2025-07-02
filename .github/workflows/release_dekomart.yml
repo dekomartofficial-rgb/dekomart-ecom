@@ -1,3 +1,5 @@
+# Docs: https://github.com/Azure/webapps-deploy
+
 name: Build and deploy Node.js app to Azure Web App - dekomart
 
 on:
@@ -6,42 +8,42 @@ on:
       - release
   workflow_dispatch:
 
-env:
-  CI: true
-  NODE_ENV: production
-
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: read # Required for actions/checkout
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22.x'
-          cache: 'npm'
 
-      - name: Install dependencies
-        run: npm install --omit=dev --ignore-scripts
-
-      - name: Build (if needed)
-        run: npm run build --if-present
-
-      - name: Zip artifact for deployment
+      - name: Install Chrome dependencies and Puppeteer (safe mode)
         run: |
-          mkdir -p deployment
-          cp -r node_modules deployment/
-          cp -r *.js deployment/
-          cp -r *.json deployment/
-          cp -r public deployment/ 2>/dev/null || :
-          cp -r views deployment/ 2>/dev/null || :
-          cd deployment && zip -r ../release.zip ./*
-
-      - name: Upload artifact
+          sudo apt-get update
+          sudo apt-get install -y wget gnupg unzip \
+            fonts-liberation libappindicator3-1 \
+            libatk-bridge2.0-0t64 libatk1.0-0t64 libcups2t64 libdbus-1-3 \
+            libgdk-pixbuf2.0-0 libnspr4 libnss3 libx11-xcb1 \
+            libxcomposite1 libxdamage1 libxrandr2 xdg-utils \
+            libasound2t64
+          cd CartifyWebApi
+          npm install
+          npx --yes puppeteer browsers install chrome || echo "Puppeteer install fallback failed"
+      - name: Build project
+        run: |
+          cd CartifyWebApi
+          npm run build || echo "No build step defined, continuing..."
+      - name: Zip contents for deployment
+        run: |
+          cd CartifyWebApi
+          zip -r ../release.zip .
+      - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
         with:
           name: node-app
@@ -50,24 +52,20 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    environment: 
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Download artifact
+      - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: node-app
 
       - name: Unzip artifact
-        run: unzip release.zip -d deployment
+        run: unzip release.zip
 
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'dekomart'
           slot-name: 'Production'
-          package: deployment
+          package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4304D5725DAB4782ADCE32F7E6F86779 }}
