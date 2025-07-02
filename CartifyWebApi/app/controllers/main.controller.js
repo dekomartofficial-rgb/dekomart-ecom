@@ -5,7 +5,8 @@ const fsp = fs.promises
 const path = require('path');
 const { handleReps } = require('./common.controller')
 const hbs = require('hbs');
-const puppeteer = require('puppeteer');
+const chromePdf = require('html-pdf-chrome'); // ✅ new package
+
 
 
 class MainController {
@@ -104,14 +105,13 @@ class MainController {
             const template = hbs.compile(htmlTemplate);
             const html = template(data);
 
-            const browser = await puppeteer.launch();
-            const page = await browser.newPage();
-            await page.setContent(html);
-            const pdfBuffer = await page.pdf({ format: 'A4' });
-            await browser.close();
+            const pdf = await chromePdf.create(html, {
+                printOptions: { format: 'A4' }
+            });
+
+            const pdfBuffer = pdf.toBuffer();
 
             if (res) {
-                console.error('Error generating PDF:', e); 
                 res.set({
                     'Content-Type': 'application/pdf',
                     'Content-Disposition': 'inline; filename="document.pdf"',
@@ -120,12 +120,14 @@ class MainController {
                 res.end(pdfBuffer);
                 return;
             }
+
             return pdfBuffer;
         } catch (e) {
+            console.error('Error generating PDF:', e);
             if (res) {
                 res.status(500).send('Failed to generate PDF');
             }
-            throw e
+            throw e;
         }
     }
 }
