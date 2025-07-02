@@ -8,30 +8,10 @@ const bodyParser = require("body-parser");
 const app = express();
 dotenv.config();
 
-const PORT = 80;
+const PORT = process.env.PORT || 80;
 const errorHandler = require("./app/helper/error-handler");
 const DataAccess = require("./app/database/dataaccess");
 const { convertBigIntMiddleware } = require("./app/middleware/CommonMiddleware");
-
-
-const puppeteer = require('puppeteer');
-
-const isProduction = process.env.NODE_ENV === 'DEV2';
-
-(async () => {
-  const browser = await puppeteer.launch({
-    headless: true,
-    executablePath: isProduction
-      ? '/usr/bin/google-chrome' // GitHub Actions / Linux
-      : undefined,              // Let Puppeteer use its own bundled Chromium on Windows
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
-
-  const page = await browser.newPage();
-  await page.goto('https://example.com');
-  await browser.close();
-})();
-
 
 // Middleware
 app.use(cors());
