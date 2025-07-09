@@ -48,57 +48,49 @@
         </div>
       </div>
     </div>
-    <div class="col-md-10-5 top-nav-var">
-      <div class="d-flex p-2 align-items-center">
-        <!-- Sidebar Toggle Button -->
-        <div class="col-md-1 m-2">
-          <button style="
-              border: none;
-              color: black;
-              font-size: 23px;
-              cursor: pointer;
-              background-color: #ffffff;
-            " (click)="sidrBarDialog()">
-            <i *ngIf="!sidebarVisible" class="fa-solid fa-bars"></i>
-            <i *ngIf="sidebarVisible" class="fa fa-close"></i>
-          </button>
-        </div>
-
-        <!-- Search Bar -->
-        <div class="col-md-6 m-1 justify-content-between d-flex">
-          <form action="" class="search-bar">
-            <input type="search" name="search" pattern=".*\S.*" required placeholder="Search...">
-            <button class="search-btn" type="submit">
-              <span>Search</span>
+    <div class="col-md-10-5 navbar">
+      <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
+        <div class="d-flex p-2 align-items-center justify-content-between">
+          <!-- Sidebar Toggle Button -->
+          <div class="col-md-1 m-2">
+            <button style="border: none;color: black;font-size: 23px;cursor: pointer;background-color: #ffffff;"
+              (click)="sidrBarDialog()">
+              <i *ngIf="!sidebarVisible" class="fa-solid fa-bars"></i>
+              <i *ngIf="sidebarVisible" class="fa fa-close"></i>
             </button>
-          </form>
-        </div>
+          </div>
 
-        <!-- Navigation Items -->
-        <div class="col-md-5 justify-content-end d-flex" style="margin: -10px">
-          <ul class="list-inline d-flex align-items-end gap-4" style="margin-right: 31px; margin-top: 13px">
-            <li class="nav-item ng-star-inserted top-nav-var-icon">
-              <a class="p-element btn menu-icon">
-                <i class="fa-solid fa-comments" pTooltip="Feedback" tooltipPosition="right"
-                  tooltipStyleClass="my-tooltip-style"></i>
-              </a>
-            </li>
-            <li class="nav-item ng-star-inserted top-nav-var-icon">
-              <a class="p-element btn menu-icon" (click)="notificationDialog()">
-                <i class="fa-solid fa-bell" pTooltip="Notification" tooltipPosition="right"
-                  tooltipStyleClass="my-tooltip-style"></i>
-              </a>
-            </li>
-            <li class="nav-item ng-star-inserted top-nav-var-icon">
-              <a class="p-element btn menu-icon" (click)="Logout()">
-                <i class="fa-solid fa-right-to-bracket" pTooltip="Sign Out" tooltipPosition="right"
-                  tooltipStyleClass="my-tooltip-style"></i>
-              </a>
-            </li>
-            <li class="nav-item position-relative top-nav-var-icon-user">
-              <img style="height: 40px;" src="assets/admin-images/user.png" alt="user-image" />
-            </li>
-          </ul>
+          <!-- Search Bar -->
+          <div class="col-md-6 m-1 justify-content-between d-flex search_bar">
+            <input type="search" name="search" pattern=".*\S.*" required placeholder="Search...">
+          </div>
+
+          <!-- Navigation Items -->
+          <div class="col-md-5 justify-content-end d-flex" style="margin: -10px">
+            <ul class="list-inline d-flex align-items-end gap-4" style="margin-right: 31px; margin-top: 13px">
+              <li class="nav-item ng-star-inserted top-nav-var-icon">
+                <a class="p-element btn menu-icon">
+                  <i class="fa-solid fa-comments" pTooltip="Feedback" tooltipPosition="right"
+                    tooltipStyleClass="my-tooltip-style"></i>
+                </a>
+              </li>
+              <li class="nav-item ng-star-inserted top-nav-var-icon">
+                <a class="p-element btn menu-icon" (click)="notificationDialog()">
+                  <i class="fa-solid fa-bell" pTooltip="Notification" tooltipPosition="right"
+                    tooltipStyleClass="my-tooltip-style"></i>
+                </a>
+              </li>
+              <li class="nav-item ng-star-inserted top-nav-var-icon">
+                <a class="p-element btn menu-icon" (click)="Logout()">
+                  <i class="fa-solid fa-right-to-bracket" pTooltip="Sign Out" tooltipPosition="right"
+                    tooltipStyleClass="my-tooltip-style"></i>
+                </a>
+              </li>
+              <li class="nav-item position-relative top-nav-var-icon-user">
+                <img style="height: 40px;" src="assets/admin-images/user.png" alt="user-image" />
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

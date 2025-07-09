@@ -7,33 +7,6 @@
   max-width: 116.5%;
 }
 
-/* Section Styles */
-.navbar-section {
-  margin: 0.5rem 0;
-  display: flex;
-  align-items: center;
-}
-
-/* Brand Logo */
-.brand-logo {
-  color: #2196f3;
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-/* Navigation Links */
-.nav-links {
-  display: flex;
-  flex-direction: column;
-  margin: 0.5rem 0;
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    margin: 0;
-  }
-}
-
 .nav-link {
   color: #666;
   text-decoration: none;
@@ -41,64 +14,9 @@
   margin-right: 0;
 }
 
-/* Search Box */
-.search-container {
-  margin: 0.5rem 0;
-}
-
-:host ::ng-deep .search-input {
-  width: 200px;
-  border-radius: 4px;
-}
-
-/* User Controls */
-:host ::ng-deep .notification-btn {
-  background-color: #333;
-  color: white;
-  width: 2.5rem;
-  height: 2.5rem;
-}
-
-:host ::ng-deep .user-avatar {
-  border: 2px solid #2196f3;
-}
-
-:host ::ng-deep .logout-btn {
-  background-color: #333;
-  color: white;
-  border-radius: 4px;
-}
-
-/* Responsive Layout */
-@media (max-width: 767px) {
-  :host ::ng-deep .p-toolbar {
-    flex-wrap: wrap;
-  }
-}
 /* Navbar styles */
 :host {
   display: block;
-}
-
-.card {
-  margin-bottom: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  background-color: #fff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.custom-icon-button {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-}
-
-.custom-icon-button:hover {
-  background-color: #f8f9fa;
 }
 
 /* Sidebar styles */
@@ -240,28 +158,6 @@
   display: inline-block;
 }
 
-/* Account and notification sidebar styles */
-:host ::ng-deep .p-sidebar-header {
-  padding: 1rem;
-  border-bottom: 1px solid #e9ecef;
-}
-
-:host ::ng-deep .p-sidebar-content {
-  padding: 0;
-}
-
-.account-profile {
-  border-bottom: 1px solid #e9ecef;
-}
-
-.menu-list ul li a {
-  transition: background-color 0.2s;
-}
-
-.menu-list ul li a:hover {
-  background-color: #f8f9fa;
-}
-
 /* Responsive styles */
 @media screen and (max-width: 768px) {
   .sidebar {
@@ -277,103 +173,6 @@
   }
 }
 
-/* Main content positioning */
-:host ::ng-deep .p-toolbar {
-  padding: 0.5rem 1rem;
-}
-
-:host ::ng-deep .p-inputtext {
-  padding: 0.5rem 0.75rem;
-}
-
-/* For better mobile experience */
-@media screen and (max-width: 576px) {
-  .searchbar input {
-    width: 120px;
-  }
-}
-/* Main content area styles */
-.main-content {
-  margin-left: 250px; /* Same as sidebar width */
-  margin-top: 70px; /* Same as navbar height */
-  padding: 20px;
-  transition: margin-left 0.3s;
-}
-
-.main-content {
-  margin-left: 250px; /* Adjust as needed */
-}
-
-/* Adjust main content when sidebar is collapsed */
-.main-content.sidebar-collapsed {
-  margin-left: 70px; /* Same as collapsed sidebar width */
-}
-
-/* Adjust main content when sidebar is hidden */
-.main-content.sidebar-hidden {
-  margin-left: 0;
-}
-
-/* Responsive adjustment for main content */
-@media screen and (max-width: 768px) {
-  .main-content {
-    margin-left: 0;
-  }
-}
-.top-bar-width {
-  width: 100%;
-  margin-left: 0px;
-}
-.content-shifted {
-  width: 100%;
-  left: 0px;
-}
-.form {
-  position: relative;
-}
-
-.form .fa-search {
-  position: absolute;
-  top: 14px;
-  left: 20px;
-  color: #9ca3af;
-}
-
-.form span {
-  position: absolute;
-  right: 17px;
-  top: 8px;
-  padding: 2px;
-  border-left: 1px solid #d1d5db;
-}
-
-.left-pan {
-  padding-left: 7px;
-}
-
-.left-pan i {
-  padding-left: 10px;
-}
-
-.form-input {
-  height: 43px;
-  text-indent: 51px;
-  border-radius: 25px;
-}
-
-.form-input:focus {
-  box-shadow: none;
-  border: none;
-}
-.top-nav-var {
-  border-bottom: 2px solid #e2e8f0;
-  background-color: white;
-}
-.top-nav-var .list-inline-item {
-  margin-left: 1.5rem !important;
-  width: 35px !important;
-  height: 35px !important;
-}
 .top-nav-var-icon-user {
   height: 39px !important;
   outline: 3px solid #ededed;
@@ -399,4 +198,32 @@
 .top-nav-var-icon i:hover,
 .top-nav-var-icon-user i:hover {
   text-decoration: none;
+}
+.search_bar input {
+  height: 100%;
+  width: 100%;
+  border-radius: 25px;
+  font-size: 18px;
+  outline: none;
+  background-color: white;
+  color: #707070;
+  border: 1px solid #aaa;
+  padding: 0 20px;
+}
+.search_bar {
+  height: 47px;
+  max-width: 430px;
+  width: 100%;
+}
+.navbar {
+  top: 0;
+  width: 100%;
+  left: 0;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 14px;
+  z-index: 1000;
+  box-shadow: 0 0 2px #aaa;
 }

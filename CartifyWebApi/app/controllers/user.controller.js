@@ -8,6 +8,7 @@ const MainController = require('./main.controller')
 class User {
   static ValidateUser = async (req, res) => {
     try {
+      const s_user_mode = req.body.AuthType
       const request = await dataAcces.getRequest();
       request.input("as_email_id", mssql.NVarChar(100), req.body.EmailId);
       request.input("as_password", mssql.NVarChar(100), req.body.Password);
@@ -16,19 +17,27 @@ class User {
       request.output("p_user_id", mssql.BigInt);
       request.output("p_retmsg", mssql.VarChar(500));
       request.output("p_rettype", mssql.Int);
+      request.output("p_email_template", mssql.BigInt);
 
       const result = await request.execute("PKG_USER$p_validate_login");
-      const output = await handleReps(result.output);
+      let output = await handleReps(result.output); 
 
-      if (output.UserId > 0) {
-        const secret = process.env.SECRET_TOKERN;
-        const token = jwt.sign({ UserId: output.UserId, RoleCode: output.UserRole }, secret, { expiresIn: process.env.TOKEN_EXPIRE, });
-        Mail.SendMail('mohammedsinanc09@gmail.com', 'User Logined', 'You Logined Sucessfully')
-        res.json({ ...output, Token: token });
-        return;
+      if (s_user_mode === 'GOOGLE_AUTH' || s_user_mode === 'NORMAL_LOGIN') {
+        if (output.UserId > 0) {
+          const secret = process.env.SECRET_TOKERN;
+          const token = jwt.sign({ UserId: output.UserId, RoleCode: output.UserRole }, secret, { expiresIn: process.env.TOKEN_EXPIRE, });
+          res.json({ ...output, Token: token });
+          return;
+        }
+      } else {
+        if (result.output && result.output.p_email_template) {
+          const EmailId = Number(result.output.p_email_template)
+          const mail_res = await Mail.GetEmailTemplate(0, EmailId, '', '', '', output.UserId)
+          if (mail_res === 'SUCCESS') {
+            res.status(200).json(output)
+          }
+        }
       }
-
-      res.status(200).json(output);
     } catch (e) {
       res.status(500).json({ err: "Error Occur" + e });
     }
@@ -365,7 +374,7 @@ class User {
       request.input("ai_user_id", mssql.BigInt, req.LoggedUserId);
 
       const result = await request.execute("PKG_REPORT$p_get_order_pdf");
-      
+
       const orderData = {
         SolidByAddress: result.recordsets[0],
         ShippingAddress: result.recordsets[1],

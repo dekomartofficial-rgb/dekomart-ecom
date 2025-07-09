@@ -1,4 +1,4 @@
-import { Component,  ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { ButtonModule } from 'primeng/button';
@@ -21,11 +21,11 @@ import { LoaderService } from '@/app/provider/services/loader.service';
 
 
 @Component({
-    selector: 'app-user-registration',
-    imports: [CommonModule, FloatLabel, TableModule, MultiSelectModule, ButtonModule, FormsModule, InputTextModule, InputIconModule, DatePicker, PasswordModule, IconFieldModule, ReactiveFormsModule, Checkbox, FormsModule, TagModule],
-    templateUrl: './user-registration.component.html',
-    styleUrl: './user-registration.component.css',
-    encapsulation: ViewEncapsulation.None
+  selector: 'app-user-registration',
+  imports: [CommonModule, FloatLabel, TableModule, MultiSelectModule, ButtonModule, FormsModule, InputTextModule, InputIconModule, DatePicker, PasswordModule, IconFieldModule, ReactiveFormsModule, Checkbox, FormsModule, TagModule],
+  templateUrl: './user-registration.component.html',
+  styleUrl: './user-registration.component.css',
+  encapsulation: ViewEncapsulation.None
 })
 export class UserRegistrationComponent {
   isModalOpen: boolean = false;
@@ -35,14 +35,21 @@ export class UserRegistrationComponent {
   SelectedUserRole: any[] = [];
   User: User = new User();
   Users: any | User;
-
+  filters = {
+    firstName: '',
+    secondName: '',
+    DateOfBirth: '',
+    Email: '',
+    PhoneNumber: '',
+    UserStatusDesc: ''
+  };
 
   constructor(private fb: FormBuilder, private http: HttpClientService, private toastService: ToastService, private LoaderService: LoaderService) {
     this.UserForm = this.fb.group({
     })
   }
 
-  ngOnInit() {  
+  ngOnInit() {
     this.getUser(0)
   }
   openModal(): void {
@@ -64,7 +71,7 @@ export class UserRegistrationComponent {
         this.LoaderService.hide()
       },
       error: (err) => {
-         this.toastService.show('Error', err)
+        this.toastService.show('Error', err)
       }
     })
   }
@@ -101,7 +108,7 @@ export class UserRegistrationComponent {
           this.closeModal();
           this.LoaderService.hide()
         } else {
-           this.toastService.show('Error', res.Message);
+          this.toastService.show('Error', res.Message);
         }
       },
       error: (err) => {
@@ -118,10 +125,7 @@ export class UserRegistrationComponent {
     this.LoaderService.show()
     this.http.get<User>('user/GetUser', { UserId: UserId }).subscribe({
       next: (res) => {
-        this.User = res;
-        const dateParts = this.User.DateOfBirth.split("/");
-        const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
-        this.userToSendDob = new Date(formattedDate + "T00:00:00");
+        this.User = res;  
         this.User.UserStatus = this.User.UserStatus === 'A' ? 1 : 0
         this.SelectedUserRole = this.User.UserRole ? this.User.UserRole.includes(',') ? this.User.UserRole.split(',').filter(role => role) : [this.User.UserRole] : [];
         this.isModalOpen = true;
@@ -129,7 +133,7 @@ export class UserRegistrationComponent {
         this.LoaderService.hide()
       },
       error: (err) => {
-         this.toastService.show('Error', err);
+        this.toastService.show('Error', err);
       }
     });
   }
@@ -138,4 +142,25 @@ export class UserRegistrationComponent {
     this.Users = this.Users.filter((user: { UserId: number; }) => user.UserId !== userId);
   }
 
+
+  applyFilters() {
+    if (!Array.isArray(this.Users)) {
+      this.Users = [];
+      return;
+    }
+    // If all filters are empty, reset Users to original data (fetch again or keep a backup)
+    const allFiltersEmpty = Object.values(this.filters).every(val => !val);
+    if (allFiltersEmpty) {
+      this.getUser(); // Or restore from a backup if you have original data cached
+      return;
+    }
+    this.Users = this.Users.filter(user => {
+      return (!this.filters.firstName || (user.FirstName && user.FirstName.toLowerCase().includes(this.filters.firstName.toLowerCase())))
+        && (!this.filters.secondName || (user.SecondName && user.SecondName.toLowerCase().includes(this.filters.secondName.toLowerCase())))
+        && (!this.filters.DateOfBirth || (user.DateOfBirth && user.DateOfBirth.includes(this.filters.DateOfBirth)))
+        && (!this.filters.Email || (user.Email && user.Email.toLowerCase().includes(this.filters.Email.toLowerCase())))
+        && (!this.filters.PhoneNumber || (user.PhoneNumber && user.PhoneNumber.includes(this.filters.PhoneNumber)))
+        && (!this.filters.UserStatusDesc || (user.UserStatusDesc && user.UserStatusDesc.toLowerCase().includes(this.filters.UserStatusDesc.toLowerCase())));
+    });
+  }
 }

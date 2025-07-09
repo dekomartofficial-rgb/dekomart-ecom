@@ -1,50 +1,3 @@
-/* user-management.component.css */
-.filter-container {
-  margin-top: 5px;
-}
-
-.filter-input {
-  width: 100%;
-  padding: 4px 8px;
-  font-size: 12px;
-}
-
-.action-cell {
-  display: flex;
-  gap: 8px;
-}
-
-table thead th {
-  position: relative;
-}
-
-.status-active {
-  background-color: green;
-  color: white;
-  border-radius: 6px;
-  padding: 6px 12px;
-  display: inline-block;
-  min-width: 80px;
-}
-
-.status-inactive {
-  background-color: red;
-  color: white;
-  border-radius: 6px;
-  padding: 6px 12px;
-  display: inline-block;
-  min-width: 80px;
-}
-
-.status-deleted {
-  background-color: #dc3545;
-  color: white;
-  border-radius: 6px;
-  padding: 6px 12px;
-  display: inline-block;
-  min-width: 80px;
-}
-
 /* Modal Styles */
 .modal {
   position: fixed;
@@ -81,22 +34,211 @@ table thead th {
   font-size: 18px;
   font-weight: normal;
 }
-
-.form-floating  label {
-  padding: 0.5rem 0.75rem;
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.text-danger {
-  color: #dc3545;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header h1::before {
+  content: "👤";
+  font-size: 20px;
+}
+
+.add-user-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-user-btn:hover {
+  background-color: #0056b3;
+}
+
+.table-container {
+  margin-top: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.force-light-mode {
+  background-color: white;
+}
+
+.p-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.p-table thead {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.p-table thead th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  font-size: 14px;
+  border-bottom: 1px solid #dee2e6;
+  position: relative;
+}
+
+.p-table thead th:first-child {
+  width: 120px;
+  text-align: center;
+}
+
+.p-table tbody tr {
+  border-bottom: 1px solid #f1f3f4;
+  transition: background-color 0.2s ease;
+}
+
+.p-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.p-table tbody td {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #495057;
+  vertical-align: middle;
+}
+
+.p-table tbody td:first-child {
+  text-align: center;
+}
+
+.column-filter {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 6px 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
   font-size: 12px;
-  margin-top: 4px;
+  background-color: white;
+  transition: border-color 0.2s ease;
+}
+
+.column-filter:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.btn {
+  border: none;
+  padding: 8px 10px;
+  margin: 0 2px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-sm {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+  padding: 6px 8px;
+  font-size: 12px;
 }
 
-.btn-close-white {
-  filter: invert(1) grayscale(100%) brightness(200%);
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn i {
+  font-size: 14px;
+}
+
+@media (max-width: 1200px) {
+  .p-table {
+    font-size: 13px;
+  }
+
+  .p-table thead th,
+  .p-table tbody td {
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .p-table {
+    font-size: 12px;
+  }
+
+  .p-table thead th,
+  .p-table tbody td {
+    padding: 8px 10px;
+  }
+
+  .column-filter {
+    font-size: 11px;
+    padding: 4px 6px;
+  }
+}
+
+.responsive-table {
+  overflow-x: auto;
+}
+
+.search-box {
+  position: relative;
+  width: 100%;
+  padding: 9px;
+}
+
+.search-box input[type="text"] {
+  width: 100%;
+  padding: 10px 40px 10px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.search-box input[type="text"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 18px;
+  pointer-events: none;
 }

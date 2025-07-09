@@ -1,0 +1,104 @@
+<div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
+    <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 col-12 d-flex justify-content-center align-content-center">
+        <div class="login-container">
+            <div class="logo">
+                <!-- Replace with actual logo -->
+                <img src="assets/nave-bar-images/logo.png" alt="Craxinno Logo">
+            </div>
+            <h2>Welcome</h2>
+            <h3>To Dekomart Admin</h3>
+            <form [formGroup]="loginForm">
+                @if (isShowOtp === false) {
+                <div class="input-group">
+                    <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex justify-content-between">
+                        <label for="email">Email</label>
+                        @if (isSubmitted && formControls['email'].errors)
+                        { <div class="error-message">
+                            @if (formControls['email'].errors['required']) {
+                            <div>Email is required</div>
+                            } @if (formControls['email'].errors['email']) {
+                            <div>Please enter a valid email</div>
+                            }
+                        </div>
+                        }
+                    </div>
+                    <input type="email" id="email" class="input-field" formControlName="email"
+                        [(ngModel)]="AdminLogin.EmailAddress" placeholder="Enter your Email" required>
+
+                </div>
+                <div class="input-group position-relative">
+                    <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex justify-content-between">
+                        <label for="password">Password</label>
+                        @if (isSubmitted && formControls['password'].errors)
+                        { <div class="error-message">
+                            @if (formControls['password'].errors['required']) {
+                            <div>Password is required</div>
+                            }
+                        </div>
+                        }
+                    </div>
+                    <input [type]="showPassword ? 'text' : 'password'" id="password" class="input-field pr-5"
+                        placeholder="Enter your Password" [(ngModel)]="AdminLogin.Password" formControlName="password"
+                        required>
+                    <button type="button" class="show-password-btn position-absolute"
+                        style="top: 38px; right: 10px; background: none; border: none; padding: 0;"
+                        (click)="showPassword = !showPassword">
+                        <i class="fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                    </button>
+
+                </div>
+                } @else {
+                <div class="input-group position-relative">
+                    <div
+                        class="col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex justify-content-center align-items-center">
+                        <p>Please enter the one time password to verify your account</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex justify-content-between">
+                        <label for="otp">OTP</label>
+                        @if (isSubmitted && formControls['otp'].errors)
+                        { <div class="error-message">
+                            @if (formControls['otp'].errors['required']) {
+                            <div>OTP is required</div>
+                            }
+                        </div>
+                        }
+                    </div>
+                    <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
+                        <input class="m-2 text-center form-control input-field rounded" type="text"
+                            formControlName="otp" [(ngModel)]="Otp1" id="first" maxlength="1" />
+                        <input class="m-2 text-center form-control input-field rounded" type="text"
+                            formControlName="otp" [(ngModel)]="Otp2" id="second" maxlength="1" />
+                        <input class="m-2 text-center form-control input-field rounded" type="text"
+                            formControlName="otp" [(ngModel)]="Otp3" id="third" maxlength="1" />
+                        <input class="m-2 text-center form-control input-field rounded" type="text"
+                            formControlName="otp" [(ngModel)]="Otp4" id="fourth" maxlength="1" />
+                        <input class="m-2 text-center form-control input-field rounded" type="text"
+                            formControlName="otp" [(ngModel)]="Otp5" id="fifth" maxlength="1" />
+                        <input class="m-2 text-center form-control input-field rounded" type="text"
+                            formControlName="otp" [(ngModel)]="Otp6" id="sixth" maxlength="1" />
+                    </div>
+                </div>
+                }
+
+                @if (!isShowOtp) {
+                <div class="checkbox-forgot p-2 col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex justify-content-center">
+                    <a href="#">Forgot Password?</a>
+                </div>
+                }
+                @if (!isShowOtp) {
+                <button type="submit" class="login-btn" (click)="sendOtp('SEND_OTP')">Send OTP</button>
+                } @else {
+                <button type="submit" class="login-btn" (click)="sendOtp('SUBMIT_OTP')">Submit</button>
+                }
+            </form>
+            @if (!isShowOtp) {
+            <p style="text-align:center; color:#dc2626; font-size:13px; margin-bottom: 20px;">
+                ⚠️ Please don't share admin credentials with others
+            </p>} @else {
+            <p style="text-align:center; color:#dc2626; font-size:13px; margin-bottom: 20px;">
+                {{errorMessage}}
+            </p>
+            }
+        </div>
+    </div>
+</div>

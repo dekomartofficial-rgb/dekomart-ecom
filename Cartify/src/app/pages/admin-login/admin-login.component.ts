@@ -1,0 +1,89 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { AdminLogin } from '@/app/provider/class/UserClass';
+import { LoaderService } from '@/app/provider/services/loader.service';
+import { HttpClientService } from '../../provider/services/http-client.service';
+import { Router } from '@angular/router';
+
+
+@Component({
+  selector: 'app-admin-login',
+  imports: [CommonModule, FormsModule, CommonModule, ReactiveFormsModule],
+  templateUrl: './admin-login.component.html',
+  styleUrl: './admin-login.component.css'
+})
+export class AdminLoginComponent {
+  showPassword: boolean = false;
+  isSubmitted: boolean = false;
+  loginForm: FormGroup;
+  isShowOtp: boolean = false
+  AdminLogin: AdminLogin = new AdminLogin()
+  errorMessage = '';
+  Otp1!: string
+  Otp2!: string
+  Otp3!: string
+  Otp4!: string
+  Otp5!: string
+  Otp6!: string
+
+  constructor(private formBuilder: FormBuilder, private loader: LoaderService, private httpClient: HttpClientService, private router: Router,) {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(1)]],
+      otp: ['', [Validators.required, Validators.minLength(1)]]
+    });
+
+  }
+
+  get formControls() {
+    return this.loginForm.controls;
+  }
+
+  sendOtp(mode: string) {
+    if (mode === 'SEND_OTP') {
+      if (this.loginForm.value.email === undefined && this.loginForm.value.password === undefined) {
+        this.isSubmitted = true
+        return
+      } else {
+        this.loader.show()
+        this.httpClient.post<any>('user/Validateuser', { EmailId: this.AdminLogin.EmailAddress, Password: this.AdminLogin.Password, AuthType: 'SENT_OTP' }).subscribe((res) => {
+          if (res && res.MessageType === 2) {
+            console.log(res)
+            this.isShowOtp = true
+            this.AdminLogin.UserId = res.UserId
+            this.errorMessage = res.Message
+            this.loader.hide()
+          }
+        })
+      }
+    } else {
+      if (this.loginForm.value.otp === undefined) {
+        this.isSubmitted = true
+        return
+      }
+      this.AdminLogin.Otp = (this.Otp1 ?? '') + (this.Otp2 ?? '') + (this.Otp3 ?? '') + (this.Otp4 ?? '') + (this.Otp5 ?? '') + (this.Otp6 ?? '');
+      this.httpClient.post<any>('admin/SaveValidateAdminOtp', { UserId: this.AdminLogin.UserId, Otp: this.AdminLogin.Otp }).subscribe((res) => {
+        if (res && res.MessageType === 2) {
+          if (this.httpClient.getToken()) {
+            localStorage.clear()
+          }
+          this.isShowOtp = true
+          const AdminData = { UserId: res.UserId ?? this.AdminLogin.UserId, Token: res.Token, UserRole: res.UserRole }
+          localStorage.setItem('userData', JSON.stringify(AdminData));
+          setTimeout(() => {
+            this.router.navigate(['/admin/']);
+            this.loader.hide()
+          }, 200);
+          this.errorMessage = res.Message
+          this.loader.hide()
+        } else {
+          this.errorMessage = res.Message
+          this.loader.hide()
+        }
+      })
+    }
+
+  }
+
+}

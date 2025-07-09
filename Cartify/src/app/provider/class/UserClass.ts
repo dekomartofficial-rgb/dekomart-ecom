@@ -69,3 +69,10 @@ export class MoveToStep{
     ExpDeliveryDate : Date | undefined
     DeliveryAgnetNumber: number = 0;
 }
+
+export class AdminLogin {
+    EmailAddress!: string 
+    Password!: string 
+    Otp!: string 
+    UserId!: number
+}

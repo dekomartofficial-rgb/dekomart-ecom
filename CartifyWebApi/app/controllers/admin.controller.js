@@ -2,6 +2,7 @@ const dataAcces = require('../database/dataaccess')
 const { handleReps } = require('./common.controller')
 const MainController = require('./main.controller')
 const mssql = require('mssql')
+const jwt = require("jsonwebtoken");
 
 class Admin {
     static GetRole = async (req, res) => {
@@ -60,7 +61,7 @@ class Admin {
         }
     }
     static GetRefGroupData = async (req, res) => {
-        try { 
+        try {
             const request = await dataAcces.getRequest()
             request.input('as_group_name', mssql.VarChar(mssql.MAX), req.query.GroupName)
             const result = await request.execute("PKG_DDL$get_ref_group_data");
@@ -115,8 +116,8 @@ class Admin {
     }
     static SaveRefData = async (req, res) => {
         try {
-            const request = await dataAcces.getRequest(); 
-            
+            const request = await dataAcces.getRequest();
+
             request.input('as_group_name', mssql.VarChar(50), req.body.GroupName);
             request.input('as_code', mssql.VarChar(20), req.body.Code);
             request.input('as_code_active', mssql.TinyInt, req.body.CodeActive);
@@ -245,7 +246,7 @@ class Admin {
     }
     static MoveToNextStep = async (req, res) => {
         try {
-            const request = await dataAcces.getRequest(); 
+            const request = await dataAcces.getRequest();
             request.input("ai_order_id", mssql.BigInt, req.body.OrderId);
             request.input("as_ops_mode", mssql.VarChar(40), req.body.OpsMode);
             request.input("ad_exp_delivery_date", mssql.Date, req.body.ExpDeliveryDate);
@@ -260,6 +261,26 @@ class Admin {
             res.status(200).json(output);
         } catch (e) {
             res.status(500).json({ err: "Error Occur" + e });
+        }
+    }
+    static SaveValidateAdminOtp = async (req, res) => {
+        try {
+            const request = await dataAcces.getRequest();
+            request.input("ai_user_id", mssql.BigInt, req.body.UserId);
+            request.input("as_otp", mssql.VarChar(10), req.body.Otp);
+            request.output("p_retmsg", mssql.VarChar(500));
+            request.output("p_user_role", mssql.VarChar(10));
+            request.output("p_rettype", mssql.Int);
+
+            const result = await request.execute("PKG_USER$p_validate_admin_otp");
+            const output = await handleReps(result.output);
+
+            const secret = process.env.SECRET_TOKERN;
+            const token = jwt.sign({ UserId: output.UserId, RoleCode: output.UserRole }, secret, { expiresIn: process.env.TOKEN_EXPIRE, });
+            res.status(200).json({ ...output, Token: token });
+        } catch (e) {
+            res.status(500).json({ err: "Error Occur" + e });
+
         }
     }
 }
