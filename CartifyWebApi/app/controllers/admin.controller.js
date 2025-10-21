@@ -139,6 +139,7 @@ class Admin {
     }
     static SaveProductHeader = async (req, res) => {
         try {
+            console.log(req)
             const request = await dataAcces.getRequest();
             const VariantTableType = new mssql.Table('TT_PRODUCT_VARIENT'); // match SQL Server type
             const ProdctDetails = JSON.parse(req.body.ProductDetails || '{}');
@@ -270,11 +271,12 @@ class Admin {
             request.input("as_otp", mssql.VarChar(10), req.body.Otp);
             request.output("p_retmsg", mssql.VarChar(500));
             request.output("p_user_role", mssql.VarChar(10));
+            request.output("p_user_id", mssql.Int);
             request.output("p_rettype", mssql.Int);
 
             const result = await request.execute("PKG_USER$p_validate_admin_otp");
             const output = await handleReps(result.output);
-
+             console.log(output)
             const secret = process.env.SECRET_TOKERN;
             const token = jwt.sign({ UserId: output.UserId, RoleCode: output.UserRole }, secret, { expiresIn: process.env.TOKEN_EXPIRE, });
             res.status(200).json({ ...output, Token: token });

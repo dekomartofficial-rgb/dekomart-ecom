@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AdminLogin } from '@/app/provider/class/UserClass';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   templateUrl: './admin-login.component.html',
   styleUrl: './admin-login.component.css'
 })
-export class AdminLoginComponent {
+export class AdminLoginComponent implements OnInit {
   showPassword: boolean = false;
   isSubmitted: boolean = false;
   loginForm: FormGroup;
@@ -35,6 +35,12 @@ export class AdminLoginComponent {
     });
 
   }
+  ngOnInit(): void {
+    this.loader.show()
+    setTimeout(() => {
+      this.loader.hide()
+    }, 2000);
+  }
 
   get formControls() {
     return this.loginForm.controls;
@@ -49,9 +55,12 @@ export class AdminLoginComponent {
         this.loader.show()
         this.httpClient.post<any>('user/Validateuser', { EmailId: this.AdminLogin.EmailAddress, Password: this.AdminLogin.Password, AuthType: 'SENT_OTP' }).subscribe((res) => {
           if (res && res.MessageType === 2) {
-            console.log(res)
             this.isShowOtp = true
             this.AdminLogin.UserId = res.UserId
+            this.errorMessage = res.Message
+            this.loader.hide()
+          } else {
+            this.isShowOtp = false
             this.errorMessage = res.Message
             this.loader.hide()
           }
@@ -71,6 +80,7 @@ export class AdminLoginComponent {
           this.isShowOtp = true
           const AdminData = { UserId: res.UserId ?? this.AdminLogin.UserId, Token: res.Token, UserRole: res.UserRole }
           localStorage.setItem('userData', JSON.stringify(AdminData));
+          this.loader.show()
           setTimeout(() => {
             this.router.navigate(['/admin/']);
             this.loader.hide()

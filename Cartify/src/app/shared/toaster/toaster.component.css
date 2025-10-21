@@ -21,38 +21,6 @@
   max-width: 100%; /* responsive toast */
   word-break: break-word; /* ensure long words break */
 }
-
-.toast-box.success {
-  border-left: 8px solid #47d764;
-}
-.toast-box.error {
-  border-left: 8px solid #ff355b;
-}
-.toast-box.info {
-  border-left: 8px solid #2f86eb;
-}
-.toast-box.warning {
-  border-left: 8px solid #ffc021;
-}
-
-.toast-box i {
-  font-size: 28px;
-  color: inherit;
-}
-
-.toast-box.success i {
-  color: #47d764;
-}
-.toast-box.error i {
-  color: #ff355b;
-}
-.toast-box.info i {
-  color: #2f86eb;
-}
-.toast-box.warning i {
-  color: #ffc021;
-}
-
 /* Toast content container (title + message) */
 .container-2 {
   display: flex;

@@ -4,7 +4,8 @@
       <div class="sidebar-container" [ngClass]="{ 'content-shifted': !sidebarVisible }">
         <div class="sidebar" [ngClass]="{ collapsed: isCollapsed, hidden: !sidebarVisible }">
           <div class="product-icon" style="text-align: center; padding: 10px">
-            <img src="assets/admin-images/icon.png" alt="" width="177px" />
+            <img src="assets/admin-images/icon.png" alt="Home" width="177px" style="cursor: pointer;"
+              routerLink="/" />
             <h6>Welcome Cartify</h6>
           </div>
           <div class="sidebar-content">

@@ -45,7 +45,6 @@
                         (click)="showPassword = !showPassword">
                         <i class="fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
                     </button>
-
                 </div>
                 } @else {
                 <div class="input-group position-relative">
@@ -65,17 +64,23 @@
                     </div>
                     <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
                         <input class="m-2 text-center form-control input-field rounded" type="text"
-                            formControlName="otp" [(ngModel)]="Otp1" id="first" maxlength="1" />
+                            style="padding: 12px 0px;" formControlName="otp" [(ngModel)]="Otp1" id="first"
+                            maxlength="1" />
                         <input class="m-2 text-center form-control input-field rounded" type="text"
-                            formControlName="otp" [(ngModel)]="Otp2" id="second" maxlength="1" />
+                            style="padding: 12px 0px;" formControlName="otp" [(ngModel)]="Otp2" id="second"
+                            maxlength="1" />
                         <input class="m-2 text-center form-control input-field rounded" type="text"
-                            formControlName="otp" [(ngModel)]="Otp3" id="third" maxlength="1" />
+                            style="padding: 12px 0px;" formControlName="otp" [(ngModel)]="Otp3" id="third"
+                            maxlength="1" />
                         <input class="m-2 text-center form-control input-field rounded" type="text"
-                            formControlName="otp" [(ngModel)]="Otp4" id="fourth" maxlength="1" />
+                            style="padding: 12px 0px;" formControlName="otp" [(ngModel)]="Otp4" id="fourth"
+                            maxlength="1" />
                         <input class="m-2 text-center form-control input-field rounded" type="text"
-                            formControlName="otp" [(ngModel)]="Otp5" id="fifth" maxlength="1" />
+                            style="padding: 12px 0px;" formControlName="otp" [(ngModel)]="Otp5" id="fifth"
+                            maxlength="1" />
                         <input class="m-2 text-center form-control input-field rounded" type="text"
-                            formControlName="otp" [(ngModel)]="Otp6" id="sixth" maxlength="1" />
+                            style="padding: 12px 0px;" formControlName="otp" [(ngModel)]="Otp6" id="sixth"
+                            maxlength="1" />
                     </div>
                 </div>
                 }
@@ -93,12 +98,16 @@
             </form>
             @if (!isShowOtp) {
             <p style="text-align:center; color:#dc2626; font-size:13px; margin-bottom: 20px;">
-                ⚠️ Please don't share admin credentials with others
-            </p>} @else {
-            <p style="text-align:center; color:#dc2626; font-size:13px; margin-bottom: 20px;">
                 {{errorMessage}}
             </p>
             }
+            @if (!isShowOtp) {
+            <p style="text-align:center; color:#dc2626; font-size:13px; margin-bottom: 20px;">
+                ⚠️ Please don't share admin credentials with others
+            </p>
+            }
+
+
         </div>
     </div>
 </div>

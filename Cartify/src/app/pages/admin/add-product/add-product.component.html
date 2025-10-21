@@ -161,7 +161,7 @@
                         @for (item of imagePreviews; track $index) {
                         @if (ClickedImage === $index) {
                         <div class="image-container d-flex justify-content-center">
-                            <img [src]="item" alt="Gallery Image" alt="Image" />
+                            <img [src]="item" [name]="item.docName" alt="Gallery Image" alt="Image" />
                         </div>
                         }
                         }
@@ -169,7 +169,7 @@
                         <div class="image-header-2 d-flex flex-wrap gap-4 col-md-12">
                             @for (item of imagePreviews; track $index) {
                             <div class="image-container-2">
-                                <img [src]="item" alt="Gallery Image" (click)="changeImage($index)" alt="Image" />
+                                <img [src]="item" alt="Gallery Image" (click)="changeImage($index)" [name]="item.docName" alt="Image" />
                                 <div class="image-overlay" *ngIf="ClickedImage === $index">
                                     <button type="button" class="delete-button">Delete</button>
                                 </div>

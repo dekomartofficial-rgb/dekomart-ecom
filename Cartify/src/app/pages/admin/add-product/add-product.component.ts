@@ -52,8 +52,7 @@ export class AddProductComponent implements OnInit {
   selectedGender: any[] = [];
   productForm: FormGroup;
   SizeArray: any[] = []
-  DocumentId: number = 0
-  ProductId: number = 0
+  DocumentId: number = 0 
 
   constructor(private commonService: CommonService, private _messageservice: ToastService, private loader: LoaderService, private httpService: HttpClientService, private _router: Router,
     private fb: FormBuilder, private http: HttpClient, private ConfirmationService: ConfirmationDialogService) {
@@ -75,10 +74,10 @@ export class AddProductComponent implements OnInit {
   }
   ngOnInit() {
     // this.addProductVariantRow();
-    this.ProductId = history.state['productId'];
-    if (this.ProductId ?? this.ProductId > 0) {
-      this.getProductVariantDetails(this.ProductId);
-      this.getProductImage(this.ProductId)
+    this.ProductDetails.ProductID = history.state['productId']; 
+    if (this.ProductDetails.ProductID ?? this.ProductDetails.ProductID > 0) {
+      this.getProductVariantDetails(this.ProductDetails.ProductID);
+      this.getProductImage(this.ProductDetails.ProductID)
     }
     this.GetRefData();
   }
@@ -232,9 +231,9 @@ export class AddProductComponent implements OnInit {
     this.httpService.post('admin/SaveProductHeader', fd).subscribe((res: any) => {
       if (res.MessageType === 2) {
         this._messageservice.show('Success', res.Message);
-        this.getProductVariantDetails(this.ProductId)
-        this.getProductImage(this.ProductId)
-        this.loader.hide() 
+        this.ProductDetails.ProductID = res.RetunId 
+        this._router.navigate(['/admin/product-details']);
+        this.loader.hide()
       } else {
         this._messageservice.show('Error', res.Message);
         this.loader.hide()
@@ -287,8 +286,8 @@ export class AddProductComponent implements OnInit {
         this.httpService.post('admin/DeleteAttachment', { DocumentId: this.DocumentId, filePath: this.ProductImages[index].Actualpath }).subscribe((res: any) => {
           if (res.MessageType === 2) {
             this._messageservice.show('Success', res.Message);
-            this.getProductVariantDetails(this.ProductId);
-            this.getProductImage(this.ProductId)
+            this.getProductVariantDetails(this.ProductDetails.ProductID);
+            this.getProductImage(this.ProductDetails.ProductID)
             this.ClickedImage = 0;
             this.loader.hide()
           } else {
