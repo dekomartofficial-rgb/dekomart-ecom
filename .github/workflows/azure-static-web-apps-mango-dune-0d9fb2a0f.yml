@@ -20,9 +20,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-        with:
-          submodules: true
-          lfs: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -30,11 +27,11 @@ jobs:
           node-version: 18
 
       - name: Install Dependencies
-        working-directory: ./Dekomart
+        working-directory: ./Dekomart/Dekomart
         run: npm install
 
       - name: Build Angular App
-        working-directory: ./Dekomart
+        working-directory: ./Dekomart/Dekomart
         run: npm run build --if-present
 
       - name: Deploy to Azure Static Web Apps
@@ -43,9 +40,9 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_MANGO_DUNE_0D9FB2A0F }}
           action: "upload"
-          app_location: "./Dekomart"                # Angular source
-          api_location: ""                          # No backend API
-          output_location: "dist/dekomart/browser"  # Angular build output
+          app_location: "./Dekomart/Dekomart"
+          api_location: ""                          
+          output_location: "dist/dekomart/browser"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
@@ -56,5 +53,5 @@ jobs:
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_AGREEABLE_MEADOW_0E65EED10 }}
-          app_location: "./Dekomart"
+          app_location: "./Dekomart/Dekomart"
           action: "close"
