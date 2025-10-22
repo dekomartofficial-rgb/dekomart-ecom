@@ -60,26 +60,26 @@
 </head>
 
 <body>
+    <div style="text-align: center;">
+        <img src="{{imageList.ImgPath}}" alt="Company Logo">
+    </div>
 
     <table class="no-border">
-        <tr>
 
+        <tr>
             <td style="width: 60%">
                 {{#each SolidByAddress}}
-                    <strong>Sold By :</strong><br>
-                    {{SolidBy}}<br><br>
-                    <strong>PAN No:</strong> {{PanNo}}<br>
-                    <strong>GST Registration No:</strong> {{GstNo}}<br><br>
+                <strong>Sold By :</strong><br>
+                {{SolidBy}}<br><br>
+                <strong>PAN No:</strong> {{PanNo}}<br>
+                <strong>GST Registration No:</strong> {{GstNo}}<br><br>
                 {{/each}}
                 {{#each SolidByAddress}}
-                    <strong>Order Number:</strong> {{OrderNo}}<br>
-                    <strong>Order Date:</strong> {{OrderDate}}<br>
-                    <strong>Order Status:</strong> {{OrderDesc}}<br>
+                <strong>Order Number:</strong> {{OrderNo}}<br>
+                <strong>Order Date:</strong> {{OrderDate}}<br>
+                <strong>Order Status:</strong> {{OrderDesc}}<br>
                 {{/each}}
             </td>
-
-
-
             <td style="width: 40%">
                 {{#each ShippingAddress}}
                 <strong>Billing Address:</strong><br>
@@ -105,6 +105,7 @@
                 <th>Payment Details</th>
                 <th>Base Price</th>
                 <th>Discount</th>
+                <th>Shipping Fee</th>
                 <th>DeliveryCharge</th>
                 <th>Total Amount</th>
             </tr>
@@ -118,6 +119,7 @@
                 <td>{{PaymentStatus}}</td>
                 <td>{{BasePrice}}</td>
                 <td>{{Discount}}</td>
+                <td>{{ShippingFee}}</td>
                 <td>{{DeliveryCharge}}</td>
                 <td>{{TotalAmount}}</td>
                 {{/each}}
@@ -125,9 +127,15 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="7" class="right bold">TOTAL:</td>
+                <td colspan="8" class="right bold">TOTAL:</td>
                 {{#each AmountDetails}}
                 <td class="right bold">₹{{TotalAmount}}</td>
+                {{/each}}
+            </tr>
+            <tr>
+                <td colspan="8" class="right bold">PAYABLE:</td>
+                {{#each AmountDetails}}
+                <td class="right bold">₹{{PayReqDelivery}}</td>
                 {{/each}}
             </tr>
         </tfoot>

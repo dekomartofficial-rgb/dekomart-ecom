@@ -55,86 +55,85 @@ class MainController {
                                 } catch (dbErr) {
                                     reject(dbErr);
                                 }
-                            
+
+                            });
                         });
-                    });
-                    continue;
+                        continue;
+                    }
                 }
             }
+        } catch (e) {
+            throw e;
         }
-        } catch(e) {
-        throw e;
-    }
-};
+    };
 
     static DeleteAttchment = async (req, res) => {
-    try {
-        const filepath = req.body.filePath
-        await fsp.unlink(filepath);
-        await this.uploadDocument(req.body.DocumentId, null, null, null, null, null, null, 0, 'DELETE', req.LoggedUser);
-        res.status(200).json({ MessageType: 2, Message: 'Document Deleted Successfully' });
-    } catch (err) {
-        console.error('Error deleting file:', err);
-    }
+        try {
+            const filepath = req.body.filePath
+            await fsp.unlink(filepath);
+            await this.uploadDocument(req.body.DocumentId, null, null, null, null, null, null, 0, 'DELETE', req.LoggedUser);
+            res.status(200).json({ MessageType: 2, Message: 'Document Deleted Successfully' });
+        } catch (err) {
+            console.error('Error deleting file:', err);
+        }
 
-}
+    }
 
     static uploadDocument = async (DocumentId, KeyId, KeyType, DocPath, DocName, DocType, DocDesc, IsActive, OpsMode, LoggedUser) => {
-    try {
-        const request = await dataAcces.getRequest()
+        try {
+            const request = await dataAcces.getRequest()
 
-        request.input('ai_document_id', mssql.BigInt, DocumentId);
-        request.input('ai_key_id', mssql.BigInt, KeyId);
-        request.input('as_key_type', mssql.VarChar(10), KeyType);
-        request.input('as_document_name', mssql.NVarChar(255), DocName);
-        request.input('as_document_type', mssql.NVarChar(100), DocType);
-        request.input('as_description', mssql.NVarChar(mssql.MAX), DocDesc);
-        request.input('as_path', mssql.NVarChar(mssql.MAX), DocPath);
-        request.input('ai_is_active', mssql.BigInt, IsActive);
-        request.input('as_ops_mode', mssql.VarChar(20), OpsMode);
-        request.input('ai_user_id', mssql.BigInt, LoggedUser);
-        request.output("p_retmsg", mssql.VarChar(500));
-        request.output("p_rettype", mssql.Int);
+            request.input('ai_document_id', mssql.BigInt, DocumentId);
+            request.input('ai_key_id', mssql.BigInt, KeyId);
+            request.input('as_key_type', mssql.VarChar(10), KeyType);
+            request.input('as_document_name', mssql.NVarChar(255), DocName);
+            request.input('as_document_type', mssql.NVarChar(100), DocType);
+            request.input('as_description', mssql.NVarChar(mssql.MAX), DocDesc);
+            request.input('as_path', mssql.NVarChar(mssql.MAX), DocPath);
+            request.input('ai_is_active', mssql.BigInt, IsActive);
+            request.input('as_ops_mode', mssql.VarChar(20), OpsMode);
+            request.input('ai_user_id', mssql.BigInt, LoggedUser);
+            request.output("p_retmsg", mssql.VarChar(500));
+            request.output("p_rettype", mssql.Int);
 
-        const result = await request.execute("PKG_BASE$p_save_document")
-        const output = await handleReps(result.output);
-        return output
-    } catch (e) {
-        throw e
+            const result = await request.execute("PKG_BASE$p_save_document")
+            const output = await handleReps(result.output);
+            return output
+        } catch (e) {
+            throw e
+        }
     }
-}
     static GeneratePdf = async (data, templateName, res = null) => {
-    try {
-        const filePath = path.join(__dirname, `../templates/${templateName}.hbs`);
-        const htmlTemplate = await fsp.readFile(filePath, 'utf-8');
-        const template = hbs.compile(htmlTemplate);
-        const html = template(data);
-
-        const pdf = await chromePdf.create(html, {
-            printOptions: { format: 'A4' }
-        });
-
-        const pdfBuffer = pdf.toBuffer();
-
-        if (res) {
-            res.set({
-                'Content-Type': 'application/pdf',
-                'Content-Disposition': 'inline; filename="document.pdf"',
-                'Content-Length': pdfBuffer.length
+        try {
+            const filePath = path.join(__dirname, `../templates/${templateName}.hbs`);
+            const htmlTemplate = await fsp.readFile(filePath, 'utf-8');
+            const template = hbs.compile(htmlTemplate);
+            const html = template(data);
+            const pdf = await chromePdf.create(html, {
+                printOptions: { format: 'A4' }
             });
-            res.end(pdfBuffer);
-            return;
-        }
 
-        return pdfBuffer;
-    } catch (e) {
-        console.error('Error generating PDF:', e);
-        if (res) {
-            res.status(500).send('Failed to generate PDF');
+            const pdfBuffer = pdf.toBuffer();
+
+            if (res) {
+                res.set({
+                    'Content-Type': 'application/pdf',
+                    'Content-Disposition': 'inline; filename="document.pdf"',
+                    'Content-Length': pdfBuffer.length
+                });
+                res.end(pdfBuffer);
+                return;
+            }
+
+            return pdfBuffer;
+        } catch (e) {
+            console.error('Error generating PDF:', e);
+            if (res) {
+                res.status(500).send('Failed to generate PDF');
+            }
+            throw e;
         }
-        throw e;
     }
-}
 }
 
 

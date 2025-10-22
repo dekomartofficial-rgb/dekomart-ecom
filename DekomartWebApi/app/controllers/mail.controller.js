@@ -1,14 +1,13 @@
 const nodemailer = require('nodemailer');
 const dataAcces = require("../database/dataaccess");
 const mssql = require("mssql");
-
+const path = require("path");
 
 const MailAccount = {
-  user: 'sinanruzz9@gmail.com',
-  pass: 'ljxo qukt veez kxvt'
+  user: process.env.AUTH_GMAIL,
+  pass: process.env.AUTH_APP_PASSWORD
 }
 
-// Create transporter
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -24,7 +23,14 @@ function sendMail(to, cc, bcc, subject, text) {
     cc: cc,
     bcc: bcc,
     subject: subject,
-    html: text, // Use 'html' instead of 'text' for HTML templates
+    html: text,
+    attachments: [
+      {
+        filename: 'image.png',
+        path: path.join(__dirname, '../../uploads/logo/image.png'), 
+        cid: 'logo',
+      }
+    ]
   };
   console.log(mailOptions)
   // Send email
@@ -36,7 +42,7 @@ function sendMail(to, cc, bcc, subject, text) {
   });
 }
 
-class Mail { 
+class Mail {
   static GetEmailTemplate = async (ProductId, EmailId, Parm1, Parm2, Parm3, UserId) => {
     try {
       const request = await dataAcces.getRequest();
@@ -47,7 +53,7 @@ class Mail {
       request.input("as_parm_3", mssql.VarChar(mssql.MAX), Parm3);
       request.input("ai_user_id", mssql.BigInt, UserId);
       const result = await request.execute("PKG_EMAIL$p_get_email_template");
-      const res = result.recordset[0]; 
+      const res = result.recordset[0];
       sendMail(res.toList, res.ccList, res.bccList, res.subject, res.messageBody);
 
       return 'SUCCESS'

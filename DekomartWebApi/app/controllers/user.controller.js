@@ -3,7 +3,10 @@ const mssql = require("mssql");
 const jwt = require("jsonwebtoken");
 const { handleReps } = require("./common.controller");
 const Mail = require('./mail.controller')
+const fsp = require('fs/promises');
 const MainController = require('./main.controller')
+const path = require("path");
+
 
 class User {
   static ValidateUser = async (req, res) => {
@@ -20,7 +23,7 @@ class User {
       request.output("p_email_template", mssql.BigInt);
 
       const result = await request.execute("PKG_USER$p_validate_login");
-      let output = await handleReps(result.output); 
+      let output = await handleReps(result.output);
 
       if (s_user_mode === 'GOOGLE_AUTH' || s_user_mode === 'NORMAL_LOGIN') {
         if (output.UserId > 0) {
@@ -380,14 +383,25 @@ class User {
         ShippingAddress: result.recordsets[1],
         BillingAddress: result.recordsets[2],
         ProductDetails: result.recordsets[3],
-        AmountDetails: result.recordsets[4]
+        AmountDetails: result.recordsets[4],
+        imageList: {}
       };
+
+      const imagePath = path.join(__dirname, '../../uploads/logo/image.png');
+      const imageData = await fsp.readFile(imagePath);
+      const base64Image = `data:image/png;base64,${imageData.toString('base64')}`;
+
+      // Add image to data
+      orderData.imageList = {
+        ImgPath: base64Image
+      };
+      const pdfordername = `invoice - ${orderData.SolidByAddress[0].OrderNo}`
 
       const pdfBuffer = await MainController.GeneratePdf(orderData, 'invoice');
 
       res.set({
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename=invoice-${orderData[0]?.OrderNo}.pdf`,
+        'Content-Disposition': `attachment; filename=invoice-${pdfordername}.pdf`,
         'Content-Length': pdfBuffer.length
       });
 
