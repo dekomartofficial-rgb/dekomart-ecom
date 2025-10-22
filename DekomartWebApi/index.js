@@ -41,7 +41,7 @@ const adminRoutes = require("./app/routers/admin.router");
 
 app.use("/user", userRoutes);
 app.use("/admin", adminRoutes);//a
-
+//asda
 // Root route
 app.get('/', (req, res) => {
   res.send('API is running...');
