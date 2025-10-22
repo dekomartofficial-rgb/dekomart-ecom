@@ -1,3 +1,24 @@
+Skip to content
+Navigation Menu
+dekomartofficial-rgb
+dekomart-ecom
+
+Type / to search
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+Azure Static Web Apps CI/CD
+ci: add Azure Static Web Apps workflow file #1
+Jobs
+Run details
+Workflow file for this run
+.github/workflows/azure-static-web-apps-mango-dune-0d9fb2a0f.yml at 0cd9f99
 name: Azure Static Web Apps CI/CD
 
 on:
@@ -9,52 +30,51 @@ on:
     branches:
       - main
 
-permissions:
-  contents: read
-
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
+    permissions:
+       id-token: write
+       contents: read
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v3
         with:
-          node-version: 18
-
-      - name: Debug - List folder structure
-        run: ls -R ./Dekomart
-
-      - name: Install Dependencies
-        working-directory: ./Dekomart
-        run: npm install
-
-      - name: Build Angular App
-        working-directory: ./Dekomart
-        run: npm run build --if-present
-
-      - name: Deploy to Azure Static Web Apps
+          submodules: true
+          lfs: false
+      - name: Install OIDC Client from Core Package
+        run: npm install @actions/core@1.6.0 @actions/http-client
+      - name: Get Id Token
+        uses: actions/github-script@v6
+        id: idtoken
+        with:
+           script: |
+               const coredemo = require('@actions/core')
+               return await coredemo.getIDToken()
+           result-encoding: string
+      - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_MANGO_DUNE_0D9FB2A0F  }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_MANGO_DUNE_0D9FB2A0F }}
           action: "upload"
-          app_location: "./Dekomart"
-          api_location: ""
-          output_location: "dist/dekomart/browser/browser"  
+          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+          app_location: "./Dekomart" # App source code path
+          api_location: "" # Api source code path - optional
+          output_location: "dist/cartify/browser/browser" # Built app content directory - optional
+          github_id_token: ${{ steps.idtoken.outputs.result }}
+          ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
     name: Close Pull Request Job
     steps:
-      - name: Close Pull Request Environment
+      - name: Close Pull Request
+        id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_AGREEABLE_MEADOW_0E65EED10 }}
-          app_location: "./Dekomart"
           action: "close"
+ci: add Azure Static Web Apps workflow file · dekomartofficial-rgb/dekomart-ecom@0cd9f99
