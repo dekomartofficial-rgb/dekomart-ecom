@@ -61,11 +61,11 @@ jobs:
 
       - name: Unzip artifact
         run: unzip release.zip
-
+        
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'dekomart'
+          app-name: 'dekomartwebapi'
           slot-name: 'Production'
           package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F0C2FC3C72B341BEBE19829A5540E78F }}
