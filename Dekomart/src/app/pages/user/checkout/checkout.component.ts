@@ -1,4 +1,4 @@
-import { Component,  OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoaderService } from '@/app/provider/services/loader.service';
 import { HttpClientService } from '@/app/provider/services/http-client.service';
 import { InrPipe } from '@/app/provider/pipe/inr.pipe';
@@ -30,6 +30,7 @@ export class CheckoutComponent implements OnInit {
   UserProfile: any[] = []
   baseUrl: string = baseUrl
   RefCode: any[] = []
+  RazorpayKey: any = ''
   PlaceOrder: PlaceOrder = new PlaceOrder()
   constructor(private loader: LoaderService, private http: HttpClientService, private router: Router, private paymentService: PaymentService, private commonService: CommonService, private toastService: ToastService,
     private blockurl: BlockUrlService
@@ -41,8 +42,8 @@ export class CheckoutComponent implements OnInit {
       this.router.navigate(['/'])
       this.loader.hide()
       return;
-    } 
-     
+    }
+
     this.GetCheckoutDetails()
     this.GetRefData()
     this.getUserProfile(this.http.getUserId())
@@ -75,6 +76,8 @@ export class CheckoutComponent implements OnInit {
       }
     })
   }
+
+
   RedirectToCart() {
     this.loader.show()
     this.IsHaveScreenPermistion = false
@@ -114,9 +117,10 @@ export class CheckoutComponent implements OnInit {
   }
 
   payOnline() {
+    this.RazorpayKey = this.commonService.getSystemParm('RAZORPAY_ID')
     this.paymentService.CreateOrder(this.PlaceOrder.TotalPayableAmount).subscribe((order) => {
       const options = {
-        key: 'rzp_test_01wjQrGrxO45cH',
+        key: this.RazorpayKey,
         amount: order.amount,
         currency: order.currency,
         name: 'Dekomart',

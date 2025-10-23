@@ -18,6 +18,11 @@ export class CommonService {
     return this.http.get<any>('admin/GetRefGroupData', { GroupName: groupName });
   }
 
+  
+  getSystemParm(ParmCode: string): Observable<any> {
+    return this.http.get<any>('admin/GetSystemParm', { ParmCode: ParmCode });
+  }
+
   getLightColour(hex: string, percent: number): string {
     hex = hex.replace(/^#/, '');
 
