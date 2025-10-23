@@ -155,7 +155,7 @@ export class LoginComponent {
 
   saveNewCustom(CustomerReg?: CustomerReg) {
     this.isSubmitted = true;
-    if (this.loginForm.invalid) {
+    if (this.RegistraionForm.invalid) {
       this.toastService.show('Error', 'Please Fill the form');
       return
     }
