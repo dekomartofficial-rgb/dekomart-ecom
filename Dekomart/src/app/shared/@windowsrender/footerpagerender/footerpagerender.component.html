@@ -1,0 +1,18 @@
+<app-nav-home [isShowChild]="'N'"></app-nav-home>
+<main>
+  <section>
+    @for (item of resValue; track $index) { @if (item.htColumn === 'H1') {
+    <h2 [ngClass]="item.htCss">{{ item.htValue }}</h2>
+    } @if (item.htColumn === 'P1') {
+    <p [ngClass]="item.htCss">{{ item.htValue }}</p>
+    } @if (item.htColumn === 'P2') {
+    <p [ngClass]="item.htCss">{{ item.htValue }}</p>
+    } @if (item.htSectionDataType === 'HTML' && item.htColumn === 'LI') {
+    <div [innerHTML]="item.htValue | safestringhtml"></div>
+    } @if (item.htSectionDataType === 'HTML' && item.htColumn === 'DIV') {
+    <div [innerHTML]="item.htValue | safestringhtml"></div>
+    } }
+  </section>
+</main>
+
+<app-footer-home></app-footer-home>

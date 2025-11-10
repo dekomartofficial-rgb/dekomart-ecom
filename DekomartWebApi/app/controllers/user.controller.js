@@ -412,6 +412,32 @@ class User {
     }
   }
 
+  static GetDynamicWindowRender = async (req, res) => {
+    try {
+      const request = await dataAcces.getRequest();
+      request.input("as_groupname", mssql.VarChar(50), req.query.GroupName); 
+
+      const result = await request.execute("PKG_SETTINGS$p_get_dynamic_pages");
+
+      res.status(200).json(result.recordset);
+    } catch (e) {
+      res.status(500).json({ err: "Error Occur" + e });
+    }
+  }
+    static GetDynamicWindowRenderValue = async (req, res) => {
+    try {
+      const request = await dataAcces.getRequest();
+      request.input("as_group_name", mssql.VarChar(50), req.query.GroupName); 
+      request.input("as_ht_code", mssql.VarChar(50), req.query.HtCode); 
+
+      const result = await request.execute("PKG_SETTINGS$p_get_dynamic_page");
+
+      res.status(200).json(result.recordset);
+    } catch (e) {
+      res.status(500).json({ err: "Error Occur" + e });
+    }
+  }
+
 }
 
 module.exports = User;

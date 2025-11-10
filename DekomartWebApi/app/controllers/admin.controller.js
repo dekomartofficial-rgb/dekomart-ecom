@@ -38,6 +38,16 @@ class Admin {
             res.status(500).json({ err: "Error Occur" + e })
         }
     }
+    static GetSystemParmForAdmin = async (req, res) => {
+        try {
+            const request = await dataAcces.getRequest()
+            request.input("as_parm_code", mssql.VarChar(20), req.query.ParmCode);
+            const result = await request.execute("PKG_SETTINGS$p_get_sys_parm");
+            res.status(200).json(result.recordsets[0])
+        } catch (e) {
+            res.status(500).json({ err: "Error Occur" + e })
+        }
+    }
     static GetAllGroupName = async (req, res) => {
         try {
             const request = await dataAcces.getRequest()
@@ -266,6 +276,7 @@ class Admin {
     }
     static SaveValidateAdminOtp = async (req, res) => {
         try {
+            let token;
             const request = await dataAcces.getRequest();
             request.input("ai_user_id", mssql.BigInt, req.body.UserId);
             request.input("as_otp", mssql.VarChar(10), req.body.Otp);
@@ -276,9 +287,11 @@ class Admin {
 
             const result = await request.execute("PKG_USER$p_validate_admin_otp");
             const output = await handleReps(result.output);
-             console.log(output)
-            const secret = process.env.SECRET_TOKERN;
-            const token = jwt.sign({ UserId: output.UserId, RoleCode: output.UserRole }, secret, { expiresIn: process.env.TOKEN_EXPIRE, });
+            if (output.MessageType === 2) {
+                const secret = process.env.SECRET_TOKERN;
+                token = jwt.sign({ UserId: output.UserId, RoleCode: output.UserRole }, secret, { expiresIn: process.env.TOKEN_EXPIRE, });
+            }
+
             res.status(200).json({ ...output, Token: token });
         } catch (e) {
             res.status(500).json({ err: "Error Occur" + e });

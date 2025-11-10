@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AdminLogin } from '@/app/provider/class/UserClass';
 import { LoaderService } from '@/app/provider/services/loader.service';
-import { HttpClientService } from '../../provider/services/http-client.service';
+import { HttpClientService } from '../../../provider/services/http-client.service';
 import { Router } from '@angular/router';
-
+import { CommonService } from '@/app/provider/services/common.service';
 
 @Component({
   selector: 'app-admin-login',
@@ -26,8 +26,10 @@ export class AdminLoginComponent implements OnInit {
   Otp4!: string
   Otp5!: string
   Otp6!: string
+  OtpColumnIndex: any = [];
+  OtpColumn: number = 0
 
-  constructor(private formBuilder: FormBuilder, private loader: LoaderService, private httpClient: HttpClientService, private router: Router,) {
+  constructor(private formBuilder: FormBuilder, private loader: LoaderService, private httpClient: HttpClientService, private router: Router, private commonService: CommonService) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(1)]],
@@ -46,6 +48,13 @@ export class AdminLoginComponent implements OnInit {
     return this.loginForm.controls;
   }
 
+  getOtpColumnIndex(): void {
+    this.commonService.getSystemParmForAdmin('OTP_INDEX').subscribe((OtpColumnIndexString: any[]) => {
+      this.OtpColumn = OtpColumnIndexString[0]?.parmValue
+      this.OtpColumnIndex = Array.from({ length: this.OtpColumn }, (_, i) => ({ index: i }));
+    });
+  }
+
   sendOtp(mode: string) {
     if (mode === 'SEND_OTP') {
       if (this.loginForm.value.email === undefined && this.loginForm.value.password === undefined) {
@@ -55,6 +64,7 @@ export class AdminLoginComponent implements OnInit {
         this.loader.show()
         this.httpClient.post<any>('user/Validateuser', { EmailId: this.AdminLogin.EmailAddress, Password: this.AdminLogin.Password, AuthType: 'SENT_OTP' }).subscribe((res) => {
           if (res && res.MessageType === 2) {
+            this.getOtpColumnIndex()
             this.isShowOtp = true
             this.AdminLogin.UserId = res.UserId
             this.errorMessage = res.Message
@@ -93,7 +103,5 @@ export class AdminLoginComponent implements OnInit {
         }
       })
     }
-
   }
-
 }

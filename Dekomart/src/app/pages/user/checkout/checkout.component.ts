@@ -12,8 +12,6 @@ import { FormsModule } from '@angular/forms';
 import { ToastService } from '@/app/provider/services/toast.service';
 import { BlockUrlService } from '@/app/provider/services/block-url.service';
 
-
-
 declare var Razorpay: any;
 
 @Component({

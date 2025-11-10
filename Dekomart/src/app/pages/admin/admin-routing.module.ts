@@ -4,6 +4,7 @@ import { UserRegistrationComponent } from './user-registration/user-registration
 import { ProductDashboardComponent } from './product-dashboard/product-dashboard.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { ReferenceDataComponent } from './reference-data/reference-data.component';
 import { RoleAccessComponent } from './role-access/role-access.component';
 import { AddProductComponent } from './add-product/add-product.component';
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'system-parm', component: SystemParamComponent, canActivate: [AuthGuard] },
   { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
   { path: 'orders-detials', component: OrdersDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'admin-login', component: AdminLoginComponent}
 ];
 
 @NgModule({

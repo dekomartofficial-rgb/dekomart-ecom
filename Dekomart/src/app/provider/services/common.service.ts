@@ -3,6 +3,7 @@ import { HttpClientService } from './http-client.service';
 import { Observable } from 'rxjs';
 import { baseUrl } from '../../../assets/config.json'
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,11 +19,14 @@ export class CommonService {
     return this.http.get<any>('admin/GetRefGroupData', { GroupName: groupName });
   }
 
-  
+
   getSystemParm(ParmCode: string): Observable<any> {
     return this.http.get<any>('admin/GetSystemParm', { ParmCode: ParmCode });
   }
 
+  getSystemParmForAdmin(ParmCode: string): Observable<any> {
+    return this.http.get<any>('admin/GetSystemParmForAdmin', { ParmCode: ParmCode });
+  }
   getLightColour(hex: string, percent: number): string {
     hex = hex.replace(/^#/, '');
 
@@ -43,7 +47,7 @@ export class CommonService {
       this.http.get<any[]>('admin/GetDocument', { KeyId: KeyId, KeyType: KeyType }).subscribe({
         next: (response) => {
           const updatedDocs = response.map(doc => {
-            doc.Actualpath = doc.docPath 
+            doc.Actualpath = doc.docPath
             if (doc.docPath && !doc.docPath.startsWith('http')) {
               doc.docPath = baseUrl + '/' + doc.docPath;
             }

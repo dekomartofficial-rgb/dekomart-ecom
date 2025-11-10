@@ -8,7 +8,7 @@ const bodyParser = require("body-parser");
 const app = express();
 dotenv.config();
 
-const PORT = 80;
+const PORT = 3000;
 const errorHandler = require("./app/helper/error-handler");
 const DataAccess = require("./app/database/dataaccess");
 const { convertBigIntMiddleware } = require("./app/middleware/CommonMiddleware");

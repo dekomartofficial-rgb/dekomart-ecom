@@ -47,7 +47,7 @@
                     </button>
                 </div>
                 } @else {
-                <div class="input-group position-relative">
+                <div class="input-group">
                     <div
                         class="col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex justify-content-center align-items-center">
                         <p>Please enter the one time password to verify your account</p>
@@ -62,29 +62,18 @@
                         </div>
                         }
                     </div>
-                    <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
-                        <input class="m-2 text-center form-control input-field rounded" type="text"
-                            style="padding: 12px 0px;" formControlName="otp" [(ngModel)]="Otp1" id="first"
-                            maxlength="1" />
-                        <input class="m-2 text-center form-control input-field rounded" type="text"
-                            style="padding: 12px 0px;" formControlName="otp" [(ngModel)]="Otp2" id="second"
-                            maxlength="1" />
-                        <input class="m-2 text-center form-control input-field rounded" type="text"
-                            style="padding: 12px 0px;" formControlName="otp" [(ngModel)]="Otp3" id="third"
-                            maxlength="1" />
-                        <input class="m-2 text-center form-control input-field rounded" type="text"
-                            style="padding: 12px 0px;" formControlName="otp" [(ngModel)]="Otp4" id="fourth"
-                            maxlength="1" />
-                        <input class="m-2 text-center form-control input-field rounded" type="text"
-                            style="padding: 12px 0px;" formControlName="otp" [(ngModel)]="Otp5" id="fifth"
-                            maxlength="1" />
-                        <input class="m-2 text-center form-control input-field rounded" type="text"
-                            style="padding: 12px 0px;" formControlName="otp" [(ngModel)]="Otp6" id="sixth"
-                            maxlength="1" />
+                    <div id="otp" class="inputs d-flex mt-2 col-12">
+                        @for (item of OtpColumnIndex; track $index) {
+                        <div id="otp" class="inputs mt-2">
+                            <div class="grid-6 justify-content-center">
+                                <input class="m-2 text-center form-control input-field rounded" type="text"
+                                    style="padding: 12px 0px; width: 50px" formControlName="otp" name="otp_{{$index}}" id="otp" [(ngModel)]="Otp1" />
+                            </div>
+                        </div>
+                        }
                     </div>
                 </div>
                 }
-
                 @if (!isShowOtp) {
                 <div class="checkbox-forgot p-2 col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex justify-content-center">
                     <a href="#">Forgot Password?</a>
@@ -94,6 +83,11 @@
                 <button type="submit" class="login-btn" (click)="sendOtp('SEND_OTP')">Send OTP</button>
                 } @else {
                 <button type="submit" class="login-btn" (click)="sendOtp('SUBMIT_OTP')">Submit</button>
+                @if (errorMessage.length > 0) {
+                <p style="text-align:center; color:#dc2626; font-size:13px; margin-bottom: 20px;">
+                    {{errorMessage}}
+                </p>
+                }
                 }
             </form>
             @if (!isShowOtp) {

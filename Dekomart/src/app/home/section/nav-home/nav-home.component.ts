@@ -36,14 +36,16 @@ export class NavHomeComponent implements OnInit {
   ];
 
   categories = [
-    { path: '/tables', label: 'Table ware', image: 'tableware.png' },
-    { path: '/platter', label: 'Platter', image: 'platter.png' },
-    { path: '/soft-furnishings', label: 'Soft Furnishing', image: 'soft-furnishing.png' },
     { path: '/decor', label: 'Decor', image: 'decor.png' },
-    { path: '/furniture', label: 'Furniture', image: 'furniture.png' },
     { path: '/vases', label: 'Vase', image: 'vase.png' },
+    { path: '/candleholder', label: 'Vase', image: 'Candle holder.png' },
     { path: '/wall-decor', label: 'Wall Decor', image: 'wall-decor.png' },
-    { path: '/mirrors', label: 'Mirror', image: 'mirror.png' }
+    { path: '/mirrors', label: 'Mirror', image: 'mirror.png' },
+    { path: '/platter', label: 'Platter', image: 'platter.png' },
+    { path: '/pots', label: 'Pots', image: 'pots.png' },
+    { path: '/tables', label: 'Table ware', image: 'Table ware.png' },
+    { path: '/soft-furnishings', label: 'Soft Furnishing', image: 'Soft furnishing.png' },
+    { path: '/furniture', label: 'Furniture', image: 'Furniture (1).png' },
   ];
 
   constructor(private http: HttpClientService, private router: Router, private authService: SocialAuthService) { }
