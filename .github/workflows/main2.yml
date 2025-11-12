@@ -6,7 +6,7 @@ name: Build and Deploy Node.js app to Azure Web App - Dekomart
 on:
   push:
     branches:
-      - release
+      - main
   workflow_dispatch:
 
 jobs:
