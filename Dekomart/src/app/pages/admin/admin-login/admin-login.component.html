@@ -64,10 +64,10 @@
                     </div>
                     <div id="otp" class="inputs d-flex mt-2 col-12">
                         @for (item of OtpColumnIndex; track $index) {
-                        <div id="otp" class="inputs mt-2">
+                        <div id="otp_{{$index}}" class="inputs mt-2">
                             <div class="grid-6 justify-content-center">
                                 <input class="m-2 text-center form-control input-field rounded" type="text"
-                                    style="padding: 12px 0px; width: 50px" formControlName="otp" name="otp_{{$index}}" id="otp_{{$index}}" [(ngModel)]="Otp1" />
+                                    style="padding: 12px 0px; width: 50px" name="otp_{{$index}}" id="otp_{{$index}}" />
                             </div>
                         </div>
                         }

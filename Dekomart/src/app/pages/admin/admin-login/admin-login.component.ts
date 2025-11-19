@@ -32,8 +32,8 @@ export class AdminLoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private loader: LoaderService, private httpClient: HttpClientService, private router: Router, private commonService: CommonService) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(1)]],
-      otp: ['', [Validators.required, Validators.minLength(1)]]
+      password: ['', [Validators.required, Validators.minLength(1)]]
+      // otp: ['', [Validators.required, Validators.minLength(1)]]
     });
 
   }

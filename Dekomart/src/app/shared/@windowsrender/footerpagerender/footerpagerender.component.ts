@@ -5,6 +5,7 @@ import { FooterHomeComponent } from "@/app/home/section/footer-home/footer-home.
 import { ActivatedRoute } from '@angular/router';
 import { HttpClientService } from '@/app/provider/services/http-client.service';
 import { SafestringhtmlPipe } from '@/app/provider/pipe/string-to-html/safestringhtml.pipe';
+import { LoaderService } from '@/app/provider/services/loader.service';
 
 @Component({
   selector: 'app-footerpagerender',
@@ -17,7 +18,7 @@ export class FooterpagerenderComponent implements OnInit {
   resValue: any;
 
 
-  constructor(private route: ActivatedRoute, private http: HttpClientService) { }
+  constructor(private route: ActivatedRoute, private http: HttpClientService, private LoaderService: LoaderService) { }
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.htCode = params.get('htcode')!!
@@ -26,9 +27,11 @@ export class FooterpagerenderComponent implements OnInit {
   }
 
   getWindowRenderValue(htcode: string) {
+    this.LoaderService.show()
     this.http.get<any[]>('user/GetDynamicWindowRenderValue', { GroupName: 'Footer', HtCode: htcode }).subscribe((res) => {
       if (res) {
         this.resValue = res
+        this.LoaderService.hide()
       }
     })
   }

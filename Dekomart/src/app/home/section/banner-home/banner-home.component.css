@@ -13,7 +13,7 @@
 
 .home-page-text {
   text-align: end;
-  font-size: clamp(24px, 6vw, 78px);
+  font-size: 70px;
   font-weight: 600;
   color: #8c4844;
   margin-right: clamp(10px, 3vw, 26px);
