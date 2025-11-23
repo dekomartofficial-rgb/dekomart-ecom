@@ -184,6 +184,7 @@ class Admin {
             request.input('an_discount', mssql.BigInt, ProdctDetails.Discount);
             request.input('as_discount_type', mssql.VarChar(200), ProdctDetails.DiscountType);
             request.input('as_category', mssql.VarChar(200), ProdctDetails.Catogery);
+            request.input('as_section', mssql.VarChar(20), ProdctDetails.Section);
             request.input('tt_product_varient', VariantTableType);
             request.input('as_ops_mode', mssql.VarChar(15), ProdctDetails.OpsMode);
             request.input('ai_user_id', mssql.BigInt, req.LoggedUserId);

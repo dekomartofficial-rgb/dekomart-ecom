@@ -61,7 +61,7 @@ export class GalleryHomeComponent implements OnInit {
     return this.HomeData.filter(item => item.HeaderTitle === headerTitle);
   }
 
-  GetProductDetails(ProductId: number) {
+  AddToCartProductDetails(ProductId: number) {
     this.displayDialog = true
     this.Loader.show()
     this.httpClient.get<any>('user/GetProductDetails', { ProductId: ProductId })
@@ -72,6 +72,11 @@ export class GalleryHomeComponent implements OnInit {
         this.AvailableSize = this.ClickedProduct[0]?.ProductSize.split(',')
         this.Loader.hide()
       });
+  }
+
+  GetProductDetails(ProductId: number) {
+    this.router.navigate(['/user/product-detail'], { state: { productId: ProductId } })
+
   }
 
   incrementQuantity() {

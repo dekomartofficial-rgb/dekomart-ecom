@@ -49,7 +49,7 @@
                         <div class="col-md-12 description-product">
                             <h5>Description Product <span class="required">*</span></h5>
                             <div class="card flex justify-center">
-                                <textarea rows="13" cols="30" pTextarea [autoResize]="true" name="ProductDesc"
+                                <textarea rows="5" cols="30" pTextarea [autoResize]="true" name="ProductDesc"
                                     [(ngModel)]="ProductDetails.ProductDesc" #ProductDesc="ngModel" required></textarea>
                                 <div *ngIf="ProductDesc.invalid && ProductDesc.touched" class="required-field">
                                     <small *ngIf="ProductDesc.errors?.['required']">Product Description
@@ -143,6 +143,16 @@
                                             </p-dropdown>
                                         </div>
                                     </div>
+                                     <div class="col-md-3">
+                                        <h5>Section</h5>
+                                        <div class="card flex justify-center">
+                                            <p-dropdown [options]="Section" optionLabel="descritpion"
+                                                [(ngModel)]="ProductDetails.Section" placeholder="Select Section"
+                                                #SectionModel="ngModel" [style]="{'width':'100%'}" optionValue="code"
+                                                name="Section" class="discount-type-dropdown">
+                                            </p-dropdown>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -185,19 +195,19 @@
                         }
                     </div>
                     <div class="file-upload-wrapper d-flex justify-content-center align-items-center col-md-12 col-lg-12 w-100 mt-2"
-                        style="height: 127px;">
+                        style="height: 14%;">
                         <input type="file" id="fileInput" (change)="onFilesSelected($event)" accept="image/*"
                             style="width:100%;" />
                         <label for="fileInput"
                             class="file-upload-label d-flex justify-content-center flex-column align-items-center w-100">
-                            <img src="https://cdn-icons-png.flaticon.com/512/1829/1829586.png" alt="Upload Icon" />
+                            <!-- <img src="https://cdn-icons-png.flaticon.com/512/1829/1829586.png" alt="Upload Icon" /> -->
                             <p>Drop your image here, or <span class="browse">browse</span></p>
                             <small>Supports: JPG, JPEG2000, PNG</small>
                         </label>
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 product-varient mt-2" style="min-height: 37vh;">
+            <!-- <div class="col-md-12 product-varient mt-2" style="min-height: 37vh;">
                 <div class="col-md-12 p-3 d-flex justify-content-between">
                     <h2>Product Varient</h2>
                     <div class="add-varient-button">
@@ -262,7 +272,7 @@
                 </div>
                 }
 
-            </div>
+            </div> -->
         </form>
     </div>
 </div>

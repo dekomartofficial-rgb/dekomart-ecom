@@ -249,7 +249,7 @@
   .category-nav {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1rem;
+    gap: 0rem;
     padding: 1rem 0;
   }
 

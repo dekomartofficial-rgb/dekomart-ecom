@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'system-parm', component: SystemParamComponent, canActivate: [AuthGuard] },
   { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
   { path: 'orders-detials', component: OrdersDetailsComponent, canActivate: [AuthGuard] },
-  { path: 'admin-login', component: AdminLoginComponent}
+  { path: 'admin-login', component: AdminLoginComponent},
 ];
 
 @NgModule({

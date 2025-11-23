@@ -9,6 +9,7 @@ router.get("/GetUser", VerifyToken, UserController.GetUser);
 router.get("/GetUserRole", VerifyToken, UserController.GetUserRole)
 router.get('/GetUserRoleScreens', VerifyToken, UserController.GetUserRoleScreens);
 router.get('/GetUserHome', UserController.GetUserHome)
+router.get('/GetSectionDetails', UserController.GetSectionDetails)
 router.get('/GetProductDetails', UserController.GetProductDetails)
 router.get('/GetUserCart', VerifyToken, UserController.GetUserCart)
 router.get('/GetUserAddress', VerifyToken, UserController.GetUserAddress)

@@ -9,7 +9,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { OrderSuccessComponent } from './order-success/order-success.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { AuthGuard } from '../../provider/guard/auth.guard'
-
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 const routes: Routes = [
   { path: '', component: UserHomeComponent, canActivate: [AuthGuard] },
@@ -19,13 +19,13 @@ const routes: Routes = [
   { path: 'user-wishlist', component: UserWishlistComponent, canActivate: [AuthGuard] },
   { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
   { path: 'order-sucessfully', component: OrderSuccessComponent, canActivate: [AuthGuard] },
-  { path: 'not-found', component: NotFoundComponent, canActivate: [AuthGuard] }
+  { path: 'product-detail', component: ProductDetailComponent},
+  { path: 'not-found', component: NotFoundComponent, canActivate: [AuthGuard] },
 ];
-
-
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
+
 export class UserRoutingModule { }

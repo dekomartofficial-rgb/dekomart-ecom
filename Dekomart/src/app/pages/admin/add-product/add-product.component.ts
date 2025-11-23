@@ -42,6 +42,7 @@ export class AddProductComponent implements OnInit {
   DiscountType: any[] = [];
   Gender: any[] = [];
   ClothingSize: any[] = [];
+  Section:any[] = [];
   Catogery: any[] = [];
   AddVariantsRow: any[] = [0];
   ProductImages: any[] = [];
@@ -60,6 +61,7 @@ export class AddProductComponent implements OnInit {
       ProductName: ['', Validators.required],
       ProductDesc: ['', Validators.required],
       BasePricing: ['', Validators.required],
+      Section: [''],
       Catogery: ['', Validators.required],
       ProductSize: ['', Validators.required],
       Gender: ['', Validators.required],
@@ -82,14 +84,17 @@ export class AddProductComponent implements OnInit {
     this.GetRefData();
   }
   GetRefData() {
-    this.commonService.getRefGroupData('DISCOUNT_TYPE,CLOTH_SIZE,GENDER,CATEGORY').subscribe({
+    this.commonService.getRefGroupData('DISCOUNT_TYPE,CLOTH_SIZE,GENDER,CATEGORY,HOMESECTION').subscribe({
       next: (res: any[]) => {
         this.DiscountType = res.filter(item => item.groupName === 'DISCOUNT_TYPE');
         this.ClothingSize = res.filter(item => item.groupName === 'CLOTH_SIZE');
         this.Gender = res.filter(item => item.groupName === 'GENDER');
         this.Catogery = res.filter(item => item.groupName === 'CATEGORY');
+        this.Section = res.filter(item => item.groupName === 'HOMESECTION')
       }
     });
+
+    console.log(this.Section)
   }
 
   getProductImage(ProductId: number) {
@@ -171,6 +176,7 @@ export class AddProductComponent implements OnInit {
       this.ProductDetails.Discount = this.Product[0].Discount;
       this.ProductDetails.DiscountType = this.Product[0].DiscountType;
       this.ProductDetails.Catogery = this.Product[0].Category;
+      this.ProductDetails.Section = this.Product[0].Section
       this.ProductVariants = [];
       this.ProductVariants.push(...this.Variants)
       this.loader.hide()

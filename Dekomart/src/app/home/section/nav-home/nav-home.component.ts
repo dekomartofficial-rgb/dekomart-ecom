@@ -25,14 +25,14 @@ export class NavHomeComponent implements OnInit {
   isDropdownOpen = false;
 
   mainNavLinks = [
-    { path: '/', label: 'NEW IN' },
-    { path: '/', label: 'DINING' },
-    { path: '/', label: 'BEDROOM' },
-    { path: '/', label: 'BATHROOM' },
-    { path: '/', label: 'FURNITURE' },
-    { path: '/', label: 'DECOR' },
-    { path: '/', label: 'CLOCK' },
-    { path: '/', label: 'GIFT' }
+    { path: '/section/NEW', label: 'NEW IN' },
+    { path: '/section/DIN', label: 'DINING' },
+    { path: '/section/BD', label: 'BEDROOM' },
+    { path: '/section/BAT', label: 'BATHROOM' },
+    { path: '/section/FUN', label: 'FURNITURE' },
+    { path: '/section/DEC', label: 'DECOR' },
+    { path: '/section/CK', label: 'CLOCK' },
+    { path: '/section/GF', label: 'GIFT' }
   ];
 
   categories = [

@@ -1,29 +1,29 @@
 .home-page {
   width: 100%;
   height: clamp(50vh, 60vw, 78vh);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   background-image: url("/assets/landing-page-images/home-page.jpg");
+  background-position: right;
+  background-size: cover;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: clamp(1rem, 3vw, 2rem);
+  padding: clamp(1rem, 4vw, 2rem);
 }
 
 .home-page-text {
-  text-align: end;
-  font-size: 70px;
+  text-align: right;
   font-weight: 600;
+  font-size: clamp(28px, 5vw, 70px);
   color: #8c4844;
-  margin-right: clamp(10px, 3vw, 26px);
   max-width: 600px;
+  margin-right: clamp(10px, 3vw, 26px);
 }
 
 .home-page-text h1 {
   color: black;
-  font-size: clamp(18px, 4vw, 36px);
-  font-weight: 100;
+  font-weight: 200;
+  font-size: clamp(16px, 3vw, 36px);
   margin-top: clamp(5px, 2vw, 10px);
 }
 
@@ -31,232 +31,89 @@
   background-color: white;
   color: #8c4844;
   border: none;
-  padding: clamp(8px, 2vw, 12px) clamp(20px, 4vw, 30px);
-  font-size: clamp(14px, 3vw, 18px);
-  font-weight: 600;
+  padding: clamp(10px, 2vw, 16px) clamp(24px, 4vw, 36px);
   border-radius: 12px;
-  width: clamp(180px, 40vw, 243px);
-  height: clamp(50px, 10vw, 69px);
+  font-weight: 700;
   cursor: pointer;
-  font-size: clamp(18px, 4vw, 30px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  width: clamp(140px, 35vw, 243px);
+  height: clamp(45px, 10vw, 69px);
+  font-size: clamp(14px, 3vw, 30px);
   margin-top: clamp(10px, 3vw, 20px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  transition: 0.3s ease;
 }
 
 .order-now-btn:hover {
   background-color: #f9f3f0;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
-/* Responsive Design for all devices */
-@media (max-width: 1400px) {
-  .home-page {
-    justify-content: center;
-    text-align: center;
-    padding: clamp(1rem, 4vw, 2rem);
-  }
+/* ---------- RESPONSIVE BREAKPOINTS ---------- */
 
-  .home-page-text {
-    margin: 0;
-    text-align: center;
-  }
-}
-
-@media (max-width: 1200px) {
-  .home-page {
-    justify-content: center;
-    text-align: center;
-    padding: clamp(1rem, 4vw, 2rem);
-  }
-
-  .home-page-text {
-    margin: 0;
-    text-align: center;
-  }
-
-  .order-now-btn {
-    font-size: clamp(16px, 3.5vw, 24px);
-    padding: clamp(10px, 2.5vw, 15px) clamp(25px, 5vw, 35px);
-  }
-}
-
+/* Tablets and small laptops */
 @media (max-width: 992px) {
   .home-page {
     justify-content: center;
     text-align: center;
-    padding: clamp(1rem, 5vw, 2rem);
-    height: clamp(45vh, 55vw, 70vh);
-  }
-
-  .home-page-text {
-    margin: 0;
-    text-align: center;
-    max-width: 500px;
-  }
-
-  .order-now-btn {
-    font-size: clamp(14px, 3vw, 20px);
-    padding: clamp(8px, 2vw, 12px) clamp(20px, 4vw, 30px);
-    width: clamp(160px, 35vw, 220px);
-    height: clamp(45px, 9vw, 60px);
-  }
-}
-
-@media (max-width: 768px) {
-  .home-page {
-    justify-content: center;
-    text-align: center;
-    padding: clamp(1rem, 6vw, 2rem);
-    height: clamp(40vh, 50vw, 60vh);
-  }
-
-  .home-page-text {
-    margin: 0;
-    text-align: center;
-    max-width: 400px;
-  }
-
-  .home-page-text h1 {
-    font-size: clamp(16px, 3.5vw, 24px);
-  }
-
-  .order-now-btn {
-    font-size: clamp(12px, 2.5vw, 16px);
-    padding: clamp(6px, 1.5vw, 10px) clamp(15px, 3vw, 25px);
-    width: clamp(140px, 30vw, 200px);
-    height: clamp(40px, 8vw, 55px);
-  }
-}
-
-@media (max-width: 576px) {
-  .home-page {
-    justify-content: center;
-    text-align: center;
-    padding: clamp(0.5rem, 4vw, 1rem);
-    height: clamp(35vh, 45vw, 50vh);
     background-position: center;
   }
 
   .home-page-text {
-    margin: 0;
     text-align: center;
+    margin: 0;
+    max-width: 500px;
+  }
+}
+
+/* Tablets & large mobiles */
+@media (max-width: 768px) {
+  .home-page {
+    height: clamp(40vh, 55vw, 65vh);
+  }
+
+  .home-page-text {
+    font-size: clamp(20px, 5vw, 40px);
+    max-width: 400px;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 576px) {
+  .home-page {
+    height: clamp(35vh, 50vw, 55vh);
+    padding: clamp(1rem, 5vw, 2rem);
+  }
+
+  .home-page-text {
+    font-size: clamp(18px, 6vw, 32px);
     max-width: 300px;
   }
 
   .home-page-text h1 {
-    font-size: clamp(14px, 3vw, 20px);
-  }
-
-  .order-now-btn {
-    font-size: clamp(10px, 2vw, 14px);
-    padding: clamp(5px, 1vw, 8px) clamp(12px, 2.5vw, 20px);
-    width: clamp(120px, 25vw, 180px);
-    height: clamp(35px, 7vw, 50px);
+    font-size: clamp(12px, 4vw, 20px);
   }
 }
 
-@media (max-width: 480px) {
+/* Small mobile (iPhone SE / Samsung mini) */
+@media (max-width: 400px) {
   .home-page {
-    justify-content: center;
-    text-align: center;
-    padding: clamp(0.5rem, 3vw, 1rem);
-    height: clamp(30vh, 40vw, 45vh);
-    background-position: center;
+    height: clamp(30vh, 45vw, 50vh);
   }
 
   .home-page-text {
-    margin: 0;
-    text-align: center;
-    max-width: 250px;
-  }
-
-  .home-page-text h1 {
-    font-size: clamp(12px, 2.5vw, 18px);
-  }
-
-  .order-now-btn {
-    font-size: clamp(9px, 1.8vw, 12px);
-    padding: clamp(4px, 0.8vw, 6px) clamp(10px, 2vw, 15px);
-    width: clamp(100px, 20vw, 150px);
-    height: clamp(30px, 6vw, 45px);
+    max-width: 260px;
+    font-size: clamp(16px, 7vw, 28px);
   }
 }
 
-@media (max-width: 360px) {
-  .home-page {
-    justify-content: center;
-    text-align: center;
-    padding: clamp(0.3rem, 2vw, 0.8rem);
-    height: clamp(25vh, 35vw, 40vh);
-    background-position: center;
-  }
-
-  .home-page-text {
-    margin: 0;
-    text-align: center;
-    max-width: 200px;
-  }
-
-  .home-page-text h1 {
-    font-size: clamp(10px, 2vw, 16px);
-  }
-
-  .order-now-btn {
-    font-size: clamp(8px, 1.5vw, 10px);
-    padding: clamp(3px, 0.6vw, 5px) clamp(8px, 1.5vw, 12px);
-    width: clamp(80px, 15vw, 120px);
-    height: clamp(25px, 5vw, 40px);
-  }
-}
-
-/* Landscape orientation adjustments */
+/* Landscape mobile */
 @media (max-height: 500px) and (orientation: landscape) {
   .home-page {
     height: 100vh;
-    padding: clamp(0.5rem, 2vw, 1rem);
+    background-position: center;
   }
 
   .home-page-text {
-    font-size: clamp(16px, 4vw, 32px);
-    max-width: 400px;
-  }
-
-  .home-page-text h1 {
-    font-size: clamp(12px, 3vw, 20px);
-  }
-
-  .order-now-btn {
-    font-size: clamp(10px, 2.5vw, 16px);
-    padding: clamp(4px, 1vw, 8px) clamp(12px, 2.5vw, 20px);
-    width: clamp(100px, 20vw, 160px);
-    height: clamp(30px, 6vw, 45px);
-  }
-}
-
-/* High DPI displays */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .home-page {
-    background-image: url("/assets/landing-page-images/home-page.jpg");
-    background-size: cover;
-  }
-}
-
-/* Print styles */
-@media print {
-  .home-page {
-    height: auto;
-    min-height: 300px;
-    background: none;
-    border: 1px solid #ccc;
-  }
-
-  .home-page-text {
-    color: #000;
-    font-size: 18px;
-  }
-
-  .order-now-btn {
-    display: none;
+    font-size: clamp(18px, 3.5vw, 32px);
   }
 }

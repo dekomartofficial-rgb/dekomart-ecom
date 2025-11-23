@@ -4,6 +4,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AdminLoginComponent } from './pages/admin/admin-login/admin-login.component';
 import { FooterpagerenderComponent } from './shared/@windowsrender/footerpagerender/footerpagerender.component';
+import { SectionPageComponent } from './home/section/section-page/section-page.component';
 
 
 export const routes: Routes = [
@@ -11,6 +12,7 @@ export const routes: Routes = [
     { path: 'user', loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule) },
     { path: 'admin-login', component: AdminLoginComponent },
     { path: "windowrender/:htcode", component: FooterpagerenderComponent },
+    { path: 'section/:htcode', component: SectionPageComponent },
     { path: "", component: HomeComponent },
     { path: "login", component: LoginComponent },
     { path: '**', component: NotFoundComponent }

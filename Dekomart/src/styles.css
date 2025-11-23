@@ -744,3 +744,19 @@ button i {
     padding-left: var(--spacing-xs);
   }
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+app-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1; /* pushes footer to bottom */
+  display: block;
+}

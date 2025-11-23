@@ -1,7 +1,10 @@
 .footer-main {
   background-color: #994037;
   color: white;
-  padding: 40px 0 20px 0;
+  padding: 40px 0 20px 0; 
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 
 .footer-header {

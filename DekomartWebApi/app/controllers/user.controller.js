@@ -114,6 +114,21 @@ class User {
 
     }
   }
+    static GetSectionDetails = async (req, res) => {
+    try {
+
+      const request = await dataAcces.getRequest();
+      console.log(req.query)
+      request.input("ai_user_id", mssql.BigInt, req.query.UserId ?? 0);
+      request.input("as_section_code", mssql.VarChar(20), req.query.Section)
+      const result = await request.execute("PKG_HOME$p_get_user_section_details");
+
+      res.status(200).json(result.recordsets);
+    } catch (e) {
+      res.status(500).json({ err: "Error Occur :" + e });
+
+    }
+  }
   static GetUserProfile = async (req, res) => {
     try {
       const request = await dataAcces.getRequest();

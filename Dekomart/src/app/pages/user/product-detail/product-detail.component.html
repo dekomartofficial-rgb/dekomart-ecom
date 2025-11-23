@@ -1,0 +1,82 @@
+<app-nav-home [isShowChild]="'N'"></app-nav-home>
+ <div class="container-fluid product-wrapper">
+
+  <div class="row justify-content-center">
+    <div class="col-lg-10 col-md-12">
+
+      <div class="row">
+
+        <!-- LEFT COLUMN (Main Image + Thumbnails) -->
+        <div class="col-lg-6 col-md-6">
+
+          <div class="card-box image-card">
+            <img class="main-image" [src]="product.mainImage" alt="product" />
+
+            <div class="thumb-row mt-3">
+              <img
+                *ngFor="let img of product.images"
+                [src]="img"
+                class="thumb-img"
+                [class.active-thumb]="img === product.mainImage"
+                (click)="product.mainImage = img"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="col-lg-6 col-md-6">
+          <div class="card-box">
+
+            <h2 class="product-title">{{ product.name }}</h2>
+
+            <div class="rating-box">
+              ⭐⭐⭐⭐☆ <span class="rating-text">(4.5 Ratings)</span>
+            </div>
+
+            <h3 class="price">AED {{ product.price }}</h3>
+
+            <!-- SIZE -->
+            <div class="info-block">
+              <h5 class="sub-title">Available Sizes</h5>
+              <div class="size-box">
+                <div class="size-item" *ngFor="let s of product.sizes">
+                  {{ s }}
+                </div>
+              </div>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="info-block">
+              <h5 class="sub-title">Description</h5>
+              <p class="description-text">
+                {{ product.description }}
+              </p>
+            </div>
+
+            <!-- HIGHLIGHTS -->
+            <div class="info-block">
+              <h5 class="sub-title">Highlights</h5>
+              <ul class="highlight-list">
+                <li *ngFor="let h of product.highlights">{{ h }}</li>
+              </ul>
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="btn-row mt-4">
+              <button class="btn add-cart">Add to Cart</button>
+              <button class="btn buy-now">Buy Now</button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<app-footer-home></app-footer-home>
+
+

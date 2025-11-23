@@ -54,9 +54,9 @@
                     </div>
                     <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 d-flex justify-content-between">
                         <label for="otp">OTP</label>
-                        @if (isSubmitted && formControls['otp'].errors)
+                        @if (isSubmitted)
                         { <div class="error-message">
-                            @if (formControls['otp'].errors['required']) {
+                            @if (OtpRequired) {
                             <div>OTP is required</div>
                             }
                         </div>
@@ -64,12 +64,8 @@
                     </div>
                     <div id="otp" class="inputs d-flex mt-2 col-12">
                         @for (item of OtpColumnIndex; track $index) {
-                        <div id="otp_{{$index}}" class="inputs mt-2">
-                            <div class="grid-6 justify-content-center">
-                                <input class="m-2 text-center form-control input-field rounded" type="text"
-                                    style="padding: 12px 0px; width: 50px" name="otp_{{$index}}" id="otp_{{$index}}" />
-                            </div>
-                        </div>
+                        <input class="m-2 text-center form-control input-field rounded" type="text"
+                            [(ngModel)]="otpValues[$index]" style="padding: 12px 0px; width: 50px" />
                         }
                     </div>
                 </div>

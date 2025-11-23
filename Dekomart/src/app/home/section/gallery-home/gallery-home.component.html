@@ -24,11 +24,11 @@
   @for (item of HomeHeaderData; track $index) {
   <div class="this_is_new mb-4">
     <div class="container d-block">
-      <div class="justify-content-between mb-2">
+      <!-- <div class="justify-content-between mb-2">
         <div class="filter-tabs-2">
           <span class="filter-tab-2">{{item.MainHeader}}</span>
         </div>
-      </div>
+      </div> -->
       <div class="filter-tabs mb-3">
         <span class="filter-tab">{{item.HeaderTitle}}</span>
       </div>
@@ -53,12 +53,12 @@
                 <p class="product-price mb-0">{{item.FinalPrice | inr}}</p>
               </div>
               } @else {
-              <p class="product-price mb-0">{{item.FinalPrice | inr}}</p>
+              <p class="product-price mb-0">{{item.FinalPrice | inr}}</p> 
               }
             </div>
             <div class="d-flex gap-2 mt-auto">
               <button class="button-6 flex-fill" role="button" style="width: 90%;"
-                (click)="GetProductDetails(item.ProductId)">
+                (click)="AddToCartProductDetails(item.ProductId)">
                 <i class="pi pi-shopping-cart"></i> Add to Cart
               </button>
               <button class="button-6" role="button"
@@ -107,22 +107,22 @@
           Every decor piece is crafted to suit diverse interiors with a focus on quality and design detail.</p>
       </div>
       <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
-        <h5>POPULAR CATEGORY</h5>
+        <h5>Popular Category</h5>
         <p>Dinner set, Cup-Mug, Cake Stand, Tea Sets, Plates, Pasta Plates, Coasters, Tea Pots, Ramen Bowls, Snack
           Plates, Trays,
           Tea Set with Kettle, Rugs, Dinner Plate, Cottage Core.</p>
       </div>
       <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
-        <h5>GIFTS FOR FESTIVALS/OCCASIONS</h5>
+        <h5>Gifts For Festivals/Occasions</h5>
         <p>Christmas Gifts, Christmas Decor, Secret Santa Gifts, Children's Day Gifts, Gifts For New Year, New Year
           Gifts For Corporates.</p>
       </div>
       <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
-        <h5>GIFTS FOR SPECIAL OCCASIONS</h5>
+        <h5>Gift For Special Occasions</h5> 
         <p>Anniversary Gifts, Wedding Gifts, House Warming Gifts, Baby Shower Gifts, Birthday Gifts, Farewell Gifts.</p>
       </div>
       <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
-        <h5>GIFTS BY RELATIONSHIPS</h5>
+        <h5>Gifts By Relationships</h5>
         <p>Valentine's Day Gifts, Gifts For Wife, Gifts For Husband, Gifts For Sister, Gifts For Brother, Gifts For
           Friends, Gifts For Mother,
           Gifts For Father, Gifts For Girlfriend, Gifts For Colleagues, New Year Gifts For Family, New Year Gifts For
@@ -132,7 +132,7 @@
           Valentine's Day Gift For Husband, Valentine's Day Gift For Wife</p>
       </div>
       <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
-        <h5>POPULAR SEARCHES</h5>
+        <h5>Popular Searches</h5>
         <p>Tote Bags, Marble Dinner Sets, Chef Decor, Tissue Box, Bowls with Chopsticks, Bread Plate, Leaf Platter,
           Nitori Side Bowl,
           Bathroom Set, Lunch Bag, Incense Difuser, Modern Cutlery Set, Vera Black Plates, House Plant Pots, Angel

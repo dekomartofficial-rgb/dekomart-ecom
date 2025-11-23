@@ -15,24 +15,25 @@
       <button class="btn btn-link text-dark p-1"><i class="pi pi-heart"></i></button>
       <button class="btn btn-link text-dark p-1" (click)="onLogin()"><i class="pi pi-user"></i></button>
       @if (isUserLogged()) {
-        <button class="btn btn-link text-dark position-relative p-1" [routerLink]="'user/user-cart'">
-          <i class="pi pi-shopping-cart"></i>
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" *ngIf="cartCount > 0">
-            {{ cartCount }}
-          </span>
-        </button>
-        <button class="btn btn-link text-dark p-1" (click)="Logout()">
-          <i class="fa-solid fa-arrow-right-from-bracket"></i>
-        </button>
+      <button class="btn btn-link text-dark position-relative p-1" [routerLink]="'user/user-cart'">
+        <i class="pi pi-shopping-cart"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          *ngIf="cartCount > 0">
+          {{ cartCount }}
+        </span>
+      </button>
+      <button class="btn btn-link text-dark p-1" (click)="Logout()">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+      </button>
       }
     </div>
 
- 
+
     <!--  Collapsible Nav + Action Buttons (Desktop) -->
     <div class="collapse navbar-collapse" id="mainNavbar">
       <ul class="navbar-nav mx-auto text-center">
         <li class="nav-item" *ngFor="let link of mainNavLinks">
-          <a class="nav-link text-dark col-md-12" style="font-weight: 600;" [routerLink]="link.path" routerLinkActive="active">
+          <a class="nav-link text-dark col-md-12" style="font-weight: 600;" [routerLink]="link.path">
             {{ link.label }}
           </a>
         </li>
@@ -44,12 +45,12 @@
         <button class="btn btn-link text-dark p-1"><i class="pi pi-heart"></i></button>
         <button class="btn btn-link text-dark p-1" (click)="onLogin()"><i class="pi pi-user"></i></button>
         @if (isUserLogged()) {
-          <button class="btn btn-link text-dark position-relative p-1" [routerLink]="'user/user-cart'">
-            <i class="pi pi-shopping-cart"></i> 
-          </button>
-          <button class="btn btn-link text-dark p-1" (click)="Logout()">
-            <i class="pi pi-sign-out"></i>
-          </button>
+        <button class="btn btn-link text-dark position-relative p-1" [routerLink]="'user/user-cart'">
+          <i class="pi pi-shopping-cart"></i>
+        </button>
+        <button class="btn btn-link text-dark p-1" (click)="Logout()">
+          <i class="pi pi-sign-out"></i>
+        </button>
         }
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AdminLogin } from '@/app/provider/class/UserClass';
@@ -20,14 +20,10 @@ export class AdminLoginComponent implements OnInit {
   isShowOtp: boolean = false
   AdminLogin: AdminLogin = new AdminLogin()
   errorMessage = '';
-  Otp1!: string
-  Otp2!: string
-  Otp3!: string
-  Otp4!: string
-  Otp5!: string
-  Otp6!: string
   OtpColumnIndex: any = [];
   OtpColumn: number = 0
+  OtpRequired: boolean = false
+  otpValues: string[] = [];
 
   constructor(private formBuilder: FormBuilder, private loader: LoaderService, private httpClient: HttpClientService, private router: Router, private commonService: CommonService) {
     this.loginForm = this.formBuilder.group({
@@ -37,6 +33,8 @@ export class AdminLoginComponent implements OnInit {
     });
 
   }
+  @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef>;
+
   ngOnInit(): void {
     this.loader.show()
     setTimeout(() => {
@@ -54,6 +52,7 @@ export class AdminLoginComponent implements OnInit {
       this.OtpColumnIndex = Array.from({ length: this.OtpColumn }, (_, i) => ({ index: i }));
     });
   }
+
 
   sendOtp(mode: string) {
     if (mode === 'SEND_OTP') {
@@ -77,12 +76,11 @@ export class AdminLoginComponent implements OnInit {
         })
       }
     } else {
-      if (this.loginForm.value.otp === undefined) {
-        this.isSubmitted = true
-        return
-      }
-      this.AdminLogin.Otp = (this.Otp1 ?? '') + (this.Otp2 ?? '') + (this.Otp3 ?? '') + (this.Otp4 ?? '') + (this.Otp5 ?? '') + (this.Otp6 ?? '');
-      this.httpClient.post<any>('admin/SaveValidateAdminOtp', { UserId: this.AdminLogin.UserId, Otp: this.AdminLogin.Otp }).subscribe((res) => {
+      this.isSubmitted = true
+      const otpArray = this.otpInputs.map(i => i.nativeElement.value);
+      const otpString = otpArray.join('');
+
+      this.httpClient.post<any>('admin/SaveValidateAdminOtp', { UserId: this.AdminLogin.UserId, Otp: otpString }).subscribe((res) => {
         if (res && res.MessageType === 2) {
           if (this.httpClient.getToken()) {
             localStorage.clear()
