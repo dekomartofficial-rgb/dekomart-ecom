@@ -33,7 +33,7 @@ class User {
           return;
         }
       } else {
-        if (result.output && result.output.p_email_template) {
+        if (result.output === 2 && result.output.p_email_template) {
           const EmailId = Number(result.output.p_email_template)
           const mail_res = await Mail.GetEmailTemplate(0, EmailId, '', '', '', output.UserId)
           if (mail_res === 'SUCCESS') {

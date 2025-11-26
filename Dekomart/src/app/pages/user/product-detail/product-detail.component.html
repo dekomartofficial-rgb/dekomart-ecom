@@ -1,82 +1,81 @@
 <app-nav-home [isShowChild]="'N'"></app-nav-home>
- <div class="container-fluid product-wrapper">
-
-  <div class="row justify-content-center">
-    <div class="col-lg-10 col-md-12">
-
-      <div class="row">
-
-        <!-- LEFT COLUMN (Main Image + Thumbnails) -->
-        <div class="col-lg-6 col-md-6">
-
-          <div class="card-box image-card">
-            <img class="main-image" [src]="product.mainImage" alt="product" />
-
-            <div class="thumb-row mt-3">
-              <img
-                *ngFor="let img of product.images"
-                [src]="img"
-                class="thumb-img"
-                [class.active-thumb]="img === product.mainImage"
-                (click)="product.mainImage = img"
-              />
-            </div>
-          </div>
+<div class="container">
+  <div class="product-wrapper">
+    <!-- Image Section -->
+    <div class="image-section">
+      <div class="main-image-container">
+        <div class="left-section col-12 col-md-12 mb-3 mb-md-0 d-flex flex-column align-items-center">
+          <img [src]="baseUrl + '/'+ ClickedImage" alt="Product Image" style="border-radius: 9px;"
+            class="main-img img-fluid" />
         </div>
-
-        <!-- RIGHT COLUMN -->
-        <div class="col-lg-6 col-md-6">
-          <div class="card-box">
-
-            <h2 class="product-title">{{ product.name }}</h2>
-
-            <div class="rating-box">
-              ⭐⭐⭐⭐☆ <span class="rating-text">(4.5 Ratings)</span>
-            </div>
-
-            <h3 class="price">AED {{ product.price }}</h3>
-
-            <!-- SIZE -->
-            <div class="info-block">
-              <h5 class="sub-title">Available Sizes</h5>
-              <div class="size-box">
-                <div class="size-item" *ngFor="let s of product.sizes">
-                  {{ s }}
-                </div>
-              </div>
-            </div>
-
-            <!-- DESCRIPTION -->
-            <div class="info-block">
-              <h5 class="sub-title">Description</h5>
-              <p class="description-text">
-                {{ product.description }}
-              </p>
-            </div>
-
-            <!-- HIGHLIGHTS -->
-            <div class="info-block">
-              <h5 class="sub-title">Highlights</h5>
-              <ul class="highlight-list">
-                <li *ngFor="let h of product.highlights">{{ h }}</li>
-              </ul>
-            </div>
-
-            <!-- BUTTONS -->
-            <div class="btn-row mt-4">
-              <button class="btn add-cart">Add to Cart</button>
-              <button class="btn buy-now">Buy Now</button>
-            </div>
-
+      </div>
+      <div class="d-flex gap-2 flex-wrap justify-content-center mt-2">
+        <div class="thumbnail-container">
+          @for (item of ClickedProductImage; track $index) {
+          <div class="thumbnail" [ngClass]="{ 'active': ClickedImage === item.ProductImagePath }">
+            <img [src]="baseUrl + '/'+ item.ProductImagePath" (click)="ClickedImage = item.ProductImagePath"
+              alt="thumb1" class="img-thumbnail" />
           </div>
+          }
         </div>
+      </div>
+    </div>
 
+    <!-- Details Section -->
+    @for (item of ClickedProduct; track $index) {
+    <div class="details-section">
+      <h1 class="product-title">{{item.ProductName}}</h1>
+      <p class="description">
+        {{item.ProductDesc}}
+      </p>
+      @if(item.Discount > 0){
+      <div class="price-container">
+        <p class="product-price" style="font-size: 34px;">₹{{item.FinalPrice | number}}</p>
+        <span class="mrp">M.R.P: <span class="original-price">₹{{item.ProductPrice}}</span></span>
+        <span class="discount" style="font-size: 34px;">({{item.Discount}}% off)</span>
+      </div>
+      } @else {
+      <p class="product-price " style="font-size: 34px; font-weight: 600;">₹{{item.FinalPrice | number}}</p>
+      }
+
+      <div class="size-selector">
+        <div class="label">Available Size</div>
+        <div class="size-options">
+          @for (item of AvailableSize; track $index) {
+          <button class="size-btn">{{item}}</button>
+          }
+        </div>
       </div>
 
+      <div class="quantity-selector">
+        <div class="label">Quantity</div>
+        <div class="quantity-wrapper my-2">
+          <div class="quantity-control d-flex align-items-center">
+            <button class="qty-btn" (click)="decrementQuantity()">−</button>
+            <div class="justify-content-center"
+              style="width: 64px; justify-content: center; text-align: center; display: flex; margin-bottom: -15px; ">
+              <p class="qty-input mx-2 quantity-controls">{{Quantity}}</p>
+            </div>
+            <button class="qty-btn" (click)="incrementQuantity()">+</button>
+          </div>
+        </div>
+        <span class="stock-notice">Last 1 left - make it yours!</span>
+      </div>
+
+      <div class="highlight-box">
+        <p class="highlight-text">
+          Celebrate the power and simplicity of the Swoosh. This warm, brushed fleece hoodie is made with some extra
+          room through the shoulder.
+        </p>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn btn-primary" (click)="AddtoCart()">ADD TO CART</button>
+        <button class="btn btn-secondary" >BUY NOW</button>
+      </div>
     </div>
+    }
+
   </div>
 </div>
-
 <app-footer-home></app-footer-home>
-
-
