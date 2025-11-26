@@ -155,10 +155,10 @@ export class LoginComponent {
 
   saveNewCustom(CustomerReg?: CustomerReg) {
     this.isSubmitted = true;
-    if (this.RegistraionForm.invalid) {
-      this.toastService.show('Error', 'Please Fill the form');
-      return
-    }
+    // if (this.RegistraionForm.invalid) {
+    //   this.toastService.show('Error', 'Please Fill the form');
+    //   return
+    // }
     this.loader.show()
     this.CustomerReg.OpsMode = 'INSERT'
     this.CustomerReg.UserId = 0

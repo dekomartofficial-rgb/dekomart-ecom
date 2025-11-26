@@ -42,7 +42,7 @@
         <div class="label">Available Size</div>
         <div class="size-options">
           @for (item of AvailableSize; track $index) {
-          <button class="size-btn">{{item}}</button>
+          <button class="size-btn" (click)="CartItem.Size = item">{{item}}</button>
           }
         </div>
       </div>
