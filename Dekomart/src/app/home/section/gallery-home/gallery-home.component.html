@@ -145,55 +145,128 @@
 
 
 <p-dialog [(visible)]="displayDialog" [modal]="true" [style]="{ width: '100%', maxWidth: '1000px' }"
-  [contentStyle]="{ padding: '0' }">
-  <div class="cart-home-page row m-0">
-    <div class="left-section col-12 col-md-8 mb-3 mb-md-0 d-flex flex-column align-items-center">
-      <img [src]="baseUrl + '/'+ ClickedImage" alt="Product Image" class="main-img img-fluid" />
-      <div class="d-flex gap-2 flex-wrap justify-content-center mt-2">
-        @for (item of ClickedProductImage; track $index) {
-        <div class="thumbnails">
-          <img [src]="baseUrl + '/'+ item.ProductImagePath" (click)="ClickedImage = item.ProductImagePath" alt="thumb1"
-            class="img-thumbnail" />
-        </div>
-        }
-      </div>
-    </div>
+  [contentStyle]="{ padding: '0' }" [closable]="true" [dismissableMask]="true">
+  <div class="cart-home-page">
     @for (item of ClickedProduct; track $index) {
-    <div class="right-section col-12 col-md-4 d-flex flex-column">
-      <div class="product-title">{{item.ProductName}}</div>
-      <div class="product-desc" style="color: black;">{{item.ProductDesc}}</div>
-      <div class="rating">★★★★☆ 30 reviews</div>
-      @if(item.Discount > 0){
-      <div class="price-container">
-        <p class="product-price">₹{{item.FinalPrice | number}}</p>
-        <span class="mrp">M.R.P: <span class="original-price">₹{{item.ProductPrice}}</span></span>
-        <span class="discount">({{item.Discount}}% off)</span>
-      </div>
-      } @else {
-      <h3 class="product-title">{{item.ProductName}}</h3>
-      <p class="product-price">₹{{item.FinalPrice | number}}</p>
-      }
-      <div class="size-options my-2">
-        @for (item of AvailableSize; track $index) {
-        <button [ngClass]="{'selected-size' : CartItem.Size === item}" (click)="CartItem.Size = item">{{item}}</button>
-        }
-      </div>
-      <div class="quantity-wrapper my-2">
-        <label class="quantity-label">Quantity</label>
-        <div class="quantity-control d-flex align-items-center">
-          <button class="qty-btn" (click)="decrementQuantity()">−</button>
-          <input type="text" class="qty-input mx-2" [value]="Quantity" readonly />
-          <button class="qty-btn" (click)="incrementQuantity()">+</button>
+    <div class="product-dialog-container">
+      <!-- Left Section - Product Images -->
+      <div class="left-section">
+        <div class="main-image-wrapper">
+          <img [src]="baseUrl + '/'+ ClickedImage" alt="Product Image" class="main-img" />
+        </div>
+        <div class="thumbnail-gallery">
+          @for (thumbItem of ClickedProductImage; track $index) {
+          <div class="thumbnail-item" [class.active]="ClickedImage === thumbItem.ProductImagePath">
+            <img [src]="baseUrl + '/'+ thumbItem.ProductImagePath" 
+                 (click)="ClickedImage = thumbItem.ProductImagePath" 
+                 alt="Thumbnail {{$index + 1}}"
+                 class="thumbnail-img" />
+          </div>
+          }
         </div>
       </div>
-      <p class="product-description">
-        Celebrate the power and simplicity of the Swoosh. This warm, brushed fleece hoodie is made with some extra
-        room
-        through the shoulder.
-      </p>
-      <div class="actions d-flex flex-column flex-md-row gap-2 mt-2">
-        <button class="add-cart flex-fill" (click)="AddtoCart()">Add to Cart</button>
-        <button class="buy-now flex-fill">Buy Now</button>
+
+      <!-- Right Section - Product Details -->
+      <div class="right-section">
+        <!-- Product Header -->
+        <div class="product-header">
+          <div class="product-title-wrapper">
+            <h2 class="product-title">{{item.ProductName}}</h2>
+            <div class="product-badge-new" *ngIf="item.ProductTag">NEW</div>
+          </div>
+          <div class="product-rating">
+            <div class="stars-container">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-value">4.5</span>
+            </div>
+            <span class="review-count">(30 reviews)</span>
+          </div>
+        </div>
+
+        <!-- Product Description -->
+        <div class="product-description-section">
+          <p class="product-desc">{{item.ProductDesc}}</p>
+        </div>
+
+        <!-- Price Section -->
+        <div class="price-section">
+          @if(item.Discount > 0){
+          <div class="price-container">
+            <div class="price-main">
+              <div class="current-price">₹{{item.FinalPrice | number}}</div>
+              <div class="discount-badge-large">{{item.Discount}}% OFF</div>
+            </div>
+            <div class="price-details">
+              <span class="mrp-label">M.R.P:</span>
+              <span class="original-price">₹{{item.ProductPrice | number}}</span>
+              <span class="savings">You save ₹{{(item.ProductPrice - item.FinalPrice) | number}}</span>
+            </div>
+          </div>
+          } @else {
+          <div class="price-container">
+            <div class="current-price">₹{{item.FinalPrice | number}}</div>
+          </div>
+          }
+        </div>
+
+        <!-- Size Selection -->
+        @if(AvailableSize && AvailableSize.length > 0) {
+        <div class="size-selection-section">
+          <label class="section-label">Select Size</label>
+          <div class="size-options">
+            @for (sizeItem of AvailableSize; track $index) {
+            <button type="button" 
+                    class="size-btn" 
+                    [class.selected-size]="CartItem.Size === sizeItem" 
+                    (click)="CartItem.Size = sizeItem">
+              {{sizeItem}}
+            </button>
+            }
+          </div>
+        </div>
+        }
+
+        <!-- Quantity Selection -->
+        <div class="quantity-selection-section">
+          <label class="section-label">Quantity</label>
+          <div class="quantity-control">
+            <button type="button" class="qty-btn minus" (click)="decrementQuantity()">−</button>
+            <input type="text" class="qty-input" [value]="Quantity" readonly />
+            <button type="button" class="qty-btn plus" (click)="incrementQuantity()">+</button>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button type="button" class="btn-primary add-cart-btn" (click)="AddtoCart()">
+            <span class="btn-icon">
+              <i class="pi pi-shopping-cart"></i>
+            </span>
+            <span class="btn-text">Add to Cart</span>
+            <span class="btn-ripple"></span>
+          </button>
+          <button type="button" class="btn-secondary buy-now-btn">
+            <span class="btn-text">Buy Now</span>
+            <span class="btn-arrow">→</span>
+            <span class="btn-ripple"></span>
+          </button>
+        </div>
+        
+        <!-- Additional Info -->
+        <div class="product-features">
+          <div class="feature-item">
+            <i class="pi pi-truck"></i>
+            <span>Free Shipping</span>
+          </div>
+          <div class="feature-item">
+            <i class="pi pi-shield"></i>
+            <span>Secure Payment</span>
+          </div>
+          <div class="feature-item">
+            <i class="pi pi-undo"></i>
+            <span>Easy Returns</span>
+          </div>
+        </div>
       </div>
     </div>
     }

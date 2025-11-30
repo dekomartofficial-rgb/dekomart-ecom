@@ -760,3 +760,7 @@ app-root {
   flex: 1; /* pushes footer to bottom */
   display: block;
 }
+:ng-deep :host .p-dialog-close-button{
+  background-color: #b44a3f !important;
+  border-radius: 23px !important;
+}

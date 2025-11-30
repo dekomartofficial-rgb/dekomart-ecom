@@ -1,28 +1,42 @@
 <!-- Top Maroon Bar -->
-<div class="w-100" style="background-color: #994037; height: 30px;"></div>
+<div class="top-maroon-bar w-100" style="background-color: #994037; height: 30px;"></div>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
   <div class="container-fluid">
 
     <!--  LOGO Always on the Left -->
     <a class="navbar-brand me-auto" routerLink="/">
-      <img src="assets/nave-bar-images/logo.png" alt="Deko Mart" class="img-fluid" style="max-height: 50px;">
+      <img src="assets/nave-bar-images/logo.png" alt="Deko Mart" class="img-fluid" style="height: 50px; max-height: 50px; width: auto;">
     </a>
 
+    <!-- Navbar Toggler (visible on mobile) -->
+    <button class="navbar-toggler custom-toggler" type="button" (click)="toggleMenu()" [attr.aria-expanded]="isMenuOpen" aria-label="Toggle navigation">
+      <span class="hamburger" [class.open]="isMenuOpen" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </button>
+
     <!--  ACTION BUTTONS (Mobile Only Left of Hamburger) -->
-    <div class="d-flex d-lg-none gap-2 align-items-center">
-      <button class="btn btn-link text-dark p-1"><i class="pi pi-search"></i></button>
-      <button class="btn btn-link text-dark p-1"><i class="pi pi-heart"></i></button>
-      <button class="btn btn-link text-dark p-1" (click)="onLogin()"><i class="pi pi-user"></i></button>
+    <div class="d-flex d-lg-none gap-1 align-items-center mobile-actions">
+      <button   type="button" aria-label="Search">
+        <i class="pi pi-search"></i>
+      </button>
+      <button  type="button" aria-label="Wishlist">
+        <i class="pi pi-heart"></i>
+      </button>
+      <button   type="button" (click)="onLogin()" aria-label="Account">
+        <i class="pi pi-user"></i>
+      </button>
       @if (isUserLogged()) {
-      <button class="btn btn-link text-dark position-relative p-1" [routerLink]="'user/user-cart'">
+      <button class="action-btn mobile-action-btn position-relative" type="button" [routerLink]="'user/user-cart'" aria-label="Cart">
         <i class="pi pi-shopping-cart"></i>
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-          *ngIf="cartCount > 0">
+        <span class="cart-badge" *ngIf="cartCount > 0">
           {{ cartCount }}
         </span>
       </button>
-      <button class="btn btn-link text-dark p-1" (click)="Logout()">
+      <button class="action-btn mobile-action-btn" type="button" (click)="Logout()" aria-label="Logout">
         <i class="fa-solid fa-arrow-right-from-bracket"></i>
       </button>
       }
@@ -30,25 +44,29 @@
 
 
     <!--  Collapsible Nav + Action Buttons (Desktop) -->
-    <div class="collapse navbar-collapse" id="mainNavbar">
-      <ul class="navbar-nav mx-auto text-center">
+    <div class="collapse navbar-collapse" id="mainNavbar" [class.show]="isMenuOpen">
+        <ul class="navbar-nav mx-auto text-center main-links" style="background-color: white;" [class.active]="isMenuOpen"
+          [ngStyle]="{ display: isMenuOpen ? 'flex' : null, 'flex-direction': isMenuOpen ? 'column' : null }">
         <li class="nav-item" *ngFor="let link of mainNavLinks">
-          <a class="nav-link text-dark col-md-12" style="font-weight: 600;" [routerLink]="link.path">
+          <a class="nav-link text-dark col-md-12" style="font-weight: 600;" [routerLink]="link.path" (click)="closeMenu()">
             {{ link.label }}
           </a>
         </li>
       </ul>
 
       <!--  Action Buttons (Desktop Only) -->
-      <div class="d-none d-lg-flex align-items-center gap-1">
-        <button class="btn btn-link text-dark p-1"><i class="pi pi-search"></i></button>
-        <button class="btn btn-link text-dark p-1"><i class="pi pi-heart"></i></button>
-        <button class="btn btn-link text-dark p-1" (click)="onLogin()"><i class="pi pi-user"></i></button>
+      <div class="d-none d-lg-flex align-items-center gap-2 desktop-actions"> 
+          <i class="pi pi-search"></i>  
+          <i class="pi pi-heart"></i>  
+          <i class="pi pi-user"></i>  
         @if (isUserLogged()) {
-        <button class="btn btn-link text-dark position-relative p-1" [routerLink]="'user/user-cart'">
+        <button class="action-btn desktop-action-btn position-relative" type="button" [routerLink]="'user/user-cart'" aria-label="Cart">
           <i class="pi pi-shopping-cart"></i>
+          <span class="cart-badge" *ngIf="cartCount > 0">
+            {{ cartCount }}
+          </span>
         </button>
-        <button class="btn btn-link text-dark p-1" (click)="Logout()">
+        <button class="action-btn desktop-action-btn" type="button" (click)="Logout()" aria-label="Logout">
           <i class="pi pi-sign-out"></i>
         </button>
         }

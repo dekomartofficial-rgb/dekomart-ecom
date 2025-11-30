@@ -117,3 +117,54 @@
     font-size: clamp(18px, 3.5vw, 32px);
   }
 }
+
+/* Extra Small Mobile Devices */
+@media (max-width: 360px) {
+  .home-page {
+    height: clamp(30vh, 45vw, 50vh);
+    padding: clamp(0.75rem, 4vw, 1.5rem);
+  }
+
+  .home-page-text {
+    max-width: 240px;
+    font-size: clamp(14px, 6.5vw, 26px);
+    margin-right: 0;
+  }
+
+  .home-page-text h1 {
+    font-size: clamp(10px, 3.5vw, 18px);
+    margin-top: clamp(3px, 1.5vw, 8px);
+  }
+
+  .order-now-btn {
+    width: clamp(120px, 32vw, 200px);
+    height: clamp(40px, 9vw, 60px);
+    font-size: clamp(12px, 2.8vw, 26px);
+    margin-top: clamp(8px, 2.5vw, 15px);
+    padding: clamp(8px, 1.8vw, 14px) clamp(20px, 3.5vw, 32px);
+  }
+}
+
+/* Very Small Mobile Devices */
+@media (max-width: 320px) {
+  .home-page {
+    height: clamp(28vh, 42vw, 48vh);
+    padding: clamp(0.5rem, 3.5vw, 1.25rem);
+  }
+
+  .home-page-text {
+    max-width: 220px;
+    font-size: clamp(13px, 6vw, 24px);
+  }
+
+  .home-page-text h1 {
+    font-size: clamp(9px, 3.2vw, 16px);
+  }
+
+  .order-now-btn {
+    width: clamp(110px, 30vw, 180px);
+    height: clamp(38px, 8.5vw, 55px);
+    font-size: clamp(11px, 2.5vw, 24px);
+    padding: clamp(7px, 1.6vw, 12px) clamp(18px, 3.2vw, 28px);
+  }
+}

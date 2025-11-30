@@ -23,6 +23,7 @@ export class NavHomeComponent implements OnInit {
   @Input({ required: true }) isShowChild: string = 'N'
   cartCount: number = 0;
   isDropdownOpen = false;
+  isMenuOpen = false;
 
   mainNavLinks = [
     { path: '/section/NEW', label: 'NEW IN' },
@@ -79,6 +80,14 @@ export class NavHomeComponent implements OnInit {
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
   }
 
   getUserProfile(id: number) {

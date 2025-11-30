@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
@@ -12,6 +12,7 @@ import { ToastService } from '@/app/provider/services/toast.service';
 import { CartItem } from '@/app/provider/class/UserClass';
 import { FormsModule } from '@angular/forms';
 import { InrPipe } from "../../../provider/pipe/inr.pipe";
+ 
 
 
 @Component({
