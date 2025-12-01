@@ -39,6 +39,9 @@ async function handleReps(response) {
                     case 'p_retid':
                         parsedColumn = 'RetunId';
                         break;
+                    case 'p_email_template':
+                        parsedColumn = 'EmailId'
+                        break;
                 }
 
                 if (parsedColumn) {

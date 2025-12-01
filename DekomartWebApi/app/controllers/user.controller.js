@@ -32,17 +32,18 @@ class User {
           res.json({ ...output, Token: token });
           return;
         }
-      } else {
-        if (result.output === 2 && result.output.p_email_template) {
+      } else { 
+        if (output.MessageType  === 2 && output.EmailId) {
           const EmailId = Number(result.output.p_email_template)
           const mail_res = await Mail.GetEmailTemplate(0, EmailId, '', '', '', output.UserId)
           if (mail_res === 'SUCCESS') {
             res.status(200).json(output)
           }
-        }
+        } 
       }
     } catch (e) {
       res.status(500).json({ err: "Error Occur" + e });
+      console.log(e)
     }
   };
   static GetUserRoleScreens = async (req, res) => {
@@ -114,7 +115,7 @@ class User {
 
     }
   }
-    static GetSectionDetails = async (req, res) => {
+  static GetSectionDetails = async (req, res) => {
     try {
 
       const request = await dataAcces.getRequest();
@@ -430,7 +431,7 @@ class User {
   static GetDynamicWindowRender = async (req, res) => {
     try {
       const request = await dataAcces.getRequest();
-      request.input("as_groupname", mssql.VarChar(50), req.query.GroupName); 
+      request.input("as_groupname", mssql.VarChar(50), req.query.GroupName);
 
       const result = await request.execute("PKG_SETTINGS$p_get_dynamic_pages");
 
@@ -439,11 +440,11 @@ class User {
       res.status(500).json({ err: "Error Occur" + e });
     }
   }
-    static GetDynamicWindowRenderValue = async (req, res) => {
+  static GetDynamicWindowRenderValue = async (req, res) => {
     try {
       const request = await dataAcces.getRequest();
-      request.input("as_group_name", mssql.VarChar(50), req.query.GroupName); 
-      request.input("as_ht_code", mssql.VarChar(50), req.query.HtCode); 
+      request.input("as_group_name", mssql.VarChar(50), req.query.GroupName);
+      request.input("as_ht_code", mssql.VarChar(50), req.query.HtCode);
 
       const result = await request.execute("PKG_SETTINGS$p_get_dynamic_page");
 

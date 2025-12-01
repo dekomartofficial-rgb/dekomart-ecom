@@ -32,8 +32,7 @@ function sendMail(to, cc, bcc, subject, text) {
       }
     ]
   };
-  console.log(mailOptions)
-  // Send email
+  console.log(mailOptions) 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       return 'ERROR';
@@ -53,7 +52,7 @@ class Mail {
       request.input("as_parm_3", mssql.VarChar(mssql.MAX), Parm3);
       request.input("ai_user_id", mssql.BigInt, UserId);
       const result = await request.execute("PKG_EMAIL$p_get_email_template");
-      const res = result.recordset[0];
+      const res = result.recordset[0]; 
       sendMail(res.toList, res.ccList, res.bccList, res.subject, res.messageBody);
 
       return 'SUCCESS'
