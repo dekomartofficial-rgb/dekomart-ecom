@@ -43,6 +43,7 @@ export class AddProductComponent implements OnInit {
   Gender: any[] = [];
   ClothingSize: any[] = [];
   Section:any[] = [];
+  OtherSection: any[] = [];
   Catogery: any[] = [];
   AddVariantsRow: any[] = [0];
   ProductImages: any[] = [];
@@ -62,6 +63,7 @@ export class AddProductComponent implements OnInit {
       ProductDesc: ['', Validators.required],
       BasePricing: ['', Validators.required],
       Section: [''],
+      OtherSection:[''],
       Catogery: ['', Validators.required],
       ProductSize: ['', Validators.required],
       Gender: ['', Validators.required],
@@ -84,17 +86,17 @@ export class AddProductComponent implements OnInit {
     this.GetRefData();
   }
   GetRefData() {
-    this.commonService.getRefGroupData('DISCOUNT_TYPE,CLOTH_SIZE,GENDER,CATEGORY,HOMESECTION').subscribe({
+    this.commonService.getRefGroupData('DISCOUNT_TYPE,CLOTH_SIZE,GENDER,CATEGORY,HOMESECTION,OTHER').subscribe({
       next: (res: any[]) => {
         this.DiscountType = res.filter(item => item.groupName === 'DISCOUNT_TYPE');
         this.ClothingSize = res.filter(item => item.groupName === 'CLOTH_SIZE');
         this.Gender = res.filter(item => item.groupName === 'GENDER');
         this.Catogery = res.filter(item => item.groupName === 'CATEGORY');
         this.Section = res.filter(item => item.groupName === 'HOMESECTION')
+        this.OtherSection = res.filter(item => item.groupName === 'OTHER')
       }
     });
-
-    console.log(this.Section)
+ 
   }
 
   getProductImage(ProductId: number) {
@@ -152,8 +154,7 @@ export class AddProductComponent implements OnInit {
       return false
     }
   }
-
-
+ 
   saveProductDetails() {
     this.ProductDetails.OpsMode = 'INSERT';
     this.saveProduct();
@@ -177,6 +178,7 @@ export class AddProductComponent implements OnInit {
       this.ProductDetails.DiscountType = this.Product[0].DiscountType;
       this.ProductDetails.Catogery = this.Product[0].Category;
       this.ProductDetails.Section = this.Product[0].Section
+      this.ProductDetails.OtherSection = this.Product[0].OtherSection
       this.ProductVariants = [];
       this.ProductVariants.push(...this.Variants)
       this.loader.hide()

@@ -143,13 +143,23 @@
                                             </p-dropdown>
                                         </div>
                                     </div>
-                                     <div class="col-md-3">
+                                    <div class="col-md-3">
                                         <h5>Section</h5>
                                         <div class="card flex justify-center">
                                             <p-dropdown [options]="Section" optionLabel="descritpion"
                                                 [(ngModel)]="ProductDetails.Section" placeholder="Select Section"
                                                 #SectionModel="ngModel" [style]="{'width':'100%'}" optionValue="code"
                                                 name="Section" class="discount-type-dropdown">
+                                            </p-dropdown>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h5>Other Navbar Section</h5>
+                                        <div class="card flex justify-center">
+                                            <p-dropdown [options]="OtherSection" optionLabel="descritpion"
+                                                [(ngModel)]="ProductDetails.OtherSection" placeholder="Select Other Section"
+                                                #OtherSectionModel="ngModel" [style]="{'width':'100%'}" optionValue="code"
+                                                name="OtherSection" class="discount-type-dropdown">
                                             </p-dropdown>
                                         </div>
                                     </div>

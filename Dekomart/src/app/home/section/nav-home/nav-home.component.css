@@ -1,556 +1,140 @@
-/* Top Maroon Bar - Responsive */
-.top-maroon-bar,
-.w-100[style*="background-color: #994037"] {
-  width: 100% !important;
-  height: clamp(20px, 3vw, 30px) !important;
-  background-color: #994037 !important;
-  overflow: hidden;
-  display: block;
-  margin: 0;
-  padding: 0;
+/* Top Bar */
+.top-maroon-bar {
+  width: 100%;
+  height: 30px;
+  background-color: #994037;
 }
 
 /* Navbar */
 .navbar {
-  background: var(--white);
+  background: white;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  padding: clamp(0.5rem, 1.2vw, 0.6rem) clamp(0.75rem, 2vw, 1rem);
-  width: 100%;
-  overflow-x: hidden;
+  padding: 0.6rem 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Container Fluid - Prevent Overflow */
-.navbar .container-fluid {
-  width: 100%;
-  max-width: 100%;
-  padding-left: clamp(0.5rem, 1.5vw, 1rem);
-  padding-right: clamp(0.5rem, 1.5vw, 1rem);
-  overflow-x: hidden;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
+.navbar-brand img {
+  height: 50px;
+  width: auto;
+}
+/* Default hidden menu */
+.collapse.navbar-collapse {
+  display: none;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transition: all 0.3s ease;
 }
 
-/* Logo - Fixed Size (Never Changes) */
-.navbar-brand img,
-.navbar-brand img.img-fluid {
-  height: 50px !important;
-  width: auto !important;
-  max-height: 50px !important;
-  max-width: none !important;
-  object-fit: contain;
-  flex-shrink: 0;
+/* Show when Angular adds .show */
+.collapse.navbar-collapse.show {
+  display: block;
+  max-height: 70vh;
+  opacity: 1;
+  visibility: visible;
 }
 
-/* Main Navigation Links */
+/* Menu list for mobile */
 .main-links {
   display: flex;
-  gap: 2rem;
-  list-style: none;
-  flex-wrap: nowrap;
-  white-space: nowrap;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.5rem;
 }
 
 .main-links a {
-  color: var(--dark);
-  text-decoration: none;
   text-transform: uppercase;
   font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  padding: 0.5rem 1.5rem;
-  position: relative;
-  transition: color 0.2s;
-  white-space: nowrap;
-  flex-shrink: 0;
+  padding: 10px;
 }
 
-/* Category Navigation */
+/* Desktop Menu */
+@media (min-width: 992px) {
+  .collapse.navbar-collapse {
+    display: flex !important;
+    max-height: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .main-links {
+    flex-direction: row;
+    gap: 2rem;
+    padding: 0;
+  }
+}
+
+/* ---------- Category Bar ---------- */
 .category-nav {
   display: flex;
   justify-content: center;
-  gap: 4rem;
+  overflow-x: visible;
   padding: 0.6rem 0;
-  margin: 0 auto;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  width: 100%;
-  max-width: 100%;
-  flex-wrap: nowrap;
-  white-space: nowrap;
-}
-
-.category-nav::-webkit-scrollbar {
-  display: none;
-}
-
-/* Prevent horizontal overflow on category nav */
-.category-nav {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  gap: 3rem;
+  flex-wrap: wrap;
 }
 
 .category-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
   min-width: 70px;
-  margin: 0 10px;
-  flex-shrink: 0;
-  white-space: nowrap;
-}
-
-.category-link {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  color: #555;
-  transition: all 0.2s;
-}
-
-.custom-toggler {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 40px;
-  padding: 10px;
-  padding-right: 10px;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  background: rgba(255, 255, 255, 0.95);
-}
-
-.custom-toggler:focus {
-  /* remove default browser outline/ring on mouse click */
-  outline: none !important;
-  box-shadow: none !important;
-  border-color: transparent;
-}
-
-.custom-toggler:focus-visible {
-  /* keep an accessible focus ring for keyboard users */
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(153, 64, 55, 0.12);
-  border-color: rgba(153, 64, 55, 0.18);
-}
-
-.hamburger {
-  display: inline-block;
-  width: 26px;
-  height: 18px;
-  position: relative;
-}
-.hamburger span {
-  position: absolute;
-  left: 0;
-  height: 2px;
-  width: 100%;
-  background: #6b3b36;
-  border: none;
-  -webkit-tap-highlight-color: transparent;
-  appearance: none;
-  border-radius: 2px;
-  transition: transform 220ms ease, opacity 180ms ease, top 220ms ease;
-}
-.hamburger span:nth-child(1) {
-  top: 0;
-}
-.hamburger span:nth-child(2) {
-  top: 8px;
-}
-.hamburger span:nth-child(3) {
-  top: 16px;
-}
-
-.hamburger.open span:nth-child(1) {
-  border: none;
-  box-shadow: 0 4px 14px rgba(153,64,55,0.03);
-}
-.hamburger.open span:nth-child(2) {
-  opacity: 0;
-  transform: translateX(-6px);
-}
-.hamburger.open span:nth-child(3) {
-  transform: rotate(-45deg);
-  top: 8px;
-}
-.category-link:hover {
-  color: var(--black);
-  transform: translateY(-2px);
+  flex: 0 1 auto;
 }
 
 .category-image {
-  width: clamp(30px, 6vw, 55px);
-  height: clamp(30px, 6vw, 55px);
+  width: 55px;
+  height: 55px;
   object-fit: contain;
-  margin-bottom: 0.5rem;
-  transition: transform 0.2s;
-}
-
-.category-link:hover .category-image {
-  transform: scale(1.1);
 }
 
 .category-label {
-  font-size: 0.8rem;
   text-align: center;
   white-space: nowrap;
   color: #994037;
 }
-
-/* Responsive Styles */
-@media (max-width: 990px) {
-  /* Mobile/Tablet: show dropdown menu with toggle */
-  .main-links {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--white);
-    padding: 0.5rem 0.75rem;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    max-height: 52vh;
-    overflow-y: auto;
-    gap: 0.4rem;
-    z-index: 1100;
-    flex-wrap: nowrap;
-  }
-  .main-links.active {
-    display: flex;
-  }
-  .main-links a {
-    padding: 0.45rem 0.75rem;
-    text-align: left;
-    font-size: 13px;
-    letter-spacing: 0.6px;
-    color: var(--dark);
-    background: transparent;
-    border-radius: 6px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .main-links a:hover {
-    background: rgba(0, 0, 0, 0.03);
-    transform: none;
-  }
-  /* Logo stays same size */
-  .navbar-brand img {
-    height: 50px;
-    max-height: 50px;
-    max-width: none;
-  }
+/* Category Bar Container */
+.category-wrapper {
+  width: 100%; 
+  padding: 10px 0;
 }
 
-@media (max-width: 992px) {
-  .navbar .container-fluid {
-    padding-left: clamp(0.5rem, 1.2vw, 0.75rem);
-    padding-right: clamp(0.5rem, 1.2vw, 0.75rem);
-  }
+/* Category Row */
+.category-nav {
+  display: flex;
+  justify-content: center;
+  gap: 3rem; /* space between icons */
+  flex-wrap: nowrap;
+  overflow-x: auto; /* allows scrolling on small screens */
+  padding: 0.5rem 1rem;
 }
 
-@media (max-width: 768px) {
-  .navbar {
-    padding: clamp(0.5rem, 1vw, 0.6rem) clamp(0.5rem, 1.5vw, 0.75rem);
-  }
-
-  .navbar .container-fluid {
-    padding-left: clamp(0.5rem, 1vw, 0.75rem);
-    padding-right: clamp(0.5rem, 1vw, 0.75rem);
-  }
-
-  .category-nav {
-    justify-content: flex-start;
-    padding-left: clamp(0.5rem, 1.5vw, 1rem);
-    padding-right: clamp(0.5rem, 1.5vw, 1rem);
-    gap: clamp(1rem, 3vw, 1.5rem);
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .category-item {
-    flex-shrink: 0;
-    min-width: clamp(60px, 15vw, 80px);
-  }
-
-  /* Logo stays same size */
-  .navbar-brand img {
-    height: 50px;
-    max-height: 50px;
-    max-width: none;
-  }
+/* Single Item */
+.category-item {
+  text-align: center;
+  min-width: 70px;
 }
 
-@media (max-width: 576px) {
-  .navbar {
-    padding: clamp(0.4rem, 0.9vw, 0.5rem) clamp(0.4rem, 1.2vw, 0.6rem);
-  }
-
-  .navbar .container-fluid {
-    padding-left: clamp(0.4rem, 0.9vw, 0.6rem);
-    padding-right: clamp(0.4rem, 0.9vw, 0.6rem);
-  }
-
-  .category-nav {
-    padding-left: clamp(0.4rem, 1.2vw, 0.75rem);
-    padding-right: clamp(0.4rem, 1.2vw, 0.75rem);
-    gap: clamp(0.75rem, 2.5vw, 1.25rem);
-  }
-
-  .category-item {
-    min-width: clamp(55px, 14vw, 70px);
-    margin: 0 clamp(3px, 1vw, 5px);
-  }
-
-  .category-image {
-    width: clamp(40px, 10vw, 50px);
-    height: clamp(40px, 10vw, 50px);
-  }
-
-  .category-label {
-    font-size: clamp(11px, 2.5vw, 13px);
-  }
+/* Icon */
+.category-image {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
 }
 
-@media (max-width: 480px) {
-  .navbar {
-    padding: clamp(0.4rem, 0.8vw, 0.5rem) clamp(0.35rem, 1vw, 0.5rem);
-  }
-
-  .navbar .container-fluid {
-    padding-left: clamp(0.35rem, 0.8vw, 0.5rem);
-    padding-right: clamp(0.35rem, 0.8vw, 0.5rem);
-  }
-
-  .category-nav {
-    padding-left: clamp(0.35rem, 1vw, 0.6rem);
-    padding-right: clamp(0.35rem, 1vw, 0.6rem);
-    gap: clamp(0.5rem, 2vw, 0.9rem);
-    padding-top: clamp(0.4rem, 1.2vw, 0.55rem);
-    padding-bottom: clamp(0.4rem, 1.2vw, 0.55rem);
-  }
-
-  .category-item {
-    min-width: clamp(50px, 12vw, 65px);
-    margin: 0 clamp(2px, 0.8vw, 4px);
-  }
-
-  .category-image {
-    width: clamp(35px, 8vw, 45px);
-    height: clamp(35px, 8vw, 45px);
-  }
-
-  .category-label {
-    font-size: clamp(10px, 2vw, 12px);
-  }
+/* Label */
+.category-label {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #994037; /* same text color as your image */
+  white-space: nowrap;
 }
 
-@media (max-width: 400px) {
-  .navbar {
-    padding: clamp(0.35rem, 0.7vw, 0.45rem) clamp(0.3rem, 0.9vw, 0.45rem);
-  }
-
-  .navbar .container-fluid {
-    padding-left: clamp(0.3rem, 0.7vw, 0.45rem);
-    padding-right: clamp(0.3rem, 0.7vw, 0.45rem);
-  }
-
-  /* Logo stays same size */
-  .navbar-brand img {
-    height: 50px;
-    max-height: 50px;
-    max-width: none;
-  }
-
-  .category-nav {
-    gap: clamp(0.4rem, 1.8vw, 0.8rem);
-    padding-left: clamp(0.3rem, 0.9vw, 0.5rem);
-    padding-right: clamp(0.3rem, 0.9vw, 0.5rem);
-    padding-top: clamp(0.35rem, 1vw, 0.5rem);
-    padding-bottom: clamp(0.35rem, 1vw, 0.5rem);
-  }
-
-  .category-item {
-    min-width: clamp(45px, 11vw, 60px);
-    margin: 0 clamp(2px, 0.7vw, 3px);
-  }
-
-  .category-image {
-    width: clamp(30px, 7vw, 40px);
-    height: clamp(30px, 7vw, 40px);
-  }
-
-  .category-label {
-    font-size: clamp(9px, 1.8vw, 11px);
-  }
-}
-
-/* Extra Small Mobile Devices */
-@media (max-width: 360px) {
-  .navbar {
-    padding: clamp(0.35rem, 0.7vw, 0.45rem) clamp(0.25rem, 0.8vw, 0.4rem);
-  }
-
-  .navbar .container-fluid {
-    padding-left: clamp(0.25rem, 0.7vw, 0.4rem);
-    padding-right: clamp(0.25rem, 0.7vw, 0.4rem);
-  }
-
-  /* Logo stays same size */
-  .navbar-brand img {
-    height: 50px;
-    max-height: 50px;
-    max-width: none;
-  }
-
-  .category-nav {
-    gap: clamp(0.35rem, 1.6vw, 0.7rem);
-    padding-left: clamp(0.25rem, 0.8vw, 0.45rem);
-    padding-right: clamp(0.25rem, 0.8vw, 0.45rem);
-    padding-top: clamp(0.3rem, 1vw, 0.45rem);
-    padding-bottom: clamp(0.3rem, 1vw, 0.45rem);
-  }
-
-  .category-item {
-    min-width: clamp(42px, 10vw, 58px);
-    margin: 0 clamp(1px, 0.6vw, 2px);
-  }
-
-  .category-image {
-    width: clamp(28px, 6.5vw, 38px);
-    height: clamp(28px, 6.5vw, 38px);
-    margin-bottom: clamp(0.25rem, 0.9vw, 0.35rem);
-  }
-
-  .category-label {
-    font-size: clamp(8px, 1.6vw, 10px);
-  }
-
-  .main-links a {
-    padding: clamp(0.35rem, 1vw, 0.5rem) clamp(0.5rem, 1.5vw, 0.7rem);
-    font-size: clamp(11px, 2.2vw, 12px);
-  }
-}
-
-/* Landscape Mobile Orientation */
-@media (max-height: 500px) and (orientation: landscape) {
-  .w-100[style*="background-color: #994037"] {
-    height: clamp(18px, 2.5vw, 25px) !important;
-  }
-
-  .navbar {
-    padding: clamp(0.35rem, 0.9vw, 0.5rem) clamp(0.4rem, 1.2vw, 0.8rem);
-  }
-
-  .navbar .container-fluid {
-    padding-left: clamp(0.4rem, 1.2vw, 0.8rem);
-    padding-right: clamp(0.4rem, 1.2vw, 0.8rem);
-  }
-
-  /* Logo stays same size */
-  .navbar-brand img {
-    height: 50px;
-    max-height: 50px;
-    max-width: none;
-  }
-
-  .category-nav {
-    padding-top: clamp(0.25rem, 0.8vw, 0.4rem);
-    padding-bottom: clamp(0.25rem, 0.8vw, 0.4rem);
-    gap: clamp(0.5rem, 1.5vw, 1rem);
-  }
-
-  .category-image {
-    width: clamp(28px, 4.5vw, 45px);
-    height: clamp(28px, 4.5vw, 45px);
-  }
-
-  .category-label {
-    font-size: clamp(9px, 1.5vw, 12px);
-  }
-}
-
-@media (min-width: 991px) {
-  /* Desktop: hide toggler, show menu normally without dropdown */
-  .custom-toggler {
-    display: none !important;
-  }
-  
-  .main-links {
-    display: flex !important;
-    flex-direction: row !important;
-    position: static !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    background: transparent !important;
-    padding: 0 !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    max-height: none !important;
-    overflow: visible !important;
-    gap: clamp(0.75rem, 2vw, 1.75rem) !important;
-    z-index: auto !important;
-    flex-wrap: nowrap !important;
-    justify-content: center;
-    white-space: nowrap !important;
-  }
-  
-  .main-links a {
-    padding: clamp(0.4rem, 1vw, 0.5rem) clamp(0.75rem, 1.8vw, 1.25rem) !important;
-    text-align: center !important;
-    font-size: clamp(12px, 1.2vw, 14px) !important;
-    letter-spacing: 0.5px !important;
-    text-transform: uppercase !important;
-    font-weight: 500 !important;
-    background: transparent !important;
-    border-radius: 0 !important;
-    white-space: nowrap !important;
-    flex-shrink: 0 !important;
-  }
-  
-  .main-links a:hover {
-    background: transparent !important;
-    transform: none !important;
-  }
-
-  .category-nav {
-    flex-wrap: nowrap !important;
-    justify-content: center;
-    gap: clamp(1.5rem, 3vw, 3.5rem);
-    padding: clamp(0.75rem, 1.5vw, 1rem) 0;
-    overflow-x: auto;
-  }
-
-  .category-item {
-    flex: 0 1 auto;
-    min-width: clamp(80px, 10vw, 120px);
-  }
-
-  .category-image {
-    width: clamp(50px, 5vw, 60px);
-    height: clamp(50px, 5vw, 60px);
-  }
-
-  .category-label {
-    font-size: clamp(12px, 1.2vw, 14px);
-  }
-}
-
-/* Prevent horizontal overflow globally for nav */
-@media (max-width: 1200px) {
-  .navbar,
-  .category-nav {
-    max-width: 100vw;
-    overflow-x: hidden;
-  }
+/* Remove blue underline / highlight */
+.category-link {
+  text-decoration: none;
+  color: inherit;
 }

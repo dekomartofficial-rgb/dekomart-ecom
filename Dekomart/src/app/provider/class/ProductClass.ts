@@ -11,6 +11,7 @@ export class ProductDetails {
     DiscountType: string = '';
     Catogery: string = '';
     Section: string = ''
+    OtherSection: string = ''
     OpsMode: string = '';
 }
 
