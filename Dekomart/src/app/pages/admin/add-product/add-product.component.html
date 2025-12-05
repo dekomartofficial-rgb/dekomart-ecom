@@ -31,7 +31,7 @@
                         <div class="col-md-12 d-flex justify-content-between">
                             <h6>General Information</h6>
                             @if (this.ProductDetails.ProductNo) {
-                            <p class="p-div product-no" >Product
+                            <p class="p-div product-no">Product
                                 No : {{this.ProductDetails.ProductNo}}</p>
                             }
                         </div>
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 d-flex product-size-gender-div">
+                        <!-- <div class="col-md-12 d-flex product-size-gender-div">
                             <div class="col-md-6 product-size">
                                 <h5>Size</h5>
                                 <p class="p-div" style="font-size: 11px; color: #716a6a; margin: -5px 0px 0px 0px;">Pick
@@ -89,7 +89,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-12 d-flex gap-md-2 pt-2">
                             <div class="col-md-12 price-and-stock">
                                 <div class="price-and-stock-card">
@@ -157,11 +157,62 @@
                                         <h5>Other Navbar Section</h5>
                                         <div class="card flex justify-center">
                                             <p-dropdown [options]="OtherSection" optionLabel="descritpion"
-                                                [(ngModel)]="ProductDetails.OtherSection" placeholder="Select Other Section"
-                                                #OtherSectionModel="ngModel" [style]="{'width':'100%'}" optionValue="code"
-                                                name="OtherSection" class="discount-type-dropdown">
+                                                [(ngModel)]="ProductDetails.OtherSection"
+                                                placeholder="Select Other Section" #OtherSectionModel="ngModel"
+                                                [style]="{'width':'100%'}" optionValue="code" name="OtherSection"
+                                                class="discount-type-dropdown">
                                             </p-dropdown>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="price-and-stock-card pt-5"> 
+                                    <div class="col-md-12 add-product-details d-flex gap-2 align-items-center justify-content-between">
+                                        <h2>Terms & Condition</h2>
+                                        <button class="btn custom-button save-button" type="button"
+                                            (click)="addConditonRow()">
+                                            <i class="fa-solid fa-plus me-2"></i>Add Row
+                                        </button>
+                                    </div>
+                                    <div class="col-md-12 gap-2 pt-2">
+                                        <div class="col-md-12 gap-2 d-flex ">
+                                            <div class="col-md-3">
+                                                <h5>Terms<span class="required">*</span></h5>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <h5>Condition </h5>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h5>
+                                            </div>
+                                        </div>
+                                        @for (item of TermAndConditionArray; track $index) {
+                                        <div class="col-md-12 gap-2 pt-2 d-flex">
+                                            <div class="col-md-3">
+                                                <div class="card flex justify-center">
+                                                    <p-dropdown [options]="TermsAndCondition" optionLabel="descritpion"
+                                                        [(ngModel)]="item.TermCode"
+                                                        placeholder="Select Terms & Condition" #TermCode="ngModel"
+                                                        [style]="{'width':'100%'}" name="TermCode_{{$index}}"
+                                                        optionValue="code" class="discount-type-dropdown">
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card flex justify-center">
+                                                    <textarea rows="2" cols="30" pTextarea [autoResize]="true"
+                                                        name="TermValue_{{$index}}" [(ngModel)]="item.TermValue"
+                                                        placeholder="Enter the Condition" #TermValue="ngModel"
+                                                        required></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h5>
+                                                <div class="flex align-items-center d-flex justify-content-center">
+                                                    <i class="fa-solid fa-x" (click)="RemoveTerms($index)"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -189,7 +240,8 @@
                         <div class="image-header-2 d-flex flex-wrap gap-4 col-md-12">
                             @for (item of imagePreviews; track $index) {
                             <div class="image-container-2">
-                                <img [src]="item" alt="Gallery Image" (click)="changeImage($index)" [name]="item.docName" alt="Image" />
+                                <img [src]="item" alt="Gallery Image" (click)="changeImage($index)"
+                                    [name]="item.docName" alt="Image" />
                                 <div class="image-overlay" *ngIf="ClickedImage === $index">
                                     <button type="button" class="delete-button">Delete</button>
                                 </div>
@@ -217,6 +269,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- <div class="col-md-12 product-varient mt-2" style="min-height: 37vh;">
                 <div class="col-md-12 p-3 d-flex justify-content-between">
                     <h2>Product Varient</h2>

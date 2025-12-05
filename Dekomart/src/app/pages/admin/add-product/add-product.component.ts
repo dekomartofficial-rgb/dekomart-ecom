@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TextareaModule } from 'primeng/textarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { ProductDetails, ProductVairant } from '@/app/provider/class/ProductClass';
+import { ProductDetails, ProductVairant, ProductTermAndCondition } from '@/app/provider/class/ProductClass';
 import { DropdownModule } from 'primeng/dropdown';
 import { CommonService } from '@/app/provider/services/common.service';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -37,12 +37,15 @@ export class AddProductComponent implements OnInit {
   ProductDetails: ProductDetails = new ProductDetails();
   Product: any[] = [];
   Variants: any[] = [];
+  Terms: any[] = [];
   ProductVariants: ProductVairant[] = new Array<ProductVairant>();
+  TermAndConditionArray: ProductTermAndCondition[] = new Array<ProductTermAndCondition>();
   ClickedImage: number = 0;
   DiscountType: any[] = [];
   Gender: any[] = [];
   ClothingSize: any[] = [];
-  Section:any[] = [];
+  Section: any[] = [];
+  TermsAndCondition: any[] = [];
   OtherSection: any[] = [];
   Catogery: any[] = [];
   AddVariantsRow: any[] = [0];
@@ -54,7 +57,7 @@ export class AddProductComponent implements OnInit {
   selectedGender: any[] = [];
   productForm: FormGroup;
   SizeArray: any[] = []
-  DocumentId: number = 0 
+  DocumentId: number = 0
 
   constructor(private commonService: CommonService, private _messageservice: ToastService, private loader: LoaderService, private httpService: HttpClientService, private _router: Router,
     private fb: FormBuilder, private http: HttpClient, private ConfirmationService: ConfirmationDialogService) {
@@ -63,22 +66,24 @@ export class AddProductComponent implements OnInit {
       ProductDesc: ['', Validators.required],
       BasePricing: ['', Validators.required],
       Section: [''],
-      OtherSection:[''],
+      OtherSection: [''],
       Catogery: ['', Validators.required],
-      ProductSize: ['', Validators.required],
-      Gender: ['', Validators.required],
+      ProductSize: [''],
+      Gender: [''],
       Discount: ['', Validators.required],
       DiscountTypeModel: [''],
       description: ['', Validators.required],
       Stock: [''],
       Price: ['', Validators.required],
       variants: this.fb.array([]),
+      TermAndCondition: this.fb.array([])
     });
 
   }
   ngOnInit() {
     // this.addProductVariantRow();
-    this.ProductDetails.ProductID = history.state['productId']; 
+    this.addConditonRow()
+    this.ProductDetails.ProductID = history.state['productId'];
     if (this.ProductDetails.ProductID ?? this.ProductDetails.ProductID > 0) {
       this.getProductVariantDetails(this.ProductDetails.ProductID);
       this.getProductImage(this.ProductDetails.ProductID)
@@ -86,7 +91,7 @@ export class AddProductComponent implements OnInit {
     this.GetRefData();
   }
   GetRefData() {
-    this.commonService.getRefGroupData('DISCOUNT_TYPE,CLOTH_SIZE,GENDER,CATEGORY,HOMESECTION,OTHER').subscribe({
+    this.commonService.getRefGroupData('DISCOUNT_TYPE,CLOTH_SIZE,GENDER,CATEGORY,HOMESECTION,OTHER,PRODUCTTERMSANDCONDITION').subscribe({
       next: (res: any[]) => {
         this.DiscountType = res.filter(item => item.groupName === 'DISCOUNT_TYPE');
         this.ClothingSize = res.filter(item => item.groupName === 'CLOTH_SIZE');
@@ -94,9 +99,10 @@ export class AddProductComponent implements OnInit {
         this.Catogery = res.filter(item => item.groupName === 'CATEGORY');
         this.Section = res.filter(item => item.groupName === 'HOMESECTION')
         this.OtherSection = res.filter(item => item.groupName === 'OTHER')
+        this.TermsAndCondition = res.filter(item => item.groupName === 'PRODUCTTERMSANDCONDITION')
       }
     });
- 
+
   }
 
   getProductImage(ProductId: number) {
@@ -118,6 +124,16 @@ export class AddProductComponent implements OnInit {
     this.ProductVariants.push(newVariant);
   }
 
+  addConditonRow() {
+    let Condition = new ProductTermAndCondition();
+    Condition.Sno = this.TermAndConditionArray.length + 1;
+    this.TermAndConditionArray.push(Condition)
+  }
+  RemoveTerms(index: number) {
+    this.loader.show()
+    this.TermAndConditionArray.splice(index, 1);
+    this.loader.hide()
+  }
   removeProductVaiantRow(index: number) {
     this.loader.show()
     this.ProductVariants.splice(index, 1);
@@ -154,9 +170,9 @@ export class AddProductComponent implements OnInit {
       return false
     }
   }
- 
+
   saveProductDetails() {
-    this.ProductDetails.OpsMode = 'INSERT';
+    this.ProductDetails.OpsMode = this.ProductDetails.ProductID ? 'UPDATE' : 'INSERT';
     this.saveProduct();
   }
 
@@ -165,6 +181,7 @@ export class AddProductComponent implements OnInit {
     this.httpService.get('admin/GetProductAndVariant', { ProductId: productId }).subscribe((res: any) => {
       this.Product = res[0];
       this.Variants = res[1];
+      this.Terms = res[2]
       this.ProductDetails.ProductID = this.Product[0].ProductId;
       this.ProductDetails.ProductName = this.Product[0].ProductName;
       this.ProductDetails.ProductNo = this.Product[0].ProductNo;
@@ -181,6 +198,8 @@ export class AddProductComponent implements OnInit {
       this.ProductDetails.OtherSection = this.Product[0].OtherSection
       this.ProductVariants = [];
       this.ProductVariants.push(...this.Variants)
+      this.TermAndConditionArray = [];
+      this.TermAndConditionArray.push(...this.Terms)
       this.loader.hide()
     });
 
@@ -235,11 +254,13 @@ export class AddProductComponent implements OnInit {
     }
     fd.append('ProductDetails', JSON.stringify(this.ProductDetails));
     fd.append('ProductVariants', JSON.stringify(this.ProductVariants));
+    fd.append('ProductTermAndCondition', JSON.stringify(this.TermAndConditionArray));
+
 
     this.httpService.post('admin/SaveProductHeader', fd).subscribe((res: any) => {
       if (res.MessageType === 2) {
         this._messageservice.show('Success', res.Message);
-        this.ProductDetails.ProductID = res.RetunId 
+        this.ProductDetails.ProductID = res.RetunId
         this._router.navigate(['/admin/product-details']);
         this.loader.hide()
       } else {
@@ -252,6 +273,7 @@ export class AddProductComponent implements OnInit {
   resetProdct() {
     this.ProductDetails = new ProductDetails;
     this.ProductVariants = new Array<ProductVairant>();
+    this.TermAndConditionArray = new Array<ProductTermAndCondition>();
     this.ProductImages = []
   }
   deleteProduct() {

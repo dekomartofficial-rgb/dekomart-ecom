@@ -22,3 +22,9 @@ export class ProductVairant {
     Price: number = 0;
     Stock: number = 0;
 }
+
+export class ProductTermAndCondition {
+    TermCode: string = '';
+    TermValue: string = '';
+    Sno: number = 0;
+}

@@ -39,7 +39,7 @@ export class NavHomeComponent implements OnInit {
   categories = [
     { path: '/section/DECOR', label: 'Decor', image: 'decor.png' },
     { path: '/section/VASES', label: 'Vase', image: 'vase.png' },
-    { path: '/section/CANDLEHOLDER', label: 'Vase', image: 'Candle holder.png' },
+    { path: '/section/CANDLEHOLDER', label: 'Candle Holder', image: 'Candle holder.png' },
     { path: '/section/WALLDECOR', label: 'Wall Decor', image: 'wall-decor.png' },
     { path: '/section/MIRROR', label: 'Mirror', image: 'mirror.png' },
     { path: '/section/PLATTER', label: 'Platter', image: 'platter.png' },

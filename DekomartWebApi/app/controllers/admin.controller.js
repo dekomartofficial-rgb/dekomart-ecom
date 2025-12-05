@@ -149,17 +149,23 @@ class Admin {
     }
     static SaveProductHeader = async (req, res) => {
         try {
-            console.log(req)
             const request = await dataAcces.getRequest();
-            const VariantTableType = new mssql.Table('TT_PRODUCT_VARIENT'); // match SQL Server type
+            const VariantTableType = new mssql.Table('TT_PRODUCT_VARIENT');
+            const TermsAndConditionType = new mssql.Table('TT_PRODUCT_TERMSANDCONDITION')
+
             const ProdctDetails = JSON.parse(req.body.ProductDetails || '{}');
             const ProductVarient = JSON.parse(req.body.ProductVariants || '[]');
+            const ProductTermAndCondition = JSON.parse(req.body.ProductTermAndCondition || '[]')
 
             VariantTableType.columns.add('VARIENT_ID', mssql.BigInt);
             VariantTableType.columns.add('COLOR', mssql.VarChar(10));
             VariantTableType.columns.add('SIZE', mssql.VarChar(20));
             VariantTableType.columns.add('PRICE', mssql.BigInt);
             VariantTableType.columns.add('STOCK_COUNT', mssql.BigInt);
+
+            TermsAndConditionType.columns.add('TERMSCODE', mssql.VarChar(20));
+            TermsAndConditionType.columns.add('TERMSVALUE', mssql.NVarChar(mssql.MAX));
+            TermsAndConditionType.columns.add('SNO', mssql.BigInt);
 
             if (ProductVarient.length > 0) {
                 ProductVarient.forEach(variant => {
@@ -172,26 +178,37 @@ class Admin {
                     );
                 });
             }
+
+            if (ProductTermAndCondition.length > 0) {
+                ProductTermAndCondition.forEach(termCom => {
+                    TermsAndConditionType.rows.add(
+                        termCom.TermCode,
+                        termCom.TermValue,
+                        termCom.Sno
+                    );
+                })
+            }
             //add parameter and table type to procedure
             request.input('ai_product_id', mssql.BigInt, ProdctDetails.ProductID);
             request.input('ai_company_id', mssql.BigInt, 1);
             request.input('as_product_name', mssql.VarChar(150), ProdctDetails.ProductName);
             request.input('as_product_desc', mssql.VarChar(mssql.MAX), ProdctDetails.ProductDesc);
-            request.input('as_product_size', mssql.VarChar(200), ProdctDetails.ProductSize);
-            request.input('as_genders', mssql.VarChar(200), ProdctDetails.Gender);
+            request.input('as_product_size', mssql.VarChar(200), 'NO');
+            request.input('as_genders', mssql.VarChar(200), 'NO');
             request.input('an_base_price', mssql.BigInt, ProdctDetails.BasePricing);
             request.input('an_total_stock', mssql.BigInt, ProdctDetails.Stock);
             request.input('an_discount', mssql.BigInt, ProdctDetails.Discount);
             request.input('as_discount_type', mssql.VarChar(200), ProdctDetails.DiscountType);
             request.input('as_category', mssql.VarChar(200), ProdctDetails.Catogery);
             request.input('as_section', mssql.VarChar(20), ProdctDetails.Section);
-            request.input('as_othersection', mssql.VarChar(20), ProdctDetails.OtherSection); 
+            request.input('as_othersection', mssql.VarChar(20), ProdctDetails.OtherSection);
             request.input('tt_product_varient', VariantTableType);
+            request.input('tt_prodct_termsandconditions', TermsAndConditionType);
             request.input('as_ops_mode', mssql.VarChar(15), ProdctDetails.OpsMode);
             request.input('ai_user_id', mssql.BigInt, req.LoggedUserId);
             request.output("p_retmsg", mssql.VarChar(500));
             request.output("p_rettype", mssql.TinyInt);
-            request.output("p_retid", mssql.Int);
+            request.output("p_retid", mssql.BigInt);
 
             const result = await request.execute("PKG_PROD$p_save_product_header")
             const output = await handleReps(result.output);
