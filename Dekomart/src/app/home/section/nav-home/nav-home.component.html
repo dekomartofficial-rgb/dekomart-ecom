@@ -47,7 +47,7 @@
       <div class="d-none d-lg-flex align-items-center gap-2 desktop-actions">
         <i class="pi pi-search"></i>
         <i class="pi pi-heart"></i>
-        <i class="pi pi-user"></i>
+        <i class="pi pi-user" [routerLink]="'login'"></i>
         @if (isUserLogged()) {
         <button class="action-btn desktop-action-btn position-relative" type="button" [routerLink]="'user/user-cart'"
           aria-label="Cart">

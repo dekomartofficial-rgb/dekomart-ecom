@@ -28,18 +28,14 @@ export class AdminLoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private loader: LoaderService, private httpClient: HttpClientService, private router: Router, private commonService: CommonService) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(1)]]
-      // otp: ['', [Validators.required, Validators.minLength(1)]]
+      password: ['', [Validators.required, Validators.minLength(1)]] 
     });
 
   }
   @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef>;
 
-  ngOnInit(): void {
-    this.loader.show()
-    setTimeout(() => {
-      this.loader.hide()
-    }, 2000);
+  ngOnInit(): void { 
+    
   }
 
   get formControls() {
@@ -90,7 +86,7 @@ export class AdminLoginComponent implements OnInit {
           localStorage.setItem('userData', JSON.stringify(AdminData));
           this.loader.show()
           setTimeout(() => {
-            this.router.navigate(['/admin/']);
+            this.router.navigate(['admin/home']);
             this.loader.hide()
           }, 200);
           this.errorMessage = res.Message

@@ -4,7 +4,6 @@ import { FooterHomeComponent } from "@/app/home/section/footer-home/footer-home.
 import { HttpClientService } from '@/app/provider/services/http-client.service';
 import { LoaderService } from '@/app/provider/services/loader.service';
 import { baseUrl } from '../../../../assets/config.json'
-import { InrPipe } from "../../../provider/pipe/inr.pipe";
 import { ToastService } from '@/app/provider/services/toast.service';
 import { CommonModule } from '@angular/common';
 import { CartItem } from '@/app/provider/class/UserClass';
@@ -12,7 +11,7 @@ import { CartItem } from '@/app/provider/class/UserClass';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [CommonModule, NavHomeComponent, FooterHomeComponent, InrPipe],
+  imports: [CommonModule, NavHomeComponent, FooterHomeComponent],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css'
 })

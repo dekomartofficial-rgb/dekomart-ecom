@@ -12,10 +12,10 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const isLoggedIn = !!this.http.getToken(); // Example: check token
     const currentUrl = state.url;
-    const firstSegment = currentUrl.split('/')[1]; 
+    const firstSegment = currentUrl.split('/')[1];
 
     if (isLoggedIn) {
-      if (firstSegment.toUpperCase() === 'ADMIN' && this.http.isAdmin()) {
+      if (firstSegment.toUpperCase() === 'ADMIN' && this.http.isAdmin()) { 
         return true;
       } else if (firstSegment.toUpperCase() === 'USER' && !this.http.isAdmin()) {
         return true

@@ -12,10 +12,11 @@ import { SystemParamComponent } from './system-param/system-param.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrdersDetailsComponent } from './orders-details/orders-details.component';
 import { AuthGuard } from '../../provider/guard/auth.guard'
+import { ProductOffersComponent } from './product-offers/product-offers.component';
 
 
 const routes: Routes = [
-  { path: '', component: AdminHomeComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: AdminHomeComponent, canActivate: [AuthGuard] },
   { path: 'product-details', component: ProductDetailsComponent, canActivate: [AuthGuard] },
   { path: 'user-registration', component: UserRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'product-dashboard', component: ProductDashboardComponent, canActivate: [AuthGuard] },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
   { path: 'orders-detials', component: OrdersDetailsComponent, canActivate: [AuthGuard] },
   { path: 'admin-login', component: AdminLoginComponent},
+  { path: 'product-offers', component: ProductOffersComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

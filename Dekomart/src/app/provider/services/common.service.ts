@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClientService } from './http-client.service';
 import { Observable } from 'rxjs';
 import { baseUrl } from '../../../assets/config.json'
-
+import { RouterStateSnapshot } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,21 @@ export class CommonService {
 
   getRole(): Observable<any> {
     return this.http.get<any>('admin/GetRole');
+  }
+
+  getIsAdmin() {
+    let userData = this.http.getUserData()
+    return userData && userData.UserRole !== 'US'
+  }
+
+  getIsShowNavbar(state: any) { 
+    const firstSegment = state.split('/')[1];
+    if(this.getIsAdmin() && firstSegment){
+      if(firstSegment.toUpperCase() === 'ADMIN') {
+        return true
+      }
+    }
+    return false
   }
 
   getRefGroupData(groupName: string): Observable<any> {

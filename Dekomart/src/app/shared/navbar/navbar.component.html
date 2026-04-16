@@ -1,11 +1,10 @@
-<div class="container-fluid">
+@if (validateNavBarShow()) {<div class="container-fluid">
   <div class="row">
     <div class="col-md-1-5">
       <div class="sidebar-container" [ngClass]="{ 'content-shifted': !sidebarVisible }">
         <div class="sidebar" [ngClass]="{ collapsed: isCollapsed, hidden: !sidebarVisible }">
           <div class="product-icon" style="text-align: center; padding: 10px">
-            <img src="assets/admin-images/icon.png" alt="Home" width="177px" style="cursor: pointer;"
-              routerLink="/" />
+            <img src="assets/admin-images/icon.png" alt="Home" width="177px" style="cursor: pointer;" routerLink="/" />
             <h6>Welcome Cartify</h6>
           </div>
           <div class="sidebar-content">
@@ -25,7 +24,7 @@
                 <ul class="submenu" [ngClass]="{ show: isGroupExpanded(item.GroupName) }">
                   @for (child of item.Children; track child.WindowUrl) {
                   <li class="nav-item">
-                    <a class="nav-link" [routerLink]="child.WindowUrl" routerLinkActive="active"
+                    <a class="nav-link" [class.active]="child.WindowName === this.firstChild" [routerLink]="child.WindowUrl" routerLinkActive="active"
                       (click)="setActive(child.WindowUrl)">
                       <i [class]="child.WindowIcon"></i>
                       <span *ngIf="!isCollapsed">{{ child.WindowName }}</span>
@@ -96,7 +95,8 @@
       </div>
     </div>
   </div>
-</div>
+</div>}
+
 
 <!-- Notification Panel -->
 <p-sidebar [(visible)]="notificationVisible" position="right" [style]="{ width: '350px' }">
